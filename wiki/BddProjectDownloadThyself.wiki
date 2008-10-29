@@ -1,0 +1,32 @@
+#summary Iteration 1: Goal - Download
+#labels BDD,horn
+
+http://spreadsheets.google.com/a/scotalt.net/ccc?key=pmM5kefyXN4LtloPvbLaMYA
+
+= Introduction =
+
+BDD: Project download thyself
+
+== Interface ==
+IGet	
+
+== Given ==
+A clean machine
+
+=== When ===
+A user asks for horn	
+
+=== Then ===
+We download horn
+
+=== When ===
+The file is not found
+
+=== Then ===
+Abort attempt, ask user
+
+=== When ===
+An authentication request is received
+
+=== Then ===
+Ask user for login
