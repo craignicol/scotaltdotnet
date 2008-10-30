@@ -1,0 +1,49 @@
+#summary Iteration 1: Goal - Build
+
+http://spreadsheets.google.com/a/scotalt.net/ccc?key=pmM5kefyXN4LtloPvbLaMYA
+
+= Introduction =
+
+BDD: Project Build thyself
+
+== Interface ==
+IBuild	
+
+== Given ==
+A clean machine
+
+=== When ===
+Horn has completed downloading
+
+=== Then ===
+We retrieve the build engine from the configuration (DSL)
+
+=== When ===
+Horn knows the build engine
+
+=== Then ===
+We locate the build file
+
+=== When ===
+horn knows the build file
+
+=== Then ===
+horn builds the downloaded source with the build engine using the build file
+
+=== When ===
+horn is building
+
+=== Then ===
+horn outputs to both the console window and a build.log file
+
+=== When ===
+horn has build successfully
+
+=== Then ===
+horn outputs to both the console window and build.log that the build was successful
+
+=== When ===
+horn does not build successfully
+
+=== Then ===
+horn outputs the reason for the failure to both the console window and the build.log
