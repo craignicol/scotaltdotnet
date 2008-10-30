@@ -17,6 +17,18 @@ A clean machine
 A user asks for horn	
 
 === Then ===
+we find the horn configuration
+
+=== When ===
+We have the horn confuration
+
+=== Then ===
+We choose the download method
+
+=== When ===
+We have the horn download location from the configuration, and the download method
+
+=== Then ===
 We download horn
 
 === When ===
