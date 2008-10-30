@@ -1,0 +1,31 @@
+#summary Iteration 1: Goal - Build
+
+http://spreadsheets.google.com/a/scotalt.net/ccc?key=pmM5kefyXN4LtloPvbLaMYA
+
+= Introduction =
+
+BDD: Parse Command line switches
+
+== Interface ==
+IBuild	
+
+== Given ==
+A clean machine
+
+=== When ===
+The user supplies switches to horn
+
+=== Then ===
+The system will parse out the name value pairs
+
+=== When ===
+The swiches have no value
+
+=== Then ===
+The parser ignores them
+
+=== When ===
+The switches do not exist
+
+=== Then ===
+The system ignores them
