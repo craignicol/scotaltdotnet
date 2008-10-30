@@ -1,0 +1,31 @@
+#summary Iteration 1: Goal - Build
+
+http://spreadsheets.google.com/a/scotalt.net/ccc?key=pmM5kefyXN4LtloPvbLaMYA
+
+= Introduction =
+
+BDD: Run Tests
+
+== Interface ==
+ITest
+
+== Given ==
+Horn can build the downloaded source code
+
+=== When ===
+The users supplies the -runtests=true switch 
+
+=== Then ===
+Horn runs the tests using the runner defined in the DSL Config
+
+=== When ===
+The tests run
+
+=== Then ===
+The output is written to the console and the log file
+
+=== When ===
+The tests run
+
+=== Then ===
+The output is transformed into a textual format
