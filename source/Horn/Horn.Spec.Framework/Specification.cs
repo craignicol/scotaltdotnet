@@ -14,10 +14,10 @@ namespace Horn.Spec.Framework
 
         protected virtual void After_each_spec() { }
 
-        protected T CreateStub<T>() where T : class
+        protected static T CreateStub<T>() where T : class
         {
             return MockRepository.GenerateStub<T>();
-        }
+        }        
 
 
         public void Dispose()
