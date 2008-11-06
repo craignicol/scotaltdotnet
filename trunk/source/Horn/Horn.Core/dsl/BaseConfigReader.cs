@@ -19,16 +19,9 @@ namespace Horn.Core.dsl
             installDelegate();
         }
 
-        protected void SetBuildTargets(Action  action)
+        protected void SetBuildTargets(Func<string> action)
         {
-            Console.WriteLine(action.GetType()); 
-        }
-
-
-        protected void Tasks(ActionDelegate action)
-        {
-            Console.WriteLine(action);
-
+            Console.WriteLine(action()); 
         }
 
         [Meta]
@@ -37,24 +30,10 @@ namespace Horn.Core.dsl
             BlockExpression condition = new BlockExpression();
             condition.Body.Add(new ReturnStatement(expression));
             return new MethodInvocationExpression(
-                new ReferenceExpression("Tasks"),
+                new ReferenceExpression("SetBuildTargets"),
                 condition
             );
         }
-
-        //[Meta]
-        //public static Expression tasks(params ReferenceExpression[] expressions)
-        //{
-        //    var buildTasks = new List<string>();
-
-        //    foreach (var expression in expressions)
-        //        buildTasks.Add(expression.Name);
-
-        //    var block = new Block();
-
-        //    return null;
-        //}
-
 
         public void description(string text)
         {
