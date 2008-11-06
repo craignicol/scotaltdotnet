@@ -1,4 +1,4 @@
-namespace Horn.Core.dsl
+namespace Horn.Console
 {
     public class Program
     {
