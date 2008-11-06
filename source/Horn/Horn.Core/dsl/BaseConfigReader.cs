@@ -35,18 +35,18 @@ namespace Horn.Core.dsl
         //    );
         //}
 
-        //[Meta]
-        //public static Expression tasks(params ReferenceExpression[] expressions)
-        //{
-        //    var buildTasks = new List<string>();
+        [Meta]
+        public static Expression tasks(params ReferenceExpression[] expressions)
+        {
+            var buildTasks = new List<string>();
 
-        //    foreach (var expression in expressions)
-        //        buildTasks.Add(expression.Name);
+            foreach (var expression in expressions)
+                buildTasks.Add(expression.Name);
 
-        //    var block = new Block();
+            var block = new Block();
 
-        //    return ret;
-        //}
+            return null;
+        }
 
 
         public void description(string text)
