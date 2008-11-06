@@ -19,34 +19,41 @@ namespace Horn.Core.dsl
             installDelegate();
         }
 
-        protected void SetBuildTargets(Action action)
+        protected void SetBuildTargets(Action  action)
         {
             Console.WriteLine(action.GetType()); 
         }
 
-        //[Meta]
-        //public static Expression tasks(ReferenceExpression expression)
-        //{
-        //    BlockExpression condition = new BlockExpression();
-        //    condition.Body.Add(new ReturnStatement(expression));
-        //    return new MethodInvocationExpression(
-        //        new ReferenceExpression("SetBuildTargets"),
-        //        expression
-        //    );
-        //}
+
+        protected void Tasks(ActionDelegate action)
+        {
+            Console.WriteLine(action);
+
+        }
 
         [Meta]
-        public static Expression tasks(params ReferenceExpression[] expressions)
+        public static Expression tasks(Expression expression)
         {
-            var buildTasks = new List<string>();
-
-            foreach (var expression in expressions)
-                buildTasks.Add(expression.Name);
-
-            var block = new Block();
-
-            return null;
+            BlockExpression condition = new BlockExpression();
+            condition.Body.Add(new ReturnStatement(expression));
+            return new MethodInvocationExpression(
+                new ReferenceExpression("Tasks"),
+                condition
+            );
         }
+
+        //[Meta]
+        //public static Expression tasks(params ReferenceExpression[] expressions)
+        //{
+        //    var buildTasks = new List<string>();
+
+        //    foreach (var expression in expressions)
+        //        buildTasks.Add(expression.Name);
+
+        //    var block = new Block();
+
+        //    return null;
+        //}
 
 
         public void description(string text)
@@ -78,5 +85,10 @@ namespace Horn.Core.dsl
             BuildTasks = new List<string>();
         }
 
+    }
+
+    public class one
+    {
+        public void DoIt(){Console.WriteLine("Test");}
     }
 }
