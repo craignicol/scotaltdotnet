@@ -65,9 +65,4 @@ namespace Horn.Core.dsl
         }
 
     }
-
-    public class one
-    {
-        public void DoIt(){Console.WriteLine("Test");}
-    }
 }
