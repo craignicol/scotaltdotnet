@@ -9,7 +9,7 @@ namespace Horn.Core.Spec.dsl
         [Test]
         public void Then_Horn_Returns_The_Component_MetaData()
         {
-            var instance = factory.Create<BaseConfigReader>(@"dsl/hornconfig.boo");
+            var instance = factory.Create<BaseConfigReader>(@"boo/projects/hornconfig.boo");
 
             instance.Prepare();
 
