@@ -94,10 +94,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="dsl\BaseDSLSpecification.cs" />
-    <Compile Include="dsl\DSLSpecification.cs" />
-    <Compile Include="Get\GetSpecification.cs" />
-    <Compile Include="Get\GetSpecificationBase.cs" />
+    <Compile Include="Unit\dsl\BaseDSLSpecification.cs" />
+    <Compile Include="Unit\dsl\DSLSpecification.cs" />
+    <Compile Include="Unit\Get\GetSpecification.cs" />
+    <Compile Include="Unit\Get\GetSpecificationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

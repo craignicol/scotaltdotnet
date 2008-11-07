@@ -1,4 +1,4 @@
-namespace Horn.Core.Spec.Get
+namespace Horn.Core.Spec.Unit.Get
 {
     using Core.Get;
     using Horn.Spec.Framework;
