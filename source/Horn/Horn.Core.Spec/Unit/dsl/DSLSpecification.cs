@@ -1,4 +1,4 @@
-﻿namespace Horn.Core.Spec.dsl
+﻿namespace Horn.Core.Spec.Unit.dsl
 {
     using Core.dsl;
     using Xunit;
