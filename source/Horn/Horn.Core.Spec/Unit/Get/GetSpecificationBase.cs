@@ -1,7 +1,6 @@
 namespace Horn.Core.Spec.Unit.Get
 {
     using Core.Get;
-    using Horn.Spec.Framework;
     using Utils;
 
     public abstract class GetSpecificationBase : Specification

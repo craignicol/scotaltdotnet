@@ -2,7 +2,6 @@ namespace Horn.Core.Spec.Unit.dsl
 {
     using System;
     using Core.dsl;
-    using Horn.Spec.Framework;
     using Rhino.DSL;
 
     public abstract class BaseDSLSpecification : Specification
