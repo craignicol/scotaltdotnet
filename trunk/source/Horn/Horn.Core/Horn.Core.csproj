@@ -76,6 +76,7 @@
     <Compile Include="dsl\BaseConfigReader.cs" />
     <Compile Include="dsl\ConfigReaderEngine.cs" />
     <Compile Include="Get\Get.cs" />
+    <Compile Include="Utils\EnumerableExtensionMethods.cs" />
     <Compile Include="Utils\IFileSystemProvider.cs" />
     <Compile Include="Get\IGet.cs" />
     <Compile Include="Project.cs" />

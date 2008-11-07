@@ -5,6 +5,8 @@ using Boo.Lang.Compiler.Ast;
 
 namespace Horn.Core.dsl
 {
+    using Utils;
+
     public abstract class BaseConfigReader
     {
         public delegate void ActionDelegate();
@@ -33,8 +35,7 @@ namespace Horn.Core.dsl
 
         protected void SetBuildTargets(string[] taskActions)
         {
-            foreach (var task in taskActions)
-                BuildTasks.Add(task);
+            taskActions.ForEach(BuildTasks.Add);
         }
 
         [Meta]
