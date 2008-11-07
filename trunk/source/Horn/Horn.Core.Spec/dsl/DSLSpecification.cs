@@ -1,6 +1,4 @@
-﻿using Rhino.Mocks.Constraints;
-
-namespace Horn.Core.Spec.dsl
+﻿namespace Horn.Core.Spec.dsl
 {
     using Core.dsl;
     using Xunit;
@@ -33,11 +31,11 @@ namespace Horn.Core.Spec.dsl
 
             Assert.Equal(reader.BuildFile, "default.build");
 
-            //Assert.That(reader.BuildTasks[0], Is.EqualTo("one"));
+            Assert.Equal(reader.BuildTasks[0], "one");
 
-            //Assert.That(reader.BuildTasks[1], Is.EqualTo("two"));
+            Assert.Equal(reader.BuildTasks[1], "two");
 
-            //Assert.That(reader.BuildTasks[2], Is.EqualTo("three"));
+            Assert.Equal(reader.BuildTasks[2], "three");
         }
     }
 }
