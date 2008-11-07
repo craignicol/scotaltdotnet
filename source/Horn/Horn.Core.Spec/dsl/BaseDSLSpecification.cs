@@ -1,16 +1,15 @@
-using System;
-using Horn.Core.dsl;
-using NUnit.Framework;
-using Rhino.DSL;
-
 namespace Horn.Core.Spec.dsl
 {
-    public class BaseDSLSpecification
+    using System;
+    using Core.dsl;
+    using Horn.Spec.Framework;
+    using Rhino.DSL;
+
+    public abstract class BaseDSLSpecification : Specification
     {
         protected DslFactory factory;
 
-        [SetUp]
-        protected void Before_each_spec()
+        protected override void Before_each_spec()
         {
             factory = new DslFactory { BaseDirectory = AppDomain.CurrentDomain.BaseDirectory };
             factory.Register<BaseConfigReader>(new ConfigReaderEngine());
