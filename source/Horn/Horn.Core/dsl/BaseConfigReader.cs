@@ -15,11 +15,7 @@ namespace Horn.Core.dsl
         [Meta]
         public static Expression install(ReferenceExpression expression, Expression action)
         {
-            var blockExpression = new BlockExpression();
-
-            var installExpression = new StringLiteralExpression(expression.Name);
-
-            blockExpression.Body.Add(new ReturnStatement(installExpression));
+            BlockExpression blockExpression = GetBlockExpression(expression);
 
             return new MethodInvocationExpression(
                     new ReferenceExpression("GetInstallerMeta"),
@@ -35,24 +31,38 @@ namespace Horn.Core.dsl
             installDelegate();
         }
 
-        protected void SetBuildTargets(Func<string> action)
+        protected void SetBuildTargets(Func<string[]> tasksAction)
         {
-            Console.WriteLine(action()); 
+            foreach(var task in tasksAction())
+                BuildTasks.Add(task);
         }
 
         [Meta]
-        public static Expression tasks(ReferenceExpression expression)
+        public static Expression tasks(params ReferenceExpression[] expressions)
         {
             var blockExpression = new BlockExpression();
 
-            var taskExpression = new StringLiteralExpression(expression.Name);
+            var arrayExpression = new ArrayLiteralExpression();
 
-            blockExpression.Body.Add(new ReturnStatement(taskExpression));
+            for (var i = 0; i < expressions.Length; i++)
+                arrayExpression.Items.Add(new StringLiteralExpression(expressions[i].Name));
+
+            blockExpression.Body.Add(new ReturnStatement(arrayExpression));
 
             return new MethodInvocationExpression(
                 new ReferenceExpression("SetBuildTargets"),
                 blockExpression
             );
+        }
+
+        private static BlockExpression GetBlockExpression(ReferenceExpression expression)
+        {
+            var blockExpression = new BlockExpression();
+
+            var returnExpression = new StringLiteralExpression(expression.Name);
+
+            blockExpression.Body.Add(new ReturnStatement(returnExpression));
+            return blockExpression;
         }
 
         public void buildfile(string file)
