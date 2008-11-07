@@ -8,7 +8,10 @@ namespace Horn.Spec.Framework
         protected Specification()
         {
             Before_each_spec();
+            Because();
         }
+
+        protected abstract void Because();
 
         protected virtual void Before_each_spec() { }
 
