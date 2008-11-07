@@ -5,7 +5,6 @@ using Rhino.DSL;
 
 namespace Horn.Core.Spec.dsl
 {
-    [TestFixture]
     public class BaseDSLSpecification
     {
         protected DslFactory factory;
