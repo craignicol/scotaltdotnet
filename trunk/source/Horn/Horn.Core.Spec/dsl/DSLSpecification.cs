@@ -29,6 +29,8 @@
 
             Assert.Equal("https://svnserver/trunk", reader.Svn);
 
+            Assert.That(reader.BuildFile, Is.EqualTo("default.build"));
+
             //Assert.That(reader.BuildTasks[0], Is.EqualTo("one"));
 
             //Assert.That(reader.BuildTasks[1], Is.EqualTo("two"));

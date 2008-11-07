@@ -12,9 +12,25 @@ namespace Horn.Core.dsl
 
         public abstract void Prepare();
 
-        public void install(string installName, ActionDelegate installDelegate)
+        [Meta]
+        public static Expression install(ReferenceExpression expression, Expression action)
         {
-            InstallName = installName;
+            var blockExpression = new BlockExpression();
+
+            var installExpression = new StringLiteralExpression(expression.Name);
+
+            blockExpression.Body.Add(new ReturnStatement(installExpression));
+
+            return new MethodInvocationExpression(
+                    new ReferenceExpression("GetInstallerMeta"),
+                    blockExpression,
+                    action
+                );
+        }
+
+        public void GetInstallerMeta(Func<string> installName, ActionDelegate installDelegate)
+        {
+            InstallName = installName();
 
             installDelegate();
         }
@@ -25,14 +41,23 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
-        public static Expression tasks(Expression expression)
+        public static Expression tasks(ReferenceExpression expression)
         {
-            BlockExpression condition = new BlockExpression();
-            condition.Body.Add(new ReturnStatement(expression));
+            var blockExpression = new BlockExpression();
+
+            var taskExpression = new StringLiteralExpression(expression.Name);
+
+            blockExpression.Body.Add(new ReturnStatement(taskExpression));
+
             return new MethodInvocationExpression(
                 new ReferenceExpression("SetBuildTargets"),
-                condition
+                blockExpression
             );
+        }
+
+        public void buildfile(string file)
+        {
+            BuildFile = file;
         }
 
         public void description(string text)
@@ -56,6 +81,8 @@ namespace Horn.Core.dsl
         public string Svn { get; set; }
 
         public List<string> BuildTasks{ get; set;}
+
+        public string BuildFile { get; set; }
 
         #endregion
 
