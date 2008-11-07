@@ -1,4 +1,6 @@
-﻿namespace Horn.Core.Spec.dsl
+﻿using Rhino.Mocks.Constraints;
+
+namespace Horn.Core.Spec.dsl
 {
     using Core.dsl;
     using Xunit;
@@ -29,7 +31,7 @@
 
             Assert.Equal("https://svnserver/trunk", reader.Svn);
 
-            Assert.That(reader.BuildFile, Is.EqualTo("default.build"));
+            Assert.Equal(reader.BuildFile, "default.build");
 
             //Assert.That(reader.BuildTasks[0], Is.EqualTo("one"));
 
