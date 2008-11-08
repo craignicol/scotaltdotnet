@@ -8,7 +8,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
     public class When_Horn_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
-        private BaseConfigReader instance;
+        private BaseConfigReader configReader;
 
         protected DslFactory factory;
 
@@ -20,14 +20,14 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void Because()
         {
-            instance = factory.Create<BaseConfigReader>(@"boo/projects/hornconfig.boo");
-            instance.Prepare();
+            configReader = factory.Create<BaseConfigReader>(@"boo/projects/hornconfig.boo");
+            configReader.Prepare();
         }
 
         [Fact]
-        public void Then_Horn_Returns_The_Component_MetaData()
+        public void Then_Horn_Returns_The_Component_DSL()
         {
-            AssertHornMetaData(instance);
+            AssertHornMetaData(configReader);
         }
 
         private void AssertHornMetaData(BaseConfigReader reader)
