@@ -97,6 +97,7 @@
     <Compile Include="Integration\Utils\FileSystemProvider.cs" />
     <Compile Include="Unit\dsl\BaseDSLSpecification.cs" />
     <Compile Include="Unit\dsl\BuildMetaDataSpecification.cs" />
+    <Compile Include="Unit\dsl\BuildConfigReaderSpecification.cs" />
     <Compile Include="Unit\dsl\DSLSpecification.cs" />
     <Compile Include="Unit\Get\GetSpecification.cs" />
     <Compile Include="Unit\Get\GetSpecificationBase.cs" />

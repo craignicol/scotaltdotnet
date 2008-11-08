@@ -74,9 +74,11 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="dsl\BaseConfigReader.cs" />
+    <Compile Include="dsl\BuildConfigReader.cs" />
     <Compile Include="dsl\BuildEngine.cs" />
     <Compile Include="dsl\BuildMetaData.cs" />
     <Compile Include="dsl\ConfigReaderEngine.cs" />
+    <Compile Include="dsl\IBuildConfigReader.cs" />
     <Compile Include="dsl\SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
     <Compile Include="Utils\EnumerableExtensionMethods.cs" />
@@ -86,6 +88,9 @@
     <Compile Include="Get\VersionControl.cs" />
     <Compile Include="Get\VersionControlParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuildConfigs\horn.boo" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

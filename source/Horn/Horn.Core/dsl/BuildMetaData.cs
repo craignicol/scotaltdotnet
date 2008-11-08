@@ -2,9 +2,9 @@ using System;
 
 namespace Horn.Core.dsl
 {
-    public class BuidMetaData
+    public class BuildMetaData
     {
-        public BuidMetaData(BaseConfigReader instance)
+        public BuildMetaData(BaseConfigReader instance)
         {
             BuildEngine = instance.BuildEngine;
 
