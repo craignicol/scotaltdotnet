@@ -1,17 +1,16 @@
+using System.Collections.Generic;
+
 namespace Horn.Core.Spec.Unit.dsl
 {
-    using System;
-    using Core.dsl;
-    using Rhino.DSL;
-
     public abstract class BaseDSLSpecification : Specification
     {
-        protected DslFactory factory;
+        protected const string DESCRIPTION = "This is a description of horn";
 
-        protected override void Before_each_spec()
-        {
-            factory = new DslFactory { BaseDirectory = AppDomain.CurrentDomain.BaseDirectory };
-            factory.Register<BaseConfigReader>(new ConfigReaderEngine());
-        }
+        protected const string SVN_URL = "https://svnserver/trunk";
+
+        protected const string BUILD_FILE = "rakefile.rb";
+
+        protected readonly List<string> TASKS = new List<string> {"build", "test", "deploy"};
+
     }
 }
