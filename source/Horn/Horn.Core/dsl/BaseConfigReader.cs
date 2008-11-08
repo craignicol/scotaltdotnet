@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
@@ -8,8 +9,6 @@ namespace Horn.Core.dsl
 
     public abstract class BaseConfigReader
     {
-        public delegate void ActionDelegate();
-
         public abstract void Prepare();
 
         [Meta]
@@ -24,7 +23,7 @@ namespace Horn.Core.dsl
                 );
         }
 
-        public void GetInstallerMeta(string installName, ActionDelegate installDelegate)
+        public void GetInstallerMeta(string installName, Action installDelegate)
         {
             InstallName = installName;
 
@@ -59,14 +58,14 @@ namespace Horn.Core.dsl
                 );
         }
 
-        protected void nant(string buildFile, ActionDelegate action)
+        protected void nant(string buildFile, Action action)
         {
             BuildEngine = new NAntBuildEngine(buildFile);
 
             action();
         }
 
-        protected void rake(string buildFile, ActionDelegate action)
+        protected void rake(string buildFile, Action action)
         {
             BuildEngine = new RakeBuildEngine(buildFile);
 
@@ -93,8 +92,6 @@ namespace Horn.Core.dsl
         }
 
         #region for testing only
-
-        public virtual ActionDelegate Action { get; set; }
 
         public virtual string InstallName { get; set; }
 
