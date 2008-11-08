@@ -27,9 +27,13 @@
 
             Assert.Equal("This is a description of horn", reader.Description);
 
-            Assert.Equal("https://svnserver/trunk", reader.Svn);
+            Assert.IsAssignableFrom(typeof (SVNSourceControl), reader.SourceControl);
 
-            Assert.Equal(reader.BuildFile, "default.build");
+            Assert.Equal("https://svnserver/trunk", reader.SourceControl.Url);
+
+            Assert.IsAssignableFrom(typeof (NAntBuild), reader.Builder);
+
+            Assert.Equal("default.build", reader.Builder.BuildFile);
 
             Assert.Equal(reader.BuildTasks[0], "one");
 

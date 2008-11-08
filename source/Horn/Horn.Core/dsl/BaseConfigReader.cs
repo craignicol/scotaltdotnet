@@ -39,6 +39,28 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
+        public static Expression get_from(MethodInvocationExpression get)
+        {
+            return get;
+        }
+
+        protected void svn(string url)
+        {
+            SourceControl = new SVNSourceControl(url);
+        }
+
+        [Meta]
+        public static Expression build_with(MethodInvocationExpression build)
+        {
+            return build;
+        }
+
+        protected void nant(string buildFile)
+        {
+            Builder = new NAntBuild(buildFile);
+        }
+
+        [Meta]
         public static Expression tasks(params ReferenceExpression[] expressions)
         {
             var arrayExpression = new ArrayLiteralExpression();
@@ -52,19 +74,9 @@ namespace Horn.Core.dsl
             );
         }
 
-        public void buildfile(string file)
-        {
-            BuildFile = file;
-        }
-
         public void description(string text)
         {
             Description = text;
-        }
-
-        public void svn(string url)
-        {
-            Svn = url;
         }
 
         #region for testing only
@@ -75,11 +87,11 @@ namespace Horn.Core.dsl
 
         public string Description { get; set; }
 
-        public string Svn { get; set; }
-
         public List<string> BuildTasks{ get; set;}
 
-        public string BuildFile { get; set; }
+        public SourceControl SourceControl { get; set; }
+
+        public Build Builder { get; set; }
 
         #endregion
 
