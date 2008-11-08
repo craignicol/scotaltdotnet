@@ -10,7 +10,7 @@ namespace Horn.Core.dsl
     public abstract class BaseConfigReader
     {
         public delegate void ActionDelegate();
-        public delegate bool ConditionDelegate();
+        public delegate void WithDelegate(params string[] args);
 
         public abstract void Prepare();
 
@@ -50,14 +50,22 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
-        public static Expression build_with(MethodInvocationExpression build)
+        public static Expression build_with(MethodInvocationExpression build, ReferenceExpression with, BlockExpression action)
         {
-            return build;
+            var targetName = ((ReferenceExpression) build.Target).Name;
+
+            return new MethodInvocationExpression(
+                    new ReferenceExpression(targetName),
+                    build.Arguments[0],
+                    action
+                );
         }
 
-        protected void nant(string buildFile)
+        protected void nant(string buildFile, ActionDelegate action)
         {
             Builder = new NAntBuild(buildFile);
+
+            action();
         }
 
         [Meta]
