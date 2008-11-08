@@ -1,5 +1,5 @@
 ﻿install horn:
 	description "This is a description of horn"
-	svn "https://svnserver/trunk"
-	buildfile "default.build"
+	get_from svn("https://svnserver/trunk")
+	build_with nant("default.build")
 	tasks one, two, three
