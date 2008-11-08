@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
@@ -10,7 +9,6 @@ namespace Horn.Core.dsl
     public abstract class BaseConfigReader
     {
         public delegate void ActionDelegate();
-        public delegate void WithDelegate(params string[] args);
 
         public abstract void Prepare();
 
@@ -35,7 +33,7 @@ namespace Horn.Core.dsl
 
         protected void SetBuildTargets(string[] taskActions)
         {
-            taskActions.ForEach(BuildTasks.Add);
+            BuildEngine.AssignTasks(taskActions);
         }
 
         [Meta]
@@ -63,7 +61,14 @@ namespace Horn.Core.dsl
 
         protected void nant(string buildFile, ActionDelegate action)
         {
-            Builder = new NAntBuild(buildFile);
+            BuildEngine = new NAntBuildEngine(buildFile);
+
+            action();
+        }
+
+        protected void rake(string buildFile, ActionDelegate action)
+        {
+            BuildEngine = new RakeBuildEngine(buildFile);
 
             action();
         }
@@ -89,24 +94,16 @@ namespace Horn.Core.dsl
 
         #region for testing only
 
-        public ActionDelegate Action { get; set; }
+        public virtual ActionDelegate Action { get; set; }
 
-        public string InstallName{ get; set; }
+        public virtual string InstallName { get; set; }
 
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
-        public List<string> BuildTasks{ get; set;}
+        public virtual SourceControl SourceControl { get; set; }
 
-        public SourceControl SourceControl { get; set; }
-
-        public Build Builder { get; set; }
+        public virtual BuildEngine BuildEngine { get; set; }
 
         #endregion
-
-        protected BaseConfigReader()
-        {
-            BuildTasks = new List<string>();
-        }
-
     }
 }

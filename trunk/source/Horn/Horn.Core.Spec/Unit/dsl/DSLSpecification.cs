@@ -1,4 +1,7 @@
-﻿namespace Horn.Core.Spec.Unit.dsl
+﻿using System;
+using Rhino.DSL;
+
+namespace Horn.Core.Spec.Unit.dsl
 {
     using Core.dsl;
     using Xunit;
@@ -6,6 +9,14 @@
     public class When_Horn_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
         private BaseConfigReader instance;
+
+        protected DslFactory factory;
+
+        protected override void Before_each_spec()
+        {
+            factory = new DslFactory { BaseDirectory = AppDomain.CurrentDomain.BaseDirectory };
+            factory.Register<BaseConfigReader>(new ConfigReaderEngine());
+        }
 
         protected override void Because()
         {
@@ -25,21 +36,21 @@
 
             Assert.Equal("horn", reader.InstallName);
 
-            Assert.Equal("This is a description of horn", reader.Description);
+            Assert.Equal(DESCRIPTION, reader.Description);
 
             Assert.IsAssignableFrom(typeof (SVNSourceControl), reader.SourceControl);
 
-            Assert.Equal("https://svnserver/trunk", reader.SourceControl.Url);
+            Assert.Equal(SVN_URL, reader.SourceControl.Url);
 
-            Assert.IsAssignableFrom(typeof (NAntBuild), reader.Builder);
+            Assert.IsAssignableFrom(typeof (RakeBuildEngine), reader.BuildEngine);
 
-            Assert.Equal("default.build", reader.Builder.BuildFile);
+            Assert.Equal(BUILD_FILE, reader.BuildEngine.BuildFile);
 
-            Assert.Equal(reader.BuildTasks[0], "one");
+            Assert.Equal(reader.BuildEngine.Tasks[0], TASKS[0]);
 
-            Assert.Equal(reader.BuildTasks[1], "two");
+            Assert.Equal(reader.BuildEngine.Tasks[1], TASKS[1]);
 
-            Assert.Equal(reader.BuildTasks[2], "three");
+            Assert.Equal(reader.BuildEngine.Tasks[2], TASKS[2]);
         }
     }
 }
