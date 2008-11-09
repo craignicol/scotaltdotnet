@@ -29,8 +29,8 @@ namespace Horn.Core.Get
 
         public virtual string Export()
         {
-            string basePath = GetDestination(project.Name);
-            string path = fileSystemProvider.CreateDirectory(basePath);
+            string path = GetDestination(project.Name);
+            fileSystemProvider.CreateDirectory(path);
 
             sourceControl.Export(path);
 
