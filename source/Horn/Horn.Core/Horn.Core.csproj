@@ -81,6 +81,7 @@
     <Compile Include="dsl\IBuildConfigReader.cs" />
     <Compile Include="dsl\SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
+    <Compile Include="UnknownBuildComponentException.cs" />
     <Compile Include="Utils\EnumerableExtensionMethods.cs" />
     <Compile Include="Utils\IFileSystemProvider.cs" />
     <Compile Include="Get\IGet.cs" />
@@ -91,6 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BuildConfigs\horn.boo" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
