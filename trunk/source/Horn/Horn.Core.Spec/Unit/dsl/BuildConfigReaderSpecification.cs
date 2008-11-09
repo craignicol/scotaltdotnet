@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
 {
+
     public class When_The_Build_Config_Reader_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
         private IBuildConfigReader reader;

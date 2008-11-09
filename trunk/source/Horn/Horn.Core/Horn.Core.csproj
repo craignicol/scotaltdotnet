@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{093CFA20-D720-4C58-9B8F-754F03A40D16}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -73,28 +73,23 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="exceptions\UnknownBuildComponentException.cs" />
     <Compile Include="dsl\BaseConfigReader.cs" />
     <Compile Include="dsl\BuildConfigReader.cs" />
-    <Compile Include="dsl\BuildEngine.cs" />
+    <Compile Include="BuildEngine.cs" />
     <Compile Include="dsl\BuildMetaData.cs" />
     <Compile Include="dsl\ConfigReaderEngine.cs" />
     <Compile Include="dsl\IBuildConfigReader.cs" />
-    <Compile Include="dsl\SourceControl.cs" />
+    <Compile Include="SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
-    <Compile Include="UnknownBuildComponentException.cs" />
     <Compile Include="Utils\EnumerableExtensionMethods.cs" />
     <Compile Include="Utils\IFileSystemProvider.cs" />
     <Compile Include="Get\IGet.cs" />
     <Compile Include="Project.cs" />
-    <Compile Include="Get\VersionControl.cs" />
-    <Compile Include="Get\VersionControlParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="BuildConfigs\horn.boo" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

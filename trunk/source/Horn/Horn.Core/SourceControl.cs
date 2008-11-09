@@ -1,4 +1,4 @@
-namespace Horn.Core.dsl
+namespace Horn.Core
 {
     public abstract class SourceControl
     {
@@ -8,12 +8,19 @@ namespace Horn.Core.dsl
         }
 
         public virtual string Url {get; private set;}
+
+        public abstract void Export(string destination);
     }
 
     public class SVNSourceControl : SourceControl
     {
         public SVNSourceControl(string url) : base(url)
         {
+        }
+
+        public override void Export(string destination)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

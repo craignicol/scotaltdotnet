@@ -7,15 +7,29 @@ namespace Horn.Core.Spec.Unit.Get
     {
         protected IGet get;
         protected IFileSystemProvider fileSystemProvider;
-        protected VersionControl versionControl;
+        protected SourceControlDouble sourceControl;
         protected Project project;
 
         protected override void Before_each_spec()
         {
-            versionControl = CreateStub<VersionControl>();
-            project = CreateStub<Project>();
+            sourceControl = new SourceControlDouble("http://localhost/horn");
+            project = new Project {Name = "horn"};
 
             fileSystemProvider = CreateStub<IFileSystemProvider>();
+        }
+    }
+
+    public class SourceControlDouble : SourceControl
+    {
+        public bool ExportWasCalled;
+
+        public SourceControlDouble(string url) : base(url)
+        {
+        }
+
+        public override void Export(string destination)
+        {
+            ExportWasCalled = true;
         }
     }
 }
