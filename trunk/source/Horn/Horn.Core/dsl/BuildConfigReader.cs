@@ -7,11 +7,23 @@ namespace Horn.Core.dsl
     {
         private readonly DslFactory factory;
 
+        private BaseConfigReader configReader;
+
         public BuildMetaData GetBuildMetaData(string sourceName)
         {
+            if(string.IsNullOrEmpty(sourceName))
+                throw new UnknownBuildComponentException("Empty build component passed into the BuildConfigReader");
+
             var buildFile = GetBuildFile(sourceName);
 
-            var configReader = factory.Create<BaseConfigReader>(buildFile);
+            try
+            {
+                configReader = factory.Create<BaseConfigReader>(buildFile);
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new UnknownBuildComponentException(string.Format("Unkown build component {0} passed into the BuildConfigReader", buildFile), e);
+            }
 
             configReader.Prepare();
 
