@@ -8,14 +8,14 @@ namespace Horn.Core.Utils
     /// </summary>
     public interface IFileSystemProvider
     {
-        void CreateDirectory(string path);
+        string CreateDirectory(string path);
     }
 
     public class FileSystemProvider : IFileSystemProvider
     {
-        public void CreateDirectory(string path)
+        public string CreateDirectory(string path)
         {
-            Directory.CreateDirectory(path);
+            return Directory.CreateDirectory(path).FullName;
         }
     }
 }

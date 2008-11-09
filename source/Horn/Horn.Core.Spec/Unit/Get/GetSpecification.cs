@@ -6,10 +6,12 @@ namespace Horn.Core.Spec.Unit.Get
 
     public class When_Asked_To_Get_Source : GetSpecificationBase
     {
+        private string destinationPath;
+
         protected override void Because()
         {
             get = new Get(fileSystemProvider);
-            get.Project(project).From(versionControl).Export();
+            destinationPath = get.Project(project).From(sourceControl).Export();
         }
 
         [Fact]
@@ -19,15 +21,15 @@ namespace Horn.Core.Spec.Unit.Get
         }
 
         [Fact]
-        public void Should_Ask_Project_For_The_VersionControl_Settings()
+        public void Should_Retrieve_Source_From_VersionControl()
         {
-            project.AssertWasCalled(p => p.GetVersionControlParameters());
+            Assert.True(sourceControl.ExportWasCalled);
         }
 
         [Fact]
-        public void Should_Retrieve_Source_From_VersionControl()
+        public void Should_Return_The_Destination_Path()
         {
-            versionControl.AssertWasCalled(s => s.Export(Arg<VersionControlParameters>.Is.Anything));
+            Assert.NotEqual(string.Empty, destinationPath);
         }
     }
 }

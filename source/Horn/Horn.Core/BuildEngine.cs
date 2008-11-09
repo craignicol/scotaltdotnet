@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
-namespace Horn.Core.dsl
+namespace Horn.Core
 {
+    using System.Collections.Generic;
+
     public abstract class BuildEngine
     {
         protected BuildEngine(string buildFile)

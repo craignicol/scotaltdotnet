@@ -1,12 +1,14 @@
 namespace Horn.Core.Get
 {
+    using System;
+    using System.IO;
     using Utils;
 
     public class Get : IGet
     {
         protected readonly IFileSystemProvider fileSystemProvider;
         protected Project project;
-        protected VersionControl versionControl;
+        protected SourceControl sourceControl;
 
         public Get(IFileSystemProvider fileSystemProvider)
         {
@@ -19,16 +21,28 @@ namespace Horn.Core.Get
             return this;
         }
 
-        public virtual IGet From(VersionControl versionControlToGetFrom)
+        public virtual IGet From(SourceControl sourceControlToGetFrom)
         {
-            versionControl = versionControlToGetFrom;
+            sourceControl = sourceControlToGetFrom;
             return this;
         }
 
-        public virtual void Export()
+        public virtual string Export()
         {
-            fileSystemProvider.CreateDirectory(project.SourcePath);
-            versionControl.Export(project.GetVersionControlParameters());
+            string basePath = GetDestination(project.Name);
+            string path = fileSystemProvider.CreateDirectory(basePath);
+
+            sourceControl.Export(path);
+
+            return path;
+        }
+
+        private string GetDestination(string projectName)
+        {
+            string installPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Install");
+            string folderName = string.Format("{0}{1}{2}", Guid.NewGuid(), Path.DirectorySeparatorChar, projectName);
+
+            return Path.Combine(installPath, folderName);
         }
     }
 }
