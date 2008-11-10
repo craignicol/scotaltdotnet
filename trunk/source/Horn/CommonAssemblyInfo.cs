@@ -1,7 +1,11 @@
-using System.Reflection;
 
-[assembly: AssemblyCompany("scotalt.net")]
-[assembly: AssemblyProduct("HORN")]
-[assembly: AssemblyCopyright("Copyright © scotalt.net 2008")]
-[assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyVersion("0.0.0.*")]
+using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+
+[assembly: AssemblyCopyrightAttribute("Released under the Apache 2.0 License")]
+[assembly: AssemblyVersionAttribute("0.0.10")]
+[assembly: AssemblyInformationalVersionAttribute("0.0.10")]
+[assembly: AssemblyCompanyAttribute("scotalt.net")]
+[assembly: AssemblyProductAttribute("horn")]
+		

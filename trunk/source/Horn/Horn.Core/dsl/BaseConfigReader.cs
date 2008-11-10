@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
 
 namespace Horn.Core.dsl
 {
-    using Utils;
-
     public abstract class BaseConfigReader
     {
         public abstract void Prepare();
