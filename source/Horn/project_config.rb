@@ -1,0 +1,16 @@
+DOT_NET_PATH = "C:/Windows/Microsoft.NET/Framework/v3.5/"
+FRAMEWORK_VERSION = "net-3.5"
+BUILD_NUMBER = "0.0.1"
+BUILD_WARN_AS_ERRORS = true
+PROJECT_CONFIGURATION = "debug"
+ROOT_DIR = File.dirname(__FILE__)
+BUILD_LIB_DIR = "../../lib/"
+BUILD_BASE_DIR = "#{ROOT_DIR}/build"
+BUILD_FAMILY_DIR = "#{BUILD_BASE_DIR}/#{FRAMEWORK_VERSION}"
+BUILD_DIR = "#{BUILD_FAMILY_DIR}/#{PROJECT_CONFIGURATION}"
+TEST_RESULTS_DIR = "#{BUILD_DIR}/test_results/"
+XUNIT_PATH = "\"#{BUILD_LIB_DIR}xunit.console.exe\""
+COMPANY = "scotalt.net"
+PRODUCT = "horn"
+COPYRIGHT = 'Released under the Apache 2.0 License';
+COMMON_ASSEMBLY_INFO = "CommonAssemblyInfo.cs";
