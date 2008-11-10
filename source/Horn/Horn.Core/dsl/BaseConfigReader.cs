@@ -36,7 +36,7 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
-        public static Expression get_from(MethodInvocationExpression get)
+        public static Expression GetFrom(MethodInvocationExpression get)
         {
             return get;
         }
@@ -47,7 +47,7 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
-        public static Expression build_with(MethodInvocationExpression build, ReferenceExpression with, BlockExpression action)
+        public static Expression BuildWith(MethodInvocationExpression build, ReferenceExpression with, BlockExpression action)
         {
             var targetName = ((ReferenceExpression) build.Target).Name;
 
