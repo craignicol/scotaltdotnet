@@ -26,6 +26,12 @@ namespace Horn.Core.Spec.Unit.dsl
             factory.Register<BaseConfigReader>(new ConfigReaderEngine());
         }
 
+        protected override void After_each_spec()
+        {
+            // Reseting the IoC to hold nothing
+            IoC.InitializeWith(null);
+        }
+
         protected override void Because()
         {
             configReader = factory.Create<BaseConfigReader>(@"boo/projects/hornconfig.boo");
