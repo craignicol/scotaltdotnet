@@ -4,7 +4,7 @@ namespace Horn.Core.Spec.Unit.Get
     using Rhino.Mocks;
     using Xunit;
 
-    public class When_Asked_To_Get_Source : GetSpecificationBase
+    public class When_Get_Is_Request_To_Retrieve_Source : GetSpecificationBase
     {
         private string destinationPath;
 
