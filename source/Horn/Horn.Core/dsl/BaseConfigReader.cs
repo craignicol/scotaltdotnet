@@ -40,7 +40,7 @@ namespace Horn.Core.dsl
 
         protected void svn(string url)
         {
-            SourceControl = new SVNSourceControl(url);
+            SourceControl = SourceControl.Create<SVNSourceControl>(url);
         }
 
         [Meta]

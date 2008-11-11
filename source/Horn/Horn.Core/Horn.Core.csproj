@@ -82,6 +82,7 @@
     <Compile Include="dsl\IBuildConfigReader.cs" />
     <Compile Include="SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
+    <Compile Include="Utils\IoC.cs" />
     <Compile Include="Utils\EnumerableExtensionMethods.cs" />
     <Compile Include="Utils\IFileSystemProvider.cs" />
     <Compile Include="Get\IGet.cs" />

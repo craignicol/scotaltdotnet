@@ -4,6 +4,7 @@ using Rhino.DSL;
 namespace Horn.Core.Spec.Unit.dsl
 {
     using Core.dsl;
+    using Rhino.Mocks;
     using Xunit;
 
     public class When_Horn_Receives_A_Request_For_A_Component : BaseDSLSpecification
@@ -11,9 +12,16 @@ namespace Horn.Core.Spec.Unit.dsl
         private BaseConfigReader configReader;
 
         protected DslFactory factory;
+        private IDependencyResolver dependencyResolver;
 
         protected override void Before_each_spec()
         {
+            dependencyResolver = CreateStub<IDependencyResolver>();
+            dependencyResolver.Stub(x => x.Resolve<SVNSourceControl>())
+                .Return(new SVNSourceControl(string.Empty));
+
+            IoC.InitializeWith(dependencyResolver);
+
             factory = new DslFactory { BaseDirectory = AppDomain.CurrentDomain.BaseDirectory };
             factory.Register<BaseConfigReader>(new ConfigReaderEngine());
         }
@@ -28,6 +36,12 @@ namespace Horn.Core.Spec.Unit.dsl
         public void Then_Horn_Returns_The_Component_DSL()
         {
             AssertHornMetaData(configReader);
+        }
+
+        [Fact]
+        public void Should_Resolve_The_Appropriate_SourceControl()
+        {
+            dependencyResolver.AssertWasCalled(r => r.Resolve<SVNSourceControl>());
         }
 
         private void AssertHornMetaData(BaseConfigReader reader)
