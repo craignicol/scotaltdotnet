@@ -43,6 +43,8 @@ namespace Horn.Core.Utils.CmdLine
 
         public static bool IsValid(IDictionary<string, IList<string>> commandLineArgs)
         {
+            var ret = true;
+
             foreach (var paramRow in paramTable)
             {
                 var arg = commandLineArgs.ContainsKey(paramRow.Key) ? commandLineArgs[paramRow.Key] : null;
@@ -50,7 +52,7 @@ namespace Horn.Core.Utils.CmdLine
                 if (arg == null)
                 {
                     if (paramRow.Required)
-                        return OutputValidationMessage(string.Format("Missing required argument key: {0}.", paramRow.Key));
+                        ret = OutputValidationMessage(string.Format("Missing required argument key: {0}.", paramRow.Key));
 
                     continue;
                 }
@@ -58,16 +60,15 @@ namespace Horn.Core.Utils.CmdLine
                 if (arg.Count == 0)
                     return OutputValidationMessage(string.Format("Missing argument value for key: {0}.", paramRow.Key));
 
-
                 if (arg.Count > 1 && !paramRow.Reoccurs)
-                    return OutputValidationMessage(string.Format("Argument key cannot reoccur: {0}.", paramRow.Key));
+                    ret = OutputValidationMessage(string.Format("Argument key cannot reoccur: {0}.", paramRow.Key));
 
                 foreach (string value in arg)
                 {
                     if (paramRow.Values != null &&
                         paramRow.Values.Length != 0 &&
                         Array.Find(paramRow.Values, match => match == value) == null)
-                        return OutputValidationMessage(string.Format("Argument {0} has already been given the value: {1}.", paramRow.Key, value));
+                        ret = OutputValidationMessage(string.Format("Argument {0} has already been given the value: {1}.", paramRow.Key, value));
                 }
             }
 
@@ -76,10 +77,10 @@ namespace Horn.Core.Utils.CmdLine
                 var paramRow = Array.Find(paramTable, match => match.Key == keyValuePair.Key);
 
                 if (paramRow == null)
-                    return OutputValidationMessage(string.Format("Argument key unknown: {0}.", keyValuePair.Key));
+                    ret= OutputValidationMessage(string.Format("Argument key unknown: {0}.", keyValuePair.Key));
             }
 
-            return true;
+            return ret;
         }
 
         private static bool OutputValidationMessage(string message)
