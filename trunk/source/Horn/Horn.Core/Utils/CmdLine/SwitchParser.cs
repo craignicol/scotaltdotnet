@@ -43,42 +43,41 @@ namespace Horn.Core.Utils.CmdLine
 
         public static bool IsValid(IDictionary<string, IList<string>> commandLineArgs)
         {
+            foreach (var paramRow in paramTable)
+            {
+                var arg = commandLineArgs.ContainsKey(paramRow.Key) ? commandLineArgs[paramRow.Key] : null;
 
-                foreach (var paramRow in paramTable)
+                if (arg == null)
                 {
-                    var arg = commandLineArgs.ContainsKey(paramRow.Key) ? commandLineArgs[paramRow.Key] : null;
+                    if (paramRow.Required)
+                        return OutputValidationMessage(string.Format("Missing required argument key: {0}.", paramRow.Key));
 
-                    if (arg == null)
-                    {
-                        if (paramRow.Required)
-                            return OutputValidationMessage(string.Format("Missing required argument key: {0}.", paramRow.Key));
-
-                        continue;
-                    }
-
-                    if (arg.Count == 0)
-                        return OutputValidationMessage(string.Format("Missing argument value for key: {0}.", paramRow.Key));
-
-
-                    if (arg.Count > 1 && !paramRow.Reoccurs)
-                        return OutputValidationMessage(string.Format("Argument key cannot reoccur: {0}.", paramRow.Key));
-
-                    foreach (string value in arg)
-                    {
-                        if (paramRow.Values != null &&
-                            paramRow.Values.Length != 0 &&
-                            Array.Find(paramRow.Values, match => match == value) == null)
-                            return OutputValidationMessage(string.Format("Argument value for key {0} is invalid: {1}.", paramRow.Key, value));
-                    }
+                    continue;
                 }
 
-                foreach (KeyValuePair<string, IList<string>> keyValuePair in commandLineArgs)
-                {
-                    var paramRow = Array.Find(paramTable, match => match.Key == keyValuePair.Key);
+                if (arg.Count == 0)
+                    return OutputValidationMessage(string.Format("Missing argument value for key: {0}.", paramRow.Key));
 
-                    if (paramRow == null)
-                        return OutputValidationMessage(string.Format("Argument key unknown: {0}.", keyValuePair.Key));
+
+                if (arg.Count > 1 && !paramRow.Reoccurs)
+                    return OutputValidationMessage(string.Format("Argument key cannot reoccur: {0}.", paramRow.Key));
+
+                foreach (string value in arg)
+                {
+                    if (paramRow.Values != null &&
+                        paramRow.Values.Length != 0 &&
+                        Array.Find(paramRow.Values, match => match == value) == null)
+                        return OutputValidationMessage(string.Format("Argument {0} has already been given the value: {1}.", paramRow.Key, value));
                 }
+            }
+
+            foreach (KeyValuePair<string, IList<string>> keyValuePair in commandLineArgs)
+            {
+                var paramRow = Array.Find(paramTable, match => match.Key == keyValuePair.Key);
+
+                if (paramRow == null)
+                    return OutputValidationMessage(string.Format("Argument key unknown: {0}.", keyValuePair.Key));
+            }
 
             return true;
         }
