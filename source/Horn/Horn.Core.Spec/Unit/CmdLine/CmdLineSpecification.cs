@@ -100,7 +100,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         }
 
         [Fact]
-        public void Then_Should_Output_Missing_argument_Error_Message()
+        public void Then_Should_Output_Argument_Has_Already_Been_Given_The_Value_Error_Message()
         {
             Assert.True(Output.ToString().Contains(ExpectErrorMessage));
         }
@@ -125,7 +125,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         }
 
         [Fact]
-        public void Then_Should_Output_Missing_argument_Error_Message()
+        public void Then_Should_Output_Argument_Has_Already_Been_Given_The_Value_Error_Message()
         {
             Assert.True(Output.ToString().Contains(ExpectErrorMessage));
         }
@@ -150,7 +150,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         }
 
         [Fact]
-        public void Then_Should_Output_Missing_argument_Error_Message()
+        public void Then_Should_Output_Argument_Has_Already_Been_Given_The_Value_Error_Message()
         {
             Assert.True(Output.ToString().Contains(ExpectErrorMessage));
         }
