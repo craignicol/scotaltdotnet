@@ -12,6 +12,8 @@
     <AssemblyName>Horn.Core.Spec</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -77,6 +79,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Integration\Utils\FileSystemProvider.cs" />
+    <Compile Include="Unit\CmdLine\CmdLineSpecification.cs" />
     <Compile Include="Unit\dsl\BaseDSLSpecification.cs" />
     <Compile Include="Unit\dsl\BuildMetaDataSpecification.cs" />
     <Compile Include="Unit\dsl\BuildConfigReaderSpecification.cs" />
