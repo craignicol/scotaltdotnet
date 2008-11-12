@@ -1,111 +1,158 @@
-using System.Collections.Generic;
 using Horn.Core.Utils.CmdLine;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.CmdLine
 {
-    public class When_Horn_Recevies_An_Install_Switch_From_The_Command_Line : Specification
+    public class When_Horn_Recevies_An_Install_Switch_From_The_Command_Line : CmdLineSpecificationBase
     {
-        private string arg;
+        private const string arg = "-install:horn";
+        private const string installName = "horn";
 
         protected override void Because()
         {
-            arg = "-install:horn";
+            parser = new SwitchParser(Output);
+
+            ParsedArgs = parser.Parse(new[]{arg});
+            IsValid = parser.IsValid(ParsedArgs);
         }
 
         [Fact]
-        public void Then_Horn_Parses_The_Name_Of_The_Component_To_Install()
+        public void Then_Parsed_Arguments_Are_Valid()
         {
-            IDictionary<string, IList<string>> parsedArgs = SwitchParser.Parse(new[]{arg});
+            Assert.True(IsValid);
+        }
 
-            Assert.True(SwitchParser.IsValid(parsedArgs));
+        [Fact]
+        public void Then_Parsed_Argumens_Contain_The_Install_Name()
+        {
+            Assert.Equal(installName, ParsedArgs["install"][0]);
         }
     }
 
-    public class When_Horn_Receives_No_Command_Line_Arguments : Specification
+
+    public class When_Horn_Receives_No_Command_Line_Arguments : CmdLineErrorSpecificationBase
     {
-        protected override void Because()
+        protected override string Args
         {
+            get { return ""; }
+        }
+
+        protected override string ExpectErrorMessage
+        {
+            get { return "Missing required argument key"; }
         }
 
         [Fact]
-        public void Then_Horn_Stops_Execution_And_Outputs_To_The_Console()
+        public void Then_Parsed_Arguments_Are_Not_Valid()
         {
-            IDictionary<string, IList<string>> parsedArgs = SwitchParser.Parse(new string[] { });
+            Assert.False(IsValid);
+        }
 
-            Assert.False(SwitchParser.IsValid(parsedArgs));
+        [Fact]
+        public void Then_Should_Output_Missing_argument_Error_Message()
+        {
+            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
         }
     }
 
-    public class When_Horn_Receives_No_Install_Argument : Specification
+    public class When_Horn_Receives_No_Install_Argument : CmdLineErrorSpecificationBase
     {
-        private string invalidArgs;
-
-        protected override void Because()
+        protected override string Args
         {
-            invalidArgs = "-somearg:something";
+            get { return "-somearg:something"; }
+        }
+
+        protected override string ExpectErrorMessage
+        {
+            get { return "Missing required argument key"; }
         }
 
         [Fact]
-        public void Then_Horn_Stops_Execution_And_Outputs_To_The_Console()
+        public void Then_Parsed_Arguments_Are_Not_Valid()
         {
-            IDictionary<string, IList<string>> parsedArgs = SwitchParser.Parse(new[] { invalidArgs });
+            Assert.False(IsValid);
+        }
 
-            Assert.False(SwitchParser.IsValid(parsedArgs));            
+        [Fact]
+        public void Then_Should_Output_Missing_argument_Error_Message()
+        {
+            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
         }
     }
 
-    public class When_Horn_Recevies_Install_Argument_With_No_Value : Specification
-    {
-        private string invalidArgs;
 
-        protected override void Because()
+    public class When_Horn_Recevies_Install_Argument_With_No_Value : CmdLineErrorSpecificationBase
+    {
+        protected override string Args
         {
-            invalidArgs = "-install:";
+            get { return "-install:"; }
+        }
+
+        protected override string ExpectErrorMessage
+        {
+            get { return "Argument install has already been given the value: ."; }
         }
 
         [Fact]
-        public void Then_Horn_Stops_Execution_And_Outputs_To_The_Console()
+        public void Then_Parsed_Arguments_Are_Not_Valid()
         {
-            IDictionary<string, IList<string>> parsedArgs = SwitchParser.Parse(new[] { invalidArgs });
-
-            Assert.False(SwitchParser.IsValid(parsedArgs));
-        }        
-    }
-
-    public class When_Horn_Recevies_Install_Argument_With_An_Unrecognised_Component : Specification
-    {
-        private string invalidArgs;
-
-        protected override void Because()
-        {
-            invalidArgs = "-install:unknown";
+            Assert.False(IsValid);
         }
 
         [Fact]
-        public void Then_Horn_Stops_Execution_And_Outputs_To_The_Console()
+        public void Then_Should_Output_Missing_argument_Error_Message()
         {
-            IDictionary<string, IList<string>> parsedArgs = SwitchParser.Parse(new[] { invalidArgs });
-
-            Assert.False(SwitchParser.IsValid(parsedArgs));
+            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
         }
     }
 
-    public class When_Horn_Recevies_Two_Install_Arguments: Specification
+    public class When_Horn_Recevies_Install_Argument_With_An_Unrecognised_Component : CmdLineErrorSpecificationBase
     {
-        private string invalidArgs;
-
-        protected override void Because()
+        protected override string Args
         {
-            invalidArgs = "-install:horn -install:horn";
+            get { return "-install:unknown"; }
+        }
+
+        protected override string ExpectErrorMessage
+        {
+            get { return "Argument install has already been given the value: unknown."; }
         }
 
         [Fact]
-        public void Then_Horn_Stops_Execution_And_Outputs_To_The_Console()
+        public void Then_Parsed_Arguments_Are_Not_Valid()
         {
-            IDictionary<string, IList<string>> parsedArgs = SwitchParser.Parse(new[] { invalidArgs });
+            Assert.False(IsValid);
+        }
 
-            Assert.False(SwitchParser.IsValid(parsedArgs));
+        [Fact]
+        public void Then_Should_Output_Missing_argument_Error_Message()
+        {
+            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
+        }
+    }
+
+    public class When_Horn_Recevies_Two_Install_Arguments : CmdLineErrorSpecificationBase
+    {
+        protected override string Args
+        {
+            get { return "-install:horn -install:horn"; }
+        }
+
+        protected override string ExpectErrorMessage
+        {
+            get { return "Argument install has already been given the value: horn -install:horn."; }
+        }
+
+        [Fact]
+        public void Then_Parsed_Arguments_Are_Not_Valid()
+        {
+            Assert.False(IsValid);
+        }
+
+        [Fact]
+        public void Then_Should_Output_Missing_argument_Error_Message()
+        {
+            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
         }
     }
 }

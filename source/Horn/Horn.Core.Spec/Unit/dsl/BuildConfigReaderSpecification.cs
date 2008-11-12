@@ -4,10 +4,21 @@ using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
 {
+    using Rhino.Mocks;
 
     public class When_The_Build_Config_Reader_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
         private IBuildConfigReader reader;
+        private IDependencyResolver dependencyResolver;
+
+        protected override void Before_each_spec()
+        {
+            dependencyResolver = CreateStub<IDependencyResolver>();
+            dependencyResolver.Stub(x => x.Resolve<SVNSourceControl>())
+                .Return(new SVNSourceControl(string.Empty));
+
+            IoC.InitializeWith(dependencyResolver);
+        }
 
         protected override void Because()
         {

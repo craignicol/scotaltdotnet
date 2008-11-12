@@ -4,11 +4,14 @@ using System.Text.RegularExpressions;
 
 namespace Horn.Core.Utils.CmdLine
 {
-    public static class SwitchParser
-    {
-        private static readonly Parameter[] paramTable;
+    using System.IO;
 
-        public static IDictionary<string, IList<string>> Parse(string[] args)
+    public class SwitchParser
+    {
+        private readonly TextWriter output;
+        private readonly Parameter[] paramTable;
+
+        public IDictionary<string, IList<string>> Parse(string[] args)
         {
             const string ARGS_REGEX = @"-([a-zA-Z_][a-zA-Z_0-9]{0,}):(.{0,})";
             string name;
@@ -41,7 +44,7 @@ namespace Horn.Core.Utils.CmdLine
             return parsedArgs;
         }
 
-        public static bool IsValid(IDictionary<string, IList<string>> commandLineArgs)
+        public bool IsValid(IDictionary<string, IList<string>> commandLineArgs)
         {
             var ret = true;
 
@@ -83,23 +86,25 @@ namespace Horn.Core.Utils.CmdLine
             return ret;
         }
 
-        private static bool OutputValidationMessage(string message)
+        private bool OutputValidationMessage(string message)
         {
-            Console.WriteLine(message);
+            output.WriteLine(message);
 
             string usage = "USAGE:" + Environment.NewLine;
 
             foreach (var paramRow in paramTable)
-                usage += string.Format("{0}-{1}:{{{2}}}{3}{4}" + Environment.NewLine, paramRow.Required ? "" : "[", paramRow.Key, paramRow.Values != null ? string.Join(" | ", new List<string>(paramRow.Values).ToArray()) : "?", paramRow.Reoccurs ? "*" : "", paramRow.Required ? "" : "]");
+                usage += string.Format("{0}-{1}:{{{2}}}{3}{4}" + Environment.NewLine, paramRow.Required ? string.Empty : "[", paramRow.Key, paramRow.Values != null ? string.Join(" | ", new List<string>(paramRow.Values).ToArray()) : "?", paramRow.Reoccurs ? "*" : "", paramRow.Required ? "" : "]");
 
-            Console.WriteLine();
-            Console.WriteLine(usage);
+            output.WriteLine();
+            output.WriteLine(usage);
 
             return false;
         }
 
-        static SwitchParser()
+        public SwitchParser(TextWriter output)
         {
+            this.output = output;
+
             //TODO: Parse from file system, tree?
             paramTable = new[]
                              {
