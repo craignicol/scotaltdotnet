@@ -23,7 +23,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         }
 
         [Fact]
-        public void Then_Parsed_Argumens_Contain_The_Install_Name()
+        public void Then_Parsed_Arguments_Contain_The_Install_Name()
         {
             Assert.Equal(installName, ParsedArgs["install"][0]);
         }
@@ -114,7 +114,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
         protected override string ExpectErrorMessage
         {
-            get { return "Argument install has already been given the value: ."; }
+            get { return "Missing argument value for key: install."; }
         }
 
         [Fact]
@@ -139,32 +139,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
         protected override string ExpectErrorMessage
         {
-            get { return "Argument install has already been given the value: unknown."; }
-        }
-
-        [Fact]
-        public void Then_Parsed_Arguments_Are_Not_Valid()
-        {
-            Assert.False(IsValid);
-        }
-
-        [Fact]
-        public void Then_Should_Output_Argument_Has_Already_Been_Given_The_Value_Error_Message()
-        {
-            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
-        }
-    }
-
-    public class When_Horn_Recevies_Two_Install_Arguments : CmdLineErrorSpecificationBase
-    {
-        protected override string Args
-        {
-            get { return "-install:horn -install:horn"; }
-        }
-
-        protected override string ExpectErrorMessage
-        {
-            get { return "Argument install has already been given the value: horn -install:horn."; }
+            get { return "Argument value for key install is invalid: unknown."; }
         }
 
         [Fact]
