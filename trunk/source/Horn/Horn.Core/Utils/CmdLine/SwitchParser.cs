@@ -10,10 +10,12 @@ namespace Horn.Core.Utils.CmdLine
     {
         #region console help text
 
-        public const string HELP_TEXT = 
-@"Horn
+        public const string HELP_TEXT =
+@"HORN - SCOTALT.NET
                                           
 http://code.google.com/p/scotaltdotnet/
+
+http://groups.google.com/group/scotaltnet
 
 Usage : horn -install:<component>
 Options :
@@ -33,10 +35,7 @@ Options :
 
             var parsedArgs = new Dictionary<string, IList<string>>();
 
-            if (args == null)
-                return parsedArgs;
-
-            if((args.Length > 0) && (args[0].ToLower().Equals("-help")))
+            if ((args == null) || (args.Length == 0) || ((args[0].ToLower().Equals("-help"))))
             {
                 output.WriteLine(HELP_TEXT);
 
@@ -81,7 +80,7 @@ Options :
                     continue;
                 }
 
-                if (arg.Count == 0)
+                if (arg.Count == 0 || string.IsNullOrEmpty(arg[0]))
                     return OutputValidationMessage(string.Format("Missing argument value for key: {0}.", paramRow.Key));
 
                 if (arg.Count > 1 && !paramRow.Reoccurs)
@@ -92,7 +91,7 @@ Options :
                     if (paramRow.Values != null &&
                         paramRow.Values.Length != 0 &&
                         Array.Find(paramRow.Values, match => match == value) == null)
-                        ret = OutputValidationMessage(string.Format("Argument {0} has already been given the value: {1}.", paramRow.Key, value));
+                        ret = OutputValidationMessage(string.Format("Argument value for key {0} is invalid: {1}.", paramRow.Key, value));
                 }
             }
 
