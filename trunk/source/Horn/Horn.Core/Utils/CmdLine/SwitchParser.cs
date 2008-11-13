@@ -8,6 +8,20 @@ namespace Horn.Core.Utils.CmdLine
 
     public class SwitchParser
     {
+        #region console help text
+
+        public const string HELP_TEXT = 
+@"Horn
+                                          
+http://code.google.com/p/scotaltdotnet/
+
+Usage : horn -install:<component>
+Options :
+    <none>";
+
+        #endregion
+
+
         private readonly TextWriter output;
         private readonly Parameter[] paramTable;
 
@@ -21,6 +35,13 @@ namespace Horn.Core.Utils.CmdLine
 
             if (args == null)
                 return parsedArgs;
+
+            if((args.Length > 0) && (args[0].ToLower().Equals("-help")))
+            {
+                output.WriteLine(HELP_TEXT);
+
+                return new HelpReturnValue();
+            }
 
             foreach (string arg in args)
             {

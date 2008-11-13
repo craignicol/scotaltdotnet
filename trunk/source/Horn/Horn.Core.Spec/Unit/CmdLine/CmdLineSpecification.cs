@@ -29,6 +29,30 @@ namespace Horn.Core.Spec.Unit.CmdLine
         }
     }
 
+    public class When_Horn_Receives_The_Help_Switch : CmdLineSpecificationBase
+    {
+        private const string arg = "-help";
+
+        protected override void Because()
+        {
+            parser = new SwitchParser(Output);
+
+            ParsedArgs = parser.Parse(new[] { arg });
+        }
+
+        [Fact]
+        public void Then_Console_Should_Output_Help_Text()
+        {
+            Assert.True(Output.ToString().Contains(SwitchParser.HELP_TEXT));
+        }
+
+        [Fact]
+        public void Then_A_Help_Return_Value_Is_returned()
+        {
+            Assert.IsAssignableFrom(typeof (HelpReturnValue), ParsedArgs);
+        }
+    }
+
 
     public class When_Horn_Receives_No_Command_Line_Arguments : CmdLineErrorSpecificationBase
     {
