@@ -73,7 +73,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         }
 
         [Fact]
-        public void Then_Should_Output_Missing_argument_Error_Message()
+        public void Then_Horn_Outputs_A_Missing_argument_Error_Message()
         {
             Assert.True(Output.ToString().Contains(ExpectErrorMessage));
         }
