@@ -23,7 +23,6 @@ Options :
 
         #endregion
 
-
         private readonly TextWriter output;
         private readonly Parameter[] paramTable;
 

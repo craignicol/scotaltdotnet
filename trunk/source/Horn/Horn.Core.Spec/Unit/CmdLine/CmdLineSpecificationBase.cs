@@ -5,7 +5,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
     using Utils.CmdLine;
     using Xunit;
 
-    public abstract class CmdLineSpecificationBase : Specification
+    public abstract class CmdLineSpecificationBase : DirectoryStructureSpecificationBase
     {
         private TextWriter textWriter;
         protected SwitchParser parser;
@@ -18,6 +18,8 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
         protected override void Before_each_spec()
         {
+            base.Before_each_spec();
+
             textWriter = new StringWriter();
         }
     }
