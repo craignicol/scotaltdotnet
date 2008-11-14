@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Horn.Core.PackageStructure;
 
 namespace Horn.Core.Utils.CmdLine
 {
@@ -120,15 +121,15 @@ Options :
             return false;
         }
 
-        public SwitchParser(TextWriter output)
+        public SwitchParser(TextWriter output, IPackageTree root)
         {
             this.output = output;
 
-            //TODO: Parse from file system, tree?
-            paramTable = new[]
-                             {
-                                 new Parameter("install", true, new[] { "horn" }, false)
-                             };
+            var parameters = new List<Parameter>();
+
+            root.BuildNodes().ForEach(c => parameters.Add(new Parameter("install", true, new[] {c.Name}, false)));
+
+            paramTable = parameters.ToArray();
         }
     }
 }

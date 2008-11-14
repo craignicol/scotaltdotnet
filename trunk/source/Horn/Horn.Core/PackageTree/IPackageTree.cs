@@ -15,5 +15,9 @@ namespace Horn.Core.PackageStructure
         BuildMetaData GetBuildMetaData();
 
         DirectoryInfo CurrentDirectory { get; }
+
+        bool IsBuildNode { get; }
+
+        List<IPackageTree> BuildNodes();
     }
 }

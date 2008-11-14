@@ -1,3 +1,5 @@
+using Horn.Core.PackageStructure;
+
 namespace Horn.Core.Spec.Unit.CmdLine
 {
     using System.Collections.Generic;
@@ -9,6 +11,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
     {
         private TextWriter textWriter;
         protected SwitchParser parser;
+        protected PackageTree packageTree;
 
         protected IDictionary<string, IList<string>> ParsedArgs { get; set; }
 
@@ -21,6 +24,8 @@ namespace Horn.Core.Spec.Unit.CmdLine
             base.Before_each_spec();
 
             textWriter = new StringWriter();
+
+            packageTree = new PackageTree(new DirectoryInfo(root), null);
         }
     }
 
@@ -32,7 +37,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
         protected override void Because()
         {
-            parser = new SwitchParser(Output);
+            parser = new SwitchParser(Output, packageTree);
             ParsedArgs = parser.Parse(new[] { Args });
             IsValid = parser.IsValid(ParsedArgs);
         }

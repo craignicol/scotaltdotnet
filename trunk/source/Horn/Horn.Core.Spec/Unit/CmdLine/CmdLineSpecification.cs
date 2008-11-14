@@ -10,7 +10,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
         protected override void Because()
         {
-            parser = new SwitchParser(Output);
+            parser = new SwitchParser(Output, packageTree);
 
             ParsedArgs = parser.Parse(new[]{arg});
             IsValid = parser.IsValid(ParsedArgs);
@@ -35,7 +35,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
         protected override void Because()
         {
-            parser = new SwitchParser(Output);
+            parser = new SwitchParser(Output, packageTree);
 
             ParsedArgs = parser.Parse(new[] { arg });
         }

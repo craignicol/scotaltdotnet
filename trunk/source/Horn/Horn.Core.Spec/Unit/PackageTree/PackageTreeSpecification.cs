@@ -34,6 +34,22 @@ namespace Horn.Core.Spec.Unit.HornTree
         }
     }
 
+    public class When_A_PackageTree_Node_Contains_A_Build_File : PackageTreeSpecificationBase
+    {
+        protected override void Because()
+        {
+            rootDirectory = new DirectoryInfo(root);
+        }
+        
+        [Fact]
+        public void Then_The_Node_Is_A_Build_Node()
+        {
+            IPackageTree hornTree = new PackageTree(rootDirectory, null);
+
+            Assert.True(hornTree.Children[0].Children[0].IsBuildNode);
+        }
+    }
+
     public class When_Given_A_Request_For_A_Build_File : PackageTreeSpecificationBase
     {
         private IPackageTree hornTree;
@@ -70,6 +86,24 @@ namespace Horn.Core.Spec.Unit.HornTree
             var metaData = hornTree.Retrieve("horn").GetBuildMetaData();
 
             BaseDSLSpecification.AssertBuildMetaDataValues(metaData);
+        }
+    }
+
+    public class When_Build_Nodes_Are_Requested : PackageTreeSpecificationBase
+    {
+        protected override void Because()
+        {
+            rootDirectory = new DirectoryInfo(root);
+        }
+
+        [Fact]
+        public void Then_A_List_Of_Build_Nodes_Are_Returned()
+        {
+            IPackageTree hornTree = new PackageTree(rootDirectory, null);
+
+            Assert.True(hornTree.BuildNodes().Count > 0);
+
+            Assert.Equal("horn", hornTree.BuildNodes()[0].Name);
         }
     }
 }
