@@ -81,6 +81,7 @@
     <Compile Include="Integration\Utils\FileSystemProvider.cs" />
     <Compile Include="Unit\CmdLine\CmdLineSpecificationBase.cs" />
     <Compile Include="Unit\CmdLine\CmdLineSpecification.cs" />
+    <Compile Include="Unit\DirectoryStructureSpecificationBase.cs" />
     <Compile Include="Unit\dsl\BaseDSLSpecification.cs" />
     <Compile Include="Unit\dsl\BuildMetaDataSpecification.cs" />
     <Compile Include="Unit\dsl\BuildConfigReaderSpecification.cs" />
