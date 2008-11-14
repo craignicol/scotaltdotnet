@@ -10,7 +10,9 @@ namespace Horn.Console
         {
             var output = new StringWriter();
 
-            var parser = new SwitchParser(output);
+            //TODO create package tree and pass into parser.
+
+            var parser = new SwitchParser(output, null);  
 
             var parsedArgs = parser.Parse(args);
 

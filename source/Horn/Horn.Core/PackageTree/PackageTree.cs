@@ -54,6 +54,16 @@ namespace Horn.Core.PackageStructure
 
         public DirectoryInfo CurrentDirectory{ get; private set; }
 
+        public bool IsBuildNode{ get; private set; }
+
+        public List<IPackageTree> BuildNodes()
+        {
+            var result = Root.GetAllPackages()
+                .Where(c => c.IsBuildNode).ToList();
+
+            return new List<IPackageTree>(result);
+        }
+
         public void Add(IPackageTree item)
         {
             item.Parent = this;
@@ -84,6 +94,8 @@ namespace Horn.Core.PackageStructure
             Name = directory.Name;
 
             CurrentDirectory = directory;
+
+            IsBuildNode = (directory.GetFiles("*.boo").Length > 0);
 
             foreach (var child in directory.GetDirectories())
             {
