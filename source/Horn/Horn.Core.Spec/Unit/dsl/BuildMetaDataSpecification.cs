@@ -1,6 +1,4 @@
 using Horn.Core.dsl;
-using Rhino.DSL;
-using Rhino.Mocks;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
