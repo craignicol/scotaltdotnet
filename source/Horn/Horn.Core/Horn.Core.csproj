@@ -84,6 +84,7 @@
     <Compile Include="IComposite.cs" />
     <Compile Include="PackageTree\IPackageTree.cs" />
     <Compile Include="PackageTree\PackageTree.cs" />
+    <Compile Include="PackageTree\PackageTreeExtensions.cs" />
     <Compile Include="SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
     <Compile Include="Utils\CmdLine\HelpReturnValue.cs" />
