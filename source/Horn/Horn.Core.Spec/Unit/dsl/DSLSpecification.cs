@@ -34,7 +34,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void Because()
         {
-            configReader = factory.Create<BaseConfigReader>(@"boo/projects/hornconfig.boo");
+            configReader = factory.Create<BaseConfigReader>(@"BuildConfigs/Horn/build.boo");
             configReader.Prepare();
         }
 
