@@ -29,7 +29,7 @@ namespace Horn.Core.Spec.Unit.dsl
         }
 
         [Fact]
-        public void Then_The_Congig_Reader_Returns_The_Ceorrect_MetaData()
+        public void Then_The_Config_Reader_Returns_The_Ceorrect_MetaData()
         {
             BuildMetaData metaData = reader.SetDslFactory(rootDirectory).GetBuildMetaData();
 
@@ -61,7 +61,7 @@ namespace Horn.Core.Spec.Unit.dsl
         }
 
         [Fact]
-        public void Then_The_Congig_Reader_Throws_A_Custom_Exception()
+        public void Then_The_Config_Reader_Throws_A_Custom_Exception()
         {
             Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(rootDirectory).GetBuildMetaData());
         }
