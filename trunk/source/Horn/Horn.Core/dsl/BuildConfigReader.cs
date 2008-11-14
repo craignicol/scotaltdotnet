@@ -8,16 +8,11 @@ namespace Horn.Core.dsl
     {
         protected DslFactory factory;
 
-        private DirectoryInfo packageDirectory;
-
         private BaseConfigReader configReader;
 
         private const string BUILD_FILE_NAME = "build.boo";
 
-        public DirectoryInfo PackageDirectory
-        {
-            get { return packageDirectory; }
-        }
+        public DirectoryInfo PackageDirectory { get; private set; }
 
         public BuildMetaData GetBuildMetaData()
         {
@@ -30,7 +25,7 @@ namespace Horn.Core.dsl
             }
             catch (InvalidOperationException e)
             {
-                throw new MissingBuildFileException(string.Format("No build.boo file component {0} at path {1}.", packageDirectory.Name, packageDirectory.FullName), e);
+                throw new MissingBuildFileException(string.Format("No build.boo file component {0} at path {1}.", PackageDirectory.Name, PackageDirectory.FullName), e);
             }
 
             configReader.Prepare();
@@ -40,7 +35,7 @@ namespace Horn.Core.dsl
 
         public virtual IBuildConfigReader SetDslFactory(DirectoryInfo baseDirectory)
         {
-            packageDirectory = baseDirectory;
+            PackageDirectory = baseDirectory;
 
             factory = new DslFactory
                             {
