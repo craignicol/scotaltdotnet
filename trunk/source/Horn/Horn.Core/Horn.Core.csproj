@@ -74,13 +74,16 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
-    <Compile Include="exceptions\UnknownBuildComponentException.cs" />
+    <Compile Include="exceptions\MissingBuildFileException.cs" />
     <Compile Include="dsl\BaseConfigReader.cs" />
     <Compile Include="dsl\BuildConfigReader.cs" />
     <Compile Include="BuildEngine.cs" />
     <Compile Include="dsl\BuildMetaData.cs" />
     <Compile Include="dsl\ConfigReaderEngine.cs" />
     <Compile Include="dsl\IBuildConfigReader.cs" />
+    <Compile Include="IComposite.cs" />
+    <Compile Include="PackageTree\IPackageTree.cs" />
+    <Compile Include="PackageTree\PackageTree.cs" />
     <Compile Include="SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
     <Compile Include="Utils\CmdLine\HelpReturnValue.cs" />

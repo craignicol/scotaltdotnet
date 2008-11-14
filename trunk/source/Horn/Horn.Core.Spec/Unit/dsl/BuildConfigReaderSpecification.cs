@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using Horn.Core.dsl;
+using Rhino.DSL;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
@@ -8,7 +10,6 @@ namespace Horn.Core.Spec.Unit.dsl
 
     public class When_The_Build_Config_Reader_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
-        private IBuildConfigReader reader;
         private IDependencyResolver dependencyResolver;
 
         protected override void Before_each_spec()
@@ -18,67 +19,51 @@ namespace Horn.Core.Spec.Unit.dsl
                 .Return(new SVNSourceControl(string.Empty));
 
             IoC.InitializeWith(dependencyResolver);
+
+            rootDirectory = new DirectoryInfo(string.Format("{0}\\BuildConfigs\\Horn", AppDomain.CurrentDomain.BaseDirectory.ToLower().Replace("bin\\debug", "")));
         }
 
         protected override void Because()
         {
-            reader = new BuildConfigReaderDouble();
+            reader = new BuildConfigReader();
         }
 
         [Fact]
         public void Then_The_Congig_Reader_Returns_The_Ceorrect_MetaData()
         {
-            BuildMetaData metaData = reader.GetBuildMetaData("horn");
+            BuildMetaData metaData = reader.SetDslFactory(rootDirectory).GetBuildMetaData();
 
             AssertBuildMetaDataValues(metaData);
         }
     }
 
-    public class When_The_Build_Config_Reader_Receives_An_Empty_String : BaseDSLSpecification
+    public class When_SetDslFactory_Is_Not_Set : BaseDSLSpecification
     {
-        private IBuildConfigReader reader;
-
         protected override void Because()
         {
-            reader = new BuildConfigReaderDouble();
+            reader = new BuildConfigReader();
+        }
+
+        [Fact]
+        public void Then_An_Argument_Null_Exception_Is_Thrown()
+        {
+            Assert.Throws<ArgumentNullException>(() => reader.GetBuildMetaData());
+        }
+    }
+
+    public class When_The_Build_File_Does_Not_Exist : BaseDSLSpecification
+    {
+        protected override void Because()
+        {
+            rootDirectory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory.ToLower());
+
+            reader = new BuildConfigReader();
         }
 
         [Fact]
         public void Then_The_Congig_Reader_Throws_A_Custom_Exception()
         {
-            Assert.Throws<UnknownBuildComponentException>(() => reader.GetBuildMetaData(""));
-        }
-    }
-
-    public class When_The_Build_Config_Reader_Receives_An_Unkonwn_Component : BaseDSLSpecification
-    {
-        private IBuildConfigReader reader;
-
-        protected override void Because()
-        {
-            reader = new UnkownBuildConfigReaderDouble();
-        }
-
-        [Fact]
-        public void Then_The_Config_Reader_Throws_A_Custom_Exception()
-        {
-            Assert.Throws<UnknownBuildComponentException>(() => reader.GetBuildMetaData("thisdoexnotexist"));
-        }
-    }
-
-    public class UnkownBuildConfigReaderDouble : BuildConfigReader
-    {
-        protected override string GetBuildFile(string sourceName)
-        {
-            return @"boo/projects/thisdoesnotexist.boo";
-        }
-    }
-
-    public class BuildConfigReaderDouble : BuildConfigReader
-    {
-        protected override string GetBuildFile(string sourceName)
-        {
-            return @"boo/projects/hornconfig.boo";
+            Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(rootDirectory).GetBuildMetaData());
         }
     }
 }

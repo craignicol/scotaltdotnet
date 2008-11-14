@@ -1,28 +1,36 @@
 using System;
+using System.IO;
 using Rhino.DSL;
 
 namespace Horn.Core.dsl
 {
     public class BuildConfigReader : IBuildConfigReader
     {
-        private readonly DslFactory factory;
+        protected DslFactory factory;
+
+        private DirectoryInfo packageDirectory;
 
         private BaseConfigReader configReader;
 
-        public BuildMetaData GetBuildMetaData(string sourceName)
-        {
-            if(string.IsNullOrEmpty(sourceName))
-                throw new UnknownBuildComponentException("Empty build component passed into the BuildConfigReader");
+        private const string BUILD_FILE_NAME = "build.boo";
 
-            var buildFile = GetBuildFile(sourceName);
+        public DirectoryInfo PackageDirectory
+        {
+            get { return packageDirectory; }
+        }
+
+        public BuildMetaData GetBuildMetaData()
+        {
+            if (factory == null)
+                throw new ArgumentNullException("You have not called SetDslFactory on class BuildConfigReader");
 
             try
             {
-                configReader = factory.Create<BaseConfigReader>(buildFile);
+                configReader = factory.Create<BaseConfigReader>(BUILD_FILE_NAME);
             }
             catch (InvalidOperationException e)
             {
-                throw new UnknownBuildComponentException(string.Format("Unkown build component {0} passed into the BuildConfigReader", buildFile), e);
+                throw new MissingBuildFileException(string.Format("No build.boo file component {0} at path {1}.", packageDirectory.Name, packageDirectory.FullName), e);
             }
 
             configReader.Prepare();
@@ -30,19 +38,18 @@ namespace Horn.Core.dsl
             return new BuildMetaData(configReader);
         }
 
-        protected virtual string GetBuildFile(string sourceName)
+        public virtual IBuildConfigReader SetDslFactory(DirectoryInfo baseDirectory)
         {
-            return string.Format("BuildConfigs/{0}.boo", sourceName);
-        }
+            packageDirectory = baseDirectory;
 
-        public BuildConfigReader()
-        {
             factory = new DslFactory
-                          {
-                              BaseDirectory = AppDomain.CurrentDomain.BaseDirectory
-                          };
+                            {
+                                BaseDirectory = baseDirectory.FullName
+                            };
 
             factory.Register<BaseConfigReader>(new ConfigReaderEngine());
+
+            return this;
         }
     }
 }

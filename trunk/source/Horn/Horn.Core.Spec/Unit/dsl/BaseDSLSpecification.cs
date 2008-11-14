@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using Horn.Core.dsl;
 using Xunit;
 
@@ -14,6 +15,9 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected readonly List<string> TASKS = new List<string> {"build", "test", "deploy"};
 
+        protected DirectoryInfo rootDirectory;
+        protected IBuildConfigReader reader;
+
         protected BaseConfigReader GetConfigReaderInstance()
         {
             BaseConfigReader ret = new ConfigReaderDouble();
@@ -27,7 +31,7 @@ namespace Horn.Core.Spec.Unit.dsl
             return ret;
         }
 
-        protected virtual void AssertBuildMetaDataValues(BuildMetaData metaData)
+        public static void AssertBuildMetaDataValues(BuildMetaData metaData)
         {
             Assert.IsAssignableFrom(typeof(SVNSourceControl), metaData.SourceControl);
 
