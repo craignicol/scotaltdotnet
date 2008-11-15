@@ -122,13 +122,13 @@ namespace Horn.Core.Spec.Unit.HornTree
         [Fact]
         public void Then_A_Null_Package_Tree_Object_Is_Returned()
         {
-            Assert.IsType(typeof (NullPackageTree), hornTree.Retrieve("unkownpackage"));
+            Assert.IsType<NullPackageTree>(hornTree.Retrieve("unkownpackage"));
         }
 
         [Fact]
         public void Then_A_Null_Build_Meta_Data_Object_Is_Returned()
         {
-            Assert.IsType(typeof(NullBuildMetatData), hornTree.Retrieve("unkonwnpackage").GetBuildMetaData());
+            Assert.IsType<NullBuildMetatData>(hornTree.Retrieve("unkonwnpackage").GetBuildMetaData());
         }
     }
 }

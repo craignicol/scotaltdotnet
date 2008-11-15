@@ -49,7 +49,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         [Fact]
         public void Then_A_Help_Return_Value_Is_returned()
         {
-            Assert.IsAssignableFrom(typeof (HelpReturnValue), ParsedArgs);
+            Assert.IsAssignableFrom<HelpReturnValue>(ParsedArgs);
         }
     }
 
