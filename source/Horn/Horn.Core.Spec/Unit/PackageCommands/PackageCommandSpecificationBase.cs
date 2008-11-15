@@ -3,6 +3,7 @@ using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.Get;
 using Horn.Core.PackageStructure;
+using Rhino.Mocks;
 
 namespace Horn.Core.Spec.Unit.PackageCommands
 {
@@ -21,6 +22,18 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             base.Before_each_spec();
 
             packageTree = new PackageTree(new DirectoryInfo(root), null);
+
+            IBuildConfigReader buildConfigReader = new BuildConfigReader();
+
+            var dependencyResolver = CreateStub<IDependencyResolver>();
+
+            dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>()).Return(buildConfigReader);
+
+            var svn = new SVNSourceControl("https://svnserver/trunk");
+
+            dependencyResolver.Stub(x => x.Resolve<SVNSourceControl>()).Return(svn);
+
+            IoC.InitializeWith(dependencyResolver);
         }
     }
 }
