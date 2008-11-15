@@ -73,6 +73,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="dsl\IBuildMetaData.cs" />
+    <Compile Include="dsl\NullBuildMetatData.cs" />
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
     <Compile Include="exceptions\MissingBuildFileException.cs" />
     <Compile Include="dsl\BaseConfigReader.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="dsl\IBuildConfigReader.cs" />
     <Compile Include="IComposite.cs" />
     <Compile Include="PackageTree\IPackageTree.cs" />
+    <Compile Include="PackageTree\NullPackageTree.cs" />
     <Compile Include="PackageTree\PackageTree.cs" />
     <Compile Include="PackageTree\PackageTreeExtensions.cs" />
     <Compile Include="SourceControl.cs" />

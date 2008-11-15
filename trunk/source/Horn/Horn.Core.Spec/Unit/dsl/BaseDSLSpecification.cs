@@ -31,7 +31,7 @@ namespace Horn.Core.Spec.Unit.dsl
             return ret;
         }
 
-        public static void AssertBuildMetaDataValues(BuildMetaData metaData)
+        public static void AssertBuildMetaDataValues(IBuildMetaData metaData)
         {
             Assert.IsAssignableFrom(typeof(SVNSourceControl), metaData.SourceControl);
 
