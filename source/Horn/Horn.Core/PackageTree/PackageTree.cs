@@ -34,6 +34,17 @@ namespace Horn.Core.PackageStructure
             get { return (Parent == null); }
         }
 
+        public DirectoryInfo CurrentDirectory { get; private set; }
+
+        public bool IsBuildNode { get; private set; }
+
+        public IList<IPackageTree> Children
+        {
+            get { return children; }
+        }
+
+        public IPackageTree Parent { get; set; }
+
         public IPackageTree Retrieve(string packageName)
         {
             var result = Root.GetAllPackages()
@@ -51,10 +62,6 @@ namespace Horn.Core.PackageStructure
 
             return reader.SetDslFactory(CurrentDirectory).GetBuildMetaData();
         }
-
-        public DirectoryInfo CurrentDirectory{ get; private set; }
-
-        public bool IsBuildNode{ get; private set; }
 
         public List<IPackageTree> BuildNodes()
         {
@@ -78,12 +85,35 @@ namespace Horn.Core.PackageStructure
             item.Parent = null;
         }
 
-        public IPackageTree Parent { get; set; }
-
-        public IList<IPackageTree> Children
+        //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
+        public static void CreateDefaultTreeStructure(string rootPath, string sourceBuildFile)
         {
-            get { return children; }
+            CreateDirectory(rootPath);
+
+            var distros = string.Format("{0}\\{1}\\", rootPath, "distros");
+
+            CreateDirectory(distros);
+
+            var horn = string.Format("{0}{1}\\", distros, "horn");
+
+            CreateDirectory(horn);
+
+            var destinationBuildFile = string.Format("{0}{1}", horn, Path.GetFileName(sourceBuildFile));
+
+            if (File.Exists(destinationBuildFile))
+                return;
+
+            if (!File.Exists(sourceBuildFile))
+                throw new FileNotFoundException(string.Format("The following build file does not exist: {0}.", sourceBuildFile));
+
+            File.Copy(sourceBuildFile, destinationBuildFile);
         }
+
+        private static void CreateDirectory(string directoryPath)
+        {
+            if (!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+        } 
 
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
         {

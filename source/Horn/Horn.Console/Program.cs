@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using Horn.Core.PackageStructure;
 using Horn.Core.Utils.CmdLine;
 
 namespace Horn.Console
@@ -10,9 +13,7 @@ namespace Horn.Console
         {
             var output = new StringWriter();
 
-            //TODO create package tree and pass into parser.
-
-            var parser = new SwitchParser(output, null);  
+            var parser = new SwitchParser(output, GetPackageTree());  
 
             var parsedArgs = parser.Parse(args);
 
@@ -24,7 +25,36 @@ namespace Horn.Console
 
             //continue
         }
-        
+
+        private static PackageTree GetPackageTree()
+        {
+            //HACK: Replace as soon as
+            var hornBuildFile = string.Format("{0}build.boo", AppDomain.CurrentDomain.BaseDirectory);
+
+            var rootFolder = GetRootFolderPath();
+
+            PackageTree.CreateDefaultTreeStructure(rootFolder.FullName, hornBuildFile);
+
+            return new PackageTree(rootFolder, null);
+        }
+
+        //HACK: to be replaced by user defined choice from the install perhaps?
+        private static DirectoryInfo GetRootFolderPath()
+        {
+            var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+
+            var rootFolder = string.Format("{0}\\Horn", documents.Parent.FullName);
+
+            if(Directory.Exists(rootFolder))
+                return new DirectoryInfo(rootFolder);
+
+            var ret = new DirectoryInfo(rootFolder);
+
+            ret.Create();
+
+            return ret;
+        }
+
         private static bool IsAValidRequest(SwitchParser parser, IDictionary<string, IList<string>> parsedArgs)
         {
             if (IsHelpTextSwitch(parsedArgs))
