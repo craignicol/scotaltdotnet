@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
-using Horn.Core.Package;
+using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.CmdLine;
 using Horn.Core.Utils.IoC;
