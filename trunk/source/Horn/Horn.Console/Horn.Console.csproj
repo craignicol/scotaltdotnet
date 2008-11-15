@@ -57,4 +57,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy /y "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" "$(TargetDir)build.boo"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
