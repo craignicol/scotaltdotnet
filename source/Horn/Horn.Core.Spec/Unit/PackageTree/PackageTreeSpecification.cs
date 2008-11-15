@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using Horn.Core.dsl;
 using Rhino.Mocks;
@@ -104,6 +105,30 @@ namespace Horn.Core.Spec.Unit.HornTree
             Assert.True(hornTree.BuildNodes().Count > 0);
 
             Assert.Equal("horn", hornTree.BuildNodes()[0].Name);
+        }
+    }
+
+    public class When_Retrieve_Does_Not_Return_A_Package : PackageTreeSpecificationBase
+    {
+        private IPackageTree hornTree;
+
+        protected override void Because()
+        {
+            rootDirectory = new DirectoryInfo(root);
+
+            hornTree = new PackageTree(rootDirectory, null);
+        }
+        
+        [Fact]
+        public void Then_A_Null_Package_Tree_Object_Is_Returned()
+        {
+            Assert.IsType(typeof (NullPackageTree), hornTree.Retrieve("unkownpackage"));
+        }
+
+        [Fact]
+        public void Then_A_Null_Build_Meta_Data_Object_Is_Returned()
+        {
+            Assert.IsType(typeof(NullBuildMetatData), hornTree.Retrieve("unkonwnpackage").GetBuildMetaData());
         }
     }
 }

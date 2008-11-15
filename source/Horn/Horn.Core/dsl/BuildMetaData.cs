@@ -1,8 +1,6 @@
-using System;
-
 namespace Horn.Core.dsl
 {
-    public class BuildMetaData
+    public class BuildMetaData : IBuildMetaData
     {
         public BuildMetaData(BaseConfigReader instance)
         {

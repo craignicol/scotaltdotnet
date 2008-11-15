@@ -42,10 +42,10 @@ namespace Horn.Core.PackageStructure
             if (result.Count() > 0)
                 return result.First();
 
-            return null;
+            return new NullPackageTree();
         }
 
-        public BuildMetaData GetBuildMetaData()
+        public IBuildMetaData GetBuildMetaData()
         {
             var reader = IoC.Resolve<IBuildConfigReader>();
 
