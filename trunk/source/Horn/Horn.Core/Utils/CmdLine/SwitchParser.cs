@@ -27,7 +27,7 @@ Options :
         private readonly TextWriter output;
         private readonly Parameter[] paramTable;
 
-        public IDictionary<string, IList<string>> Parse(string[] args)
+        public Dictionary<string, IList<string>> Parse(string[] args)
         {
             const string ARGS_REGEX = @"-([a-zA-Z_][a-zA-Z_0-9]{0,}):(.{0,})";
             string name;

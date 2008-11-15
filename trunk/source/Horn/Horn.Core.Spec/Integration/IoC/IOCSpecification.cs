@@ -1,4 +1,5 @@
 using Horn.Core.dsl;
+using Horn.Core.Package;
 using Xunit;
 
 namespace Horn.Core.Spec.Integration
@@ -28,4 +29,18 @@ namespace Horn.Core.Spec.Integration
             Assert.IsAssignableFrom<SVNSourceControl>(IoC.Resolve<SVNSourceControl>());
         }
     }
+
+    public class When_An_Install_Key_Is_Passed_To_The_Container : IoCSpecificationBase
+    {
+        protected override void Because()
+        {
+        }
+
+        [Fact]
+        public void Then_A_Package_Builder_Is_Returned()
+        {
+            Assert.IsAssignableFrom<PackageBuilder>(IoC.Resolve<IPackageCommand>("install"));
+        }
+    }
+
 }

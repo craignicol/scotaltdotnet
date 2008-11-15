@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using Horn.Core.dsl;
+using Horn.Core.Package;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.CmdLine;
 using Horn.Core.Utils.IoC;
@@ -17,9 +17,7 @@ namespace Horn.Console
 
             var output = new StringWriter();
 
-            var packageTree = GetPackageTree();
-
-            var parser = new SwitchParser(output, packageTree);  
+            var parser = new SwitchParser(output, GetPackageTree());  
 
             var parsedArgs = parser.Parse(args);
 
@@ -29,14 +27,14 @@ namespace Horn.Console
                 return;
             }
 
-            //continue
+            IoC.Resolve<IPackageCommand>(parsedArgs.First().Key).Execute(parsedArgs);
         }
 
         private static void InitialiseIoC()
         {
             var resolver = new WindsorDependencyResolver();
 
-            IoC.InitializeWith(resolver);            
+            IoC.InitializeWith(resolver);          
         }
 
         private static PackageTree GetPackageTree()

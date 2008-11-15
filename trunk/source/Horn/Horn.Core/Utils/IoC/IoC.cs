@@ -12,9 +12,16 @@ public static class IoC
     {
         return dependencyResolver.Resolve<T>();
     }
+
+    public static T Resolve<T>(string key)
+    {
+        return dependencyResolver.Resolve<T>(key);
+    }
 }
 
 public interface IDependencyResolver
 {
     T Resolve<T>();
+
+    T Resolve<T>(string key);
 }
