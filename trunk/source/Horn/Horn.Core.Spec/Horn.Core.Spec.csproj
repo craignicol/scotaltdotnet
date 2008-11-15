@@ -78,6 +78,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Integration\IoC\IOCSpecification.cs" />
+    <Compile Include="Integration\IoC\IoCSpecificationBase.cs" />
     <Compile Include="Integration\Utils\FileSystemProvider.cs" />
     <Compile Include="Unit\CmdLine\CmdLineSpecificationBase.cs" />
     <Compile Include="Unit\CmdLine\CmdLineSpecification.cs" />

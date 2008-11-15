@@ -58,11 +58,11 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(DESCRIPTION, reader.Description);
 
-            Assert.IsAssignableFrom(typeof (SVNSourceControl), reader.SourceControl);
+            Assert.IsAssignableFrom<SVNSourceControl>(reader.SourceControl);
 
             Assert.Equal(SVN_URL, reader.SourceControl.Url);
 
-            Assert.IsAssignableFrom(typeof (RakeBuildEngine), reader.BuildEngine);
+            Assert.IsAssignableFrom<RakeBuildEngine>(reader.BuildEngine);
 
             Assert.Equal(BUILD_FILE, reader.BuildEngine.BuildFile);
 

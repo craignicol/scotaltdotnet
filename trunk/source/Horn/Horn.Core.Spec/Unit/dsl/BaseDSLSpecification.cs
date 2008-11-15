@@ -33,11 +33,11 @@ namespace Horn.Core.Spec.Unit.dsl
 
         public static void AssertBuildMetaDataValues(IBuildMetaData metaData)
         {
-            Assert.IsAssignableFrom(typeof(SVNSourceControl), metaData.SourceControl);
+            Assert.IsAssignableFrom<SVNSourceControl>(metaData.SourceControl);
 
             Assert.Equal(SVN_URL, metaData.SourceControl.Url);
 
-            Assert.IsAssignableFrom(typeof (RakeBuildEngine), metaData.BuildEngine);
+            Assert.IsAssignableFrom<RakeBuildEngine>(metaData.BuildEngine);
 
             Assert.Equal(BUILD_FILE, metaData.BuildEngine.BuildFile);
 
