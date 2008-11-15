@@ -1,6 +1,8 @@
+using System;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Horn.Core.dsl;
+using Horn.Core.Get;
 using Horn.Core.PackageCommands;
 
 namespace Horn.Core.Utils.IoC
@@ -23,6 +25,7 @@ namespace Horn.Core.Utils.IoC
         {
             innerContainer = new WindsorContainer();
 
+            //TODO: Scan the horn.core assembly and add the components automatically
             innerContainer.Register(
                 Component.For<IBuildConfigReader>()
                             .Named("buildconfigreader")
@@ -40,6 +43,20 @@ namespace Horn.Core.Utils.IoC
                 Component.For<IPackageCommand>()
                             .Named("install")
                             .ImplementedBy<PackageBuilder>()
+                            .LifeStyle.Transient
+                );
+
+            innerContainer.Register(
+                Component.For<IGet>()
+                            .Named("get")
+                            .ImplementedBy<Get.Get>()
+                            .LifeStyle.Transient
+                );
+
+            innerContainer.Register(
+                Component.For<IFileSystemProvider>()
+                            .Named("filesystemprovider")
+                            .ImplementedBy<FileSystemProvider>()
                             .LifeStyle.Transient
                 );
         }
