@@ -17,7 +17,9 @@ namespace Horn.Console
 
             var output = new StringWriter();
 
-            var parser = new SwitchParser(output, GetPackageTree());  
+            var packageTree = GetPackageTree();
+
+            var parser = new SwitchParser(output, packageTree);  
 
             var parsedArgs = parser.Parse(args);
 
@@ -27,7 +29,7 @@ namespace Horn.Console
                 return;
             }
 
-            IoC.Resolve<IPackageCommand>(parsedArgs.First().Key).Execute(parsedArgs);
+            IoC.Resolve<IPackageCommand>(parsedArgs.First().Key).Execute(packageTree parsedArgs);
         }
 
         private static void InitialiseIoC()
