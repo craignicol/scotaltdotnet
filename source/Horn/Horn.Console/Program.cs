@@ -29,7 +29,7 @@ namespace Horn.Console
                 return;
             }
 
-            IoC.Resolve<IPackageCommand>(parsedArgs.First().Key).Execute(packageTree parsedArgs);
+            IoC.Resolve<IPackageCommand>(parsedArgs.First().Key).Execute(packageTree, parsedArgs);
         }
 
         private static void InitialiseIoC()

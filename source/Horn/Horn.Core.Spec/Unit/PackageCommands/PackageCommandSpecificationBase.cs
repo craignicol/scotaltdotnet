@@ -18,6 +18,8 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
         protected override void Before_each_spec()
         {
+            base.Before_each_spec();
+
             packageTree = new PackageTree(new DirectoryInfo(root), null);
         }
     }
