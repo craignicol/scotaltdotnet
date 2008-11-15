@@ -1,5 +1,5 @@
 using Horn.Core.dsl;
-using Horn.Core.Package;
+using Horn.Core.PackageCommands;
 using Xunit;
 
 namespace Horn.Core.Spec.Integration

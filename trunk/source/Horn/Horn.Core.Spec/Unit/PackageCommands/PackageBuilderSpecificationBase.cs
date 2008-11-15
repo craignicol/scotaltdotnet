@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Horn.Core.Spec.Unit.PackageBuilderSpec
+namespace Horn.Core.Spec.Unit.PackageCommands
 {
     public abstract class PackageBuilderSpecificationBase : Specification
     {

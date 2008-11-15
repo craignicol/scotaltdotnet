@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Horn.Core.Package
+namespace Horn.Core.PackageCommands
 {
     public interface IPackageCommand
     {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Horn.Core.Package;
+using Horn.Core.PackageCommands;
 using Xunit;
 
-namespace Horn.Core.Spec.Unit.PackageBuilderSpec
+namespace Horn.Core.Spec.Unit.PackageCommands
 {
     public class When_The_Builder_Receives_An_Install_Switch : PackageBuilderSpecificationBase
     {

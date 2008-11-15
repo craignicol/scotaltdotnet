@@ -1,7 +1,7 @@
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Horn.Core.dsl;
-using Horn.Core.Package;
+using Horn.Core.PackageCommands;
 
 namespace Horn.Core.Utils.IoC
 {
