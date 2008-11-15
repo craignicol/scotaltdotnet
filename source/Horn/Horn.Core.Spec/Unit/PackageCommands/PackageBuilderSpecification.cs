@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Horn.Core.Spec.Unit.PackageCommands
 {
-    public class When_The_Builder_Receives_An_Install_Switch : PackageBuilderSpecificationBase
+    public class When_The_Builder_Receives_An_Install_Switch : PackageCommandSpecificationBase
     {
         protected override void Because()
         {
