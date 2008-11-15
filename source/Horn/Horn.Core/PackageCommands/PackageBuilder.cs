@@ -10,7 +10,9 @@ namespace Horn.Core.PackageCommands
 
         public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
         {
-            var buildMetaData = packageTree.Retrieve(switches["install"][0]).GetBuildMetaData();
+            var packageName = switches["install"][0];
+
+            var buildMetaData = packageTree.Retrieve(packageName).GetBuildMetaData();
         }
 
         public PackageBuilder(IGet get)

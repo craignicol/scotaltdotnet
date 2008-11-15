@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Horn.Core.dsl;
 using Horn.Core.Get;
 using Horn.Core.PackageCommands;
-using Rhino.Mocks;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.PackageCommands
