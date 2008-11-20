@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core.dsl;
+using Horn.Core.Spec.Extensions;
 using Rhino.DSL;
 using Xunit;
 
@@ -20,7 +21,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             IoC.InitializeWith(dependencyResolver);
 
-            rootDirectory = new DirectoryInfo(string.Format("{0}\\BuildConfigs\\Horn", AppDomain.CurrentDomain.BaseDirectory.ToLower().Replace("bin\\debug", "")));
+            rootDirectory = new DirectoryInfo(string.Format("{0}\\BuildConfigs\\Horn", AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath()));
         }
 
         protected override void Because()

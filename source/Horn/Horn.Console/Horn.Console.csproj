@@ -49,6 +49,9 @@
       <Name>Horn.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Horn.Console.build" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -58,6 +61,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy /y "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" "$(TargetDir)build.boo"</PostBuildEvent>
+    <PostBuildEvent>IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" "$(TargetDir)build.boo"</PostBuildEvent>
   </PropertyGroup>
 </Project>
