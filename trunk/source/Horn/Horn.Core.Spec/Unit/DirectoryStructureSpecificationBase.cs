@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core.PackageStructure;
+using Horn.Core.Spec.Extensions;
 
 namespace Horn.Core.Spec.Unit
 {
@@ -15,7 +16,7 @@ namespace Horn.Core.Spec.Unit
         {
             root = string.Format("{0}\\{1}\\", AppDomain.CurrentDomain.BaseDirectory, Environment.UserName);
 
-            var sourceBuildFile = string.Format("{0}{1}\\{2}", AppDomain.CurrentDomain.BaseDirectory.ToLower().Replace("bin\\debug", ""), "BuildConfigs\\Horn", TEST_BUILD_FILE_NAME);
+            var sourceBuildFile = string.Format("{0}{1}\\{2}", AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath(), "BuildConfigs\\Horn", TEST_BUILD_FILE_NAME);
 
             PackageTree.CreateDefaultTreeStructure(root, sourceBuildFile);
         }       

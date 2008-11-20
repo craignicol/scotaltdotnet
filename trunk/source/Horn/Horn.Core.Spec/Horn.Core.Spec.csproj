@@ -78,6 +78,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Integration\IoC\IOCSpecification.cs" />
     <Compile Include="Integration\IoC\IoCSpecificationBase.cs" />
     <Compile Include="Integration\Utils\FileSystemProvider.cs" />
@@ -117,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Horn.Core.Spec.build" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
