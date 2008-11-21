@@ -1,4 +1,5 @@
 using Horn.Core.dsl;
+using Horn.Core.Spec.Unit.dsl;
 using Rhino.Mocks;
 using Xunit;
 
@@ -12,7 +13,9 @@ namespace Horn.Core.Spec.BuildEngine
         {
             var buildConfigReader = CreateStub<BuildConfigReader>();
 
+            var configReader = BaseDSLSpecification.GetConfigReaderInstance();
 
+            
         }
 
         [Fact]

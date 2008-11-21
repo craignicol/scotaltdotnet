@@ -62,15 +62,11 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(SVN_URL, reader.SourceControl.Url);
 
-            Assert.IsAssignableFrom<RakeBuildEngine>(reader.BuildEngine);
+            Assert.IsAssignableFrom<NAntBuildEngine>(reader.BuildEngine);
 
             Assert.Equal(BUILD_FILE, reader.BuildEngine.BuildFile);
 
             Assert.Equal(reader.BuildEngine.Tasks[0], TASKS[0]);
-
-            Assert.Equal(reader.BuildEngine.Tasks[1], TASKS[1]);
-
-            Assert.Equal(reader.BuildEngine.Tasks[2], TASKS[2]);
         }
     }
 }
