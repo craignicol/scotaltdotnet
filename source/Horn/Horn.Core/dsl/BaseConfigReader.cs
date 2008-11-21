@@ -57,14 +57,14 @@ namespace Horn.Core.dsl
 
         protected void nant(string buildFile, Action action)
         {
-            BuildEngine = new NAntBuildEngine(buildFile);
+            BuildEngine = new BuildEngine(new NAntBuildTool(), buildFile);
 
             action();
         }
 
         protected void rake(string buildFile, Action action)
         {
-            BuildEngine = new RakeBuildEngine(buildFile);
+            BuildEngine = new BuildEngine(new RakeBuildTool(), buildFile);
 
             action();
         }

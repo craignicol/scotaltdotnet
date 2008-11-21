@@ -89,8 +89,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BuildEngines\NAntBuildEngine.cs" />
-    <Compile Include="BuildEngines\RakeBuildEngine.cs" />
+    <Compile Include="BuildEngines\IBuildTool.cs" />
+    <Compile Include="BuildEngines\NAntBuildTool.cs" />
+    <Compile Include="BuildEngines\RakeBuildTool.cs" />
     <Compile Include="dsl\IBuildMetaData.cs" />
     <Compile Include="dsl\NullBuildMetatData.cs" />
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />

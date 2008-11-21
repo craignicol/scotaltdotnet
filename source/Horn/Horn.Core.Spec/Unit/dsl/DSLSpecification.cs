@@ -62,7 +62,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(SVN_URL, reader.SourceControl.Url);
 
-            Assert.IsAssignableFrom<NAntBuildEngine>(reader.BuildEngine);
+            Assert.IsAssignableFrom<NAntBuildTool>(reader.BuildEngine.BuildTool);
 
             Assert.Equal(BUILD_FILE, reader.BuildEngine.BuildFile);
 

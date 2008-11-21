@@ -23,7 +23,7 @@ namespace Horn.Core.Spec.Unit.dsl
             BaseConfigReader ret = new ConfigReaderDouble();
 
             ret.description(DESCRIPTION);
-            ret.BuildEngine = new NAntBuildEngine(BUILD_FILE);
+            ret.BuildEngine = new Core.BuildEngine(new NAntBuildTool(), BUILD_FILE);
             ret.SourceControl = new SVNSourceControl(SVN_URL);
 
             ret.BuildEngine.AssignTasks(TASKS.ToArray());
@@ -37,7 +37,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(SVN_URL, metaData.SourceControl.Url);
 
-            Assert.IsAssignableFrom<NAntBuildEngine>(metaData.BuildEngine);
+            Assert.IsAssignableFrom<NAntBuildTool>(metaData.BuildEngine.BuildTool);
 
             Assert.Equal(BUILD_FILE, metaData.BuildEngine.BuildFile);
 

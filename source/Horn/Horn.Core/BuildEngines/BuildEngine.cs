@@ -2,7 +2,7 @@ namespace Horn.Core
 {
     using System.Collections.Generic;
 
-    public abstract class BuildEngine
+    public class BuildEngine
     {
         public virtual void AssignTasks(string[] tasks)
         {
@@ -13,8 +13,12 @@ namespace Horn.Core
 
         public virtual List<string> Tasks { get; private set; }
 
-        protected BuildEngine(string buildFile)
+        public IBuildTool BuildTool { get; private set; }
+
+        public BuildEngine(IBuildTool buildTool, string buildFile)
         {
+            BuildTool = buildTool;
+
             BuildFile = buildFile;
         }
     }
