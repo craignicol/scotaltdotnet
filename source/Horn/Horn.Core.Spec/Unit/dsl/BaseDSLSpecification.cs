@@ -11,19 +11,19 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected const string SVN_URL = "https://svnserver/trunk";
 
-        protected const string BUILD_FILE = "rakefile.rb";
+        protected const string BUILD_FILE = "Horn.build";
 
-        protected readonly List<string> TASKS = new List<string> {"build", "test", "deploy"};
+        public  static readonly List<string> TASKS = new List<string> {"build"};
 
         protected DirectoryInfo rootDirectory;
         protected IBuildConfigReader reader;
 
-        protected BaseConfigReader GetConfigReaderInstance()
+        public static BaseConfigReader GetConfigReaderInstance()
         {
             BaseConfigReader ret = new ConfigReaderDouble();
 
             ret.description(DESCRIPTION);
-            ret.BuildEngine = new RakeBuildEngine(BUILD_FILE);
+            ret.BuildEngine = new NAntBuildEngine(BUILD_FILE);
             ret.SourceControl = new SVNSourceControl(SVN_URL);
 
             ret.BuildEngine.AssignTasks(TASKS.ToArray());
@@ -37,11 +37,11 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(SVN_URL, metaData.SourceControl.Url);
 
-            Assert.IsAssignableFrom<RakeBuildEngine>(metaData.BuildEngine);
+            Assert.IsAssignableFrom<NAntBuildEngine>(metaData.BuildEngine);
 
             Assert.Equal(BUILD_FILE, metaData.BuildEngine.BuildFile);
 
-            Assert.Equal(3, metaData.BuildEngine.Tasks.Count);
+            Assert.Equal(1, metaData.BuildEngine.Tasks.Count);
         }
     }
 }
