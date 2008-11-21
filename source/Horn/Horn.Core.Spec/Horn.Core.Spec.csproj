@@ -78,6 +78,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuildEngine\BuildEngineSpec.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Integration\IoC\IOCSpecification.cs" />
     <Compile Include="Integration\IoC\IoCSpecificationBase.cs" />
