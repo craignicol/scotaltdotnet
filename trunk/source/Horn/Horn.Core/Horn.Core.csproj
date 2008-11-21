@@ -89,13 +89,15 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuildEngines\NAntBuildEngine.cs" />
+    <Compile Include="BuildEngines\RakeBuildEngine.cs" />
     <Compile Include="dsl\IBuildMetaData.cs" />
     <Compile Include="dsl\NullBuildMetatData.cs" />
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
     <Compile Include="exceptions\MissingBuildFileException.cs" />
     <Compile Include="dsl\BaseConfigReader.cs" />
     <Compile Include="dsl\BuildConfigReader.cs" />
-    <Compile Include="BuildEngine.cs" />
+    <Compile Include="BuildEngines\BuildEngine.cs" />
     <Compile Include="dsl\BuildMetaData.cs" />
     <Compile Include="dsl\ConfigReaderEngine.cs" />
     <Compile Include="dsl\IBuildConfigReader.cs" />

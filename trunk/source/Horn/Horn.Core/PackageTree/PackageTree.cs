@@ -50,10 +50,10 @@ namespace Horn.Core.PackageStructure
             var result = Root.GetAllPackages()
                 .Where(c => c.Name == packageName).ToList();
 
-            if (result.Count() > 0)
-                return result.First();
-
-            return new NullPackageTree();
+            if (result.Count() == 0)
+                return new NullPackageTree();
+                
+            return result.First();
         }
 
         public IBuildMetaData GetBuildMetaData()
