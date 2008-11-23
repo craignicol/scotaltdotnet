@@ -1,3 +1,5 @@
+using Horn.Core.SCM;
+
 namespace Horn.Core.Spec.Unit.Get
 {
     using Core.Get;
@@ -8,12 +10,13 @@ namespace Horn.Core.Spec.Unit.Get
         protected IGet get;
         protected IFileSystemProvider fileSystemProvider;
         protected SourceControlDouble sourceControl;
-        protected Project project;
+        protected Package package;
 
         protected override void Before_each_spec()
         {
             sourceControl = new SourceControlDouble("http://localhost/horn");
-            project = new Project {Name = "horn"};
+
+            package = new Package("horn", SpecificationHelper.GetBuildMetaData());
 
             fileSystemProvider = CreateStub<IFileSystemProvider>();
         }

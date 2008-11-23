@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Horn.Core.dsl;
+using Horn.Core.SCM;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl

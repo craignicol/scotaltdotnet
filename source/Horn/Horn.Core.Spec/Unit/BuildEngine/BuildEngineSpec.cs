@@ -1,6 +1,4 @@
 using Horn.Core.dsl;
-using Horn.Core.Spec.Unit.dsl;
-using Rhino.Mocks;
 using Xunit;
 
 namespace Horn.Core.Spec.BuildEngine
@@ -11,9 +9,7 @@ namespace Horn.Core.Spec.BuildEngine
 
         protected override void Because()
         {
-            var configReader = BaseDSLSpecification.GetConfigReaderInstance();
-
-            buildMetaData = new BuildMetaData(configReader);
+            buildMetaData = SpecificationHelper.GetBuildMetaData();
         }
 
         [Fact]

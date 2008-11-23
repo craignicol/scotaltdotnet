@@ -1,6 +1,7 @@
 using System;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
+using Horn.Core.SCM;
 
 namespace Horn.Core.dsl
 {

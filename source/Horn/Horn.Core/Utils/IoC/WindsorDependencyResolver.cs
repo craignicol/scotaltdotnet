@@ -4,6 +4,7 @@ using Castle.Windsor;
 using Horn.Core.dsl;
 using Horn.Core.Get;
 using Horn.Core.PackageCommands;
+using Horn.Core.SCM;
 
 namespace Horn.Core.Utils.IoC
 {

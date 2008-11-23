@@ -1,4 +1,5 @@
 ﻿using System;
+using Horn.Core.SCM;
 using Rhino.DSL;
 
 namespace Horn.Core.Spec.Unit.dsl
