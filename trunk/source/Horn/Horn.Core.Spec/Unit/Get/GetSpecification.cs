@@ -1,8 +1,9 @@
+using Horn.Core.PackageStructure;
 using Rhino.Mocks;
 using Xunit;
 namespace Horn.Core.Spec.Unit.Get
 {
-    using Core.Get;
+    using Core.GetOperations;
 
     public class When_Get_Is_Request_To_Retrieve_Source : GetSpecificationBase
     {
@@ -12,13 +13,7 @@ namespace Horn.Core.Spec.Unit.Get
         {
             get = new Get(fileSystemProvider);
 
-            destinationPath = get.Package(package).From(sourceControl).Export();
-        }
-
-        [Fact]
-        public void Should_Create_Directory()
-        {
-            fileSystemProvider.AssertWasCalled(r => r.CreateDirectory(Arg<string>.Is.Anything));
+            destinationPath = get.Package(package).From(sourceControl).ExportTo(packageTree.Retrieve("horn").WorkingDirectory.FullName);
         }
 
         [Fact]

@@ -3,6 +3,7 @@ using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.SCM;
 using Horn.Core.Spec.Extensions;
+using Horn.Core.Spec.Unit.Get;
 using Rhino.DSL;
 using Xunit;
 
@@ -17,8 +18,8 @@ namespace Horn.Core.Spec.Unit.dsl
         protected override void Before_each_spec()
         {
             dependencyResolver = CreateStub<IDependencyResolver>();
-            dependencyResolver.Stub(x => x.Resolve<SVNSourceControl>())
-                .Return(new SVNSourceControl(string.Empty));
+            dependencyResolver.Stub(x => x.Resolve<SourceControlDouble>())
+                .Return(new SourceControlDouble(string.Empty));
 
             IoC.InitializeWith(dependencyResolver);
 

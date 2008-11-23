@@ -1,8 +1,7 @@
-using System;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Horn.Core.dsl;
-using Horn.Core.Get;
+using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
 using Horn.Core.SCM;
 
@@ -50,7 +49,7 @@ namespace Horn.Core.Utils.IoC
             innerContainer.Register(
                 Component.For<IGet>()
                             .Named("get")
-                            .ImplementedBy<Get.Get>()
+                            .ImplementedBy<Get>()
                             .LifeStyle.Transient
                 );
 

@@ -36,6 +36,8 @@ namespace Horn.Core.PackageStructure
 
         public DirectoryInfo CurrentDirectory { get; private set; }
 
+        public DirectoryInfo WorkingDirectory{ get; private set;}
+
         public bool IsBuildNode { get; private set; }
 
         public IList<IPackageTree> Children
@@ -88,6 +90,9 @@ namespace Horn.Core.PackageStructure
         //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
         public static void CreateDefaultTreeStructure(string rootPath, string sourceBuildFile)
         {
+            if(Directory.Exists(rootPath))
+                Directory.Delete(rootPath, true);
+
             CreateDirectory(rootPath);
 
             var distros = string.Format("{0}\\{1}\\", rootPath, "distros");
@@ -124,6 +129,9 @@ namespace Horn.Core.PackageStructure
             Name = directory.Name;
 
             CurrentDirectory = directory;
+
+            WorkingDirectory =
+                new DirectoryInfo(string.Format("{0}{1}{2}", directory.FullName, Path.DirectorySeparatorChar, "Working"));
 
             IsBuildNode = (directory.GetFiles("*.boo").Length > 0);
 

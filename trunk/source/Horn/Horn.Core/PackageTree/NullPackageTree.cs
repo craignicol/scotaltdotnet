@@ -52,6 +52,11 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public DirectoryInfo WorkingDirectory
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         public bool IsBuildNode
         {
             get { throw new System.NotImplementedException(); }
