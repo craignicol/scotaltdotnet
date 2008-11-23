@@ -72,6 +72,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\Rhino.DSL.dll</HintPath>
     </Reference>
+    <Reference Include="SharpSvn, Version=1.5001.662.32487, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SharpSvn.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -109,15 +113,16 @@
     <Compile Include="PackageTree\NullPackageTree.cs" />
     <Compile Include="PackageTree\PackageTree.cs" />
     <Compile Include="PackageTree\PackageTreeExtensions.cs" />
-    <Compile Include="SourceControl.cs" />
+    <Compile Include="SourceControl\SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
+    <Compile Include="SourceControl\SvnSourceControl.cs" />
     <Compile Include="Utils\CmdLine\HelpReturnValue.cs" />
     <Compile Include="Utils\CmdLine\Parameter.cs" />
     <Compile Include="Utils\IoC\IoC.cs" />
     <Compile Include="Utils\EnumerableExtensionMethods.cs" />
     <Compile Include="Utils\IFileSystemProvider.cs" />
     <Compile Include="Get\IGet.cs" />
-    <Compile Include="Project.cs" />
+    <Compile Include="Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\CmdLine\SwitchParser.cs" />
     <Compile Include="Utils\IoC\WindsorDependencyResolver.cs" />

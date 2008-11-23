@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Horn.Core.dsl;
 using Horn.Core.Get;
 using Horn.Core.PackageCommands;
+using Horn.Core.PackageStructure;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.PackageCommands

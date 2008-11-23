@@ -1,3 +1,5 @@
+using Horn.Core.SCM;
+
 namespace Horn.Core.dsl
 {
     public interface IBuildMetaData

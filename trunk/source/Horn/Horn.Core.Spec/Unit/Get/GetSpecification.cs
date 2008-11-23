@@ -1,8 +1,8 @@
+using Rhino.Mocks;
+using Xunit;
 namespace Horn.Core.Spec.Unit.Get
 {
     using Core.Get;
-    using Rhino.Mocks;
-    using Xunit;
 
     public class When_Get_Is_Request_To_Retrieve_Source : GetSpecificationBase
     {
@@ -11,7 +11,8 @@ namespace Horn.Core.Spec.Unit.Get
         protected override void Because()
         {
             get = new Get(fileSystemProvider);
-            destinationPath = get.Project(project).From(sourceControl).Export();
+
+            destinationPath = get.Package(package).From(sourceControl).Export();
         }
 
         [Fact]

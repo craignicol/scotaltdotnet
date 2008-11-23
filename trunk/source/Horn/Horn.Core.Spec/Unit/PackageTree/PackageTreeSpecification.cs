@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Horn.Core.dsl;
+using Horn.Core.SCM;
 using Rhino.Mocks;
 using Horn.Core.PackageStructure;
 using Horn.Core.Spec.Unit.dsl;
