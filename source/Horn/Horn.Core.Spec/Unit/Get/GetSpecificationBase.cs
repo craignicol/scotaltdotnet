@@ -1,20 +1,28 @@
+using Horn.Core.dsl;
+using Horn.Core.GetOperations;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 
 namespace Horn.Core.Spec.Unit.Get
 {
-    using Core.Get;
     using Utils;
 
-    public abstract class GetSpecificationBase : Specification
+    public abstract class GetSpecificationBase : DirectoryStructureSpecificationBase
     {
         protected IGet get;
         protected IFileSystemProvider fileSystemProvider;
         protected SourceControlDouble sourceControl;
         protected Package package;
+        protected IBuildMetaData buildMetaData;
+        protected IPackageTree packageTree;
 
         protected override void Before_each_spec()
-        {
+        {   
+            base.Before_each_spec();
+
             sourceControl = new SourceControlDouble("http://localhost/horn");
+
+            packageTree = new PackageTree(rootDirectory, null);
 
             package = new Package("horn", SpecificationHelper.GetBuildMetaData());
 
@@ -22,7 +30,7 @@ namespace Horn.Core.Spec.Unit.Get
         }
     }
 
-    public class SourceControlDouble : SourceControl
+    public class SourceControlDouble : SVNSourceControl
     {
         public bool ExportWasCalled;
 

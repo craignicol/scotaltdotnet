@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Horn.Core.Get;
+using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 
 namespace Horn.Core.PackageCommands
@@ -12,7 +12,11 @@ namespace Horn.Core.PackageCommands
         {
             var packageName = switches["install"][0];
 
+            var componentTree = packageTree.Retrieve(packageName);
+
             var buildMetaData = packageTree.Retrieve(packageName).GetBuildMetaData();
+
+            get.From(buildMetaData.SourceControl).ExportTo(componentTree.WorkingDirectory.FullName);
         }
 
         public PackageBuilder(IGet get)

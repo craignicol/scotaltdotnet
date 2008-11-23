@@ -1,10 +1,7 @@
-using Horn.Core.dsl;
 using Horn.Core.SCM;
 
-namespace Horn.Core.Get
+namespace Horn.Core.GetOperations
 {
-    using System;
-    using System.IO;
     using Utils;
 
     public class Get : IGet
@@ -26,22 +23,11 @@ namespace Horn.Core.Get
             return this;
         }
 
-        public virtual string Export()
+        public virtual string ExportTo(string path)
         {
-            string path = GetDestination(package.Name);
-            fileSystemProvider.CreateDirectory(path);
-
             sourceControl.Export(path);
 
             return path;
-        }
-
-        private string GetDestination(string packageName)
-        {
-            string installPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Install");
-            string folderName = string.Format("{0}{1}{2}", Guid.NewGuid(), Path.DirectorySeparatorChar, packageName);
-
-            return Path.Combine(installPath, folderName);
         }
 
         public Get(IFileSystemProvider fileSystemProvider)

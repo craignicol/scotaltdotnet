@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Horn.Core.dsl;
-using Horn.Core.Get;
+using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
-using Horn.Core.PackageStructure;
+using Horn.Core.SCM;
+using Horn.Core.Spec.Unit.Get;
+using Rhino.Mocks;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.PackageCommands
@@ -13,9 +15,19 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             switches.Add("install", new List<string>{"horn"});
 
-            get = CreateStub<IGet>();
+            get = new GetOperations.Get(fileSystemProvider);
 
-            buildConfigReader = CreateStub<IBuildConfigReader>();
+            var dependencyResolver = CreateStub<IDependencyResolver>();
+
+            buildConfigReader = new BuildConfigReader();
+
+            dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>()).Return(buildConfigReader);
+
+            var sourceControlDouble = new SourceControlDouble("https://svnserver/trunk");
+
+            dependencyResolver.Stub(x => x.Resolve<SVNSourceControl>()).Return(sourceControlDouble);
+
+            IoC.InitializeWith(dependencyResolver);
         }
 
         [Fact]

@@ -16,6 +16,8 @@ namespace Horn.Core.Spec.Unit
         {
             root = string.Format("{0}\\{1}\\", AppDomain.CurrentDomain.BaseDirectory, Environment.UserName);
 
+            rootDirectory = new DirectoryInfo(root);
+
             var sourceBuildFile = string.Format("{0}{1}\\{2}", AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath(), "BuildConfigs\\Horn", TEST_BUILD_FILE_NAME);
 
             PackageTree.CreateDefaultTreeStructure(root, sourceBuildFile);
