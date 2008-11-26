@@ -86,7 +86,7 @@ Options :
                 if (arg.Count > 1 && !paramRow.Reoccurs)
                     ret = OutputValidationMessage(string.Format("Argument key cannot reoccur: {0}.", paramRow.Key));
 
-                foreach (string value in arg)
+                foreach (var value in arg)
                 {
                     if (paramRow.Values != null &&
                         paramRow.Values.Length != 0 &&
@@ -95,7 +95,7 @@ Options :
                 }
             }
 
-            foreach (KeyValuePair<string, IList<string>> keyValuePair in commandLineArgs)
+            foreach (var keyValuePair in commandLineArgs)
             {
                 var paramRow = Array.Find(paramTable, match => match.Key == keyValuePair.Key);
 

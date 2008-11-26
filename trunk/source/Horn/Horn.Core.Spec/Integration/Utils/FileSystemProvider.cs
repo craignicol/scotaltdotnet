@@ -13,7 +13,7 @@ namespace Horn.Core.Spec.Integration.Utils
         public void CreateDirectory_Will_Create_Directory()
         {
             CreateSUT().CreateDirectory(path);
-
+            
             Assert.True(Directory.Exists(path));
         }
 

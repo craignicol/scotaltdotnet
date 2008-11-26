@@ -1,4 +1,3 @@
-using Horn.Core.dsl;
 using Horn.Core.Utils.IoC;
 
 namespace Horn.Core.Spec.Integration
