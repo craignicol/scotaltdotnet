@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
+using log4net;
 
 namespace Horn.Core.PackageCommands
 {
@@ -8,9 +9,13 @@ namespace Horn.Core.PackageCommands
     {
         private readonly IGet get;
 
+        private static readonly ILog log = LogManager.GetLogger(typeof (PackageBuilder));
+
         public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
         {
             var packageName = switches["install"][0];
+
+            log.InfoFormat("installing {0}.\n", packageName);
 
             var componentTree = packageTree.Retrieve(packageName);
 

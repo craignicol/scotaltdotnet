@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.dsl;
+using log4net;
 
 namespace Horn.Core.PackageStructure
 {

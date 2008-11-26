@@ -1,18 +1,27 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.CmdLine;
 using Horn.Core.Utils.IoC;
+using log4net;
+using log4net.Config;
+using log4net.Util;
 
 namespace Horn.Console
 {
     class Program
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof (Program));
+
         static void Main(string[] args)
         {
+            log.Debug("Horn starting.........");
+
+            XmlConfigurator.Configure();
+
             InitialiseIoC();
 
             var output = new StringWriter();
@@ -25,9 +34,11 @@ namespace Horn.Console
 
             if (!IsAValidRequest(parser, parsedArgs))
             {
-                System.Console.WriteLine(output.ToString());
+                log.Error(output.ToString());
                 return;
             }
+
+            LogArguments(parsedArgs);
 
             IoC.Resolve<IPackageCommand>(parsedArgs.First().Key).Execute(packageTree, parsedArgs);
         }
@@ -37,6 +48,8 @@ namespace Horn.Console
             var resolver = new WindsorDependencyResolver();
 
             IoC.InitializeWith(resolver);          
+
+            log.Debug("IOC initialised.....");
         }
 
         private static PackageTree GetPackageTree()
@@ -57,6 +70,8 @@ namespace Horn.Console
             var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
             var rootFolder = string.Format("{0}\\Horn", documents.Parent.FullName);
+
+            log.DebugFormat("root folder = {0}", rootFolder);
 
             if(Directory.Exists(rootFolder))
                 return new DirectoryInfo(rootFolder);
@@ -79,6 +94,17 @@ namespace Horn.Console
         private static bool IsHelpTextSwitch(IDictionary<string, IList<string>> parsedArgs)
         {
             return parsedArgs != null && parsedArgs is HelpReturnValue;
+        }
+
+        private static void LogArguments(Dictionary<string, IList<string>> args)
+        {
+            foreach (var arg in args)
+            {
+                log.InfoFormat("Command {0} was issued with values:", arg.Key);
+
+                foreach (var value in arg.Value)
+                    log.InfoFormat("{0}\n", value);
+            }
         }
     }
 }
