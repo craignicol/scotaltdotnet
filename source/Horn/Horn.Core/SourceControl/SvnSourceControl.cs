@@ -36,10 +36,10 @@ namespace Horn.Core.SCM
             }
         }
 
-        //protected override void SetMonitor(string destination)
-        //{
-        //    downloadMonitor = new DownloadMonitor(destination);
-        //}
+        protected override void SetMonitor(string destination)
+        {
+            downloadMonitor = new DownloadMonitor(destination);
+        }
 
         public SVNSourceControl(string url)
             : base(url)
