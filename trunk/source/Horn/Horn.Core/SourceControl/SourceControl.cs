@@ -1,14 +1,49 @@
+using System.Threading;
+
 namespace Horn.Core.SCM
 {
     public abstract class SourceControl
     {
-        public virtual string Url {get; private set;}
+        protected  IDownloadMonitor downloadMonitor;
 
-        public abstract void Export(string destination);
+        protected abstract void Initialise(string destination);
+
+        protected abstract void Download(string destination);
+
+        public string Url {get; private set;}
+
+        public IDownloadMonitor DownloadMonitor
+        {
+            get { return downloadMonitor; }
+        }
+
+        public virtual void Export(string destination)
+        {
+            Initialise(destination);
+
+            SetMonitor(destination);
+
+            var thread = new Thread(downloadMonitor.StartMonitoring);
+
+            thread.Start();
+
+            Download(destination);
+
+            downloadMonitor.StopMonitoring = true;
+
+            thread.Join();
+
+        }
+
+        protected virtual void SetMonitor(string destination)
+        {
+            downloadMonitor = new DefaultDownloadMonitor();
+        }
 
         public static T Create<T>(string url) where T : SourceControl
         {
-            T sourceControl = IoC.Resolve<T>();
+            var sourceControl = IoC.Resolve<T>();
+
             sourceControl.Url = url;
 
             return sourceControl;

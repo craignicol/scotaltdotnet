@@ -18,7 +18,7 @@ namespace Horn.Core.Spec.Unit.dsl
         protected override void Before_each_spec()
         {
             dependencyResolver = CreateStub<IDependencyResolver>();
-            dependencyResolver.Stub(x => x.Resolve<SourceControlDouble>())
+            dependencyResolver.Stub(x => x.Resolve<SVNSourceControl>())
                 .Return(new SourceControlDouble(string.Empty));
 
             IoC.InitializeWith(dependencyResolver);
@@ -34,7 +34,7 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_The_Config_Reader_Returns_The_Ceorrect_MetaData()
         {
-            BuildMetaData metaData = reader.SetDslFactory(rootDirectory).GetBuildMetaData();
+            var metaData = reader.SetDslFactory(rootDirectory).GetBuildMetaData();
 
             AssertBuildMetaDataValues(metaData);
         }

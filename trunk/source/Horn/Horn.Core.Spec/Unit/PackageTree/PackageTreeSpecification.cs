@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.SCM;
