@@ -34,13 +34,26 @@ namespace Horn.Core.Spec.Unit.Get
     {
         public bool ExportWasCalled;
 
-        public SourceControlDouble(string url) : base(url)
+        protected override void Initialise(string destination)
         {
+            System.Console.WriteLine("In initialise");
+        }
+
+        protected override void Download(string destination)
+        {
+            System.Console.WriteLine("In Download");
         }
 
         public override void Export(string destination)
         {
+            base.Export(destination);
+
             ExportWasCalled = true;
+        }
+
+        public SourceControlDouble(string url)
+            : base(url)
+        {
         }
     }
 }

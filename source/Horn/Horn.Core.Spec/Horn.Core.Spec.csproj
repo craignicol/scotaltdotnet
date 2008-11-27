@@ -50,6 +50,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\Boo.Lang.Parser.dll</HintPath>
     </Reference>
+    <Reference Include="Osherove.ThreadTester, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Osherove.ThreadTester.dll</HintPath>
+    </Reference>
     <Reference Include="Rhino.Commons.Clr, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\Rhino.Commons.Clr.dll</HintPath>
@@ -100,6 +104,7 @@
     <Compile Include="Unit\PackageCommands\PackageCommandSpecificationBase.cs" />
     <Compile Include="Unit\PackageTree\PackageTreeSpecification.cs" />
     <Compile Include="Unit\PackageTree\PackageTreeSpecificationBase.cs" />
+    <Compile Include="Unit\SourceControl\When_A_Source_Control_Monitor_Is_Requested.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Horn.Console\Horn.Console.csproj">

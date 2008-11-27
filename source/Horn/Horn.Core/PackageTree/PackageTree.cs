@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -92,8 +93,17 @@ namespace Horn.Core.PackageStructure
         public static void CreateDefaultTreeStructure(string rootPath, string sourceBuildFile)
         {
             if(Directory.Exists(rootPath))
-                Directory.Delete(rootPath, true);
-
+            {
+                try
+                {
+                    Directory.Delete(rootPath, true);
+                }
+                catch (IOException)
+                {
+                    return;
+                }
+            }
+                
             CreateDirectory(rootPath);
 
             var distros = string.Format("{0}\\{1}\\", rootPath, "distros");

@@ -117,8 +117,11 @@
     <Compile Include="PackageTree\NullPackageTree.cs" />
     <Compile Include="PackageTree\PackageTree.cs" />
     <Compile Include="PackageTree\PackageTreeExtensions.cs" />
+    <Compile Include="SourceControl\DefaultDownloadMonitor.cs" />
+    <Compile Include="SourceControl\IDownloadMonitor.cs" />
     <Compile Include="SourceControl\SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
+    <Compile Include="SourceControl\DownloadMonitor.cs" />
     <Compile Include="SourceControl\SvnSourceControl.cs" />
     <Compile Include="Utils\CmdLine\HelpReturnValue.cs" />
     <Compile Include="Utils\CmdLine\Parameter.cs" />

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Horn.Core.dsl;
-using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
 using Horn.Core.SCM;
 using Horn.Core.Spec.Unit.Get;
