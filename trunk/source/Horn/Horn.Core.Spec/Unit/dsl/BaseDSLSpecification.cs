@@ -12,11 +12,12 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected const string SVN_URL = "https://svnserver/trunk";
 
-        protected const string BUILD_FILE = "Horn.build";
+        protected const string BUILD_FILE = "horn.sln";
 
         public  static readonly List<string> TASKS = new List<string> {"build"};
 
         protected DirectoryInfo rootDirectory;
+
         protected IBuildConfigReader reader;
 
         public static BaseConfigReader GetConfigReaderInstance()
@@ -24,7 +25,7 @@ namespace Horn.Core.Spec.Unit.dsl
             BaseConfigReader ret = new ConfigReaderDouble();
 
             ret.description(DESCRIPTION);
-            ret.BuildEngine = new Core.BuildEngine(new NAntBuildTool(), BUILD_FILE);
+            ret.BuildEngine = new Core.BuildEngine(new MSBuildBuildTool(), BUILD_FILE);
             ret.SourceControl = new SVNSourceControl(SVN_URL);
 
             ret.BuildEngine.AssignTasks(TASKS.ToArray());
@@ -38,11 +39,9 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(SVN_URL, metaData.SourceControl.Url);
 
-            Assert.IsAssignableFrom<NAntBuildTool>(metaData.BuildEngine.BuildTool);
+            Assert.IsAssignableFrom<MSBuildBuildTool>(metaData.BuildEngine.BuildTool);
 
             Assert.Equal(BUILD_FILE, metaData.BuildEngine.BuildFile);
-
-            Assert.Equal(1, metaData.BuildEngine.Tasks.Count);
         }
     }
 }

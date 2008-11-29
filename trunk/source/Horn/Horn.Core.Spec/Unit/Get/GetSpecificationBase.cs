@@ -46,8 +46,6 @@ namespace Horn.Core.Spec.Unit.Get
 
         public override void Export(string destination)
         {
-            base.Export(destination);
-
             ExportWasCalled = true;
         }
 

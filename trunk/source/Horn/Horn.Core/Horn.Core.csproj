@@ -98,6 +98,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildEngines\IBuildTool.cs" />
+    <Compile Include="BuildEngines\MSBuildBuildTool.cs" />
     <Compile Include="BuildEngines\NAntBuildTool.cs" />
     <Compile Include="BuildEngines\RakeBuildTool.cs" />
     <Compile Include="dsl\IBuildMetaData.cs" />
