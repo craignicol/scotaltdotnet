@@ -1,4 +1,7 @@
+using System.IO;
 using Horn.Core.dsl;
+using Horn.Core.PackageStructure;
+using Rhino.Mocks;
 using Xunit;
 
 namespace Horn.Core.Spec.BuildEngine
@@ -7,17 +10,39 @@ namespace Horn.Core.Spec.BuildEngine
     {
         private BuildMetaData buildMetaData;
 
+        private IPackageTree packageTree;
+
         protected override void Because()
         {
             buildMetaData = SpecificationHelper.GetBuildMetaData();
+
+            packageTree = CreateStub<IPackageTree>();
+
+            packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\"));
         }
 
         [Fact]
         public void Then_Horn_Compiles_The_Source()
         {
-            IBuildTool buildTool = new NAntBuildTool();
+            BuildToolStub buildToolStub = new BuildToolStub();
 
-            //var buildEngine = new Core.BuildEngine(buildTool);
+            var buildEngine = new Core.BuildEngine(buildToolStub, "somebuild.file");
+
+            buildEngine.Build(packageTree);
+
+            Assert.Equal(@"C:\somebuild.file", buildToolStub.PathToBuildFile);
+        }
+    }
+
+    public class BuildToolStub : IBuildTool
+    {
+        public string PathToBuildFile { get; private set; }
+
+        public void Build(string pathToBuildFile)
+        {
+            PathToBuildFile = pathToBuildFile;
+
+            System.Console.WriteLine(pathToBuildFile);
         }
     }
 }
