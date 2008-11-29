@@ -1,4 +1,3 @@
-using System.IO;
 using Horn.Core.SCM;
 using Xunit;
 
@@ -18,8 +17,7 @@ namespace Horn.Core.Spec.Integration.Get
             DeleteTempSandBox();
         }
 
-        //TODO: Very slow running test.
-        //[Fact]
+        [Fact]
         public void Then_The_Source_Horn_Is_Downloaded()
         {
             SourceControl svn = new SVNSourceControl(HORN_URL);
