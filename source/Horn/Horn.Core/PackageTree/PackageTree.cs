@@ -42,6 +42,8 @@ namespace Horn.Core.PackageStructure
 
         public bool IsBuildNode { get; private set; }
 
+        public DirectoryInfo OutputDirectory { get; private set; }
+
         public IList<IPackageTree> Children
         {
             get { return children; }
@@ -142,7 +144,9 @@ namespace Horn.Core.PackageStructure
             CurrentDirectory = directory;
 
             WorkingDirectory =
-                new DirectoryInfo(string.Format("{0}{1}{2}", directory.FullName, Path.DirectorySeparatorChar, "Working"));
+                new DirectoryInfo(Path.Combine(directory.FullName, "Working"));
+
+            OutputDirectory = new DirectoryInfo(Path.Combine(directory.FullName, "Output"));
 
             IsBuildNode = (directory.GetFiles("*.boo").Length > 0);
 

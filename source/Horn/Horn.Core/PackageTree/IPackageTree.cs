@@ -19,6 +19,8 @@ namespace Horn.Core.PackageStructure
         DirectoryInfo WorkingDirectory { get; }
 
         bool IsBuildNode { get; }
+        
+        DirectoryInfo OutputDirectory { get; }
 
         List<IPackageTree> BuildNodes();
     }
