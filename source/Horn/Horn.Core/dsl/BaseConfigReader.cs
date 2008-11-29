@@ -45,14 +45,13 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
-        public static Expression BuildWith(MethodInvocationExpression build, ReferenceExpression with, BlockExpression action)
+        public static Expression BuildWith(ReferenceExpression builder, MethodInvocationExpression build)
         {
-            var targetName = ((ReferenceExpression) build.Target).Name;
+            var targetName = ((ReferenceExpression)builder).Name;
 
             return new MethodInvocationExpression(
                     new ReferenceExpression(targetName),
-                    build.Arguments[0],
-                    action
+                    build.Arguments[0]
                 );
         }
 
@@ -62,6 +61,12 @@ namespace Horn.Core.dsl
 
             action();
         }
+
+        protected void msbuild(string buildFile)
+        {
+            BuildEngine = new BuildEngine(new MSBuildBuildTool(), buildFile);
+        }
+
 
         protected void rake(string buildFile, Action action)
         {

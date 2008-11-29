@@ -104,7 +104,6 @@
     <Compile Include="Unit\PackageCommands\PackageCommandSpecificationBase.cs" />
     <Compile Include="Unit\PackageTree\PackageTreeSpecification.cs" />
     <Compile Include="Unit\PackageTree\PackageTreeSpecificationBase.cs" />
-    <Compile Include="Unit\SourceControl\When_A_Source_Control_Monitor_Is_Requested.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Horn.Console\Horn.Console.csproj">
@@ -121,13 +120,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildConfigs\Horn\buildnant.boo">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="BuildConfigs\Horn\build.boo" />
+    <Content Include="BuildConfigs\Horn\buildnant.boo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Horn.Core.Spec.build" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Unit\SourceControl\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -137,4 +138,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)BuildConfigs\Horn"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
