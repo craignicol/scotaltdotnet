@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using log4net;
+using log4net.Core;
 
 namespace Horn.Core
 {
@@ -21,7 +22,28 @@ namespace Horn.Core
 
             try
             {
-                Process.Start(MSBuildPath, args);
+                ProcessStartInfo psi = new ProcessStartInfo(MSBuildPath, args)
+                                           {
+                                               UseShellExecute = false,
+                                               RedirectStandardOutput = true,
+                                               WorkingDirectory = Path.GetDirectoryName(pathToBuildFile)
+                                           };
+
+                var msBuild = Process.Start(psi);
+
+                while (true)
+                {
+                    // read line
+                    string line = msBuild.StandardOutput.ReadLine();
+                    if (line == null)
+                    {
+                        break;
+                    }
+                    // display line
+                    log.Info(line);
+                }
+
+                msBuild.WaitForExit();
             }
             catch (Exception ex)
             {
