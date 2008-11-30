@@ -137,6 +137,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)BuildConfigs\Horn"</PostBuildEvent>
+    <PostBuildEvent>IF EXIST "$(TargetDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)BuildConfigs\Horn"</PostBuildEvent>
   </PropertyGroup>
 </Project>
