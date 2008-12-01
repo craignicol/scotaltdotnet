@@ -1,9 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
+using Horn.Core.Utils.Framework;
 using log4net;
-using log4net.Core;
 
 namespace Horn.Core
 {
@@ -11,10 +10,10 @@ namespace Horn.Core
     {
         private static readonly ILog log = LogManager.GetLogger(typeof (MSBuildBuildTool));
 
-        public static string MSBuildPath { get; private set; }
-
-        public void Build(string pathToBuildFile)
+        public void Build(string pathToBuildFile, FrameworkVersion version)
         {
+            var pathToMsBuild = FrameworkLocator.Instance[FrameworkVersion.frameworkVersion35].MSBuild.AssemblyPath;
+
             var args =
                 string.Format(
                     "\"{0}\" /p:OutputPath=\"{1}\"  /p:TargetFrameworkVersion=v3.5 /p:NoWarn=1591 /consoleloggerparameters:Summary",
@@ -22,7 +21,7 @@ namespace Horn.Core
 
             try
             {
-                ProcessStartInfo psi = new ProcessStartInfo(MSBuildPath, args)
+                var psi = new ProcessStartInfo(pathToMsBuild, args)
                                            {
                                                UseShellExecute = false,
                                                RedirectStandardOutput = true,
@@ -33,13 +32,11 @@ namespace Horn.Core
 
                 while (true)
                 {
-                    // read line
-                    string line = msBuild.StandardOutput.ReadLine();
+                    var line = msBuild.StandardOutput.ReadLine();
+
                     if (line == null)
-                    {
                         break;
-                    }
-                    // display line
+
                     log.Info(line);
                 }
 
@@ -51,11 +48,6 @@ namespace Horn.Core
 
                 throw;
             }
-        }
-
-        static MSBuildBuildTool()
-        {
-            MSBuildPath = Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(), "MSBuild.exe");
         }
     }
 }

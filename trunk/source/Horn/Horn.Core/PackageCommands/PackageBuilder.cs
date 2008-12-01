@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using log4net;
@@ -21,7 +22,12 @@ namespace Horn.Core.PackageCommands
 
             var buildMetaData = packageTree.Retrieve(packageName).GetBuildMetaData();
 
-            get.From(buildMetaData.SourceControl).ExportTo(componentTree.WorkingDirectory.FullName);
+            get.From(buildMetaData.SourceControl)
+                                .ExportTo(componentTree.WorkingDirectory.FullName);
+
+            buildMetaData.BuildEngine.Build(packageTree);
+
+
         }
 
         public PackageBuilder(IGet get)

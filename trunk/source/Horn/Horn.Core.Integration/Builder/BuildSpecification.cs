@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core.PackageStructure;
+using Horn.Core.Utils.Framework;
 using Rhino.Mocks;
 using Xunit;
 
@@ -24,17 +25,12 @@ namespace Horn.Core.Integration.Builder
 
             packageTree = MockRepository.GenerateStub<IPackageTree>();
 
+            //HACK: Paths reference my solution directory
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\Projects\horn\trunk\source\Horn\"));
 
             packageTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(outputPath));
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), @"C:\Projects\horn\trunk\source\Horn\Horn.sln");
-        }
-
-        [Fact]
-        public void The_Rutime_Version_Of_MSBuild_Is_Selected()
-        {
-            Assert.True(File.Exists(MSBuildBuildTool.MSBuildPath));
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), @"C:\Projects\horn\trunk\source\Horn\Horn.sln", FrameworkVersion.frameworkVersion35);
         }
 
 

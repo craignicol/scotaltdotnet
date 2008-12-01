@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.SCM;
+using Horn.Core.Utils.Framework;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
@@ -10,7 +11,7 @@ namespace Horn.Core.Spec.Unit.dsl
     {
         protected const string DESCRIPTION = "This is a description of horn";
 
-        protected const string SVN_URL = "https://svnserver/trunk";
+        protected const string SVN_URL = "https://scotaltdotnet.googlecode.com/svn/trunk/";
 
         protected const string BUILD_FILE = "horn.sln";
 
@@ -25,7 +26,7 @@ namespace Horn.Core.Spec.Unit.dsl
             BaseConfigReader ret = new ConfigReaderDouble();
 
             ret.description(DESCRIPTION);
-            ret.BuildEngine = new Core.BuildEngine(new MSBuildBuildTool(), BUILD_FILE);
+            ret.BuildEngine = new Core.BuildEngine(new MSBuildBuildTool(), BUILD_FILE, FrameworkVersion.frameworkVersion35);
             ret.SourceControl = new SVNSourceControl(SVN_URL);
 
             ret.BuildEngine.AssignTasks(TASKS.ToArray());

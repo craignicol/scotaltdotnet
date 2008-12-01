@@ -2,6 +2,7 @@ using System;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
 using Horn.Core.SCM;
+using Horn.Core.Utils.Framework;
 
 namespace Horn.Core.dsl
 {
@@ -45,32 +46,39 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
-        public static Expression BuildWith(ReferenceExpression builder, MethodInvocationExpression build)
+        public static Expression BuildWith(ReferenceExpression builder, MethodInvocationExpression build, ReferenceExpression frameWorkVersion)
         {
-            var targetName = ((ReferenceExpression)builder).Name;
+            var targetName = builder.Name;
 
             return new MethodInvocationExpression(
                     new ReferenceExpression(targetName),
-                    build.Arguments[0]
+                    build.Arguments[0],
+                    new StringLiteralExpression(frameWorkVersion.Name)
                 );
         }
 
-        protected void nant(string buildFile, Action action)
+        protected void nant(string buildFile, Action action, string frameWorkVersion)
         {
-            BuildEngine = new BuildEngine(new NAntBuildTool(), buildFile);
+            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
+
+            BuildEngine = new BuildEngine(new NAntBuildTool(), buildFile, version);
 
             action();
         }
 
-        protected void msbuild(string buildFile)
+        protected void msbuild(string buildFile, string frameWorkVersion)
         {
-            BuildEngine = new BuildEngine(new MSBuildBuildTool(), buildFile);
+            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
+
+            BuildEngine = new BuildEngine(new MSBuildBuildTool(), buildFile, version);
         }
 
 
-        protected void rake(string buildFile, Action action)
+        protected void rake(string buildFile, Action action, string frameWorkVersion)
         {
-            BuildEngine = new BuildEngine(new RakeBuildTool(), buildFile);
+            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
+
+            BuildEngine = new BuildEngine(new RakeBuildTool(), buildFile, version);
 
             action();
         }
