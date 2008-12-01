@@ -117,12 +117,6 @@ namespace Horn.Core.PackageStructure
             File.Copy(sourceBuildFile, destinationBuildFile);
         }
 
-        private static void CreateDirectory(string directoryPath)
-        {
-            if (!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
-        } 
-
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
         {
             Parent = parent;
@@ -146,6 +140,12 @@ namespace Horn.Core.PackageStructure
                 children.Add(new PackageTree(new DirectoryInfo(child.FullName), this));
             }
         }
+
+        private static void CreateDirectory(string directoryPath)
+        {
+            if (!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+        } 
 
         private bool IsHornDirectory(DirectoryInfo child)
         {
