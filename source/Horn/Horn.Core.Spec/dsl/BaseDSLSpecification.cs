@@ -13,7 +13,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected const string SVN_URL = "https://scotaltdotnet.googlecode.com/svn/trunk/";
 
-        protected const string BUILD_FILE = "horn.sln";
+        protected const string BUILD_FILE = "source/Horn/horn.sln";
 
         public  static readonly List<string> TASKS = new List<string> {"build"};
 
@@ -26,7 +26,7 @@ namespace Horn.Core.Spec.Unit.dsl
             BaseConfigReader ret = new ConfigReaderDouble();
 
             ret.description(DESCRIPTION);
-            ret.BuildEngine = new Core.BuildEngine(new MSBuildBuildTool(), BUILD_FILE, FrameworkVersion.frameworkVersion35);
+            ret.BuildEngine = new BuildEngines.BuildEngine(new MSBuildBuildTool(), BUILD_FILE, FrameworkVersion.frameworkVersion35);
             ret.SourceControl = new SVNSourceControl(SVN_URL);
 
             ret.BuildEngine.AssignTasks(TASKS.ToArray());

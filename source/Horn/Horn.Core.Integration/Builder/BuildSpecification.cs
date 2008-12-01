@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using Horn.Core.BuildEngines;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
+using Horn.Spec.Framework.Extensions;
 using Rhino.Mocks;
 using Xunit;
 
@@ -11,28 +13,29 @@ namespace Horn.Core.Integration.Builder
     {
         private BuildEngine buildEngine;
         private IPackageTree packageTree;
+
         private string outputPath;
         
-
         protected override void Because()
         {
-            outputPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
+            outputPath = CreateDirectory("Output");
 
-            if(Directory.Exists(outputPath))
-                Directory.Delete(outputPath);
-
-            Directory.CreateDirectory(outputPath);
+            var working = CreateDirectory("Working");
 
             packageTree = MockRepository.GenerateStub<IPackageTree>();
 
-            //HACK: Paths reference my solution directory
-            packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\Projects\horn\trunk\source\Horn\"));
+            packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(working));
+
 
             packageTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(outputPath));
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), @"C:\Projects\horn\trunk\source\Horn\Horn.sln", FrameworkVersion.frameworkVersion35);
-        }
+            string rootPath =
+                new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory.ResolvePath()).Parent.FullName;
 
+            var solutionPath = Path.Combine(rootPath, "Horn.sln");
+
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.frameworkVersion35);
+        }
 
         [Fact]
         public void Then_MSBuild_Compiles_The_Source()
@@ -40,6 +43,19 @@ namespace Horn.Core.Integration.Builder
             buildEngine.Build(packageTree);
 
             Assert.True(File.Exists(Path.Combine(outputPath, "Horn.Core.dll")));
+        }
+
+
+        private string CreateDirectory(string directoryName)
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, directoryName);
+
+            if (Directory.Exists(path))
+                Directory.Delete(path, true);
+
+            Directory.CreateDirectory(path);
+
+            return path;
         }
     }
 }

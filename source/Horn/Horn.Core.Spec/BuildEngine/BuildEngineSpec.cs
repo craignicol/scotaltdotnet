@@ -7,11 +7,16 @@ using Xunit;
 
 namespace Horn.Core.Spec.BuildEngine
 {
-    public class When_Nant_Is_Specified_And_the_Source_Control_Has_Been_downloaded_To_The_Sandbox : Specification
+    public class When_The_Build_Engine_Is_Ran : Specification
     {
         private BuildMetaData buildMetaData;
 
         private IPackageTree packageTree;
+
+        public BuildMetaData BuildMetaData
+        {
+            get { return buildMetaData; }
+        }
 
         protected override void Because()
         {
@@ -23,27 +28,27 @@ namespace Horn.Core.Spec.BuildEngine
         }
 
         [Fact]
-        public void Then_Horn_Compiles_The_Source()
+        public void Then_Build_Engine_Builds_With_The_Build_Tool()
         {
-            BuildToolStub buildToolStub = new BuildToolStub();
+            var buildToolStub = new BuildToolStub();
 
-            var buildEngine = new Core.BuildEngine(buildToolStub, "somebuild.file", FrameworkVersion.frameworkVersion35);
+            var buildEngine = new BuildEngines.BuildEngine(buildToolStub, "deeper/than/this/somebuild.file", FrameworkVersion.frameworkVersion35);
 
             buildEngine.Build(packageTree);
 
-            Assert.Equal(@"C:\somebuild.file", buildToolStub.PathToBuildFile);
+            Assert.Equal(@"C:\deeper\than\this\somebuild.file", buildToolStub.PathToBuildFile);
         }
     }
 
-    public class BuildToolStub : IBuildTool
-    {
-        public string PathToBuildFile { get; private set; }
 
-        public void Build(string pathToBuildFile, FrameworkVersion version)
-        {
-            PathToBuildFile = pathToBuildFile;
 
-            System.Console.WriteLine(pathToBuildFile);
-        }
-    }
+
+
+
+
+
+
+
+
+
 }

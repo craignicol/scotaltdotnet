@@ -1,3 +1,4 @@
+using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
 
 namespace Horn.Core.dsl
