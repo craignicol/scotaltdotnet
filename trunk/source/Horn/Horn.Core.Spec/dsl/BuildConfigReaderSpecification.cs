@@ -2,9 +2,8 @@ using System;
 using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.SCM;
-using Horn.Core.Spec.Extensions;
 using Horn.Core.Spec.Unit.Get;
-using Rhino.DSL;
+using Horn.Spec.Framework.Extensions;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl

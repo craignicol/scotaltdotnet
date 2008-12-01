@@ -8,7 +8,6 @@ using Horn.Core.Utils.CmdLine;
 using Horn.Core.Utils.IoC;
 using log4net;
 using log4net.Config;
-using log4net.Util;
 
 namespace Horn.Console
 {
@@ -73,8 +72,8 @@ namespace Horn.Console
 
             log.DebugFormat("root folder = {0}", rootFolder);
 
-            if(Directory.Exists(rootFolder))
-                return new DirectoryInfo(rootFolder);
+            if (Directory.Exists(rootFolder))
+                Directory.Delete(rootFolder, true);
 
             var ret = new DirectoryInfo(rootFolder);
 

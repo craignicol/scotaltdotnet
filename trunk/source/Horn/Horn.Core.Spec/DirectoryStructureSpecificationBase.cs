@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core.PackageStructure;
-using Horn.Core.Spec.Extensions;
+using Horn.Spec.Framework.Extensions;
 
 namespace Horn.Core.Spec.Unit
 {

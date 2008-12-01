@@ -1,12 +1,10 @@
+using System.Collections.Generic;
 using System.IO;
-using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
 
-namespace Horn.Core
+namespace Horn.Core.BuildEngines
 {
-    using System.Collections.Generic;
-
     public class BuildEngine
     {
         public virtual void AssignTasks(string[] tasks)
@@ -24,9 +22,9 @@ namespace Horn.Core
 
         public virtual BuildEngine Build(IPackageTree tree)
         {
-            var buildFilePath = Path.Combine(tree.WorkingDirectory.FullName, BuildFile);
+            var buildFilePath = Path.Combine(tree.WorkingDirectory.FullName, BuildFile).Replace('/', '\\');
 
-            BuildTool.Build(buildFilePath, Version);
+            BuildTool.Build(buildFilePath,tree, Version);
 
             return this;
         }

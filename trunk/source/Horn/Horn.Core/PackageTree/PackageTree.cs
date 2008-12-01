@@ -11,6 +11,8 @@ namespace Horn.Core.PackageStructure
     {
         private readonly IList<IPackageTree> children;
 
+        private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
+
         private IPackageTree Root
         {
             get
@@ -93,30 +95,18 @@ namespace Horn.Core.PackageStructure
 
         //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
         public static void CreateDefaultTreeStructure(string rootPath, string sourceBuildFile)
-        {
-            if(Directory.Exists(rootPath))
-            {
-                try
-                {
-                    Directory.Delete(rootPath, true);
-                }
-                catch (IOException)
-                {
-                    return;
-                }
-            }
-                
+        {       
             CreateDirectory(rootPath);
 
-            var distros = string.Format("{0}\\{1}\\", rootPath, "distros");
+            var distros = Path.Combine(rootPath, "distros");
 
             CreateDirectory(distros);
 
-            var horn = string.Format("{0}{1}\\", distros, "horn");
+            var horn = Path.Combine(distros, "horn");
 
             CreateDirectory(horn);
 
-            var destinationBuildFile = string.Format("{0}{1}", horn, Path.GetFileName(sourceBuildFile));
+            var destinationBuildFile = Path.Combine(horn, Path.GetFileName(sourceBuildFile));
 
             if (File.Exists(destinationBuildFile))
                 return;
@@ -143,17 +133,37 @@ namespace Horn.Core.PackageStructure
 
             CurrentDirectory = directory;
 
-            WorkingDirectory =
-                new DirectoryInfo(Path.Combine(directory.FullName, "Working"));
-
-            OutputDirectory = new DirectoryInfo(Path.Combine(directory.FullName, "Output"));
-
             IsBuildNode = (directory.GetFiles("*.boo").Length > 0);
+
+            if(IsBuildNode)
+                CreateRequiredDirectories(directory);
 
             foreach (var child in directory.GetDirectories())
             {
+                if (IsHornDirectory(child))
+                    return;
+
                 children.Add(new PackageTree(new DirectoryInfo(child.FullName), this));
             }
+        }
+
+        private bool IsHornDirectory(DirectoryInfo child)
+        {
+            return reservedDirectoryNames.Contains(child.Name.ToLower());
+        }
+
+        private void CreateRequiredDirectories(DirectoryInfo directory)
+        {
+            WorkingDirectory =
+                new DirectoryInfo(Path.Combine(directory.FullName, "Working"));
+
+            if(!WorkingDirectory.Exists)
+                WorkingDirectory.Create();
+
+            OutputDirectory = new DirectoryInfo(Path.Combine(directory.FullName, "Output"));
+
+            if(!OutputDirectory.Exists)
+                OutputDirectory.Create();
         }
     }
 }
