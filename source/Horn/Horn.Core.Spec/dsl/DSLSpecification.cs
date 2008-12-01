@@ -29,7 +29,6 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void After_each_spec()
         {
-            // Reseting the IoC to hold nothing
             IoC.InitializeWith(null);
         }
 

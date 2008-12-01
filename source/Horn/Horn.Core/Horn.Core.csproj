@@ -126,6 +126,9 @@
     <Compile Include="SourceControl\SvnSourceControl.cs" />
     <Compile Include="Utils\CmdLine\HelpReturnValue.cs" />
     <Compile Include="Utils\CmdLine\Parameter.cs" />
+    <Compile Include="Utils\Framework\Framework.cs" />
+    <Compile Include="Utils\Framework\FrameworkLocator.cs" />
+    <Compile Include="Utils\Framework\MSBuild.cs" />
     <Compile Include="Utils\IoC\IoC.cs" />
     <Compile Include="Utils\EnumerableExtensionMethods.cs" />
     <Compile Include="Utils\IFileSystemProvider.cs" />

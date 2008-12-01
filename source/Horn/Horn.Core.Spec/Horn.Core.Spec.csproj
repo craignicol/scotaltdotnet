@@ -100,6 +100,7 @@
     <Compile Include="PackageCommands\PackageCommandSpecificationBase.cs" />
     <Compile Include="PackageTree\PackageTreeSpecification.cs" />
     <Compile Include="PackageTree\PackageTreeSpecificationBase.cs" />
+    <Compile Include="Utils\FrameworkLocatorSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Horn.Console\Horn.Console.csproj">

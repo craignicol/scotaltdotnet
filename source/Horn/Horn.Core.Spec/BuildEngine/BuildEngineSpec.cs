@@ -1,6 +1,7 @@
 using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
+using Horn.Core.Utils.Framework;
 using Rhino.Mocks;
 using Xunit;
 
@@ -26,7 +27,7 @@ namespace Horn.Core.Spec.BuildEngine
         {
             BuildToolStub buildToolStub = new BuildToolStub();
 
-            var buildEngine = new Core.BuildEngine(buildToolStub, "somebuild.file");
+            var buildEngine = new Core.BuildEngine(buildToolStub, "somebuild.file", FrameworkVersion.frameworkVersion35);
 
             buildEngine.Build(packageTree);
 
@@ -38,7 +39,7 @@ namespace Horn.Core.Spec.BuildEngine
     {
         public string PathToBuildFile { get; private set; }
 
-        public void Build(string pathToBuildFile)
+        public void Build(string pathToBuildFile, FrameworkVersion version)
         {
             PathToBuildFile = pathToBuildFile;
 
