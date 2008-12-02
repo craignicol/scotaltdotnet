@@ -14,11 +14,11 @@ namespace Horn.Core.Spec.Unit
 
         protected override void Before_each_spec()
         {
-            root = string.Format("{0}\\{1}\\", Environment.GetEnvironmentVariable("temp"), Guid.NewGuid());
+            root = Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString());
 
             rootDirectory = new DirectoryInfo(root);
 
-            var sourceBuildFile = string.Format("{0}{1}\\{2}", AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath(), "BuildConfigs\\Horn", TEST_BUILD_FILE_NAME);
+            var sourceBuildFile = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath(), "BuildConfigs\\Horn"), TEST_BUILD_FILE_NAME);
 
             PackageTree.CreateDefaultTreeStructure(root, sourceBuildFile);
         }

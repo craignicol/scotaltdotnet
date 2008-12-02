@@ -32,8 +32,6 @@ namespace Horn.Core.Spec.Unit.HornTree
             Assert.Equal(1, hornTree.Children[0].Children.Count);
 
             Assert.Equal(rootDirectory.FullName, hornTree.CurrentDirectory.FullName);
-
-            Assert.Equal(Path.Combine(rootDirectory.FullName, "Output"), hornTree.OutputDirectory.FullName);
         }
     }
 
