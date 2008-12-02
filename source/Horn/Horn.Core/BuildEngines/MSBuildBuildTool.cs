@@ -13,7 +13,7 @@ namespace Horn.Core
 
         public void Build(string pathToBuildFile, IPackageTree packageTree, FrameworkVersion version)
         {
-            var pathToMsBuild = FrameworkLocator.Instance[FrameworkVersion.frameworkVersion35].MSBuild.AssemblyPath;
+            var pathToMsBuild = FrameworkLocator.Instance[version].MSBuild.AssemblyPath;
 
             var args =
                 string.Format(
