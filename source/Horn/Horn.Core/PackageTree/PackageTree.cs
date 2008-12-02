@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.dsl;
-using log4net;
 
 namespace Horn.Core.PackageStructure
 {
@@ -46,9 +44,9 @@ namespace Horn.Core.PackageStructure
 
         public DirectoryInfo OutputDirectory { get; private set; }
 
-        public IList<IPackageTree> Children
+        public IPackageTree[] Children
         {
-            get { return children; }
+            get { return children.ToArray(); }
         }
 
         public IPackageTree Parent { get; set; }
@@ -76,7 +74,7 @@ namespace Horn.Core.PackageStructure
             var result = Root.GetAllPackages()
                 .Where(c => c.IsBuildNode).ToList();
 
-            return new List<IPackageTree>(result);
+            return result;
         }
 
         public void Add(IPackageTree item)
@@ -97,24 +95,50 @@ namespace Horn.Core.PackageStructure
         public static void CreateDefaultTreeStructure(string rootPath, string sourceBuildFile)
         {       
             CreateDirectory(rootPath);
+            string distros = CreateDistrosDirectory(rootPath);
+            string horn = CreateHornDirectory(distros);
 
-            var distros = Path.Combine(rootPath, "distros");
+            string destinationBuildFile = CreateDestinationBuildFilePath(horn, sourceBuildFile);
 
-            CreateDirectory(distros);
+            if (FileExists(destinationBuildFile))
+                return;
 
+            if (!FileExists(sourceBuildFile))
+                throw new FileNotFoundException(string.Format("The following build file does not exist: {0}.", sourceBuildFile));
+
+            CopySourceToDestination(sourceBuildFile, destinationBuildFile);
+        }
+
+        private static void CopySourceToDestination(string sourceBuildFile, string destinationBuildFile)
+        {
+            File.Copy(sourceBuildFile, destinationBuildFile);
+        }
+
+        private static bool FileExists(string destinationBuildFile)
+        {
+            return File.Exists(destinationBuildFile);
+        }
+
+        private static string CreateDestinationBuildFilePath(string horn, string sourceBuildFile)
+        {
+            return Path.Combine(horn, Path.GetFileName(sourceBuildFile));
+        }
+
+        private static string CreateHornDirectory(string distros)
+        {
             var horn = Path.Combine(distros, "horn");
 
             CreateDirectory(horn);
 
-            var destinationBuildFile = Path.Combine(horn, Path.GetFileName(sourceBuildFile));
+            return horn;
+        }
 
-            if (File.Exists(destinationBuildFile))
-                return;
+        private static string CreateDistrosDirectory(string rootPath)
+        {
+            var distros = Path.Combine(rootPath, "distros");
 
-            if (!File.Exists(sourceBuildFile))
-                throw new FileNotFoundException(string.Format("The following build file does not exist: {0}.", sourceBuildFile));
-
-            File.Copy(sourceBuildFile, destinationBuildFile);
+            CreateDirectory(distros);
+            return distros;
         }
 
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
@@ -134,36 +158,35 @@ namespace Horn.Core.PackageStructure
 
             foreach (var child in directory.GetDirectories())
             {
-                if (IsHornDirectory(child))
+                if (IsReservedDirectory(child))
                     return;
 
-                children.Add(new PackageTree(new DirectoryInfo(child.FullName), this));
+                children.Add(CreateNewPackageTree(child));
             }
+        }
+
+        private PackageTree CreateNewPackageTree(DirectoryInfo child)
+        {
+            return new PackageTree(child, this);
         }
 
         private static void CreateDirectory(string directoryPath)
         {
-            if (!Directory.Exists(directoryPath))
-                Directory.CreateDirectory(directoryPath);
-        } 
+            Directory.CreateDirectory(directoryPath);
+        }
 
-        private bool IsHornDirectory(DirectoryInfo child)
+        private bool IsReservedDirectory(DirectoryInfo child)
         {
             return reservedDirectoryNames.Contains(child.Name.ToLower());
         }
 
         private void CreateRequiredDirectories(DirectoryInfo directory)
         {
-            WorkingDirectory =
-                new DirectoryInfo(Path.Combine(directory.FullName, "Working"));
-
-            if(!WorkingDirectory.Exists)
-                WorkingDirectory.Create();
+            WorkingDirectory = new DirectoryInfo(Path.Combine(directory.FullName, "Working"));
+            WorkingDirectory.Create();
 
             OutputDirectory = new DirectoryInfo(Path.Combine(directory.FullName, "Output"));
-
-            if(!OutputDirectory.Exists)
-                OutputDirectory.Create();
+            OutputDirectory.Create();
         }
     }
 }

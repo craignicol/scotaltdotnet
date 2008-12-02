@@ -27,6 +27,11 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
             packageTree = new PackageTree(new DirectoryInfo(root), null);
         }
+
+        protected void AssertOutputContains(string outoutShouldContain)
+        {
+            Assert.True(Output.ToString().Contains(outoutShouldContain));
+        }
     }
 
 
