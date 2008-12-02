@@ -26,7 +26,7 @@ namespace Horn.Core
                                            {
                                                UseShellExecute = false,
                                                RedirectStandardOutput = true,
-                                               WorkingDirectory = Path.GetDirectoryName(pathToBuildFile)
+                                               WorkingDirectory = packageTree.WorkingDirectory.FullName
                                            };
 
                 var msBuild = Process.Start(psi);
