@@ -7,11 +7,6 @@ namespace Horn.Core.BuildEngines
 {
     public class BuildEngine
     {
-        public virtual void AssignTasks(string[] tasks)
-        {
-            Tasks = new List<string>(tasks);
-        }
-
         public string BuildFile { get; private set; }
 
         public FrameworkVersion Version { get; private set; }
@@ -19,6 +14,11 @@ namespace Horn.Core.BuildEngines
         public List<string> Tasks { get; private set; }
 
         public IBuildTool BuildTool { get; private set; }
+
+        public virtual void AssignTasks(string[] tasks)
+        {
+            Tasks = new List<string>(tasks);
+        }
 
         public virtual BuildEngine Build(IPackageTree tree)
         {
