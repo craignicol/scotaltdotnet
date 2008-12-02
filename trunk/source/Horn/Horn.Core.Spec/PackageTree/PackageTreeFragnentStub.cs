@@ -23,7 +23,7 @@ namespace Horn.Core.Spec.Unit.HornTree
             set { throw new System.NotImplementedException(); }
         }
 
-        public IList<IPackageTree> Children
+        public IPackageTree[] Children
         {
             get { throw new System.NotImplementedException(); }
         }

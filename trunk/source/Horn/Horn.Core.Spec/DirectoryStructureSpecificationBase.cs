@@ -14,13 +14,29 @@ namespace Horn.Core.Spec.Unit
 
         protected override void Before_each_spec()
         {
+            CreateTempDirectory();
+            string sourceBuildFile = CreateSourceBuildFile();
+
+            PackageTree.CreateDefaultTreeStructure(root, sourceBuildFile);
+        }
+
+        private string CreateSourceBuildFile()
+        {
+            string pathToBuildConfigurationFiles = GetPathToBuildConfigurationFiles();
+
+            return Path.Combine(pathToBuildConfigurationFiles, TEST_BUILD_FILE_NAME);
+        }
+
+        private string GetPathToBuildConfigurationFiles()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath(), "BuildConfigs\\Horn");
+        }
+
+        private void CreateTempDirectory()
+        {
             root = Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString());
 
             rootDirectory = new DirectoryInfo(root);
-
-            var sourceBuildFile = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath(), "BuildConfigs\\Horn"), TEST_BUILD_FILE_NAME);
-
-            PackageTree.CreateDefaultTreeStructure(root, sourceBuildFile);
         }
 
         protected override void After_each_spec()

@@ -10,43 +10,52 @@ namespace Horn.Core.Spec.Unit.HornTree
 {
     public class When_Given_The_Package_Root_Directory : PackageTreeSpecificationBase
     {
+        private IPackageTree rootTree;
+
         protected override void Because()
         {
             rootDirectory = new DirectoryInfo(root);
+            rootTree = new PackageTree(rootDirectory, null);
         }
 
         [Fact]
-        public void Then_Horn_Builds_An_In_Memory_Tree_Structure_Of_The_Builds()
+        public void Is_the_root()
         {
-            IPackageTree hornTree = new PackageTree(rootDirectory, null);
-
-            AssertPackageTreeStructure(hornTree);
+            Assert.True(rootTree.IsRoot);
         }
 
-        private void AssertPackageTreeStructure(IPackageTree hornTree)
+        [Fact]
+        public void Will_Have_A_Child()
         {
-            Assert.True(hornTree.IsRoot);
+            Assert.Equal(1, rootTree.Children.Length);
+        }
 
-            Assert.Equal(1, hornTree.Children.Count);
-
-            Assert.Equal(1, hornTree.Children[0].Children.Count);
-
-            Assert.Equal(rootDirectory.FullName, hornTree.CurrentDirectory.FullName);
+        [Fact]
+        public void CurrentDirector_Will_Be_the_Root_Directory()
+        {
+            Assert.Equal(rootDirectory.FullName, rootTree.CurrentDirectory.FullName); 
         }
     }
 
     public class When_A_PackageTree_Node_Contains_A_Build_File : PackageTreeSpecificationBase
     {
+        private IPackageTree hornTree;
+
         protected override void Because()
         {
             rootDirectory = new DirectoryInfo(root);
+            hornTree = new PackageTree(rootDirectory, null);
+        }
+
+        [Fact]
+        public void Then_The_Node_Will_have_a_Child()
+        {
+            Assert.Equal(1, hornTree.Children[0].Children.Length);
         }
         
         [Fact]
         public void Then_The_Node_Is_A_Build_Node()
         {
-            IPackageTree hornTree = new PackageTree(rootDirectory, null);
-
             Assert.True(hornTree.Children[0].Children[0].IsBuildNode);
         }
     }

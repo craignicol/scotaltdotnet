@@ -43,7 +43,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         [Fact]
         public void Then_Console_Should_Output_Help_Text()
         {
-            Assert.True(Output.ToString().Contains(SwitchParser.HELP_TEXT));
+            AssertOutputContains(SwitchParser.HELP_TEXT);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
     {
         protected override string Args
         {
-            get { return ""; }
+            get { return string.Empty; }
         }
 
         protected override string ExpectErrorMessage
@@ -75,7 +75,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         [Fact]
         public void Then_Horn_Outputs_A_Missing_argument_Error_Message()
         {
-            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
+            AssertOutputContains(ExpectErrorMessage);
         }
     }
 
@@ -100,7 +100,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         [Fact]
         public void Then_Should_Output_Missing_argument_Error_Message()
         {
-            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
+            AssertOutputContains(ExpectErrorMessage);
         }
     }
 
@@ -126,7 +126,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         [Fact]
         public void Then_Should_Output_Argument_Has_Already_Been_Given_The_Value_Error_Message()
         {
-            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
+            AssertOutputContains(ExpectErrorMessage);
         }
     }
 
@@ -151,7 +151,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         [Fact]
         public void Then_Should_Output_Argument_Has_Already_Been_Given_The_Value_Error_Message()
         {
-            Assert.True(Output.ToString().Contains(ExpectErrorMessage));
+            AssertOutputContains(ExpectErrorMessage);
         }
     }
 }

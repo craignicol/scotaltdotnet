@@ -22,11 +22,15 @@ namespace Horn.Core.BuildEngines
 
         public virtual BuildEngine Build(IPackageTree tree)
         {
-            var buildFilePath = Path.Combine(tree.WorkingDirectory.FullName, BuildFile).Replace('/', '\\');
-
-            BuildTool.Build(buildFilePath,tree, Version);
+            string buildFilePath = GetBuildFilePath(tree);
+            BuildTool.Build(buildFilePath, tree, Version);
 
             return this;
+        }
+
+        private string GetBuildFilePath(IPackageTree tree)
+        {
+            return Path.Combine(tree.WorkingDirectory.FullName, BuildFile).Replace('/', '\\');
         }
 
         public BuildEngine(IBuildTool buildTool, string buildFile, FrameworkVersion version)
