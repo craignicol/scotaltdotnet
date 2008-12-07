@@ -18,11 +18,13 @@ namespace Horn.Core.Spec.BuildEngine
         protected override void Because()
         {
             packageTree = CreateStub<IPackageTree>();
+
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\"));
             
             buildToolStub = CreateStub<IBuildTool>();
 
             buildEngine = new BuildEngine(buildToolStub, "deeper/than/this/somebuild.file", FrameworkVersion.frameworkVersion35);
+            
             buildEngine.Build(packageTree);
         }
 

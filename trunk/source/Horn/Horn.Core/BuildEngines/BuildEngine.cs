@@ -23,6 +23,7 @@ namespace Horn.Core.BuildEngines
         public virtual BuildEngine Build(IPackageTree tree)
         {
             string buildFilePath = GetBuildFilePath(tree);
+
             BuildTool.Build(buildFilePath, tree, Version);
 
             return this;
@@ -38,6 +39,7 @@ namespace Horn.Core.BuildEngines
             BuildTool = buildTool;
 
             BuildFile = buildFile;
+
             Version = version;
         }
     }
