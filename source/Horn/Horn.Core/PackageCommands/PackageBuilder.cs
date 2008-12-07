@@ -16,10 +16,13 @@ namespace Horn.Core.PackageCommands
         public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
         {
             string packageName = GetPackageName(switches);
+
             IPackageTree componentTree = GetComponentTreeFrom(packageTree, packageName);
-            IBuildMetaData buildMetaData = GetBuildMetaDataForComponentTreeFrom(packageTree, packageName);
+            
+            IBuildMetaData buildMetaData = GetBuildMetaDataFor(packageTree, packageName);
 
             ExecuteSourceControlGet(buildMetaData, componentTree);
+            
             BuildComponentTree(buildMetaData, componentTree);
         }
 
@@ -37,7 +40,7 @@ namespace Horn.Core.PackageCommands
             return packageTree.Retrieve(packageName);
         }
 
-        private IBuildMetaData GetBuildMetaDataForComponentTreeFrom(IPackageTree packageTree, string packageName)
+        private IBuildMetaData GetBuildMetaDataFor(IPackageTree packageTree, string packageName)
         {
             return packageTree.Retrieve(packageName).GetBuildMetaData();
         }
