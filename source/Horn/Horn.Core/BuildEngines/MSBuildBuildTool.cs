@@ -20,35 +20,26 @@ namespace Horn.Core
                     "\"{0}\" /p:OutputPath=\"{1}\"  /p:TargetFrameworkVersion={2} /p:NoWarn=1591 /consoleloggerparameters:Summary",
                     pathToBuildFile, packageTree.OutputDirectory, GetCmdLineFrameworkVersion(version));
 
-            try
+            var psi = new ProcessStartInfo(pathToMsBuild, args)
+                                       {
+                                           UseShellExecute = false,
+                                           RedirectStandardOutput = true,
+                                           WorkingDirectory = packageTree.WorkingDirectory.FullName
+                                       };
+
+            var msBuild = Process.Start(psi);
+
+            while (true)
             {
-                var psi = new ProcessStartInfo(pathToMsBuild, args)
-                                           {
-                                               UseShellExecute = false,
-                                               RedirectStandardOutput = true,
-                                               WorkingDirectory = packageTree.WorkingDirectory.FullName
-                                           };
+                var line = msBuild.StandardOutput.ReadLine();
 
-                var msBuild = Process.Start(psi);
+                if (line == null)
+                    break;
 
-                while (true)
-                {
-                    var line = msBuild.StandardOutput.ReadLine();
-
-                    if (line == null)
-                        break;
-
-                    log.Info(line);
-                }
-
-                msBuild.WaitForExit();
+                log.Info(line);
             }
-            catch (Exception ex)
-            {
-                log.Error(ex);
 
-                throw;
-            }
+            msBuild.WaitForExit();
         }
 
         private string GetCmdLineFrameworkVersion(FrameworkVersion version)
