@@ -24,7 +24,7 @@ namespace Horn.Core.Spec.Integration.Get
 
             svn.Export(tempSandBox.FullName);
 
-            Assert.Equal(2, tempSandBox.GetDirectories().Length);
+            Assert.Equal(1, tempSandBox.GetDirectories().Length);
         }
     }
 }
