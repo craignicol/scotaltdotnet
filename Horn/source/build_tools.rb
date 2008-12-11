@@ -1,6 +1,6 @@
 require 'erb'
 require 'fileutils'
-require 'project_config'
+require 'source/project_config'
 
 def build relative_path
  # allows me to avoid duplicating the build location in the build file
