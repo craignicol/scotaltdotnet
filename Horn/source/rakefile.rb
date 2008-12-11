@@ -1,5 +1,5 @@
 require 'rake'
-require 'source/build_tools'
+require 'build_tools'
   
 require 'ftools'
 
