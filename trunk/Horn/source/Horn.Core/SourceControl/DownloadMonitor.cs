@@ -27,10 +27,8 @@ namespace Horn.Core.SCM
                 EnableRaisingEvents = true
             };
 
-            watcher.Changed += OnChanged;
             watcher.Created += OnChanged;
             watcher.Deleted += OnChanged;
-            watcher.Renamed += OnChanged;
         }
 
         private static void OnChanged(object source, FileSystemEventArgs e)
