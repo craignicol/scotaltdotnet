@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\BuildSpecification.cs" />
+    <Compile Include="Builder\BuildSpecificationBase.cs" />
     <Compile Include="Get\SourceControlSpecification.cs" />
     <Compile Include="Get\SourceControlTestBase.cs" />
     <Compile Include="IoC\IOCSpecification.cs" />

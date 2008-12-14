@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
 using log4net;
@@ -11,7 +11,7 @@ namespace Horn.Core
     {
         private static readonly ILog log = LogManager.GetLogger(typeof (MSBuildBuildTool));
 
-        public void Build(string pathToBuildFile, IPackageTree packageTree, FrameworkVersion version)
+        public void Build(string pathToBuildFile, List<string> tasks, IPackageTree packageTree, FrameworkVersion version)
         {
             var pathToMsBuild = FrameworkLocator.Instance[version].MSBuild.AssemblyPath;
 
