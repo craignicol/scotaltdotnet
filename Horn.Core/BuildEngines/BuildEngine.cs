@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
 
@@ -24,7 +25,7 @@ namespace Horn.Core.BuildEngines
         {
             string buildFilePath = GetBuildFilePath(tree);
 
-            BuildTool.Build(buildFilePath, tree, Version);
+            BuildTool.Build(buildFilePath, Tasks, tree, Version);
 
             return this;
         }

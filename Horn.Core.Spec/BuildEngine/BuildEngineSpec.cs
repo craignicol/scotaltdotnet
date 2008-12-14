@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
 using Rhino.Mocks;
@@ -30,7 +32,7 @@ namespace Horn.Core.Spec.BuildEngine
         [Fact]
         public void Then_Build_Engine_Builds_With_The_Build_Tool()
         {
-            buildToolStub.AssertWasCalled(x => x.Build(Arg<string>.Is.Anything, Arg<IPackageTree>.Is.Anything, Arg<FrameworkVersion>.Is.Anything));
+            buildToolStub.AssertWasCalled(x => x.Build(Arg<string>.Is.Anything, Arg<List<string>>.Is.Anything, Arg<IPackageTree>.Is.Anything, Arg<FrameworkVersion>.Is.Anything));
         }
     }
 
