@@ -9,7 +9,26 @@ namespace Horn.Core.dsl
 {
     public abstract class BaseConfigReader
     {
+
+		#region public properties (4) 
+
+        public virtual BuildEngine BuildEngine { get; set; }
+
+        public virtual string Description { get; set; }
+
+        public virtual string InstallName { get; set; }
+
+        public virtual SourceControl SourceControl { get; set; }
+
+		#endregion public properties 
+
+		#region abstract methods (1) 
+
         public abstract void Prepare();
+
+		#endregion abstract methods 
+
+		#region public static methods (5) 
 
         [Meta]
         public static Expression install(ReferenceExpression expression, Expression action)
@@ -23,27 +42,19 @@ namespace Horn.Core.dsl
                 );
         }
 
-        public void GetInstallerMeta(string installName, Action installDelegate)
+        [Meta]
+        public static Expression with(Expression action)
         {
-            InstallName = installName;
-
-            installDelegate();
-        }
-
-        protected void SetBuildTargets(string[] taskActions)
-        {
-            BuildEngine.AssignTasks(taskActions);
+            return new MethodInvocationExpression(
+                    new ReferenceExpression("AssignTasks"), 
+                    action
+                );
         }
 
         [Meta]
         public static Expression GetFrom(MethodInvocationExpression get)
         {
             return get;
-        }
-
-        protected void svn(string url)
-        {
-            SourceControl = SourceControl.Create<SVNSourceControl>(url);
         }
 
         [Meta]
@@ -56,32 +67,6 @@ namespace Horn.Core.dsl
                     build.Arguments[0],
                     new StringLiteralExpression(frameWorkVersion.Name)
                 );
-        }
-
-        protected void nant(string buildFile, Action action, string frameWorkVersion)
-        {
-            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
-
-            BuildEngine = new BuildEngine(new NAntBuildTool(), buildFile, version);
-
-            action();
-        }
-
-        protected void msbuild(string buildFile, string frameWorkVersion)
-        {
-            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
-
-            BuildEngine = new BuildEngine(new MSBuildBuildTool(), buildFile, version);
-        }
-
-
-        protected void rake(string buildFile, Action action, string frameWorkVersion)
-        {
-            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
-
-            BuildEngine = new BuildEngine(new RakeBuildTool(), buildFile, version);
-
-            action();
         }
 
         [Meta]
@@ -98,21 +83,65 @@ namespace Horn.Core.dsl
             );
         }
 
+		#endregion public static methods 
+
+		#region public methods (2) 
+
+        public void AssignTasks(Action tasksDelegate)
+        {
+            tasksDelegate();
+        }
+
         public void description(string text)
         {
             Description = text;
         }
 
-        #region for testing only
+        public void GetInstallerMeta(string installName, Action installDelegate)
+        {
+            InstallName = installName;
 
-        public virtual string InstallName { get; set; }
+            installDelegate();
+        }
 
-        public virtual string Description { get; set; }
+		#endregion public methods 
 
-        public virtual SourceControl SourceControl { get; set; }
+		#region protected methods (5) 
 
-        public virtual BuildEngine BuildEngine { get; set; }
+        protected void SetBuildTargets(string[] taskActions)
+        {
+            BuildEngine.AssignTasks(taskActions);
+        }
 
-        #endregion
+        protected void svn(string url)
+        {
+            SourceControl = SourceControl.Create<SVNSourceControl>(url);
+        }
+
+        protected void nant(string buildFile, string frameWorkVersion)
+        {
+            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
+
+            BuildEngine = new BuildEngine(new NAntBuildTool(), buildFile, version);
+        }
+
+        protected void msbuild(string buildFile, string frameWorkVersion)
+        {
+            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
+
+            BuildEngine = new BuildEngine(new MSBuildBuildTool(), buildFile, version);
+        }
+
+        protected void rake(string buildFile, Action action, string frameWorkVersion)
+        {
+            var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
+
+            BuildEngine = new BuildEngine(new RakeBuildTool(), buildFile, version);
+
+            action();
+        }
+
+		#endregion protected methods 
+
     }
 }
