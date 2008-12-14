@@ -1,5 +1,4 @@
 using System.IO;
-using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
 using Rhino.Mocks;
