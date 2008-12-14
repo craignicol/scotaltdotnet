@@ -23,7 +23,6 @@ namespace Horn.Core.Integration.Builder
 
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(working));
 
-
             packageTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(outputPath));
 
             return new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory.ResolvePath()).Parent.FullName;

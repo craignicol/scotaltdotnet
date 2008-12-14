@@ -52,6 +52,15 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
+        public static Expression switches(Expression action)
+        {
+            return new MethodInvocationExpression(
+                    new ReferenceExpression("AddSwitches"),
+                    action
+                );
+        }
+
+        [Meta]
         public static Expression GetFrom(MethodInvocationExpression get)
         {
             return get;
@@ -67,6 +76,20 @@ namespace Horn.Core.dsl
                     build.Arguments[0],
                     new StringLiteralExpression(frameWorkVersion.Name)
                 );
+        }
+
+        [Meta]
+        public static Expression parameters(params StringLiteralExpression[] expressions)
+        {
+            var arrayExpression = new ArrayLiteralExpression();
+
+            for (var i = 0; i < expressions.Length; i++)
+                arrayExpression.Items.Add(expressions[i]);
+
+            return new MethodInvocationExpression(
+                new ReferenceExpression("SetParameters"),
+                arrayExpression
+            );
         }
 
         [Meta]
@@ -86,6 +109,12 @@ namespace Horn.Core.dsl
 		#endregion public static methods 
 
 		#region public methods (2) 
+
+        public void AddSwitches(Action parametersDelegate)
+        {
+            parametersDelegate();
+        }
+
 
         public void AssignTasks(Action tasksDelegate)
         {
@@ -107,6 +136,11 @@ namespace Horn.Core.dsl
 		#endregion public methods 
 
 		#region protected methods (5) 
+
+        protected void SetParameters(string[] parameters)
+        {
+            BuildEngine.AssignParameters(parameters);
+        }
 
         protected void SetBuildTargets(string[] taskActions)
         {

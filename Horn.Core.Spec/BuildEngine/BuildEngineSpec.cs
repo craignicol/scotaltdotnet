@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
 using Rhino.Mocks;
@@ -36,15 +35,25 @@ namespace Horn.Core.Spec.BuildEngine
         }
     }
 
+    public class When_The_Build_Engine_Receives_An_Array_Of_Parameters : Specification
+    {
+        private string[] switches = new string[] { "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "environment=uat", "common.testrunner.failonerror=true", "build.msbuild=true" };
 
+        private BuildEngine buildEngine;
 
+        protected override void Because()
+        {            
+            buildEngine = new BuildEngine(null, "", FrameworkVersion.frameworkVersion35);
 
+            buildEngine.AssignParameters(switches);
+        }
 
+        [Fact]
+        public void Then_A_Dictionary_Of_Switches_Is_Created()
+        {
+            Assert.Equal(6, buildEngine.Parameters.Keys.Count);
 
-
-
-
-
-
-
+            Assert.Equal(6, buildEngine.Parameters.Values.Count);
+        }
+    }
 }

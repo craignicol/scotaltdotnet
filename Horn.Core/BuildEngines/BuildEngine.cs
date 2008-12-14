@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
+using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;
 
 namespace Horn.Core.BuildEngines
@@ -15,6 +16,23 @@ namespace Horn.Core.BuildEngines
         public List<string> Tasks { get; private set; }
 
         public IBuildTool BuildTool { get; private set; }
+
+        public Dictionary<string, string> Parameters{ get; private set;}
+
+        public void AssignParameters(string[] parameters)
+        {
+            if ((parameters == null) || (parameters.Length == 0))
+                return;
+
+            Parameters = new Dictionary<string, string>();
+
+            parameters.ForEach(x =>
+                                   {
+                                       var parts = x.Split('=');
+                                        
+                                       Parameters.Add(parts[0], parts[1]);
+                                   });
+        }
 
         public virtual void AssignTasks(string[] tasks)
         {
