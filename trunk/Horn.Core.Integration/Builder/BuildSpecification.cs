@@ -37,6 +37,7 @@ namespace Horn.Core.Integration.Builder
             buildEngine = new BuildEngine(new NAntBuildTool(), buildFilePath, FrameworkVersion.frameworkVersion35);
         }
 
+        //[Fact]
         public void Then_Nant_Compiles_The_Source()
         {
             buildEngine.AssignTasks(new[] {"build"});

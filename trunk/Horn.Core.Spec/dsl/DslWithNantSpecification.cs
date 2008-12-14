@@ -39,6 +39,8 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.Equal(1, configReader.BuildEngine.Tasks.Count);
 
             Assert.Equal("build", configReader.BuildEngine.Tasks[0]);
+
+            Assert.Equal(6, configReader.BuildEngine.Parameters.Count);
         }
     }
 }
