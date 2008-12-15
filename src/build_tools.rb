@@ -12,6 +12,12 @@ def compile_dll(project_file)
   sh "#{DOT_NET_PATH}MSBuild.exe #{project_file} -p:OutputPath=#{BUILD_DIR} -p:TreatWarningsAsErrors=true -p:SignAssembly=false -p:Configuration=#{PROJECT_CONFIGURATION};TargetFrameworkVersion=v3.5"
 end
 
+def get_build_directory(project_folder)
+	puts "-----------------------------------------"
+	puts project_folder
+	puts "-----------------------------------------"
+end
+
 class Dir
   def self.remove(asset)  
     FileUtils.rm_r(asset)
@@ -39,8 +45,8 @@ class XUnitRunner
   def initialize(assemblyToTest, assemblyName)
     @assemby = "#{assemblyToTest}.dll"
     @configruation = "#{assemblyToTest}.dll.config"
-    @test_results = "#{TEST_RESULTS_DIR}/#{assemblyName}-results.xml"
-    @output_file = "#{BUILD_DIR}/#{@assemby}-xunit-output.txt"
+    @test_results = "#{TEST_RESULTS_DIR}#{assemblyName}-results.xml"
+    @output_file = "#{BUILD_DIR}#{@assemby}-xunit-output.txt"
   end
   
   def run_tests
