@@ -39,9 +39,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo.Lang.Compiler.dll</HintPath>
     </Reference>
+    <Reference Include="Boo.Lang.Extensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Boo.Lang.Parser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo.Lang.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Commons.Clr, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -55,7 +63,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="SharpSvn, Version=1.5001.662.32487, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpSvn.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -74,11 +85,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\BuildSpecification.cs" />
+    <Compile Include="Builder\BuildSpecificationBase.cs" />
     <Compile Include="Get\SourceControlSpecification.cs" />
     <Compile Include="Get\SourceControlTestBase.cs" />
     <Compile Include="IoC\IOCSpecification.cs" />
     <Compile Include="IoC\IoCSpecificationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuildConfigs\Horn\build.boo" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Horn.Core\Horn.Core.csproj">
@@ -89,9 +104,6 @@
       <Project>{03B7A9D2-30E7-4EBB-A91F-AB06F8AC1EE9}</Project>
       <Name>Horn.Spec.Framework</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="BuildConfigs\Horn\build.boo" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
