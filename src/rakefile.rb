@@ -26,7 +26,7 @@ end
 
 task :build_horn_spec => [:build_horn_spec_framework] do
   compile_dll "Horn.Core.Spec/Horn.Core.Spec.csproj"
-  xunitRunner = XUnitRunner.new("../source/Horn.Core.Spec/bin/Debug/Horn.Core.Spec", "Horn.Core.Spec")
+  xunitRunner = XUnitRunner.new("../src/Horn.Core.Spec/bin/Debug/Horn.Core.Spec", "Horn.Core.Spec")
   xunitRunner.run_tests
 end
 
