@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F454D3B6-6765-4F02-B985-E672FDEB652B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Horn.Core.Spec</RootNamespace>
+    <AssemblyName>Horn.Core.Spec</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Boo.Lang, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Compiler, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Extensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Parser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="Osherove.ThreadTester, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Osherove.ThreadTester.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Commons.Clr, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino.Commons.Clr.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.DSL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino.DSL.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.5.0.1337, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="xunit, Version=1.0.3.1299, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\xunit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="BuildEngine\BuildEngineStub.cs" />
+    <Compile Include="dsl\DslWithNantSpecification.cs" />
+    <Compile Include="PackageTree\PackageTreeFragnentStub.cs" />
+    <Compile Include="SpecificationHelper.cs" />
+    <Compile Include="BuildEngine\BuildEngineSpec.cs" />
+    <Compile Include="Utils\FileSystemProvider.cs" />
+    <Compile Include="CmdLine\CmdLineSpecificationBase.cs" />
+    <Compile Include="CmdLine\CmdLineSpecification.cs" />
+    <Compile Include="DirectoryStructureSpecificationBase.cs" />
+    <Compile Include="dsl\BaseDSLSpecification.cs" />
+    <Compile Include="dsl\BuildMetaDataSpecification.cs" />
+    <Compile Include="dsl\BuildConfigReaderSpecification.cs" />
+    <Compile Include="dsl\DSLSpecification.cs" />
+    <Compile Include="Get\GetSpecification.cs" />
+    <Compile Include="Get\GetSpecificationBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PackageCommands\PackageBuilderSpecification.cs" />
+    <Compile Include="PackageTree\PackageTreeSpecification.cs" />
+    <Compile Include="PackageTree\PackageTreeSpecificationBase.cs" />
+    <Compile Include="Utils\FrameworkLocatorSpec.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Horn.Console\Horn.Console.csproj">
+      <Project>{7DCE20DC-A313-4E44-AA77-D91FBF625DF3}</Project>
+      <Name>Horn.Console</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Horn.Core\Horn.Core.csproj">
+      <Project>{093CFA20-D720-4C58-9B8F-754F03A40D16}</Project>
+      <Name>Horn.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Horn.Spec.Framework\Horn.Spec.Framework.csproj">
+      <Project>{03B7A9D2-30E7-4EBB-A91F-AB06F8AC1EE9}</Project>
+      <Name>Horn.Spec.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuildConfigs\Horn\build.boo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="BuildConfigs\Horn\buildnant.boo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Horn.Core.Spec.build" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SourceControl\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>IF EXIST "$(TargetDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)BuildConfigs\Horn"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
