@@ -13,7 +13,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected const string SVN_URL = "https://scotaltdotnet.googlecode.com/svn/trunk/";
 
-        protected const string BUILD_FILE = "src/horn.sln";
+        protected const string BUILD_FILE = "horn/source/horn.sln";
 
         public  static readonly List<string> TASKS = new List<string> {"build"};
 

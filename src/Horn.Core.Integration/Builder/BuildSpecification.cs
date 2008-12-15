@@ -1,36 +1,16 @@
-using System;
+using System.Collections.Generic;
 using System.IO;
 using Horn.Core.BuildEngines;
-using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
-using Horn.Spec.Framework.Extensions;
-using Rhino.Mocks;
 using Xunit;
 
 namespace Horn.Core.Integration.Builder
 {
-    public class When_The_Build_Meta_Data_Specifies_MSBuild : TestBase
+    public class When_The_Build_Meta_Data_Specifies_MSBuild : BuildSpecificationBase
     {
-        private BuildEngine buildEngine;
-        private IPackageTree packageTree;
-
-        private string outputPath;
-        
         protected override void Because()
         {
-            outputPath = CreateDirectory("Output");
-
-            var working = CreateDirectory("Working");
-
-            packageTree = MockRepository.GenerateStub<IPackageTree>();
-
-            packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(working));
-
-
-            packageTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(outputPath));
-
-            string rootPath =
-                new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory.ResolvePath()).Parent.FullName;
+            string rootPath = GetRootPath();
 
             var solutionPath = Path.Combine(rootPath, "Horn.sln");
 
@@ -44,18 +24,27 @@ namespace Horn.Core.Integration.Builder
 
             Assert.True(File.Exists(Path.Combine(outputPath, "Horn.Core.dll")));
         }
+    }
 
-
-        private string CreateDirectory(string directoryName)
+    public class When_The_Build_Meta_Data_Specifies_Nant : BuildSpecificationBase
+    {
+        protected override void Because()
         {
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, directoryName);
+            string rootPath = GetRootPath();
 
-            if (Directory.Exists(path))
-                Directory.Delete(path, true);
+            var buildFilePath = Path.Combine(rootPath, "horn.build");
 
-            Directory.CreateDirectory(path);
+            buildEngine = new BuildEngine(new NAntBuildTool(), buildFilePath, FrameworkVersion.frameworkVersion35);
+        }
 
-            return path;
+        //[Fact]
+        public void Then_Nant_Compiles_The_Source()
+        {
+            buildEngine.AssignTasks(new[] {"build"});
+
+            buildEngine.Build(packageTree);
+
+            Assert.True(File.Exists(Path.Combine(outputPath, "Horn.Core.dll")));            
         }
     }
 }

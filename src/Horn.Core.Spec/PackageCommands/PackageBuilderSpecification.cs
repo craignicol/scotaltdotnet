@@ -39,9 +39,9 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             var buildTool = CreateStub<IBuildTool>();
 
-            buildTool.Stub(x => x.Build(@"C:\", componentTree, FrameworkVersion.frameworkVersion35));
+            buildTool.Stub(x => x.Build(@"C:\", null, componentTree, FrameworkVersion.frameworkVersion35));
 
-            buildTool.Stub(x => x.Build(@"C:\", packageTree, FrameworkVersion.frameworkVersion35));
+            buildTool.Stub(x => x.Build(@"C:\", null, packageTree, FrameworkVersion.frameworkVersion35));
 
             var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.frameworkVersion35);
 

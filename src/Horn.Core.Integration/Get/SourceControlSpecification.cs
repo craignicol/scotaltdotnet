@@ -18,13 +18,13 @@ namespace Horn.Core.Spec.Integration.Get
         }
 
         [Fact]
-        public void Then_The_Source_Horn_Is_Downloaded()
+        public void Then_The_Horn_Source_Is_Downloaded()
         {
             SourceControl svn = new SVNSourceControl(HORN_URL);
 
             svn.Export(tempSandBox.FullName);
 
-            Assert.Equal(2, tempSandBox.GetDirectories().Length);
+            Assert.InRange(tempSandBox.GetDirectories().Length, 1, 20);
         }
     }
 }
