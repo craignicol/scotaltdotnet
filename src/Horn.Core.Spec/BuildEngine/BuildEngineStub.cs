@@ -1,14 +1,20 @@
-using System.Collections.Generic;
-using Horn.Core.PackageStructure;
-using Horn.Core.Utils.Framework;
-
 namespace Horn.Core.Spec.BuildEngine
 {
+    using System.Collections.Generic;
+    using PackageStructure;
+    using Utils.Framework;
+    using BuildEngines;
+
     public class BuildToolStub : IBuildTool
     {
         public string PathToBuildFile { get; private set; }
 
-        public void Build(string pathToBuildFile, List<string> tasks, IPackageTree packageTree, FrameworkVersion version)
+        public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Build(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
             PathToBuildFile = pathToBuildFile;
 
@@ -17,4 +23,5 @@ namespace Horn.Core.Spec.BuildEngine
             System.Console.WriteLine(version);
         }
     }
+
 }
