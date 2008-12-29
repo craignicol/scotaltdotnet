@@ -93,6 +93,8 @@
     <Compile Include="BuildEngine\BuildEngineStub.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
+    <Compile Include="Extensions\DirectoryExtensions.cs" />
+    <Compile Include="Extensions\stringextensionspecs.cs" />
     <Compile Include="PackageTree\PackageTreeFragnentStub.cs" />
     <Compile Include="SpecificationHelper.cs" />
     <Compile Include="BuildEngine\BuildEngineSpec.cs" />
