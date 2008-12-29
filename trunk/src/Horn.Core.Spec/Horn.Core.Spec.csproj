@@ -91,6 +91,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildEngine\BuildEngineStub.cs" />
+    <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
     <Compile Include="PackageTree\PackageTreeFragnentStub.cs" />
     <Compile Include="SpecificationHelper.cs" />

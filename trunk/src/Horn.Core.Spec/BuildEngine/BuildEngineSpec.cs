@@ -31,13 +31,13 @@ namespace Horn.Core.Spec.BuildEngine
         [Fact]
         public void Then_Build_Engine_Builds_With_The_Build_Tool()
         {
-            buildToolStub.AssertWasCalled(x => x.Build(Arg<string>.Is.Anything, Arg<List<string>>.Is.Anything, Arg<IPackageTree>.Is.Anything, Arg<FrameworkVersion>.Is.Anything));
+            buildToolStub.AssertWasCalled(x => x.Build(Arg<string>.Is.Anything, Arg<BuildEngine>.Is.NotNull, Arg<IPackageTree>.Is.Anything, Arg<FrameworkVersion>.Is.Anything));
         }
     }
 
     public class When_The_Build_Engine_Receives_An_Array_Of_Parameters : Specification
     {
-        private string[] switches = new string[] { "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "environment=uat", "common.testrunner.failonerror=true", "build.msbuild=true" };
+        private readonly string[] switches = new[] { "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "environment=uat", "common.testrunner.failonerror=true", "build.msbuild=true" };
 
         private BuildEngine buildEngine;
 

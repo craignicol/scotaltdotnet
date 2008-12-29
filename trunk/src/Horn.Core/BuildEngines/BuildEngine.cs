@@ -43,7 +43,7 @@ namespace Horn.Core.BuildEngines
         {
             string buildFilePath = GetBuildFilePath(tree);
 
-            BuildTool.Build(buildFilePath, Tasks, tree, Version);
+            BuildTool.Build(buildFilePath, this, tree, Version);
 
             return this;
         }
