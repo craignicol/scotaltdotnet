@@ -12,42 +12,27 @@ namespace Horn.Core
 {
     public class NAntBuildTool : IBuildTool
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(MSBuildBuildTool));
-
-        private string cmdLineArguments;
-
-
         public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
-            return string.Format(" -t:net-{0} -buildfile:{1} {2}",  GetFrameworkVersion(version), pathToBuildFile, GenerateParameters(buildEngine.Parameters));
+            return string.Format(" -t:net-{0} -buildfile:{1} {2}",  GetFrameworkVersionForBuildTool(version), pathToBuildFile, GenerateParameters(buildEngine.Parameters));
         }
 
-        public void Build(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
+        public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)
         {
-            cmdLineArguments = CommandLineArguments(pathToBuildFile, buildEngine, packageTree, version);
-                                     
-            var pathToNant = Path.Combine(packageTree.WorkingDirectory.FullName, @"lib\Nant\NAnt.exe");
+            return Path.Combine(packageTree.WorkingDirectory.FullName, @"lib\Nant\NAnt.exe");
+        }
 
-            var psi = new ProcessStartInfo(pathToNant, cmdLineArguments)
+        public string GetFrameworkVersionForBuildTool(FrameworkVersion version)
+        {
+            switch (version)
             {
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                WorkingDirectory = packageTree.WorkingDirectory.FullName
-            };
-
-            var msBuild = Process.Start(psi);
-
-            while (true)
-            {
-                var line = msBuild.StandardOutput.ReadLine();
-
-                if (line == null)
-                    break;
-
-                log.Info(line);
+                case FrameworkVersion.frameworkVersion2:
+                    return "2.0";
+                case FrameworkVersion.frameworkVersion35:
+                    return "3.5";
             }
 
-            msBuild.WaitForExit();
+            throw new InvalidEnumArgumentException("Invalid Framework version paased to NAntBuildTool.GetFrameworkVersion", (int)version, typeof(FrameworkVersion));
         }
 
         private string GenerateParameters(Dictionary<string, string> parameters)
@@ -73,19 +58,6 @@ namespace Horn.Core
             tasks.ForEach(x => ret += string.Format("{0} ", x));
 
             return ret;
-        }
-
-        private string GetFrameworkVersion(FrameworkVersion version)
-        {
-            switch(version)
-            {
-                case FrameworkVersion.frameworkVersion2:
-                    return "2.0";
-                case FrameworkVersion.frameworkVersion35:
-                    return "3.5";
-            }
-            
-            throw new InvalidEnumArgumentException("Invalid Framework version paased to NAntBuildTool.GetFrameworkVersion", (int)version, typeof(FrameworkVersion));
         }
     }
 }

@@ -1,14 +1,17 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;
+using log4net;
 
 namespace Horn.Core.BuildEngines
 {
     public class BuildEngine
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(MSBuildBuildTool));
+
         public string BuildFile { get; private set; }
 
         public FrameworkVersion Version { get; private set; }
@@ -39,11 +42,27 @@ namespace Horn.Core.BuildEngines
             Tasks = new List<string>(tasks);
         }
 
-        public virtual BuildEngine Build(IPackageTree tree)
+        public virtual BuildEngine Build(IProcessFactory processFactory, IPackageTree packageTree)
         {
-            string buildFilePath = GetBuildFilePath(tree);
+            string pathToBuildFile = GetBuildFilePath(packageTree);
 
-            BuildTool.Build(buildFilePath, this, tree, Version);
+            var cmdLineArguments = BuildTool.CommandLineArguments(pathToBuildFile, this, packageTree, Version);
+
+            var pathToBuildTool = BuildTool.PathToBuildTool(packageTree, Version);
+
+            IProcess psi = processFactory.GetProcess(pathToBuildTool, cmdLineArguments, packageTree.WorkingDirectory.FullName);
+
+            while (true)
+            {
+                string line = psi.GetLineOrOutput();
+
+                if (line == null)
+                    break;
+
+                log.Info(line);
+            }
+
+            psi.WaitForExit();
 
             return this;
         }

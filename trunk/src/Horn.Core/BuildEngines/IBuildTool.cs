@@ -9,6 +9,8 @@ namespace Horn.Core
     {
         string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version);
 
-        void Build(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version);
+        string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version);
+
+        string GetFrameworkVersionForBuildTool(FrameworkVersion version);
     }
 }

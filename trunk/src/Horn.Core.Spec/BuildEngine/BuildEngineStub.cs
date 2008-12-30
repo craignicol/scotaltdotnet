@@ -1,3 +1,5 @@
+using System;
+
 namespace Horn.Core.Spec.BuildEngine
 {
     using System.Collections.Generic;
@@ -11,16 +13,26 @@ namespace Horn.Core.Spec.BuildEngine
 
         public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine(pathToBuildFile);
+            Console.WriteLine(buildEngine);
+            Console.WriteLine(packageTree);
+            Console.WriteLine(version);
+
+            return string.Empty;
         }
 
-        public void Build(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
+        public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)
         {
-            PathToBuildFile = pathToBuildFile;
+            Console.WriteLine(version);
 
-            System.Console.WriteLine(pathToBuildFile);
+            return string.Empty;
+        }
 
-            System.Console.WriteLine(version);
+        public string GetFrameworkVersionForBuildTool(FrameworkVersion version)
+        {
+            Console.WriteLine(version);
+
+            return "3.5";
         }
     }
 

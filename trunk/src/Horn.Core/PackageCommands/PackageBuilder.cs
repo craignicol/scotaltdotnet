@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Horn.Core.BuildEngines;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using log4net;
@@ -52,7 +53,8 @@ namespace Horn.Core.PackageCommands
 
         private void BuildComponentTree(IBuildMetaData buildMetaData, IPackageTree componentTree)
         {
-            buildMetaData.BuildEngine.Build(componentTree);
+            //TODO replace new with Dependency Injection
+            buildMetaData.BuildEngine.Build(new DiagnosticsProcessFactory(), componentTree);
         }        
 
         public PackageBuilder(IGet get)

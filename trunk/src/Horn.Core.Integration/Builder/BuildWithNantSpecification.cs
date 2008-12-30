@@ -32,7 +32,7 @@ namespace Horn.Core.Integration.Builder
         [Fact]
         public void Then_Nant_Builds_The_Source()
         {
-            buildEngine.Build(packageTree);
+            buildEngine.Build(new DiagnosticsProcessFactory(), packageTree);
 
             //THIS IS THE REAL TEST WE NEED TO PASS
             //Assert.True(File.Exists(Path.Combine(outputPath, "Horn.Core.dll")));
