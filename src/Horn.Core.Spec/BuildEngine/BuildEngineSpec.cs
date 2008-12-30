@@ -25,13 +25,13 @@ namespace Horn.Core.Spec.BuildEngine
 
             buildEngine = new BuildEngine(buildToolStub, "deeper/than/this/somebuild.file", FrameworkVersion.frameworkVersion35);
             
-            buildEngine.Build(packageTree);
+            buildEngine.Build(new StubProcessFactory(), packageTree);
         }
 
         //[Fact]  Takes too long to run.  Tool long for an integration tests
         public void Then_Build_Engine_Builds_With_The_Build_Tool()
         {
-            buildToolStub.AssertWasCalled(x => x.Build(Arg<string>.Is.Anything, Arg<BuildEngine>.Is.NotNull, Arg<IPackageTree>.Is.Anything, Arg<FrameworkVersion>.Is.Anything));
+            buildToolStub.AssertWasCalled(x => x.CommandLineArguments(Arg<string>.Is.Anything, Arg<BuildEngine>.Is.NotNull, Arg<IPackageTree>.Is.Anything, Arg<FrameworkVersion>.Is.Anything));
         }
     }
 

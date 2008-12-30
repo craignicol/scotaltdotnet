@@ -1,18 +1,18 @@
-using System.Collections.Generic;
-using System.IO;
-using Horn.Core.dsl;
-using Horn.Core.GetOperations;
-using Horn.Core.PackageCommands;
-using Horn.Core.PackageStructure;
-using Horn.Core.Spec.Unit.Get;
-using Horn.Core.Spec.Unit.HornTree;
-using Horn.Core.Utils;
-using Horn.Core.Utils.Framework;
-using Rhino.Mocks;
-using Xunit;
-
 namespace Horn.Core.Spec.Unit.PackageCommands
 {
+    using System.Collections.Generic;
+    using Core.dsl;
+    using GetOperations;
+    using Core.PackageCommands;
+    using PackageStructure;
+    using BuildEngine;
+    using Get;
+    using HornTree;
+    using Utils;
+    using Utils.Framework;
+    using Rhino.Mocks;
+    using Xunit;
+
     public class When_The_Builder_Receives_An_Install_Switch : Specification
     {
         protected IDictionary<string, IList<string>> switches = new Dictionary<string, IList<string>>();
@@ -25,7 +25,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             switches.Add("install", new List<string>{"horn"});
 
-            get = new GetOperations.Get(fileSystemProvider);
+            get = new Get(fileSystemProvider);
 
             var baseConfigReader = CreateStub<BaseConfigReader>();
 
@@ -37,11 +37,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             packageTree.Stub(x => x.Retrieve("horn")).Return(componentTree).Repeat.Once();
 
-            var buildTool = CreateStub<IBuildTool>();
-
-            buildTool.Stub(x => x.Build(@"C:\", null, componentTree, FrameworkVersion.frameworkVersion35));
-
-            buildTool.Stub(x => x.Build(@"C:\", null, packageTree, FrameworkVersion.frameworkVersion35));
+            var buildTool = new BuildToolStub();
 
             var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.frameworkVersion35);
 

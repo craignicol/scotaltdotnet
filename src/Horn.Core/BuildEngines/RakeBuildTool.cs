@@ -12,6 +12,16 @@ namespace Horn.Core
             throw new System.NotImplementedException();
         }
 
+        public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetFrameworkVersionForBuildTool(FrameworkVersion version)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Build(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
             throw new System.NotImplementedException();

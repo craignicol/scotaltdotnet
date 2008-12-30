@@ -97,8 +97,12 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuildEngines\DiagnosticsProcess.cs" />
     <Compile Include="BuildEngines\IBuildTool.cs" />
+    <Compile Include="BuildEngines\iprocess.cs" />
+    <Compile Include="BuildEngines\IProcessFactory.cs" />
     <Compile Include="BuildEngines\MSBuildBuildTool.cs" />
+    <Compile Include="BuildEngines\DiagnosticsProcessFactory.cs" />
     <Compile Include="BuildEngines\NAntBuildTool.cs" />
     <Compile Include="BuildEngines\RakeBuildTool.cs" />
     <Compile Include="dsl\IBuildMetaData.cs" />
