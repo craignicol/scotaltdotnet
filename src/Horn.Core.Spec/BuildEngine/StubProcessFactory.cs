@@ -10,17 +10,4 @@ namespace Horn.Core.Spec.BuildEngine
             return new StubProcess();
         }
     }
-
-    public class StubProcess : IProcess
-    {
-        public string GetLineOrOutput()
-        {
-            return "This is from the fake process";
-        }
-
-        public void WaitForExit()
-        {
-            Console.WriteLine("WaitForExit called in the StubProcess");
-        }
-    }
 }
