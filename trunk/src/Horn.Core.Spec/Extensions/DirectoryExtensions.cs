@@ -45,7 +45,7 @@ namespace Horn.Core.Spec.Extensions
             source.CopyToDirectory(destination);
         }
 
-        [Fact]
+        //[Fact], too slow to be useful
         public void Then_SubFolders_And_Files_Are_Copied()
         {
             Assert.True(destination.GetDirectories().Length > 0);

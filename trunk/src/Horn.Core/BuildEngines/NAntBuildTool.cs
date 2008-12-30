@@ -26,7 +26,7 @@ namespace Horn.Core
         {
             cmdLineArguments = CommandLineArguments(pathToBuildFile, buildEngine, packageTree, version);
                                      
-            var pathToNant = Path.Combine(packageTree.OutputDirectory.FullName, @"lib\net\NAnt.Core.dll");
+            var pathToNant = Path.Combine(packageTree.WorkingDirectory.FullName, @"lib\net\NAnt.Core.dll");
         }
 
         private string GenerateParameters(Dictionary<string, string> parameters)
