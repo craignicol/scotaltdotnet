@@ -50,11 +50,11 @@ namespace Horn.Core.BuildEngines
 
             var pathToBuildTool = BuildTool.PathToBuildTool(packageTree, Version);
 
-            IProcess psi = processFactory.GetProcess(pathToBuildTool, cmdLineArguments, packageTree.WorkingDirectory.FullName);
+            IProcess process = processFactory.GetProcess(pathToBuildTool, cmdLineArguments, packageTree.WorkingDirectory.FullName);
 
             while (true)
             {
-                string line = psi.GetLineOrOutput();
+                string line = process.GetLineOrOutput();
 
                 if (line == null)
                     break;
@@ -62,7 +62,7 @@ namespace Horn.Core.BuildEngines
                 log.Info(line);
             }
 
-            psi.WaitForExit();
+            process.WaitForExit();
 
             return this;
         }
