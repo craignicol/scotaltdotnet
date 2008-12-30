@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="BuildEngine\BuildEngineStub.cs" />
     <Compile Include="BuildEngine\BuildWithNantSpecification.cs" />
+    <Compile Include="BuildEngine\StubProcess.cs" />
     <Compile Include="BuildEngine\StubProcessFactory.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />

@@ -57,7 +57,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         [Fact]
         public void Then_The_Builder_Coordinates_The_Build()
         {
-            IPackageCommand command = new PackageBuilder(get);
+            IPackageCommand command = new PackageBuilder(get, new StubProcessFactory());
 
             command.Execute(packageTree, switches);
         }
