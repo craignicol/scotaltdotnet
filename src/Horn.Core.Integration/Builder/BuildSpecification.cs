@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Horn.Core.BuildEngines;
 using Horn.Core.Utils.Framework;
+using Rhino.Mocks;
 using Xunit;
 
 namespace Horn.Core.Integration.Builder
@@ -11,6 +12,8 @@ namespace Horn.Core.Integration.Builder
         protected override void Because()
         {
             string rootPath = GetRootPath();
+
+            packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(workingPath));
 
             var solutionPath = Path.Combine(rootPath, "Horn.sln");
 
@@ -23,28 +26,6 @@ namespace Horn.Core.Integration.Builder
             buildEngine.Build(packageTree);
 
             Assert.True(File.Exists(Path.Combine(outputPath, "Horn.Core.dll")));
-        }
-    }
-
-    public class When_The_Build_Meta_Data_Specifies_Nant : BuildSpecificationBase
-    {
-        protected override void Because()
-        {
-            string rootPath = GetRootPath();
-
-            var buildFilePath = Path.Combine(rootPath, "horn.build");
-
-            buildEngine = new BuildEngine(new NAntBuildTool(), buildFilePath, FrameworkVersion.frameworkVersion35);
-        }
-
-        //[Fact]
-        public void Then_Nant_Compiles_The_Source()
-        {
-            buildEngine.AssignTasks(new[] {"build"});
-
-            buildEngine.Build(packageTree);
-
-            Assert.True(File.Exists(Path.Combine(outputPath, "Horn.Core.dll")));            
         }
     }
 }

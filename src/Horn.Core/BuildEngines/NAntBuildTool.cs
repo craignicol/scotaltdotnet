@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Horn.Core.BuildEngines;
 using Horn.Core.PackageStructure;
@@ -26,7 +26,28 @@ namespace Horn.Core
         {
             cmdLineArguments = CommandLineArguments(pathToBuildFile, buildEngine, packageTree, version);
                                      
-            var pathToNant = Path.Combine(packageTree.WorkingDirectory.FullName, @"lib\net\NAnt.Core.dll");
+            var pathToNant = Path.Combine(packageTree.WorkingDirectory.FullName, @"lib\Nant\NAnt.exe");
+
+            var psi = new ProcessStartInfo(pathToNant, cmdLineArguments)
+            {
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                WorkingDirectory = packageTree.WorkingDirectory.FullName
+            };
+
+            var msBuild = Process.Start(psi);
+
+            while (true)
+            {
+                var line = msBuild.StandardOutput.ReadLine();
+
+                if (line == null)
+                    break;
+
+                log.Info(line);
+            }
+
+            msBuild.WaitForExit();
         }
 
         private string GenerateParameters(Dictionary<string, string> parameters)
