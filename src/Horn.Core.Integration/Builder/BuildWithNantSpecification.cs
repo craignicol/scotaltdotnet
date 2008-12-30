@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Horn.Core.Integration.Builder
 {
-    public class When_The_Build_MetaData_Specifies_MSBuild : BuildSpecificationBase
+    public class When_The_Build_MetaData_Specifies_Nant : BuildSpecificationBase
     {
         protected override void Because()
         {
