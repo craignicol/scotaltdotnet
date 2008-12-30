@@ -1,5 +1,6 @@
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
+using Horn.Core.BuildEngines;
 using Horn.Core.dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
@@ -58,6 +59,14 @@ namespace Horn.Core.Utils.IoC
                             .Named("filesystemprovider")
                             .ImplementedBy<FileSystemProvider>()
                             .LifeStyle.Transient
+                );
+
+            innerContainer.Register(
+                Component.For<IProcessFactory>()
+                            .Named("processfactory")
+                            .ImplementedBy<DiagnosticsProcessFactory>()
+                            .LifeStyle.Transient
+                            
                 );
         }
     }
