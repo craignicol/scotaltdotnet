@@ -37,6 +37,12 @@ namespace Horn.Core.SCM
 
             var dir = Path.GetDirectoryName(e.FullPath);
 
+            if (!string.IsNullOrEmpty(file) && (file.IndexOf("tmp") > -1))
+                return;
+
+            if (!string.IsNullOrEmpty(dir) && (dir.IndexOf("tmp") > -1))
+                return;
+
             log.InfoFormat("{0} was {1} in {2}", file, e.ChangeType, dir);
         }
 
