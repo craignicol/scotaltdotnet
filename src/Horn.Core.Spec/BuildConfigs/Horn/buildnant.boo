@@ -1,6 +1,6 @@
 ﻿install horn:
-	description "This is a description of horn"
-	get_from svn("https://scotaltdotnet.googlecode.com/svn/trunk/")
+	description "A .NET build and dependency manager"
+	get_from svn("http://scotaltdotnet.googlecode.com/svn/trunk/")
 	build_with nant, buildfile("src/horn.build"), frameworkVersion35
 	with:
 		tasks build
