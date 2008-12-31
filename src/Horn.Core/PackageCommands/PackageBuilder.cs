@@ -26,6 +26,8 @@ namespace Horn.Core.PackageCommands
             ExecuteSourceControlGet(buildMetaData, componentTree);
             
             BuildComponentTree(buildMetaData, componentTree);
+
+            log.InfoFormat("\nHorn has finished installing {0}.\n\nFOR GOD AND ULSTER STAY STRONG!".ToUpper(), packageName);
         }
 
         private string GetPackageName(IDictionary<string, IList<string>> switches)
