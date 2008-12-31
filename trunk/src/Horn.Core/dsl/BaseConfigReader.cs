@@ -9,9 +9,6 @@ namespace Horn.Core.dsl
 {
     public abstract class BaseConfigReader
     {
-
-		#region public properties (4) 
-
         public virtual BuildEngine BuildEngine { get; set; }
 
         public virtual string Description { get; set; }
@@ -20,15 +17,7 @@ namespace Horn.Core.dsl
 
         public virtual SourceControl SourceControl { get; set; }
 
-		#endregion public properties 
-
-		#region abstract methods (1) 
-
         public abstract void Prepare();
-
-		#endregion abstract methods 
-
-		#region public static methods (5) 
 
         [Meta]
         public static Expression install(ReferenceExpression expression, Expression action)
@@ -106,10 +95,6 @@ namespace Horn.Core.dsl
             );
         }
 
-		#endregion public static methods 
-
-		#region public methods (2) 
-
         public void AddSwitches(Action parametersDelegate)
         {
             parametersDelegate();
@@ -132,10 +117,6 @@ namespace Horn.Core.dsl
 
             installDelegate();
         }
-
-		#endregion public methods 
-
-		#region protected methods (5) 
 
         protected void SetParameters(string[] parameters)
         {
@@ -174,8 +155,5 @@ namespace Horn.Core.dsl
 
             action();
         }
-
-		#endregion protected methods 
-
     }
 }
