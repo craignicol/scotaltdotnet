@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Horn.Core.PackageStructure;
 
@@ -90,7 +91,7 @@ Options :
                 {
                     if (paramRow.Values != null &&
                         paramRow.Values.Length != 0 &&
-                        Array.Find(paramTable, match => Array.Find(match.Values, x => x == value) ==null) == null)
+                        !CheckValueForMatch(arg))
                         ret = OutputValidationMessage(string.Format("Argument value for key {0} is invalid: {1}.", paramRow.Key, value));
                 }
             }
@@ -104,6 +105,16 @@ Options :
             }
 
             return ret;
+        }
+
+        private bool CheckValueForMatch(IList<string> arg)
+        {
+            foreach(var param in paramTable)
+            {   
+                if(param.Values.Where(value => arg.Contains(value)).Count() > 0)
+                    return true;
+            }
+            return false;
         }
 
         private bool OutputValidationMessage(string message)
