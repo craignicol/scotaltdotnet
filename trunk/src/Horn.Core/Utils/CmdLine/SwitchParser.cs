@@ -91,7 +91,7 @@ Options :
                 {
                     if (paramRow.Values != null &&
                         paramRow.Values.Length != 0 &&
-                        !CheckSwitchValueIsValid(arg))
+                        !SwitchValueIsValid(arg))
                         ret = OutputValidationMessage(string.Format("Argument value for key {0} is invalid: {1}.", paramRow.Key, value));
                 }
             }
@@ -107,7 +107,7 @@ Options :
             return ret;
         }
 
-        private bool CheckSwitchValueIsValid(IList<string> arg)
+        private bool SwitchValueIsValid(IList<string> arg)
         {
             return paramTable
                        .Where(param => param.Values
