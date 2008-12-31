@@ -9,11 +9,11 @@ namespace Horn.Core.Spec.Unit.dsl
 {
     public abstract class BaseDSLSpecification : Specification
     {
-        protected const string DESCRIPTION = "This is a description of horn";
+        protected const string DESCRIPTION = "A .NET build and dependency manager";
 
-        protected const string SVN_URL = "https://scotaltdotnet.googlecode.com/svn/trunk/";
+        protected const string SVN_URL = "http://scotaltdotnet.googlecode.com/svn/trunk/";
 
-        protected const string BUILD_FILE = "horn/source/horn.sln";
+        protected const string BUILD_FILE = "src/horn.sln";
 
         public  static readonly List<string> TASKS = new List<string> {"build"};
 

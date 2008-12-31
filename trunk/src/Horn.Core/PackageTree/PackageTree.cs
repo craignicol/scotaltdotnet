@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -92,53 +93,39 @@ namespace Horn.Core.PackageStructure
         }
 
         //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
-        public static void CreateDefaultTreeStructure(string rootPath, string sourceBuildFile)
-        {       
-            CreateDirectory(rootPath);
-            string distros = CreateDistrosDirectory(rootPath);
-            string horn = CreateHornDirectory(distros);
+        public static void CreateDefaultTreeStructure(string rootPath)
+        {
+            var hornBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "horn.boo");
 
-            string destinationBuildFile = CreateDestinationBuildFilePath(horn, sourceBuildFile);
-
-            if (FileExists(destinationBuildFile))
-                return;
-
-            if (!FileExists(sourceBuildFile))
-                throw new FileNotFoundException(string.Format("The following build file does not exist: {0}.", sourceBuildFile));
-
-            CopySourceToDestination(sourceBuildFile, destinationBuildFile);
+            CreateDefaultTreeStructure(rootPath, hornBuildFile);
         }
 
-        private static void CopySourceToDestination(string sourceBuildFile, string destinationBuildFile)
+        //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
+        public static void CreateDefaultTreeStructure(string hornBuildFile, string sourceBuildFile)
         {
-            File.Copy(sourceBuildFile, destinationBuildFile);
+            CreateDirectory(hornBuildFile);
+
+            string builders = CreateDirectory(hornBuildFile, "builders");
+            string horn = CreateDirectory(builders, "horn");
+
+            CopyBuildFileToDestination(sourceBuildFile, horn);
+
+            string loggers = CreateDirectory(hornBuildFile, "loggers");
+            string log4net = CreateDirectory(loggers, "log4net");
+
+            var log4NetBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.boo");
+
+            CopyBuildFileToDestination(log4NetBuildFile, log4net);
         }
 
-        private static bool FileExists(string destinationBuildFile)
+        private static void CopyBuildFileToDestination(string sourceFile, string destinationFolder)
         {
-            return File.Exists(destinationBuildFile);
-        }
+            if(!File.Exists(sourceFile))
+                throw new FileNotFoundException(string.Format("The build file {0} does not exist", sourceFile));
 
-        private static string CreateDestinationBuildFilePath(string horn, string sourceBuildFile)
-        {
-            return Path.Combine(horn, Path.GetFileName(sourceBuildFile));
-        }
+            string destinationBuildFile = Path.Combine(destinationFolder, "build.boo");
 
-        private static string CreateHornDirectory(string distros)
-        {
-            var horn = Path.Combine(distros, "horn");
-
-            CreateDirectory(horn);
-
-            return horn;
-        }
-
-        private static string CreateDistrosDirectory(string rootPath)
-        {
-            var distros = Path.Combine(rootPath, "distros");
-
-            CreateDirectory(distros);
-            return distros;
+            File.Copy(sourceFile, destinationBuildFile, true);
         }
 
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
@@ -170,9 +157,18 @@ namespace Horn.Core.PackageStructure
             return new PackageTree(child, this);
         }
 
-        private static void CreateDirectory(string directoryPath)
+        private static string CreateDirectory(string directoryPath, string newDirectoryName)
+        {
+            var combination = Path.Combine(directoryPath, newDirectoryName);
+
+            return CreateDirectory(combination);
+        }
+
+        private static string CreateDirectory(string directoryPath)
         {
             Directory.CreateDirectory(directoryPath);
+
+            return directoryPath;
         }
 
         private bool IsReservedDirectory(DirectoryInfo child)

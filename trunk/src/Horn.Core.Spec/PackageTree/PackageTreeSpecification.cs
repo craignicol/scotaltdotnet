@@ -27,7 +27,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         [Fact]
         public void Will_Have_A_Child()
         {
-            Assert.Equal(1, rootTree.Children.Length);
+            Assert.Equal(2, rootTree.Children.Length);
         }
 
         [Fact]
