@@ -109,11 +109,14 @@ Options :
 
         private bool CheckValueForMatch(IList<string> arg)
         {
-            foreach(var param in paramTable)
-            {   
-                if(param.Values.Where(value => arg.Contains(value)).Count() > 0)
-                    return true;
-            }
+            if (paramTable
+                    .Where(param => param.Values
+                    .Where(value => arg.Contains(value)
+                    ).Count() > 0)
+                     .Count() > 0)
+
+                return true;
+
             return false;
         }
 
