@@ -7,29 +7,14 @@ namespace Horn.Core.Spec.Unit
 {
     public abstract class DirectoryStructureSpecificationBase : Specification
     {
-        private const string TEST_BUILD_FILE_NAME = "build.boo";
-
         protected string root;
         protected DirectoryInfo rootDirectory;
 
         protected override void Before_each_spec()
         {
             CreateTempDirectory();
-            string sourceBuildFile = CreateSourceBuildFile();
 
-            PackageTree.CreateDefaultTreeStructure(root, sourceBuildFile);
-        }
-
-        private string CreateSourceBuildFile()
-        {
-            string pathToBuildConfigurationFiles = GetPathToBuildConfigurationFiles();
-
-            return Path.Combine(pathToBuildConfigurationFiles, TEST_BUILD_FILE_NAME);
-        }
-
-        private string GetPathToBuildConfigurationFiles()
-        {
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath(), "BuildConfigs\\Horn");
+            PackageTree.CreateDefaultTreeStructure(root);
         }
 
         private void CreateTempDirectory()

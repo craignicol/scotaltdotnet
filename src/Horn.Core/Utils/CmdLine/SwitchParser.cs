@@ -90,7 +90,7 @@ Options :
                 {
                     if (paramRow.Values != null &&
                         paramRow.Values.Length != 0 &&
-                        Array.Find(paramRow.Values, match => match == value) == null)
+                        Array.Find(paramTable, match => Array.Find(match.Values, x => x == value) ==null) == null)
                         ret = OutputValidationMessage(string.Format("Argument value for key {0} is invalid: {1}.", paramRow.Key, value));
                 }
             }

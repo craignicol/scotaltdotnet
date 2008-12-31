@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BuildConfigs\horn.boo" />
+    <Content Include="BuildConfigs\log4net.boo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Horn.Core.build" />

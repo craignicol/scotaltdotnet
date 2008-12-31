@@ -53,12 +53,9 @@ namespace Horn.Console
 
         private static PackageTree GetPackageTree()
         {
-            //HACK: Replace as soon as
-            var hornBuildFile = string.Format("{0}build.boo", AppDomain.CurrentDomain.BaseDirectory);
-
             var rootFolder = GetRootFolderPath();
 
-            PackageTree.CreateDefaultTreeStructure(rootFolder.FullName, hornBuildFile);
+            PackageTree.CreateDefaultTreeStructure(rootFolder.FullName);
 
             return new PackageTree(rootFolder, null);
         }
