@@ -20,6 +20,35 @@ namespace Horn.Core.dsl
         public abstract void Prepare();
 
         [Meta]
+        public static Expression build_with(ReferenceExpression builder, MethodInvocationExpression build, ReferenceExpression frameWorkVersion)
+        {
+            var targetName = builder.Name;
+
+            return new MethodInvocationExpression(
+                    new ReferenceExpression(targetName),
+                    build.Arguments[0],
+                    new StringLiteralExpression(frameWorkVersion.Name)
+                );
+        }
+
+        [Meta]
+        public static Expression dependencies(MethodInvocationExpression addDependencyMethod)
+        {
+            return addDependencyMethod;
+        }
+
+        public void AddDependency(string component, string copyToLocation)
+        {
+            BuildEngine.Dependencies.Add(new Dependency(component, copyToLocation));
+        }
+
+        [Meta]
+        public static Expression get_from(MethodInvocationExpression get)
+        {
+            return get;
+        }
+
+        [Meta]
         public static Expression install(ReferenceExpression expression, Expression action)
         {
             var installName = new StringLiteralExpression(expression.Name);
@@ -28,42 +57,6 @@ namespace Horn.Core.dsl
                     new ReferenceExpression("GetInstallerMeta"),
                     installName,
                     action
-                );
-        }
-
-        [Meta]
-        public static Expression with(Expression action)
-        {
-            return new MethodInvocationExpression(
-                    new ReferenceExpression("AssignTasks"), 
-                    action
-                );
-        }
-
-        [Meta]
-        public static Expression switches(Expression action)
-        {
-            return new MethodInvocationExpression(
-                    new ReferenceExpression("AddSwitches"),
-                    action
-                );
-        }
-
-        [Meta]
-        public static Expression GetFrom(MethodInvocationExpression get)
-        {
-            return get;
-        }
-
-        [Meta]
-        public static Expression BuildWith(ReferenceExpression builder, MethodInvocationExpression build, ReferenceExpression frameWorkVersion)
-        {
-            var targetName = builder.Name;
-
-            return new MethodInvocationExpression(
-                    new ReferenceExpression(targetName),
-                    build.Arguments[0],
-                    new StringLiteralExpression(frameWorkVersion.Name)
                 );
         }
 
@@ -82,6 +75,15 @@ namespace Horn.Core.dsl
         }
 
         [Meta]
+        public static Expression switches(Expression action)
+        {
+            return new MethodInvocationExpression(
+                    new ReferenceExpression("AddSwitches"),
+                    action
+                );
+        }
+
+        [Meta]
         public static Expression tasks(params ReferenceExpression[] expressions)
         {
             var arrayExpression = new ArrayLiteralExpression();
@@ -93,6 +95,15 @@ namespace Horn.Core.dsl
                 new ReferenceExpression("SetBuildTargets"),
                 arrayExpression
             );
+        }
+
+        [Meta]
+        public static Expression with(Expression action)
+        {
+            return new MethodInvocationExpression(
+                    new ReferenceExpression("AssignTasks"), 
+                    action
+                );
         }
 
         public void AddSwitches(Action parametersDelegate)

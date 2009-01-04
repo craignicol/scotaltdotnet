@@ -22,6 +22,8 @@ namespace Horn.Core.BuildEngines
 
         public Dictionary<string, string> Parameters{ get; private set;}
 
+        public List<Dependency> Dependencies { get; private set; }
+
         public void AssignParameters(string[] parameters)
         {
             if ((parameters == null) || (parameters.Length == 0))
@@ -79,6 +81,8 @@ namespace Horn.Core.BuildEngines
             BuildFile = buildFile;
 
             Version = version;
+
+            Dependencies = new List<Dependency>();
         }
     }
 }
