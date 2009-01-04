@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
+using Castle.Core;
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
 using Horn.Core.Utils.Framework;
@@ -37,9 +39,14 @@ namespace Horn.Core.dsl
             return addDependencyMethod;
         }
 
-        public void AddDependency(string component, string copyToLocation)
+        public void AddDependencies(string[] dependencies)
         {
-            BuildEngine.Dependencies.Add(new Dependency(component, copyToLocation));
+            Array.ForEach(dependencies, item =>
+                                     {
+                                         var dependency = new Dependency(item.Split('|')[0], item.Split('|')[1]);
+
+                                         BuildEngine.Dependencies.Add(dependency); 
+                                     });
         }
 
         [Meta]
