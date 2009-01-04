@@ -1,4 +1,3 @@
-using System;
 using Boo.Lang.Compiler.Ast;
 using Boo.Lang.Compiler.Steps;
 
@@ -8,6 +7,8 @@ namespace Horn.Core.dsl
     {
         public override void OnBlockExpression(BlockExpression node)
         {
+            var dependencies = new ArrayLiteralExpression();
+
             foreach (Statement statement in node.Body.Statements)
             {
                 MethodInvocationExpression expression = (MethodInvocationExpression)((ExpressionStatement) statement).Expression;
@@ -19,18 +20,23 @@ namespace Horn.Core.dsl
 
                     var binaryExpression = (BinaryExpression) arg;
 
-                    var replacementMethod = new MethodInvocationExpression(new ReferenceExpression("AddDependency"), 
-                                                        binaryExpression.Left, 
-                                                        binaryExpression.Right
-                                                );
-
-                    ReplaceCurrentNode(replacementMethod);
-
-                    return;
+                    //HACK: Need a better Expression type for pass a list of strings into a method
+                    dependencies.Items.Add(
+                            new StringLiteralExpression(string.Format("{0}|{1}", 
+                                                            binaryExpression.Left.ToString().Trim('\''), 
+                                                            binaryExpression.Right.ToString().Trim('\'')))
+                         );
                 }
             }
 
-            base.OnBlockExpression(node);
+            if (dependencies.Items.Count == 0)
+                return;
+
+            var replacementMethod = new MethodInvocationExpression(new ReferenceExpression("AddDependencies"),
+                                                dependencies
+                                        );
+
+            ReplaceCurrentNode(replacementMethod);
         }
 
         public override void Run()
