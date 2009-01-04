@@ -8,4 +8,4 @@
 		parameters "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "common.testrunner.failonerror=true", "build.msbuild=true"
 
 dependencies:
-	depend @log4net >> @lib		
+	depend @log4net >> @lib
