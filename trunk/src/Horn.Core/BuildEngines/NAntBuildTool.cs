@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Horn.Core.BuildEngines;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
-using log4net;
 
 namespace Horn.Core
 {

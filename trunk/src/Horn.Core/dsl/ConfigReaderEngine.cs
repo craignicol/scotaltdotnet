@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection;
 using Rhino.DSL;
 
 namespace Horn.Core.dsl
@@ -9,7 +11,10 @@ namespace Horn.Core.dsl
         protected override void CustomizeCompiler(Boo.Lang.Compiler.BooCompiler compiler, Boo.Lang.Compiler.CompilerPipeline pipeline, string[] urls)
         {
             pipeline.Insert(1, new ImplicitBaseClassCompilerStep(typeof(BaseConfigReader), "Prepare", "Horn.Core.dsl"));
-            pipeline.InsertBefore(typeof(ProcessMethodBodiesWithDuckTyping), new UnderscorNamingConventionsToPascalCaseCompilerStep());
+            pipeline.InsertBefore(typeof(ProcessMethodBodiesWithDuckTyping), new RightShiftToMethodCompilerStep());
+            pipeline.Insert(2, new UnderscorNamingConventionsToPascalCaseCompilerStep());
+            pipeline.Insert(3, new UseSymbolsStep());
+            
         }
     }
 }

@@ -23,8 +23,10 @@ namespace Horn.Core.Spec.Unit.dsl
 
             IoC.InitializeWith(dependencyResolver);
 
+            var engine = new ConfigReaderEngine();
+
             factory = new DslFactory { BaseDirectory = AppDomain.CurrentDomain.BaseDirectory };
-            factory.Register<BaseConfigReader>(new ConfigReaderEngine());
+            factory.Register<BaseConfigReader>(engine);
         }
 
         protected override void After_each_spec()
@@ -65,6 +67,8 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.IsAssignableFrom<MSBuildBuildTool>(reader.BuildEngine.BuildTool);
 
             Assert.Equal(BUILD_FILE, reader.BuildEngine.BuildFile);
+
+            Assert.Equal(1, reader.BuildEngine.Dependencies.Count);
         }
     }
 }

@@ -40,10 +40,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo.Lang.Compiler.dll</HintPath>
     </Reference>
-    <Reference Include="Boo.Lang.Extensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Boo.Lang.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="Boo.Lang.Parser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo.Lang.Parser.dll</HintPath>
@@ -97,6 +93,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BuildEngines\Dependency.cs" />
     <Compile Include="BuildEngines\DiagnosticsProcess.cs" />
     <Compile Include="BuildEngines\IBuildTool.cs" />
     <Compile Include="BuildEngines\iprocess.cs" />
@@ -107,6 +104,7 @@
     <Compile Include="BuildEngines\RakeBuildTool.cs" />
     <Compile Include="dsl\IBuildMetaData.cs" />
     <Compile Include="dsl\NullBuildMetatData.cs" />
+    <Compile Include="dsl\RightShiftToMethodCompilerStep.cs" />
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
     <Compile Include="exceptions\MissingBuildFileException.cs" />
     <Compile Include="dsl\BaseConfigReader.cs" />
