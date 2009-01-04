@@ -94,24 +94,24 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildEngines\Dependency.cs" />
-    <Compile Include="BuildEngines\DiagnosticsProcess.cs" />
-    <Compile Include="BuildEngines\IBuildTool.cs" />
-    <Compile Include="BuildEngines\iprocess.cs" />
-    <Compile Include="BuildEngines\IProcessFactory.cs" />
-    <Compile Include="BuildEngines\MSBuildBuildTool.cs" />
-    <Compile Include="BuildEngines\DiagnosticsProcessFactory.cs" />
-    <Compile Include="BuildEngines\NAntBuildTool.cs" />
-    <Compile Include="BuildEngines\RakeBuildTool.cs" />
-    <Compile Include="dsl\IBuildMetaData.cs" />
-    <Compile Include="dsl\NullBuildMetatData.cs" />
-    <Compile Include="dsl\RightShiftToMethodCompilerStep.cs" />
+    <Compile Include="BuildEngines\Process\DiagnosticsProcess.cs" />
+    <Compile Include="BuildEngines\BuildTools\IBuildTool.cs" />
+    <Compile Include="BuildEngines\Process\iprocess.cs" />
+    <Compile Include="BuildEngines\Process\IProcessFactory.cs" />
+    <Compile Include="BuildEngines\BuildTools\MSBuildBuildTool.cs" />
+    <Compile Include="BuildEngines\Process\DiagnosticsProcessFactory.cs" />
+    <Compile Include="BuildEngines\BuildTools\NAntBuildTool.cs" />
+    <Compile Include="BuildEngines\BuildTools\RakeBuildTool.cs" />
+    <Compile Include="dsl\BuildMetadata\IBuildMetaData.cs" />
+    <Compile Include="dsl\BuildMetadata\NullBuildMetatData.cs" />
+    <Compile Include="dsl\CompilerSteps\RightShiftToMethodCompilerStep.cs" />
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
     <Compile Include="exceptions\MissingBuildFileException.cs" />
     <Compile Include="dsl\BaseConfigReader.cs" />
     <Compile Include="dsl\BuildConfigReader.cs" />
     <Compile Include="BuildEngines\BuildEngine.cs" />
-    <Compile Include="dsl\BuildMetaData.cs" />
-    <Compile Include="dsl\ConfigReaderEngine.cs" />
+    <Compile Include="dsl\BuildMetadata\BuildMetaData.cs" />
+    <Compile Include="dsl\DslEngines\ConfigReaderEngine.cs" />
     <Compile Include="dsl\IBuildConfigReader.cs" />
     <Compile Include="extensions\StringExtensions.cs" />
     <Compile Include="IComposite.cs" />
