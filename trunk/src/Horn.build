@@ -23,7 +23,7 @@
   </fileset>
 
   <target name="build"
-			depends="clean init copy-referenced-assemblies"
+			depends="clean init copy-referenced-assemblies copy-package-tree"
 			description="Builds Horn to the current configuration." >
     <nant target="build">
       <buildfiles refid="buildfiles.all"/>
@@ -110,9 +110,19 @@
     <mkdir dir="${build.dir}" />
     <mkdir dir="${testresults.dir}" />
     <call target="copy-referenced-assemblies" />
+	<call target="copy-package-tree" />	
     <property name="build.rebuild" value="true" />
   </target>
 
+  <target name="copy-package-tree">
+    <!-- Copy framework-neutral libraries -->
+    <copy todir="${build.dir}" >
+      <fileset basedir="${package.dir}">
+        <include name="*.boo" />
+      </fileset>
+    </copy>
+  </target>
+	
   <target name="copy-referenced-assemblies">
     <!-- Copy framework-neutral libraries -->
     <copy todir="${build.dir}" >
