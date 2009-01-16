@@ -93,6 +93,7 @@
 		<property name="releasenotes.dir"	value="${build.dir}/ReleaseNotes" />
 		<property name="build.rebuild"		value="false" />
 		<property name="build.lib.dir" value="${root.dir}../../lib"/>
+		<property name="package.dir" value="${src.dir}/Horn.Core/BuildConfigs" />
 	</target>
 
 	<target name="set-framework-configuration">
