@@ -5,7 +5,7 @@ require 'ftools'
 
 task :default => :build 
 
-task :build  => [:clean, :init, :copy_referenced_assemblies, :build_horn_core, :build_horn_console] do
+task :build  => [:clean, :init, :copy_package_tree, :copy_referenced_assemblies, :build_horn_core, :build_horn_console] do
   
 end 
 
@@ -22,6 +22,10 @@ end
 
 task :build_horn_spec_framework do
  compile_dll "Horn.Spec.Framework/Horn.Spec.Framework.csproj"
+end
+
+task :copy_package_tree do
+	cp_r Dir.glob(File.join("#{ROOT_DIR}/Horn.Core/BuildConfigs/**", "*.boo")), "#{BUILD_DIR}"
 end
 
 task :build_horn_spec => [:build_horn_spec_framework] do
