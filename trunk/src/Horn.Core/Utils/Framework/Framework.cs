@@ -39,7 +39,10 @@ namespace Horn.Core.Utils.Framework
             assemblyPaths.Add(FrameworkVersion.frameworkVersion2, Path.Combine(root, "v2.0.50727"));
             assemblyPaths.Add(FrameworkVersion.frameworkVersion35, Path.Combine(root, "v3.5"));
 
-            assemblyPaths.ForEach(x => log.Info(x.Value));
+            assemblyPaths.ForEach(x => { 
+                                            Console.WriteLine(x.Value);
+                                            log.Info(x.Value); 
+                                        });
         }
     }
 }
