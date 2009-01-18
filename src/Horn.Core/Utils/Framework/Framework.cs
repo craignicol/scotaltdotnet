@@ -35,7 +35,7 @@ namespace Horn.Core.Utils.Framework
             //HACK: Is there a better way to determine the Correct framework path
             var currentVersion = RuntimeEnvironment.GetRuntimeDirectory();
 
-            Console.WriteLine(RuntimeEnvironment.GetRuntimeDirectory());
+            Console.WriteLine("Runtime directory = {0}", RuntimeEnvironment.GetRuntimeDirectory());
 
             var root = currentVersion.Substring(0, currentVersion.LastIndexOf("\\Framework\\") + "\\Framework\\".Length);
 
