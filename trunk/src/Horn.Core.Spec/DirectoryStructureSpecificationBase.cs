@@ -24,23 +24,6 @@ namespace Horn.Core.Spec.Unit
             rootDirectory = new DirectoryInfo(root);
         }
 
-        protected override void After_each_spec()
-        {
-            base.After_each_spec();
-
-            if (!rootDirectory.Exists)
-                return;
-
-            try
-            {
-                rootDirectory.Delete(true);
-            }
-            catch (IOException)
-            {
-                RecursiveDelete(rootDirectory.FullName);
-            }
-        }
-
         private void RecursiveDelete(string path)
         {
             if (!Directory.Exists(path))
