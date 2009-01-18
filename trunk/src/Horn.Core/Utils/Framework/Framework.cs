@@ -34,15 +34,13 @@ namespace Horn.Core.Utils.Framework
         {
             //HACK: Is there a better way to determine the Correct framework path
             var currentVersion = RuntimeEnvironment.GetRuntimeDirectory();
+
+            Console.WriteLine(RuntimeEnvironment.GetRuntimeDirectory());
+
             var root = currentVersion.Substring(0, currentVersion.LastIndexOf("\\Framework\\") + "\\Framework\\".Length);
 
             assemblyPaths.Add(FrameworkVersion.frameworkVersion2, Path.Combine(root, "v2.0.50727"));
             assemblyPaths.Add(FrameworkVersion.frameworkVersion35, Path.Combine(root, "v3.5"));
-
-            assemblyPaths.ForEach(x => { 
-                                            Console.WriteLine(x.Value);
-                                            log.Info(x.Value); 
-                                        });
         }
     }
 }
