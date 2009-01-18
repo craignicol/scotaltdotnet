@@ -37,7 +37,12 @@ namespace Horn.Core.Utils.Framework
 
             Console.WriteLine("Runtime directory = {0}", RuntimeEnvironment.GetRuntimeDirectory());
 
-            var root = currentVersion.Substring(0, currentVersion.LastIndexOf("\\Framework\\") + "\\Framework\\".Length);
+            string root;
+            
+            if(currentVersion.IndexOf("Framework64") > 0)
+                root = currentVersion.Substring(0, currentVersion.LastIndexOf("\\Framework64\\") + "\\Framework64\\".Length);
+            else
+                root = currentVersion.Substring(0, currentVersion.LastIndexOf("\\Framework\\") + "\\Framework\\".Length);
 
             assemblyPaths.Add(FrameworkVersion.frameworkVersion2, Path.Combine(root, "v2.0.50727"));
             assemblyPaths.Add(FrameworkVersion.frameworkVersion35, Path.Combine(root, "v3.5"));
