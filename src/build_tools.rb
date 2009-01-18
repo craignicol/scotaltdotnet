@@ -42,7 +42,8 @@ end
 
 class XUnitRunner
   
-  def initialize(assemblyToTest, assemblyName)
+  def initialize(assemblyToTest)
+    assemblyName = assemblyToTest.split('/').last
     @assemby = "#{assemblyToTest}.dll"
     @configruation = "#{assemblyToTest}.dll.config"
     @test_results = "#{TEST_RESULTS_DIR}#{assemblyName}-results.xml"
