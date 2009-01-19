@@ -16,9 +16,7 @@ end
 task :build_horn_console do
   compile_dll "Horn.Console/Horn.Console.csproj"
   if ENV["runtests"] == "true"
-    Rake::Task["build_horn_spec"].execute 
-    
-    #TODO: Enable integration tests to run from TC
+    Rake::Task["build_horn_spec"].execute     
     Rake::Task["build_horn_integration"].execute 
   end
 end
