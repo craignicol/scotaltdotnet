@@ -37,6 +37,38 @@ namespace Horn.Core.Spec.Unit.HornTree
         }
     }
 
+    public class When_CreateDefaultTreeStructure_Is_Executed_On_A_Clean_Install : PackageTreeSpecificationBase
+    {
+        protected override void Because()
+        {
+            rootDirectory = new DirectoryInfo(root);
+        }
+
+        [Fact]
+        public void Check_That_There_Is_No_Existing_PackageTree()
+        {
+            Assert.Equal(0, rootDirectory.GetDirectories().Length);
+            Assert.Equal(0, rootDirectory.GetFiles().Length);
+        }
+
+        [Fact]
+        public void Retrieve_The_Most_Recent_PackageTree_Structure_From_SVN_And_Load_To_Local_Horn_Directory()
+        {
+            Assert.True(rootDirectory.GetDirectories().Length > 1);
+        }
+    }
+
+    public class When_CreateDefaultTreeStructure_Is_Executed_On_An_Existing_Install : PackageTreeSpecificationBase
+    {
+        protected override void Because()
+        {
+            rootDirectory = new DirectoryInfo(root);
+        }
+
+        //If PackageTree Exists Do Nothing
+
+    }
+
     public class When_A_PackageTree_Node_Contains_A_Build_File : PackageTreeSpecificationBase
     {
         private IPackageTree hornTree;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.dsl;
+using Horn.Core.SCM;
 
 namespace Horn.Core.PackageStructure
 {
@@ -95,9 +96,13 @@ namespace Horn.Core.PackageStructure
         //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
         public static void CreateDefaultTreeStructure(string rootPath)
         {
-            var hornBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "horn.boo");
+            var root = new DirectoryInfo(rootPath);
+            
+            if (!root.Exists) Directory.CreateDirectory(rootPath);
+            if (root.GetDirectories().Length != 0) return;
 
-            CreateDefaultTreeStructure(rootPath, hornBuildFile);
+            var svn = new SVNSourceControl("http://scotaltdotnet.googlecode.com/svn/trunk/package_tree/");
+            svn.Export(rootPath);
         }
 
         //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
