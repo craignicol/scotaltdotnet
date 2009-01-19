@@ -115,6 +115,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST $(SolutionDir) xcopy /s /y $(SolutionDir)Horn.Core.Spec\BuildConfigs\Horn $(TargetDir)BuildConfigs\Horn</PostBuildEvent>
+    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\Horn" copy /y "$(ProjectDir)BuildConfigs\Horn\*.boo" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

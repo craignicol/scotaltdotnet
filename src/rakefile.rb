@@ -19,7 +19,7 @@ task :build_horn_console do
     Rake::Task["build_horn_spec"].execute 
     
     #TODO: Enable integration tests to run from TC
-    #Rake::Task["build_horn_integration"].execute 
+    Rake::Task["build_horn_integration"].execute 
   end
 end
 
@@ -40,7 +40,7 @@ task :build_horn_spec => [:build_horn_spec_framework] do
 task :build_horn_integration do
   compile_dll "Horn.Core.Integration/Horn.Core.Integration.csproj"
   
-  cp_r Dir.glob(File.join("#{ROOT_DIR}/Horn.Core.Spec/BuildConfigs/**", "*.boo")), "#{BUILD_DIR}"
+  cp_r Dir.glob(File.join("#{ROOT_DIR}/Horn.Core.Integration/BuildConfigs/**", "*.boo")), "#{BUILD_DIR}"
   
   XUnitRunner.new("#{BUILD_DIR}/Horn.Core.Integration").run_tests 
 end
