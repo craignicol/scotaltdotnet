@@ -3,7 +3,7 @@ namespace Horn.Core.Spec.Unit.Get
 {
     using GetOperations;
 
-    public class When_Get_Is_Request_To_Retrieve_Source : GetSpecificationBase
+    public class When_a_get_request_is_made_to_retrieve_the_source : GetSpecificationBase
     {
         private string destinationPath;
 
