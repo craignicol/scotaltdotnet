@@ -1,0 +1,29 @@
+#summary Iteration 2: Goal - Synchronise the horn package tree with an external repository
+
+= Introduction =
+
+BDD: Project metatdata refresh thyself
+
+== Interface ==
+IMetaSynchroniser
+
+== Given ==
+A clean machine
+
+=== When ===
+Horn is running and the package tree does not exist
+
+=== Then ===
+Horn retrieves the package tree structure from subversion to the local users directory
+
+=== When ===
+A horn user submits a horn –refresh command from the command line
+
+=== Then ===
+Horn retrieves the latest build metatdata and overwrites any existing metadata files
+
+=== When ===
+The subversion repository is unreachable 
+
+=== Then ===
+An appropriate error message is displayed to the user and execution halts.
