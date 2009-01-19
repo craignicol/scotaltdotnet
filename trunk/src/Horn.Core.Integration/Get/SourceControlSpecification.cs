@@ -1,3 +1,4 @@
+using Horn.Core.Integration.Builder;
 using Horn.Core.SCM;
 using Xunit;
 
@@ -9,6 +10,8 @@ namespace Horn.Core.Spec.Integration.Get
 
         protected override void Because()
         {
+            System.Diagnostics.Debugger.Break();
+
             SetUpTemporarySandBox();
         }
 
@@ -17,7 +20,7 @@ namespace Horn.Core.Spec.Integration.Get
             DeleteTempSandBox();
         }
 
-        [Fact]
+        //[Fact]
         public void Then_The_Horn_Source_Is_Downloaded()
         {
             SourceControl svn = new SVNSourceControl(HORN_URL);

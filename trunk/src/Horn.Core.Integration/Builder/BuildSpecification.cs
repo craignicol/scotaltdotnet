@@ -11,8 +11,6 @@ namespace Horn.Core.Integration.Builder
     {
         protected override void Because()
         {
-            //System.Diagnostics.Debugger.Break();
-
             string rootPath = GetRootPath();
 
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(workingPath));

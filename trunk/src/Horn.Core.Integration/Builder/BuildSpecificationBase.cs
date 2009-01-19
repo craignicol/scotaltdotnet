@@ -25,7 +25,28 @@ namespace Horn.Core.Integration.Builder
 
             packageTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(outputPath));
 
-            return new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory.ResolvePath()).Parent.FullName;
+            var executionBase = AppDomain.CurrentDomain.BaseDirectory;
+
+            return ResolveRootPath(executionBase);
+        }
+
+        public static string ResolveRootPath(string executionBase)
+        {
+            if (!IsRunningFromCIBuild)
+                return new DirectoryInfo(executionBase.ResolvePath()).Parent.FullName;
+
+            if(executionBase.IndexOf("debug") > -1)
+                return new DirectoryInfo(executionBase).Parent.Parent.Parent.FullName;
+
+            return new DirectoryInfo(executionBase).Parent.Parent.FullName;
+        }
+
+        public static bool IsRunningFromCIBuild
+        {
+            get
+            {
+                return (AppDomain.CurrentDomain.BaseDirectory.IndexOf("net-3.5") > -1);   
+            }
         }
 
         private string CreateDirectory(string directoryName)
