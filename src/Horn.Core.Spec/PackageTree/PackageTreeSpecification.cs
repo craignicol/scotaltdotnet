@@ -19,19 +19,19 @@ namespace Horn.Core.Spec.Unit.HornTree
         }
 
         [Fact]
-        public void Is_the_root()
+        public void Then_the_tree_root_is_the_root()
         {
             Assert.True(rootTree.IsRoot);
         }
 
         [Fact]
-        public void Will_Have_A_Child()
+        public void Then_the_root_will_have_two_Children()
         {
             Assert.Equal(2, rootTree.Children.Length);
         }
 
         [Fact]
-        public void CurrentDirector_Will_Be_the_Root_Directory()
+        public void Then_The_CurrentDirectory_is_the_Root_Directory()
         {
             Assert.Equal(rootDirectory.FullName, rootTree.CurrentDirectory.FullName); 
         }
@@ -45,28 +45,17 @@ namespace Horn.Core.Spec.Unit.HornTree
         }
 
         [Fact]
-        public void Check_That_There_Is_No_Existing_PackageTree()
+        public void Then_Check_That_There_Is_No_Existing_PackageTree()
         {
             Assert.Equal(0, rootDirectory.GetDirectories().Length);
             Assert.Equal(0, rootDirectory.GetFiles().Length);
         }
 
         [Fact]
-        public void Retrieve_The_Most_Recent_PackageTree_Structure_From_SVN_And_Load_To_Local_Horn_Directory()
+        public void Then_Retrieve_The_Most_Recent_PackageTree_Structure_From_SVN_And_Load_To_Local_Horn_Directory()
         {
             Assert.True(rootDirectory.GetDirectories().Length > 1);
         }
-    }
-
-    public class When_CreateDefaultTreeStructure_Is_Executed_On_An_Existing_Install : PackageTreeSpecificationBase
-    {
-        protected override void Because()
-        {
-            rootDirectory = new DirectoryInfo(root);
-        }
-
-        //If PackageTree Exists Do Nothing
-
     }
 
     public class When_A_PackageTree_Node_Contains_A_Build_File : PackageTreeSpecificationBase
