@@ -23,26 +23,5 @@ namespace Horn.Core.Spec.Unit
 
             rootDirectory = new DirectoryInfo(root);
         }
-
-        private void RecursiveDelete(string path)
-        {
-            if (!Directory.Exists(path))
-                return;
-
-            var directory = new DirectoryInfo(path);
-
-            try
-            {
-                foreach (var child in directory.GetDirectories())
-                    RecursiveDelete(child.FullName);
-
-                if (directory.Exists)
-                    directory.Delete(true);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                System.Console.WriteLine(ex);
-            }
-        }
     }
 }
