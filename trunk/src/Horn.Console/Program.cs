@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
+using Horn.Core.SCM;
+using Horn.Core.Tree.MetaDataSynchroniser;
 using Horn.Core.Utils.CmdLine;
 using Horn.Core.Utils.IoC;
 using log4net;
@@ -55,12 +57,17 @@ namespace Horn.Console
         {
             var rootFolder = GetRootFolderPath();
 
-            PackageTree.CreateDefaultTreeStructure(rootFolder.FullName);
+            //TODO: Hard coded dependency.  Should be injected in or retrieved from the container
+            IMetaDataSynchroniser metaDataSynchroniser =
+                new MetaDataSynchroniser(new SVNSourceControl(MetaDataSynchroniser.PACKAGE_TREE_URI));
+
+            if(!metaDataSynchroniser.PackageTreeExists(rootFolder.FullName))
+                metaDataSynchroniser.SynchronisePackageTree(rootFolder.FullName);
 
             return new PackageTree(rootFolder, null);
         }
 
-        //HACK: to be replaced by user defined choice from the install perhaps?
+        //TODO: to be replaced by user defined choice from the install perhaps?
         private static DirectoryInfo GetRootFolderPath()
         {
             var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
@@ -69,6 +76,7 @@ namespace Horn.Console
 
             log.DebugFormat("root folder = {0}", rootFolder);
 
+            //TODO: remove delete of package tree on every run when a bit more stable.
             if (Directory.Exists(rootFolder))
                 Directory.Delete(rootFolder, true);
 

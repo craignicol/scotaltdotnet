@@ -3,6 +3,7 @@ using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.SCM;
 using Horn.Core.Spec.Unit.Get;
+using Horn.Framework.helpers;
 using Horn.Spec.Framework.Extensions;
 using Xunit;
 
@@ -22,7 +23,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             IoC.InitializeWith(dependencyResolver);
 
-            rootDirectory = new DirectoryInfo(string.Format("{0}\\BuildConfigs\\Horn", AppDomain.CurrentDomain.BaseDirectory.ToLower().ResolvePath()));
+            rootDirectory = new DirectoryInfo(string.Format("{0}\\BuildConfigs\\Horn", DirectoryHelper.GetBaseDirectory().ToLower().ResolvePath()));
         }
 
         protected override void Because()
@@ -57,7 +58,7 @@ namespace Horn.Core.Spec.Unit.dsl
     {
         protected override void Because()
         {
-            rootDirectory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory.ToLower());
+            rootDirectory = new DirectoryInfo(DirectoryHelper.GetBaseDirectory().ToLower());
 
             reader = new BuildConfigReader();
         }

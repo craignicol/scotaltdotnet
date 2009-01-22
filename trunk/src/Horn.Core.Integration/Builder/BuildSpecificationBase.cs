@@ -3,6 +3,7 @@ using System.IO;
 using Horn.Core.BuildEngines;
 using Horn.Core.extensions;
 using Horn.Core.PackageStructure;
+using Horn.Framework.helpers;
 using Horn.Spec.Framework.Extensions;
 using Rhino.Mocks;
 
@@ -45,13 +46,13 @@ namespace Horn.Core.Integration.Builder
         {
             get
             {
-                return (AppDomain.CurrentDomain.BaseDirectory.IndexOf("net-3.5") > -1);   
+                return (DirectoryHelper.GetBaseDirectory().IndexOf("net-3.5") > -1);   
             }
         }
 
         private string CreateDirectory(string directoryName)
         {
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, directoryName);
+            var path = Path.Combine(DirectoryHelper.GetBaseDirectory(), directoryName);
 
             if (Directory.Exists(path))
                 Directory.Delete(path, true);

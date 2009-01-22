@@ -1,3 +1,5 @@
+using Horn.Framework.helpers;
+
 namespace Horn.Core.Spec.Integration.Utils
 {
     using System;
@@ -7,7 +9,7 @@ namespace Horn.Core.Spec.Integration.Utils
 
     public class FileSystemProviderSpec : IDisposable
     {
-        readonly string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DateTime.Now.Ticks.ToString());
+        readonly string path = Path.Combine(DirectoryHelper.GetBaseDirectory(), DateTime.Now.Ticks.ToString());
 
         [Fact]
         public void CreateDirectory_Will_Create_Directory()

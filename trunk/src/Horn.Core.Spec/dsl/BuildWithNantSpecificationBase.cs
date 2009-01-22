@@ -2,6 +2,7 @@ using System;
 using Horn.Core.dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
+using Horn.Framework.helpers;
 using Rhino.DSL;
 using Rhino.Mocks;
 
@@ -23,7 +24,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             IoC.InitializeWith(dependencyResolver);
 
-            factory = new DslFactory { BaseDirectory = AppDomain.CurrentDomain.BaseDirectory };
+            factory = new DslFactory { BaseDirectory = DirectoryHelper.GetBaseDirectory() };
             factory.Register<BaseConfigReader>(new ConfigReaderEngine());
 
             packageTree = MockRepository.GenerateStub<IPackageTree>();

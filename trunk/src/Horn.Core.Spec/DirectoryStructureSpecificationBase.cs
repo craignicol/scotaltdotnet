@@ -1,7 +1,6 @@
-using System;
 using System.IO;
 using Horn.Core.PackageStructure;
-using Horn.Spec.Framework.Extensions;
+using Horn.Framework.helpers;
 
 namespace Horn.Core.Spec.Unit
 {
@@ -14,14 +13,14 @@ namespace Horn.Core.Spec.Unit
         {
             CreateTempDirectory();
 
-            PackageTree.CreateDefaultTreeStructure(root);
+            root = rootDirectory.FullName;
+
+            PackageTreeHelper.CreatePackageTreeForTesting(root);
         }
 
         private void CreateTempDirectory()
         {
-            root = Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString());
-
-            rootDirectory = new DirectoryInfo(root);
+            rootDirectory = new DirectoryInfo(DirectoryHelper.GetTempDirectoryName());
         }
     }
 }
