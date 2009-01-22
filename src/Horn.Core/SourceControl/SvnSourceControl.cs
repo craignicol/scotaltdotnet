@@ -26,14 +26,24 @@ namespace Horn.Core.SCM
                 {
                     client.Export(Url, destination);
                 }
-                catch (SvnObstructedUpdateException ex)
+                catch(SvnRepositoryIOException sre)
                 {
-                    downloadMonitor.StopMonitoring = true;
+                    HandleExceptions(sre);
 
-                    log.Error(ex);
                     throw;
                 }
+                catch (SvnObstructedUpdateException sue)
+                {
+                    HandleExceptions(sue);
+                }
             }
+        }
+
+        private void HandleExceptions(Exception ex)
+        {
+            downloadMonitor.StopMonitoring = true;
+
+            log.Error(ex);
         }
 
         protected override void SetMonitor(string destination)

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Horn.Core.Spec.Unit.CmdLine
 {
-    public class When_Horn_Recevies_An_Install_Switch_From_The_Command_Line : CmdLineSpecificationBase
+    public class When_horn_recevies_an_Install_Switch_From_The_Command_Line : CmdLineSpecificationBase
     {
         private const string arg = "-install:horn";
         private const string installName = "horn";

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Horn.Framework.helpers;
 
 namespace Horn.Core.Spec.Integration.Get
 {
@@ -7,7 +8,7 @@ namespace Horn.Core.Spec.Integration.Get
     {
         public class SubversionTestBase : TestBase
         {
-            protected DirectoryInfo tempSandBox = new DirectoryInfo(string.Format("{0}{1}{2}", AppDomain.CurrentDomain.BaseDirectory, Path.DirectorySeparatorChar, Guid.NewGuid()));
+            protected DirectoryInfo tempSandBox = new DirectoryInfo(DirectoryHelper.GetTempDirectoryName());
 
             protected override void Because()
             {

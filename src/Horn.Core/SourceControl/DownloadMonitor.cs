@@ -27,6 +27,7 @@ namespace Horn.Core.SCM
                 EnableRaisingEvents = true
             };
 
+            watcher.Changed += OnChanged;
             watcher.Created += OnChanged;
             watcher.Deleted += OnChanged;
         }

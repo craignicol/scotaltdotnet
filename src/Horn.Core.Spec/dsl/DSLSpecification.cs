@@ -1,5 +1,6 @@
 ﻿using System;
 using Horn.Core.SCM;
+using Horn.Framework.helpers;
 using Rhino.DSL;
 
 namespace Horn.Core.Spec.Unit.dsl
@@ -25,7 +26,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             var engine = new ConfigReaderEngine();
 
-            factory = new DslFactory { BaseDirectory = AppDomain.CurrentDomain.BaseDirectory };
+            factory = new DslFactory { BaseDirectory = DirectoryHelper.GetBaseDirectory() };
             factory.Register<BaseConfigReader>(engine);
         }
 

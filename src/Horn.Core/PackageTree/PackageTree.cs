@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.dsl;
-using Horn.Core.SCM;
 
 namespace Horn.Core.PackageStructure
 {
@@ -93,46 +91,6 @@ namespace Horn.Core.PackageStructure
             item.Parent = null;
         }
 
-        //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
-        public static void CreateDefaultTreeStructure(string rootPath)
-        {
-            var root = new DirectoryInfo(rootPath);
-            
-            if (!root.Exists) Directory.CreateDirectory(rootPath);
-            if (root.GetDirectories().Length != 0) return;
-
-            var svn = new SVNSourceControl("http://scotaltdotnet.googlecode.com/svn/trunk/package_tree/");
-            svn.Export(rootPath);
-        }
-
-        //HACK: replace with synchronisation from svn, http or ftp.  Very, very temporary measure
-        public static void CreateDefaultTreeStructure(string hornBuildFile, string sourceBuildFile)
-        {
-            CreateDirectory(hornBuildFile);
-
-            string builders = CreateDirectory(hornBuildFile, "builders");
-            string horn = CreateDirectory(builders, "horn");
-
-            CopyBuildFileToDestination(sourceBuildFile, horn);
-
-            string loggers = CreateDirectory(hornBuildFile, "loggers");
-            string log4net = CreateDirectory(loggers, "log4net");
-
-            var log4NetBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.boo");
-
-            CopyBuildFileToDestination(log4NetBuildFile, log4net);
-        }
-
-        private static void CopyBuildFileToDestination(string sourceFile, string destinationFolder)
-        {
-            if(!File.Exists(sourceFile))
-                throw new FileNotFoundException(string.Format("The build file {0} does not exist", sourceFile));
-
-            string destinationBuildFile = Path.Combine(destinationFolder, "build.boo");
-
-            File.Copy(sourceFile, destinationBuildFile, true);
-        }
-
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
         {
             Parent = parent;
@@ -160,20 +118,6 @@ namespace Horn.Core.PackageStructure
         private PackageTree CreateNewPackageTree(DirectoryInfo child)
         {
             return new PackageTree(child, this);
-        }
-
-        private static string CreateDirectory(string directoryPath, string newDirectoryName)
-        {
-            var combination = Path.Combine(directoryPath, newDirectoryName);
-
-            return CreateDirectory(combination);
-        }
-
-        private static string CreateDirectory(string directoryPath)
-        {
-            Directory.CreateDirectory(directoryPath);
-
-            return directoryPath;
         }
 
         private bool IsReservedDirectory(DirectoryInfo child)

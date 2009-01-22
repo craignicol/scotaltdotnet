@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core.extensions;
+using Horn.Framework.helpers;
 using Xunit;
 
 namespace Horn.Core.Spec.Extensions
@@ -38,7 +39,7 @@ namespace Horn.Core.Spec.Extensions
 
         protected override void Because()
         {
-            source = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory.RemoveDebugFolderParts()).Parent;
+            source = new DirectoryInfo(DirectoryHelper.GetBaseDirectory().RemoveDebugFolderParts()).Parent;
 
             destination = new DirectoryInfo(Path.Combine(new DirectoryInfo("C:\\").FullName, "Working"));
 

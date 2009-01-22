@@ -1,7 +1,9 @@
+using System.IO;
 using Horn.Core.dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
+using Horn.Framework.helpers;
 
 namespace Horn.Core.Spec.Unit.Get
 {
@@ -27,31 +29,6 @@ namespace Horn.Core.Spec.Unit.Get
             package = new Package("horn", SpecificationHelper.GetBuildMetaData());
 
             fileSystemProvider = CreateStub<IFileSystemProvider>();
-        }
-    }
-
-    public class SourceControlDouble : SVNSourceControl
-    {
-        public bool ExportWasCalled;
-
-        protected override void Initialise(string destination)
-        {
-            System.Console.WriteLine("In initialise");
-        }
-
-        protected override void Download(string destination)
-        {
-            System.Console.WriteLine("In Download");
-        }
-
-        public override void Export(string destination)
-        {
-            ExportWasCalled = true;
-        }
-
-        public SourceControlDouble(string url)
-            : base(url)
-        {
         }
     }
 }
