@@ -95,6 +95,8 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -112,6 +114,7 @@
     <Compile Include="BuildEngine\StubProcess.cs" />
     <Compile Include="BuildEngine\StubProcessFactory.cs" />
     <Compile Include="CmdLine\RefreshCommandLineFixture.cs" />
+    <Compile Include="DependencyTree\DependencyTreeSpecification.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
     <Compile Include="Extensions\DirectoryExtensions.cs" />
