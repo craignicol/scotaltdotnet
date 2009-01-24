@@ -1,0 +1,23 @@
+== Notes from HORN meeting 22 Jan 2009 ==
+
+Attended by:
+
+Paul Cowan
+Craig Nicol
+Colin Gemmell
+Chris Canal
+
+Dependencies
+* Build dependency tree
+* Find circular references (if (this in ancestors) raise Circular
+* Sort dependencies from leaves to roots
+* Resolve duplicates (copy result to @lib and @src/lib)
+* Determine parallel dependencies
+* Get in order
+* Build in order
+refresh package tree
+* check if package tree is up to date
+* select revision of package tree
+additional metadata (home page)
+searchable
+Make integration tests pass
