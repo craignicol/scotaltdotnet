@@ -20,7 +20,7 @@ namespace Horn.Core.PackageStructure
 
                 IPackageTree parent = Parent;
 
-                while(parent != null)
+                while(!parent.IsRoot)
                 {
                     parent = parent.Parent;
                 }

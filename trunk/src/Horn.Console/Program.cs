@@ -72,7 +72,7 @@ namespace Horn.Console
         {
             var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
-            var rootFolder = string.Format("{0}\\Horn", documents.Parent.FullName);
+            var rootFolder = string.Format("{0}\\.horn", documents.Parent.FullName);
 
             log.DebugFormat("root folder = {0}", rootFolder);
 
