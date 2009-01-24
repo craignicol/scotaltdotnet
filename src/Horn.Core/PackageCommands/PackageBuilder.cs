@@ -3,10 +3,12 @@ using Horn.Core.BuildEngines;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using log4net;
+using System;
 
 namespace Horn.Core.PackageCommands
 {
     using dsl;
+    using Horn.Core.Spec.Unit.DependencyTree;
 
     public class PackageBuilder : IPackageCommand
     {
@@ -23,9 +25,21 @@ namespace Horn.Core.PackageCommands
             
             IBuildMetaData buildMetaData = GetBuildMetaDataFor(packageTree, packageName);
 
-            ExecuteSourceControlGet(buildMetaData, componentTree);
-            
-            BuildComponentTree(buildMetaData, componentTree);
+            IDependencyTree dependencyTree = GetDependencyTree(buildMetaData, componentTree);
+
+            foreach (IBuildMetaData nextMetaData in dependencyTree.BuildList)
+            {
+                log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), nextMetaData.SourceControl.Url);
+
+                ExecuteSourceControlGet(nextMetaData, componentTree);            	
+            }
+
+            foreach (IBuildMetaData nextMetaData in dependencyTree.BuildList)
+            {
+                log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine.BuildFile);
+
+                BuildComponentTree(nextMetaData, componentTree);
+            }
 
             log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), packageName);
         }
@@ -47,6 +61,11 @@ namespace Horn.Core.PackageCommands
         private IBuildMetaData GetBuildMetaDataFor(IPackageTree packageTree, string packageName)
         {
             return packageTree.Retrieve(packageName).GetBuildMetaData();
+        }
+
+        private IDependencyTree GetDependencyTree(IBuildMetaData buildMetaData, IPackageTree componentTree)
+        {
+            return new DependencyTree(buildMetaData, componentTree);
         }
 
         private void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
