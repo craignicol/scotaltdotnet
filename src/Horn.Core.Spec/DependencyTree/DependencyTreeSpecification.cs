@@ -11,6 +11,7 @@
     using Horn.Core.Spec.BuildEngine;
     using Horn.Core.dsl;
     using Rhino.Mocks;
+    using Horn.Core.DependencyTree;
 
     public class When_We_Have_A_Single_Dependency : DirectoryStructureSpecificationBase
     {
@@ -36,7 +37,6 @@
             dependentTree = CreateStub<IPackageTree>();
             dependentTree.Stub(x => x.Name).Return("simpleDependency");
             dependentTree.Stub(x => x.GetBuildMetaData()).Return(dependencyBuildMetaData);
-            packageTree.Add(dependentTree);
 
             packageTree.Stub(x => x.Retrieve("")).IgnoreArguments().Return(dependentTree);
         }
@@ -48,6 +48,46 @@
             Assert.Contains(packageTree, dependencyTree.BuildList);
             Assert.Contains(dependentTree, dependencyTree.BuildList);
             Assert.InRange(dependencyTree.BuildList.IndexOf(dependentTree), 0, dependencyTree.BuildList.IndexOf(packageTree));
+        }
+    }
+
+    public class When_We_Have_A_Circular_Dependency : DirectoryStructureSpecificationBase
+    {
+        protected IBuildMetaData dependencyBuildMetaData;
+        protected IBuildMetaData rootBuildMetaData;
+        protected IDependencyTree dependencyTree;
+        protected IPackageTree packageTree;
+        protected IPackageTree dependentTree;
+
+        protected override void Because()
+        {
+            rootBuildMetaData = CreateStub<IBuildMetaData>();
+            dependencyBuildMetaData = CreateStub<IBuildMetaData>();
+
+            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Horn.Core.Utils.Framework.FrameworkVersion.frameworkVersion35);
+            rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency.boo"));
+            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency.boo", Horn.Core.Utils.Framework.FrameworkVersion.frameworkVersion35);
+            dependencyBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("root", "root.boo"));
+
+            packageTree = CreateStub<IPackageTree>();
+            packageTree.Stub(x => x.Name).Return("root");
+            packageTree.Stub(x => x.GetBuildMetaData()).Return(rootBuildMetaData);
+
+            dependentTree = CreateStub<IPackageTree>();
+            dependentTree.Stub(x => x.Name).Return("simpleDependency");
+            dependentTree.Stub(x => x.GetBuildMetaData()).Return(dependencyBuildMetaData);
+
+            packageTree.Stub(x => x.Retrieve("simpleDependency")).Return(dependentTree);
+            packageTree.Stub(x => x.Retrieve("root")).Return(packageTree);
+            dependentTree.Stub(x => x.Retrieve("simpleDependency")).Return(dependentTree);
+            dependentTree.Stub(x => x.Retrieve("root")).Return(packageTree);
+        }
+
+        [Fact]
+        public void Then_An_Exception_Is_Raised()
+        {
+            Exception ex = Assert.Throws<CircularDependencyException>(() => new DependencyTree(packageTree));
+            Assert.Equal("root is a dependent of itself", ex.Message);
         }
     }
 }
