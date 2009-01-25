@@ -90,4 +90,50 @@
             Assert.Equal("root is a dependent of itself", ex.Message);
         }
     }
+
+    public class When_We_Have_A_Complex_Dependency : DirectoryStructureSpecificationBase
+    {
+        protected IDependencyTree dependencyTree;
+        protected IPackageTree packageTree;
+
+        private IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
+        {
+            IBuildMetaData buildMetaData = CreateStub<IBuildMetaData>();
+            buildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Horn.Core.Utils.Framework.FrameworkVersion.frameworkVersion35);
+            foreach (string dependencyName in dependencyNames)
+            {
+                buildMetaData.BuildEngine.Dependencies.Add(new Dependency(dependencyName, String.Format("{0}.boo", dependencyName)));                
+            }
+
+            IPackageTree packageTree = CreateStub<IPackageTree>();
+            packageTree.Stub(x => x.Name).Return(packageName);
+            packageTree.Stub(x => x.GetBuildMetaData()).Return(buildMetaData);
+
+            return packageTree;
+        }
+
+        protected override void Because()
+        {
+            packageTree = CreatePackageTreeNode("root", new string[] {"complexDependency", "sharedDependency"});
+            IPackageTree dependentTree = CreatePackageTreeNode("complexDependency", new string[] {"sharedDependency"});
+            IPackageTree sharedTree = CreatePackageTreeNode("sharedDependency", new string[] { });
+
+            IPackageTree[] packages = new IPackageTree[] { packageTree, dependentTree, sharedTree };
+
+            foreach (IPackageTree packageStub in packages)
+            {
+                foreach (IPackageTree retrievedPackage in packages)
+                {
+                    packageStub.Stub(x => x.Retrieve(retrievedPackage.Name)).Return(retrievedPackage);                    
+                }
+            }
+        }
+
+        [Fact]
+        public void Then_No_Exception_Is_Raised()
+        {
+            dependencyTree = new DependencyTree(packageTree);
+            Assert.NotNull(dependencyTree);
+        }
+    }
 }
