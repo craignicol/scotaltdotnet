@@ -12,6 +12,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
     using Utils.Framework;
     using Rhino.Mocks;
     using Xunit;
+    using System.IO;
 
     public class When_The_Builder_Receives_An_Install_Switch : Specification
     {
@@ -33,7 +34,9 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             packageTree = CreateStub<IPackageTree>();
 
-            var componentTree = new PackageTreeFragnentStub();
+            var componentTree = CreateStub<IPackageTree>();
+
+            componentTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\")).Repeat.Any();
 
             packageTree.Stub(x => x.Retrieve("horn")).Return(componentTree).Repeat.Once();
 
@@ -52,6 +55,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             packageTree.Stub(x => x.Retrieve("horn")).Return(packageTree).IgnoreArguments().Repeat.Once();
 
             packageTree.Stub(x => x.GetBuildMetaData()).Return(buildMetaData).IgnoreArguments().Repeat.Any();
+            componentTree.Stub(x => x.GetBuildMetaData()).Return(buildMetaData).IgnoreArguments().Repeat.Any();
         }
 
         [Fact]

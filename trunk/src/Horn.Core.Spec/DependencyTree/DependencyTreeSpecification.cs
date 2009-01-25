@@ -18,6 +18,7 @@
         protected IBuildMetaData rootBuildMetaData;
         protected IDependencyTree dependencyTree;
         protected IPackageTree packageTree;
+        protected IPackageTree dependentTree;
 
         protected override void Because()
         {
@@ -32,7 +33,7 @@
             packageTree.Stub(x => x.Name).Return("root");
             packageTree.Stub(x => x.GetBuildMetaData()).Return(rootBuildMetaData);
 
-            IPackageTree dependentTree = CreateStub<IPackageTree>();
+            dependentTree = CreateStub<IPackageTree>();
             dependentTree.Stub(x => x.Name).Return("simpleDependency");
             dependentTree.Stub(x => x.GetBuildMetaData()).Return(dependencyBuildMetaData);
             packageTree.Add(dependentTree);
@@ -43,10 +44,10 @@
         [Fact]
         public void Then_The_Dependency_Is_Built_Before_The_Root()
         {
-            dependencyTree = new DependencyTree(rootBuildMetaData, packageTree);
-            Assert.Contains(rootBuildMetaData, dependencyTree.BuildList);
-            Assert.Contains(dependencyBuildMetaData, dependencyTree.BuildList);
-            Assert.InRange(dependencyTree.BuildList.IndexOf(dependencyBuildMetaData), 0, dependencyTree.BuildList.IndexOf(rootBuildMetaData));
+            dependencyTree = new DependencyTree(packageTree);
+            Assert.Contains(packageTree, dependencyTree.BuildList);
+            Assert.Contains(dependentTree, dependencyTree.BuildList);
+            Assert.InRange(dependencyTree.BuildList.IndexOf(dependentTree), 0, dependencyTree.BuildList.IndexOf(packageTree));
         }
     }
 }

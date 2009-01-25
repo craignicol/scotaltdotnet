@@ -8,31 +8,29 @@ namespace Horn.Core.Spec.Unit.DependencyTree
 
     public class DependencyTree : IDependencyTree
     {
-        public DependencyTree(IBuildMetaData buildMetaData, IPackageTree packageTree)
+
+        public DependencyTree(IPackageTree packageTree)
         {
             PackageTree = packageTree;
-            BuildMetaData = buildMetaData;
-            BuildList = new List<IBuildMetaData>();
+            BuildList = new List<IPackageTree>();
 
-            CalculateDependencies(BuildMetaData);
+            CalculateDependencies(PackageTree);
         }
 
         public IPackageTree PackageTree { get; private set; }
-        public IBuildMetaData BuildMetaData { get; private set; }
-        public IList<IBuildMetaData> BuildList
+        public IList<IPackageTree> BuildList
         {
             get;
             private set;
         }
 
-        private void CalculateDependencies(IBuildMetaData buildMetaData)
+        private void CalculateDependencies(IPackageTree packageTree)
         {
             // Dependencies go first
-            buildMetaData.BuildEngine.Dependencies.ForEach(
-                dependency =>
-                    CalculateDependencies(PackageTree.Retrieve(dependency.Name).GetBuildMetaData()));
+            packageTree.GetBuildMetaData().BuildEngine.Dependencies.ForEach(
+                dependency => CalculateDependencies(PackageTree.Retrieve(dependency.Name)));
 
-            BuildList.Add(buildMetaData);
+            BuildList.Add(packageTree);
         }
     }
 }
