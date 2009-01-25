@@ -8,7 +8,7 @@ using System;
 namespace Horn.Core.PackageCommands
 {
     using dsl;
-    using Horn.Core.Spec.Unit.DependencyTree;
+    using Horn.Core.DependencyTree;
 
     public class PackageBuilder : IPackageCommand
     {

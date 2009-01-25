@@ -1,4 +1,4 @@
-namespace Horn.Core.Spec.Unit.DependencyTree
+namespace Horn.Core.DependencyTree
 {
     using System;
     using System.Collections.Generic;

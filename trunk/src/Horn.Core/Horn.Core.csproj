@@ -119,6 +119,7 @@
     <Compile Include="BuildEngines\Process\DiagnosticsProcessFactory.cs" />
     <Compile Include="BuildEngines\BuildTools\NAntBuildTool.cs" />
     <Compile Include="BuildEngines\BuildTools\RakeBuildTool.cs" />
+    <Compile Include="DependencyTree\CircularDependencyException.cs" />
     <Compile Include="DependencyTree\DependencyTree.cs" />
     <Compile Include="DependencyTree\IDependencyTree.cs" />
     <Compile Include="dsl\BuildMetadata\IBuildMetaData.cs" />

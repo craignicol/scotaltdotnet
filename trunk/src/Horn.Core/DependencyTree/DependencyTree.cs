@@ -1,4 +1,4 @@
-namespace Horn.Core.Spec.Unit.DependencyTree
+namespace Horn.Core.DependencyTree
 {
     using System;
     using System.Collections.Generic;
@@ -26,11 +26,16 @@ namespace Horn.Core.Spec.Unit.DependencyTree
 
         private void CalculateDependencies(IPackageTree packageTree)
         {
-            // Dependencies go first
+            if (BuildList.Contains(packageTree))
+            {
+                throw new CircularDependencyException(packageTree.Name);
+            }
+            // Insert dependencies before parents
+            BuildList.Insert(0, packageTree);
+
             packageTree.GetBuildMetaData().BuildEngine.Dependencies.ForEach(
                 dependency => CalculateDependencies(PackageTree.Retrieve(dependency.Name)));
 
-            BuildList.Add(packageTree);
         }
     }
 }
