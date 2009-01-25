@@ -25,20 +25,24 @@ namespace Horn.Core.PackageCommands
             
             IBuildMetaData buildMetaData = GetBuildMetaDataFor(packageTree, packageName);
 
-            IDependencyTree dependencyTree = GetDependencyTree(buildMetaData, componentTree);
+            IDependencyTree dependencyTree = GetDependencyTree(componentTree);
 
-            foreach (IBuildMetaData nextMetaData in dependencyTree.BuildList)
+            foreach (IPackageTree nextTree in dependencyTree.BuildList)
             {
+                IBuildMetaData nextMetaData = nextTree.GetBuildMetaData();
+
                 log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), nextMetaData.SourceControl.Url);
 
-                ExecuteSourceControlGet(nextMetaData, componentTree);            	
+                ExecuteSourceControlGet(nextMetaData, nextTree);            	
             }
 
-            foreach (IBuildMetaData nextMetaData in dependencyTree.BuildList)
+            foreach (IPackageTree nextTree in dependencyTree.BuildList)
             {
+                IBuildMetaData nextMetaData = nextTree.GetBuildMetaData();
+
                 log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine.BuildFile);
 
-                BuildComponentTree(nextMetaData, componentTree);
+                BuildComponentTree(nextMetaData, nextTree);
             }
 
             log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), packageName);
@@ -63,9 +67,9 @@ namespace Horn.Core.PackageCommands
             return packageTree.Retrieve(packageName).GetBuildMetaData();
         }
 
-        private IDependencyTree GetDependencyTree(IBuildMetaData buildMetaData, IPackageTree componentTree)
+        private IDependencyTree GetDependencyTree(IPackageTree componentTree)
         {
-            return new DependencyTree(buildMetaData, componentTree);
+            return new DependencyTree(componentTree);
         }
 
         private void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
