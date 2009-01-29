@@ -50,7 +50,7 @@ namespace Horn.Core.Integration.Builder
             }
         }
 
-        private string CreateDirectory(string directoryName)
+        protected string CreateDirectory(string directoryName)
         {
             var path = Path.Combine(DirectoryHelper.GetBaseDirectory(), directoryName);
 
