@@ -55,7 +55,7 @@ namespace Horn.Core.Integration.Builder
 
             DirectoryInfo dependentDir = new DirectoryInfo(dependentPath);
             dependentTree.Stub(x => x.OutputDirectory).Return(dependentDir);
-            File.Create(Path.Combine(dependentPath, "dependent.dll")).Close();
+            File.Create(Path.Combine(dependentPath, dependentFilename)).Close();
 
             packageTree.Stub(x => x.Retrieve("dependency")).Return(dependentTree);
         }
@@ -65,7 +65,8 @@ namespace Horn.Core.Integration.Builder
         {
             buildEngine.Build(new DiagnosticsProcessFactory(), packageTree);
 
-            Assert.True(File.Exists(Path.Combine(Path.Combine(workingPath, libDir), dependentFilename)));
+            string dependentLibFile = Path.Combine(Path.Combine(workingPath, libDir), dependentFilename);
+            Assert.True(File.Exists(dependentLibFile));
         }
     }
 }
