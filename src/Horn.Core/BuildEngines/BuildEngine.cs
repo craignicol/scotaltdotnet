@@ -5,6 +5,7 @@ using Horn.Core.PackageStructure;
 using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;
 using log4net;
+using System;
 
 namespace Horn.Core.BuildEngines
 {
@@ -44,6 +45,33 @@ namespace Horn.Core.BuildEngines
             Tasks = new List<string>(tasks);
         }
 
+        private void CopyDependenciesTo(IPackageTree packageTree)
+        {
+            foreach (Dependency dependency in Dependencies)
+            {
+                var sourceFiles = packageTree.Retrieve(dependency.Name).OutputDirectory.GetFiles();
+                var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.Location);
+
+                string targetDir;
+
+                if (possibleTargetDir.Length == 0)
+                {
+                    targetDir = packageTree.WorkingDirectory.CreateSubdirectory(dependency.Location).FullName;
+                }
+                else
+                {
+                    targetDir = possibleTargetDir[0].FullName;
+                }
+
+
+                foreach (FileInfo nextFile in sourceFiles)
+                {
+                    log.InfoFormat("Dependency: Copying {0} to {1} ...", nextFile.FullName, targetDir);
+                    nextFile.CopyTo(Path.Combine(targetDir, nextFile.Name), true);
+                }
+            }
+        }
+
         public virtual BuildEngine Build(IProcessFactory processFactory, IPackageTree packageTree)
         {
             string pathToBuildFile = GetBuildFilePath(packageTree);
@@ -51,6 +79,8 @@ namespace Horn.Core.BuildEngines
             var cmdLineArguments = BuildTool.CommandLineArguments(pathToBuildFile, this, packageTree, Version);
 
             var pathToBuildTool = BuildTool.PathToBuildTool(packageTree, Version);
+
+            CopyDependenciesTo(packageTree);
 
             IProcess process = processFactory.GetProcess(pathToBuildTool, cmdLineArguments, packageTree.WorkingDirectory.FullName);
 
