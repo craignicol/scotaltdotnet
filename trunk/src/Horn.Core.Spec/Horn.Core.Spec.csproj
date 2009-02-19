@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F454D3B6-6765-4F02-B985-E672FDEB652B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -177,8 +177,8 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>IF EXIST "$(TargetDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)BuildConfigs\Horn"
-IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" "$(TargetDir)horn.boo"
-IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" "$(TargetDir)log4net.boo"</PostBuildEvent>
+    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)"
+REM IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" "$(TargetDir)horn.boo"
+IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" "$(TargetDir)log4net.boo"</PostBuildEvent>
   </PropertyGroup>
 </Project>
