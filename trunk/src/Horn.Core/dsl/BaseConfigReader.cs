@@ -19,6 +19,8 @@ namespace Horn.Core.dsl
 
         public virtual SourceControl SourceControl { get; set; }
 
+        
+
         public abstract void Prepare();
 
         [Meta]
@@ -67,6 +69,16 @@ namespace Horn.Core.dsl
                 );
         }
 
+
+        [Meta]
+        public static Expression metadata(Expression action)
+        {
+            return new MethodInvocationExpression(
+                    new ReferenceExpression("AddMetaData"),
+                    action
+                );
+        }
+
         [Meta]
         public static Expression parameters(params StringLiteralExpression[] expressions)
         {
@@ -77,6 +89,20 @@ namespace Horn.Core.dsl
 
             return new MethodInvocationExpression(
                 new ReferenceExpression("SetParameters"),
+                arrayExpression
+            );
+        }
+
+        [Meta]
+        public static Expression data(params StringLiteralExpression[] expressions)
+        {
+            var arrayExpression = new ArrayLiteralExpression();
+
+            for (var i = 0; i < expressions.Length; i++)
+                arrayExpression.Items.Add(expressions[i]);
+
+            return new MethodInvocationExpression(
+                new ReferenceExpression("SetData"),
                 arrayExpression
             );
         }
@@ -118,6 +144,10 @@ namespace Horn.Core.dsl
             parametersDelegate();
         }
 
+        public void AddMetaData(Action dataDelegate)
+        {
+            dataDelegate();
+        }
 
         public void AssignTasks(Action tasksDelegate)
         {
@@ -129,6 +159,8 @@ namespace Horn.Core.dsl
             Description = text;
         }
 
+
+
         public void GetInstallerMeta(string installName, Action installDelegate)
         {
             InstallName = installName;
@@ -139,6 +171,11 @@ namespace Horn.Core.dsl
         protected void SetParameters(string[] parameters)
         {
             BuildEngine.AssignParameters(parameters);
+        }
+
+        protected void SetData(string[] parameters)
+        {
+            BuildEngine.AssignMataData(parameters);
         }
 
         protected void SetBuildTargets(string[] taskActions)
