@@ -15,6 +15,8 @@ namespace Horn.Core.BuildEngines
 
         public string BuildFile { get; private set; }
 
+        public Dictionary<string, string> MetaData { get; set; }
+
         public FrameworkVersion Version { get; private set; }
 
         public List<string> Tasks { get; private set; }
@@ -112,7 +114,22 @@ namespace Horn.Core.BuildEngines
 
             Version = version;
 
+            MetaData = new Dictionary<string, string>();
+
             Dependencies = new List<Dependency>();
+        }
+
+        public void AssignMataData(string[] parameters)
+        {
+            if ((parameters == null) || (parameters.Length == 0))
+                return;
+
+            parameters.ForEach(x =>
+            {
+                var parts = x.Split('=');
+
+                MetaData.Add(parts[0], parts[1]);
+            });
         }
     }
 }
