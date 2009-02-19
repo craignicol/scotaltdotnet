@@ -58,7 +58,12 @@ namespace Horn.Core.Spec.Unit.dsl
     {
         protected override void Because()
         {
-            rootDirectory = new DirectoryInfo(DirectoryHelper.GetBaseDirectory().ToLower());
+            var directoryWithNoBooFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "nonexistent");
+
+            if (!Directory.Exists(directoryWithNoBooFile))
+                Directory.CreateDirectory(directoryWithNoBooFile);
+
+            rootDirectory = new DirectoryInfo(directoryWithNoBooFile);
 
             reader = new BuildConfigReader();
         }
