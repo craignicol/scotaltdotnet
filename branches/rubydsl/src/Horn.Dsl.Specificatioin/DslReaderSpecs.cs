@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Horn.Dsl.Specificatioin
 {
-    public class When_given_a_dsl_file_path : Specification
+    public class When_requesting_a_string_value_from_iron_ruby : Specification
     {
         private string buildFile;
 
@@ -16,18 +16,20 @@ namespace Horn.Dsl.Specificatioin
         }
 
         [Fact]
-        public void Then_the_dsl_is_parsed()
-        {            
-            
+        public void Then_a_string_type_is_returned()
+        {                       
             var engine = Ruby.CreateEngine();
 
+            var scope = Ruby.CreateRuntime().CreateScope();
             engine.ExecuteFile(buildFile);
 
-            var code = String.Format("{0}.new.method :{1}", "Builder", "do_it");
+            var code = String.Format("{0}.new.method :{1}", "SimpleType", "return_string");
 
             var action = engine.CreateScriptSourceFromString(code).Execute();
 
             var result = engine.Operations.Call(action);
+
+            Assert.Equal(result.ToString(), "This should be returned");
         }
     }
 }

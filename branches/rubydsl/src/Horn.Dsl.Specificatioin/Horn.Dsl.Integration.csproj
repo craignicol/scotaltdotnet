@@ -86,7 +86,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BuildConfigs\build.rb" />
+    <Folder Include="BuildConfigs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -97,6 +97,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\build.rb" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" "$(TargetDir)build.rb"</PostBuildEvent>
+    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\build.rb" copy /y "$(ProjectDir)BuildConfigs\build.rb" "$(TargetDir)build.rb"</PostBuildEvent>
   </PropertyGroup>
 </Project>
