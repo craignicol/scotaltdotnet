@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
+using Horn.Core.DSL.Domain;
 using IronRuby;
-using Microsoft.Scripting.Hosting;
 using Xunit;
 
 namespace Horn.Dsl.Specificatioin
 {
-    public class When_requesting_a_string_value_from_iron_ruby : Specification
+    public class When_parsing_a_build_file : Specification
     {
         private string buildFile;
 
@@ -16,20 +16,19 @@ namespace Horn.Dsl.Specificatioin
         }
 
         [Fact]
-        public void Then_a_string_type_is_returned()
+        public void Then_a_build_metadata_object_is_returned()
         {                       
             var engine = Ruby.CreateEngine();
 
-            var scope = Ruby.CreateRuntime().CreateScope();
             engine.ExecuteFile(buildFile);
 
-            var code = String.Format("{0}.new.method :{1}", "SimpleType", "return_string");
+            var code = String.Format("{0}.new.method :{1}", "MetaDataFactory", "return_meta_data");
 
             var action = engine.CreateScriptSourceFromString(code).Execute();
 
-            var result = engine.Operations.Call(action);
+            var result = (BuildMetaData)engine.Operations.Call(action);
 
-            Assert.Equal(result.ToString(), "This should be returned");
+            Assert.Equal(result.Description, "A description of sorts");
         }
     }
 }
