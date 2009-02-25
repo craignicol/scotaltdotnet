@@ -80,6 +80,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Horn.Core.DSL.Domain\Horn.Core.DSL.Domain.csproj">
+      <Project>{609B1E4E-3389-40E7-9AE4-0C186039892E}</Project>
+      <Name>Horn.Core.DSL.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Horn.Spec.Framework\Horn.Spec.Framework.csproj">
       <Project>{03B7A9D2-30E7-4EBB-A91F-AB06F8AC1EE9}</Project>
       <Name>Horn.Spec.Framework</Name>
