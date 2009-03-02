@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Horn.Core.DSL.Domain;
 using IronRuby;
 using IronRuby.Builtins;
@@ -27,9 +29,15 @@ namespace Horn.Dsl.Specificatioin
 
             var instance = (RubyObject)engine.Operations.CreateInstance(klass);
 
-            var result = (Horn.Core.DSL.Domain.BuildMetaData)engine.Operations.InvokeMember(instance, "return_meta_data");
+            var return_meta_data = engine.Operations.InvokeMember(instance, "return_meta_data");
 
-            //Assert.Equal(result.Description, "A description of sorts");
+            var description = return_meta_data.GetType().GetProperty("Description", typeof(string)).GetValue(return_meta_data, null);
+
+            var dependencies = return_meta_data.GetType().GetProperties()[1].GetValue(return_meta_data, null);
+
+            Assert.Equal(description, "A description of sorts");
+
+            Assert.Equal(((List<Dependency>) dependencies).Count, 1);
         }
     }
 }
