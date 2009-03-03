@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horn.Core.Integration", "Horn.Core.Integration\Horn.Core.Integration.csproj", "{BA9C5A30-FC54-48D0-BA59-E48BDCA75777}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horn.Dsl.Integration", "Horn.Dsl.Specificatioin\Horn.Dsl.Integration.csproj", "{2EAD127F-04B5-4CEA-B761-5C818D57B13B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horn.Dsl.Specification", "Horn.Dsl.Specificatioin\Horn.Dsl.Specification.csproj", "{2EAD127F-04B5-4CEA-B761-5C818D57B13B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horn.Core.DSL.Domain", "Horn.Core.DSL.Domain\Horn.Core.DSL.Domain.csproj", "{609B1E4E-3389-40E7-9AE4-0C186039892E}"
 EndProject
