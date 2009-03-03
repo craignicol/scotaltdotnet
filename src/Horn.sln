@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horn.Core.Integration", "Ho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horn.Core.DSL.Domain", "Horn.Core.DSL.Domain\Horn.Core.DSL.Domain.csproj", "{609B1E4E-3389-40E7-9AE4-0C186039892E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horn.Dsl.Specification", "Horn.Dsl.Specification\Horn.Dsl.Specification.csproj", "{2EAD127F-04B5-4CEA-B761-5C818D57B13B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horn.Dsl.Spec", "Horn.Dsl.Specification\Horn.Dsl.Spec.csproj", "{2EAD127F-04B5-4CEA-B761-5C818D57B13B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
