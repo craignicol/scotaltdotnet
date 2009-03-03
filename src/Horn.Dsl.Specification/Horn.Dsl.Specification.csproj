@@ -8,8 +8,8 @@
     <ProjectGuid>{2EAD127F-04B5-4CEA-B761-5C818D57B13B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Horn.Dsl.Specificatioin</RootNamespace>
-    <AssemblyName>Horn.Dsl.Specificatioin</AssemblyName>
+    <RootNamespace>Horn.Dsl.Spec</RootNamespace>
+    <AssemblyName>Horn.Dsl.Spec</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
