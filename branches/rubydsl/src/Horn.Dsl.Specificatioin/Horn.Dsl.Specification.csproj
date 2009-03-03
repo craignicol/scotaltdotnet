@@ -106,6 +106,8 @@
   <PropertyGroup>
     <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\build.rb" copy /y "$(ProjectDir)BuildConfigs\build.rb" "$(TargetDir)build.rb"
 
-IF EXIST "$(ProjectDir)BuildConfigs\test.rb" copy /y "$(ProjectDir)BuildConfigs\test.rb" "$(TargetDir)test.rb"</PostBuildEvent>
+IF EXIST "$(ProjectDir)BuildConfigs\test.rb" copy /y "$(ProjectDir)BuildConfigs\test.rb" "$(TargetDir)test.rb"
+
+IF EXIST "$(ProjectDir)BuildConfigs\horn.rb" copy /y "$(ProjectDir)BuildConfigs\horn.rb" "$(TargetDir)horn.rb"</PostBuildEvent>
   </PropertyGroup>
 </Project>
