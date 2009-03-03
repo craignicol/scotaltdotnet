@@ -15,7 +15,7 @@ namespace Horn.Dsl.Specificatioin
 
         protected override void Because()
         {
-            buildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "build.rb");
+            buildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.rb");
         }
 
         [Fact]
@@ -23,21 +23,19 @@ namespace Horn.Dsl.Specificatioin
         {                       
             var engine = Ruby.CreateEngine();
 
+            engine.Runtime.LoadAssembly(typeof (BuildMetaData).Assembly);
+
             engine.ExecuteFile(buildFile);
 
             var klass = engine.Runtime.Globals.GetVariable("MetaDataFactory");
 
             var instance = (RubyObject)engine.Operations.CreateInstance(klass);
 
-            var return_meta_data = engine.Operations.InvokeMember(instance, "return_meta_data");
+            var metaData = (BuildMetaData)engine.Operations.InvokeMember(instance, "return_meta_data");
 
-            var description = return_meta_data.GetType().GetProperty("Description", typeof(string)).GetValue(return_meta_data, null);
+            Assert.Equal(metaData.Description, "A description of sorts");
 
-            var dependencies = return_meta_data.GetType().GetProperties()[1].GetValue(return_meta_data, null);
-
-            Assert.Equal(description, "A description of sorts");
-
-            Assert.Equal(((List<Dependency>) dependencies).Count, 1);
+            Assert.Equal(metaData.Dependencies.Count, 1);
         }
     }
 }
