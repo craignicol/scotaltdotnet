@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Horn.Dsl.Specificatioin
 {
-    public class When_parsing_a_build_file : Specification
+    public class When_creating_a_clr_object_in_ironruby : Specification
     {
         private string buildFile;
 
@@ -19,7 +19,7 @@ namespace Horn.Dsl.Specificatioin
         }
 
         [Fact]
-        public void Then_a_build_metadata_object_is_returned()
+        public void Then_the_object_should_be_accessible_in_csharp()
         {                       
             var engine = Ruby.CreateEngine();
 
