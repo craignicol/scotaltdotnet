@@ -1,3 +1,3 @@
-describe User do
+class User
   
 end

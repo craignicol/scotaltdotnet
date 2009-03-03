@@ -29,6 +29,9 @@ namespace Horn.Dsl.Specific
 
             var instance = (RubyObject)engine.Operations.CreateInstance(klass);
 
+
+            //You must have shadow-copying turned off for the next line to run and for the test to pass.
+            //E.g. in R# go to "ReSharper/Options/Unit Testing/Shadow-Copy Assemblies being tested" should be un-checked.
             var metaData = (BuildMetaData)engine.Operations.InvokeMember(instance, "return_meta_data");
 
             Assert.Equal(metaData.Description, "A description of sorts");
