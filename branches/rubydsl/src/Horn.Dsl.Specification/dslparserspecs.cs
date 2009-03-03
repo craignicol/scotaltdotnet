@@ -1,4 +1,4 @@
-namespace Horn.Dsl.Specificatioin
+namespace Horn.Dsl.Spec
 {
     public class dslparserspecs
     {

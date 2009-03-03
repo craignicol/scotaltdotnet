@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using Horn.Core.DSL.Domain;
 using IronRuby;
 using IronRuby.Builtins;
 using Xunit;
 
-namespace Horn.Dsl.Specificatioin
+namespace Horn.Dsl.Specific
 {
     public class When_creating_a_clr_object_in_ironruby : Specification
     {
