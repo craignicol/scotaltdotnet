@@ -1,4 +1,4 @@
-require 'horn'
+require 'hornbuild'
 
 describe "something to do" do
   it "should be able to store a descrption" do
