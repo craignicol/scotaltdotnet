@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Horn.Core.Dsl;
 using IronRuby;
 using Xunit;
@@ -9,6 +11,8 @@ namespace Horn.Dsl.Spec
     public class When_an_install_of_horn_with_a_description_is_given : Specification
     {
         private string buildFile;
+
+        private BuildMetaData buildMetaData;
 
         protected override void Before_each_spec()
         {
@@ -23,13 +27,17 @@ namespace Horn.Dsl.Spec
 
             engine.ExecuteFile(buildFile);
 
-            var klass = engine.Runtime.Globals.GetVariable("get_metadata");
+            var klass = engine.Runtime.Globals.GetVariable("ClrAccessor");
+
+            var instance = engine.Operations.CreateInstance(klass);
+
+            buildMetaData = (BuildMetaData)engine.Operations.InvokeMember(instance, "get_build_metadata");
         }
 
         [Fact]
         public void Then_the_meta_data_object_should_be_created()
         {
-            
+            Assert.Equal("A .NET build and dependency manager", buildMetaData.Description);
         }
     }
 }
