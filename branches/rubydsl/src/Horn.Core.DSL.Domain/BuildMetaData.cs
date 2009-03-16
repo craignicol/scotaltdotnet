@@ -1,6 +1,6 @@
 //using System.Collections.Generic;
 
-//namespace Horn.Core.DSL.Domain
+//CallTree.Domain
 //{
 //    public class BuildMetaData
 //    {

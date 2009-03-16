@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using IronRuby;
 using IronRuby.Builtins;
 using Xunit;

@@ -1,5 +1,5 @@
 using System;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 using Horn.Framework.helpers;

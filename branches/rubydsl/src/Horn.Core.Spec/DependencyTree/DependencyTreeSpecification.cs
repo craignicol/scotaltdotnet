@@ -9,7 +9,7 @@
     using Xunit;
     using System.IO;
     using Horn.Core.Spec.BuildEngine;
-    using Horn.Core.dsl;
+    using Horn.Core.Dsl;
     using Rhino.Mocks;
     using Horn.Core.DependencyTree;
 

@@ -5,7 +5,7 @@ using Rhino.DSL;
 
 namespace Horn.Core.Spec.Unit.dsl
 {
-    using Core.dsl;
+    using Core.Dsl;
     using Rhino.Mocks;
     using Xunit;
 

@@ -1,4 +1,4 @@
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl

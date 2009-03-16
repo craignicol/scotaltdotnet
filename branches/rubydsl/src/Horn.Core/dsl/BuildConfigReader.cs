@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Rhino.DSL;
 
-namespace Horn.Core.dsl
+namespace Horn.Core.Dsl
 {
     public class BuildConfigReader : IBuildConfigReader
     {

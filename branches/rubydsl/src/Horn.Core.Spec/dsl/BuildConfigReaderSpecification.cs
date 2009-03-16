@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Horn.Core.SCM;
 using Horn.Core.Spec.Unit.Get;
 using Horn.Framework.helpers;

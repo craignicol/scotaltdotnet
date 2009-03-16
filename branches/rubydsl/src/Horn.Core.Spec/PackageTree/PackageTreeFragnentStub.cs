@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
 
 namespace Horn.Core.Spec.Unit.HornTree

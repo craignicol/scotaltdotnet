@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 
 namespace Horn.Core.PackageStructure
 {
