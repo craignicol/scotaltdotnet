@@ -5,6 +5,8 @@ namespace Horn.Core.dsl
 {
     public class BuildMetaData : IBuildMetaData
     {
+        public string Description { get; set; }
+
         public BuildEngine BuildEngine { get; set; }
 
         public SourceControl SourceControl { get; set; }

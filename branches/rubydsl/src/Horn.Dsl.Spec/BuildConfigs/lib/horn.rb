@@ -1,4 +1,10 @@
 require 'lib/dsl'
-class BuildMetaData
+class MetaData    
   include Horn::Dsl::Main
+  
+  attr_accessor :desc
+  
+  def setDescription(desc)
+    @desc = desc
+  end
 end

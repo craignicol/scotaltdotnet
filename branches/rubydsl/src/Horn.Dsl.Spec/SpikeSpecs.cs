@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using Horn.Core.DSL.Domain;
+using Horn.Core.dsl;
 using IronRuby;
 using IronRuby.Builtins;
 using Xunit;
 
-namespace Horn.Dsl.Specific
+namespace Horn.Dsl.Spec
 {
     public class When_creating_a_clr_object_in_ironruby : Specification
     {
@@ -13,7 +13,7 @@ namespace Horn.Dsl.Specific
 
         protected override void Because()
         {
-            buildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.rb");
+            buildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "rubyspike.rb");
         }
 
         [Fact]
@@ -34,8 +34,6 @@ namespace Horn.Dsl.Specific
             var metaData = (BuildMetaData)engine.Operations.InvokeMember(instance, "return_meta_data");
 
             Assert.Equal(metaData.Description, "A description of sorts");
-
-            Assert.Equal(metaData.Dependencies.Count, 1);
         }
     }
 }
