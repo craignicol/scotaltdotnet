@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dslparserspecs.cs" />
+    <Compile Include="MetaDataSpecs.cs" />
     <Compile Include="SpikeSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,6 +85,10 @@
     <ProjectReference Include="..\Horn.Core.DSL.Domain\Horn.Core.DSL.Domain.csproj">
       <Project>{609B1E4E-3389-40E7-9AE4-0C186039892E}</Project>
       <Name>Horn.Core.DSL.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Horn.Core\Horn.Core.csproj">
+      <Project>{093CFA20-D720-4C58-9B8F-754F03A40D16}</Project>
+      <Name>Horn.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Horn.Spec.Framework\Horn.Spec.Framework.csproj">
       <Project>{03B7A9D2-30E7-4EBB-A91F-AB06F8AC1EE9}</Project>
@@ -105,10 +110,12 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\build.rb" copy /y "$(ProjectDir)BuildConfigs\build.rb" "$(TargetDir)build.rb"
+    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\rubyspike.rb" copy /y "$(ProjectDir)BuildConfigs\rubyspike.rb" "$(TargetDir)rubyspike.rb"
 
-IF EXIST "$(ProjectDir)BuildConfigs\test.rb" copy /y "$(ProjectDir)BuildConfigs\test.rb" "$(TargetDir)test.rb"
+IF EXIST "$(ProjectDir)BuildConfigs\hornbuild.rb" copy /y "$(ProjectDir)BuildConfigs\hornbuild.rb" "$(TargetDir)hornbuild.rb"
 
-IF EXIST "$(ProjectDir)BuildConfigs\horn.rb" copy /y "$(ProjectDir)BuildConfigs\horn.rb" "$(TargetDir)horn.rb"</PostBuildEvent>
+IF EXIST "$(ProjectDir)BuildConfigs\description_example.rb" copy /y "$(ProjectDir)BuildConfigs\description_example.rb" "$(TargetDir)description_example.rb"
+
+IF EXIST "$(ProjectDir)BuildConfigs\lib" xcopy /s /y /c "$(ProjectDir)BuildConfigs\lib" "$(TargetDir)lib"</PostBuildEvent>
   </PropertyGroup>
 </Project>
