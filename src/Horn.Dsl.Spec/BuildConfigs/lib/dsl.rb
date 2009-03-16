@@ -1,12 +1,9 @@
 module MetaBuilder
   module Dsl
     module Main
-      attr_accessor :metadata
-      def install(name, &block)
-        @metadata = Horn::Core::Dsl::BuildMetaData.new
+      
+      def install(name, &block)        
         yield self if block_given?
-        #puts @metadata.description
-        puts "it works"
       end
 
       def get_from(name, url)
@@ -15,14 +12,37 @@ module MetaBuilder
       end
 
       def description(desc)
-         @metadata.Description = desc
-      end
-       
-      def get_metadata
-          @metadata
-      end
+         wrapper.metadata.Description = desc
+      end       
 
+      class MetaDataAccessor
+        attr_accessor :metadata
+        
+        private
+        def initialize
+          @metadata = Horn::Core::Dsl::BuildMetaData.new
+        end
+        
+        public
+        def self.instance
+          @@instance ||= new
+        end
+        
+        def self.get_metadata
+            @metadata
+        end        
+      end
     end
+  end
+end
+
+def wrapper
+  MetaBuilder::Dsl::Main::MetaDataAccessor.instance
+end
+
+class ClrAccessor
+  def get_build_metadata
+    wrapper.metadata
   end
 end
 
