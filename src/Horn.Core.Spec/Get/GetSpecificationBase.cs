@@ -1,5 +1,5 @@
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;

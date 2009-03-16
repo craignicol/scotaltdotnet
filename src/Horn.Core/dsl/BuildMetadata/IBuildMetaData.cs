@@ -1,7 +1,7 @@
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
 
-namespace Horn.Core.dsl
+namespace Horn.Core.Dsl
 {
     public interface IBuildMetaData
     {

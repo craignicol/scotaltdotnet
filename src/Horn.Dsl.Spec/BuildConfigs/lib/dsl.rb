@@ -1,9 +1,9 @@
-module Builder
+module MetaBuilder
   module Dsl
     module Main
       attr_accessor :metadata
       def install(name, &block)
-        @metadata = Horn::Core::dsl::BuildMetaData.new
+        @metadata = Horn::Core::Dsl::BuildMetaData.new
         yield self if block_given?
         #puts @metadata.description
         puts "it works"
@@ -15,7 +15,7 @@ module Builder
       end
 
       def description(desc)
-         @metadata.Desription = desc         
+         @metadata.Description = desc
       end
        
       def get_metadata
@@ -26,4 +26,4 @@ module Builder
   end
 end
 
-include Builder::Dsl::Main
+include MetaBuilder::Dsl::Main

@@ -1,7 +1,7 @@
 using Boo.Lang.Compiler.Ast;
 using Boo.Lang.Compiler.Steps;
 
-namespace Horn.Core.dsl
+namespace Horn.Core.Dsl
 {
     public class RightShiftToMethodCompilerStep : AbstractTransformerCompilerStep
     {

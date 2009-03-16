@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Horn.Core.dsl
+namespace Horn.Core.Dsl
 {
     public interface IBuildConfigReader
     {

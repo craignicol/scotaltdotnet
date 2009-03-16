@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
-using Castle.Core;
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
 using Horn.Core.Utils.Framework;
 
-namespace Horn.Core.dsl
+namespace Horn.Core.Dsl
 {
     public abstract class BaseConfigReader
     {

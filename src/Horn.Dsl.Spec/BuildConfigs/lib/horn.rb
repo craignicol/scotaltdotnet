@@ -1,6 +1,6 @@
 require 'lib/dsl'
 class MetaData    
-  include Horn::Dsl::Main
+  include MetaBuilder::Dsl::Main
   
   attr_accessor :desc
   

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Horn.Core.SCM;
 using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;

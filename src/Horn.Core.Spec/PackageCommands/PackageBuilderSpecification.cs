@@ -1,7 +1,7 @@
 namespace Horn.Core.Spec.Unit.PackageCommands
 {
     using System.Collections.Generic;
-    using Core.dsl;
+    using Core.Dsl;
     using GetOperations;
     using Core.PackageCommands;
     using PackageStructure;

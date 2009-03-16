@@ -1,5 +1,5 @@
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Horn.Core.SCM;
 using Rhino.Mocks;
 using Horn.Core.PackageStructure;
