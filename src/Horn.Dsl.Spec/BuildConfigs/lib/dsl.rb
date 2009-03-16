@@ -12,7 +12,7 @@ module MetaBuilder
       end
 
       def description(desc)
-         wrapper.metadata.Description = desc
+         meta.metadata.Description = desc
       end       
 
       class MetaDataAccessor
@@ -36,13 +36,13 @@ module MetaBuilder
   end
 end
 
-def wrapper
+def meta
   MetaBuilder::Dsl::Main::MetaDataAccessor.instance
 end
 
 class ClrAccessor
   def get_build_metadata
-    wrapper.metadata
+    meta.metadata
   end
 end
 
