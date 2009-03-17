@@ -7,8 +7,9 @@ module MetaBuilder
       end
 
       def get_from(name, url)
-        puts name
-        puts url
+        case name
+          when :svn then meta.metadata.SourceControl = Horn::Core::SCM::SVNSourceControl.new(url)
+        end
       end
 
       def description(desc)
