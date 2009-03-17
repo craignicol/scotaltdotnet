@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="dslparserspecs.cs" />
+    <Compile Include="Helpers\DlrHelper.cs" />
     <Compile Include="MetaDataSpecs.cs" />
     <Compile Include="SpikeSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,12 +111,10 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\rubyspike.rb" copy /y "$(ProjectDir)BuildConfigs\rubyspike.rb" "$(TargetDir)rubyspike.rb"
+    <PostBuildEvent>IF NOT EXIST "$(ProjectDir)BuildConfigs\lib" mkdir "$(ProjectDir)BuildConfigs\lib"
 
-IF EXIST "$(ProjectDir)BuildConfigs\hornbuild.rb" copy /y "$(ProjectDir)BuildConfigs\hornbuild.rb" "$(TargetDir)hornbuild.rb"
+IF EXIST "$(ProjectDir)BuildConfigs\lib" xcopy /s /y /c /i "$(ProjectDir)BuildConfigs\lib" "$(TargetDir)lib"
 
-IF EXIST "$(ProjectDir)BuildConfigs\description_example.rb" copy /y "$(ProjectDir)BuildConfigs\description_example.rb" "$(TargetDir)description_example.rb"
-
-IF EXIST "$(ProjectDir)BuildConfigs\lib" xcopy /s /y /c "$(ProjectDir)BuildConfigs\lib" "$(TargetDir)lib"</PostBuildEvent>
+IF EXIST "$(ProjectDir)BuildConfigs\description_example.rb" copy /y "$(ProjectDir)BuildConfigs\*.rb" "$(TargetDir)*.rb"</PostBuildEvent>
   </PropertyGroup>
 </Project>
