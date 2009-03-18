@@ -23,7 +23,7 @@ namespace Horn.Core.Spec.BuildEngine
             
             buildToolStub = CreateStub<IBuildTool>();
 
-            buildEngine = new BuildEngine(buildToolStub, "deeper/than/this/somebuild.file", FrameworkVersion.frameworkVersion35);
+            buildEngine = new BuildEngine(buildToolStub, "deeper/than/this/somebuild.file", FrameworkVersion.FrameworkVersion35);
             
             buildEngine.Build(new StubProcessFactory(), packageTree);
         }
@@ -43,7 +43,7 @@ namespace Horn.Core.Spec.BuildEngine
 
         protected override void Because()
         {            
-            buildEngine = new BuildEngine(null, "", FrameworkVersion.frameworkVersion35);
+            buildEngine = new BuildEngine(null, "", FrameworkVersion.FrameworkVersion35);
 
             buildEngine.AssignParameters(switches);
         }

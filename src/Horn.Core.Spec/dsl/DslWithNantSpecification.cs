@@ -44,7 +44,7 @@ namespace Horn.Core.Spec.Unit.dsl
         public void Then_The_Build_Tool_Renders_The_Expected_Arguments()
         {
             var actual = buildTool.CommandLineArguments("Horn.build", configReader.BuildEngine, packageTree,
-                                                        FrameworkVersion.frameworkVersion35);
+                                                        FrameworkVersion.FrameworkVersion35);
 
             Assert.Equal(EXPECTED_CMD_LINE_ARGUMENTS, actual);
         }

@@ -22,7 +22,7 @@ namespace Horn.Core.Spec.BuildEngine
             IBuildTool nant = configReader.BuildEngine.BuildTool;
 
             var cmdLineArgs = nant.CommandLineArguments("Horn.build", configReader.BuildEngine, packageTree,
-                                                        FrameworkVersion.frameworkVersion35).Trim();
+                                                        FrameworkVersion.FrameworkVersion35).Trim();
 
             Assert.Equal(EXPECTED, cmdLineArgs);
         }

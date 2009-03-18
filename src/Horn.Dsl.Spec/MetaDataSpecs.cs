@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using Horn.Core;
 using Horn.Core.Dsl;
 using Horn.Core.SCM;
+using Horn.Core.Utils.Framework;
 using Horn.Dsl.Spec.Helpers;
 using IronRuby;
 using Xunit;
@@ -51,6 +53,33 @@ namespace Horn.Dsl.Spec
         public void Then_the_meta_data_contains_a_svn_source_control_reference()
         {
             Assert.IsAssignableFrom<SVNSourceControl>(buildMetaData.SourceControl);
+        }
+    }
+
+    public class When_the_metadata_specifies_which_build_engine_to_build_with : Specification
+    {
+        private string buildFile;
+
+        private BuildMetaData buildMetaData;
+
+        protected override void Before_each_spec()
+        {
+            buildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "build_with_example.rb");
+        }
+
+        protected override void Because()
+        {
+            buildMetaData = DlrHelper.RetrieveBuildMetaDataFromTheDlr(buildFile, "ClrAccessor", "get_build_metadata");
+        }
+
+        [Fact]
+        public void Then_the_meta_data_contains_a_svn_source_control_reference()
+        {
+            Assert.Equal("src/horn.sln", buildMetaData.BuildEngine.BuildFile);
+
+            Assert.Equal(FrameworkVersion.FrameworkVersion35, buildMetaData.BuildEngine.Version);
+
+            Assert.IsAssignableFrom<MSBuildBuildTool>(buildMetaData.BuildEngine.BuildTool);
         }
     }
 }

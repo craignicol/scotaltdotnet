@@ -2,14 +2,32 @@ module MetaBuilder
   module Dsl
     module Main
       
+      BuildEngines = Horn::Core::BuildEngines
+      Framework = Horn::Core::Utils::Framework
+      
       def install(name, &block)        
         yield self if block_given?
       end
+      
+      def build_with(buildEngine, version, options = {})
+        raise "No such buildengine is implemented" unless respond_to? buildEngine
+        buildTool = send(buildEngine)
+        
+        frameWorkVersion = version == :FrameworkVersion2 ? Framework::FrameworkVersion.FrameworkVersion2 : Framework::FrameworkVersion.FrameworkVersion35
+        meta.metadata.BuildEngine = BuildEngines::BuildEngine.new(buildTool, options[:buildfile], frameWorkVersion)
+      end
+      
+      def msbuild()
+        Horn::Core::MSBuildBuildTool.new
+      end
 
-      def get_from(name, url)
-        case name
-          when :svn then meta.metadata.SourceControl = Horn::Core::SCM::SVNSourceControl.new(url)
-        end
+      def get_from(scm, url)
+        raise "No such source control manager is implemented" unless respond_to? scm
+        send(scm, url)
+      end
+      
+      def svn(url)
+        meta.metadata.SourceControl = SCM::SVNSourceControl.new(url)
       end
 
       def description(desc)
