@@ -8,8 +8,8 @@ namespace Horn.Core.Utils.Framework
 {
     public enum FrameworkVersion
     {
-        frameworkVersion2,
-        frameworkVersion35
+        FrameworkVersion2,
+        FrameworkVersion35
     }
 
     public class Framework
@@ -44,8 +44,8 @@ namespace Horn.Core.Utils.Framework
             else
                 root = currentVersion.Substring(0, currentVersion.LastIndexOf("\\Framework64\\") + "\\Framework64\\".Length);
 
-            assemblyPaths.Add(FrameworkVersion.frameworkVersion2, Path.Combine(root, "v2.0.50727"));
-            assemblyPaths.Add(FrameworkVersion.frameworkVersion35, Path.Combine(root, "v3.5"));
+            assemblyPaths.Add(FrameworkVersion.FrameworkVersion2, Path.Combine(root, "v2.0.50727"));
+            assemblyPaths.Add(FrameworkVersion.FrameworkVersion35, Path.Combine(root, "v3.5"));
         }
     }
 }

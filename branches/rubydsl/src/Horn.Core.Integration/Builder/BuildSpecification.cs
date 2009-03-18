@@ -18,7 +18,7 @@ namespace Horn.Core.Integration.Builder
 
             var solutionPath = Path.Combine(rootPath, "Horn.sln");
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.frameworkVersion35);
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35);
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace Horn.Core.Integration.Builder
 
             var solutionPath = Path.Combine(rootPath, "Horn.sln");
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.frameworkVersion35);
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35);
             libDir = "lib";
 
             string dependentPath = CreateDirectory("Dependent");

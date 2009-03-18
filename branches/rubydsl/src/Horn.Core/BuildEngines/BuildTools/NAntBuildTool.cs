@@ -24,9 +24,9 @@ namespace Horn.Core
         {
             switch (version)
             {
-                case FrameworkVersion.frameworkVersion2:
+                case FrameworkVersion.FrameworkVersion2:
                     return "2.0";
-                case FrameworkVersion.frameworkVersion35:
+                case FrameworkVersion.FrameworkVersion35:
                     return "3.5";
             }
 

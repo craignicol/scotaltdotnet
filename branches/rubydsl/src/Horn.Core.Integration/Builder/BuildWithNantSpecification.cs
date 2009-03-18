@@ -24,7 +24,7 @@ namespace Horn.Core.Integration.Builder
 
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(workingPath)).Repeat.Once();
 
-            buildEngine = new BuildEngine(new NAntBuildTool(), path, FrameworkVersion.frameworkVersion35);
+            buildEngine = new BuildEngine(new NAntBuildTool(), path, FrameworkVersion.FrameworkVersion35);
 
             buildEngine.AssignParameters(new[] { "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "common.testrunner.failonerror=true", "build.msbuild=true"});
 

@@ -42,7 +42,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             var buildTool = new BuildToolStub();
 
-            var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.frameworkVersion35);
+            var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35);
 
             baseConfigReader.BuildEngine = buildEngine;
 
