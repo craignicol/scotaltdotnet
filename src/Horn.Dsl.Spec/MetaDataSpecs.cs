@@ -82,4 +82,27 @@ namespace Horn.Dsl.Spec
             Assert.IsAssignableFrom<MSBuildBuildTool>(buildMetaData.BuildEngine.BuildTool);
         }
     }
+
+    public class When_the_metadata_specifies_project_info : Specification
+    {
+        private string buildFile;
+
+        private BuildMetaData buildMetaData;
+
+        protected override void Before_each_spec()
+        {
+            buildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "meta_data_example.rb");
+        }
+
+        protected override void Because()
+        {
+            buildMetaData = DlrHelper.RetrieveBuildMetaDataFromTheDlr(buildFile, "ClrAccessor", "get_build_metadata");
+        }
+
+        [Fact]
+        public void Then_the_project_info_will_contain_home_page_details()
+        {
+            Assert.Equal(buildMetaData.ProjectInfo["homepage"], "http://code.google.com/p/scotaltdotnet/");
+        }
+    }
 }

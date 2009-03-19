@@ -1,10 +1,11 @@
 module MetaBuilder
   module Dsl
     module Main
-      
+
+=begin
       BuildEngines = Horn::Core::BuildEngines
       Framework = Horn::Core::Utils::Framework
-      
+=end      
       def install(name, &block)        
         yield self if block_given?
       end
@@ -32,7 +33,29 @@ module MetaBuilder
 
       def description(desc)
          meta.metadata.Description = desc
-      end       
+       end
+
+      class ProjectInfo        
+        
+        class << self
+          def instance
+            @@projectInstance ||= new
+          end          
+        end
+        
+        private
+        def initialize
+        end
+        
+        public
+        def method_missing(meth, *args, &block)
+          puts "here"
+        end
+        
+        def Info
+          yield
+        end
+      end
 
       class MetaDataAccessor
         attr_accessor :metadata
@@ -44,7 +67,7 @@ module MetaBuilder
         
         public
         def self.instance
-          @@instance ||= new
+          @@metaInstance ||= new
         end
         
         def self.get_metadata
@@ -57,6 +80,10 @@ end
 
 def meta
   MetaBuilder::Dsl::Main::MetaDataAccessor.instance
+end
+
+def project
+  MetaBuilder::Dsl::Main::ProjectInfo.instance
 end
 
 class ClrAccessor

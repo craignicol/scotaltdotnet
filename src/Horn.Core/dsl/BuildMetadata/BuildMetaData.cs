@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
 
@@ -11,6 +12,8 @@ namespace Horn.Core.Dsl
         public string Description { get; set; }
 
         public SourceControl SourceControl { get; set; }
+
+        public Dictionary<string, object> ProjectInfo { get; set; }
 
         public BuildMetaData(){}
 
