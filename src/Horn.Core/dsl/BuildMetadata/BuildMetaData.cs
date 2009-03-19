@@ -13,11 +13,14 @@ namespace Horn.Core.Dsl
 
         public SourceControl SourceControl { get; set; }
 
-        public Dictionary<string, object> ProjectInfo { get; set; }
+        public Dictionary<string, object> ProjectInfo { get; private set; }
 
-        public BuildMetaData(){}
+        public BuildMetaData()
+        {
+            ProjectInfo = new Dictionary<string, object>();
+        }
 
-        public BuildMetaData(BaseConfigReader instance)
+        public BuildMetaData(BaseConfigReader instance) : this()
         {
             BuildEngine = instance.BuildEngine;
 

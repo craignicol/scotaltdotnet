@@ -2,13 +2,13 @@ namespace Horn.Core.BuildEngines
 {
     public class Dependency
     {
-        public string Name { get; private set; }
-        public string Location { get; private set; }
+        public string PackageName { get; private set; }
+        public string Library { get; private set; }
 
-        public Dependency(string name, string location)
+        public Dependency(string package, string library)
         {
-            Name = name;
-            Location = location;
+            PackageName = package;
+            Library = library;
         }
     }
 }

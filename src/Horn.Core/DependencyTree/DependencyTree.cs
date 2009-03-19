@@ -106,7 +106,7 @@ namespace Horn.Core.DependencyTree
                 tree.AddChild(packageTree);
             }
             packageTree.GetBuildMetaData().BuildEngine.Dependencies.ForEach(
-                dependency => CalculateDependencies(PackageTree.Retrieve(dependency.Name), tree));
+                dependency => CalculateDependencies(PackageTree.Retrieve(dependency.PackageName), tree));
 
             return tree;
 

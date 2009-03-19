@@ -102,7 +102,30 @@ namespace Horn.Dsl.Spec
         [Fact]
         public void Then_the_project_info_will_contain_home_page_details()
         {
-            Assert.Equal(buildMetaData.ProjectInfo["homepage"], "http://code.google.com/p/scotaltdotnet/");
+            Assert.Equal(buildMetaData.ProjectInfo["homepage"].ToString(), "http://code.google.com/p/scotaltdotnet/");
+        }
+    }
+
+    public class When_the_metadata_specifies_project_dependencies : Specification
+    {
+        private string buildFile;
+
+        private BuildMetaData buildMetaData;
+
+        protected override void Before_each_spec()
+        {
+            buildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dependencies_example.rb");
+        }
+
+        protected override void Because()
+        {
+            buildMetaData = DlrHelper.RetrieveBuildMetaDataFromTheDlr(buildFile, "ClrAccessor", "get_build_metadata");
+        }
+
+        [Fact]
+        public void Then_the_dependencies_can_be_retrieved()
+        {
+            Assert.True(buildMetaData.BuildEngine.Dependencies.Count > 0);
         }
     }
 }
