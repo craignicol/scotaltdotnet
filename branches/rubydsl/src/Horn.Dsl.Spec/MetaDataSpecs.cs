@@ -128,4 +128,39 @@ namespace Horn.Dsl.Spec
             Assert.True(buildMetaData.BuildEngine.Dependencies.Count > 0);
         }
     }
+
+    public class When_given_all_the_meta_data_for_a_project : Specification
+    {
+        private string buildFile;
+
+        private BuildMetaData buildMetaData;
+
+        protected override void Before_each_spec()
+        {
+            buildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "whole_example.rb");
+        }
+
+        protected override void Because()
+        {
+            buildMetaData = DlrHelper.RetrieveBuildMetaDataFromTheDlr(buildFile, "ClrAccessor", "get_build_metadata");
+        }
+
+        [Fact]
+        public void Then_the_whole_metat_data_can_be_obtained()
+        {
+            Assert.Equal("A .NET build and dependency manager", buildMetaData.Description);
+
+            Assert.IsAssignableFrom<SVNSourceControl>(buildMetaData.SourceControl);
+
+            Assert.Equal("src/horn.sln", buildMetaData.BuildEngine.BuildFile);
+
+            Assert.Equal(FrameworkVersion.FrameworkVersion35, buildMetaData.BuildEngine.Version);
+
+            Assert.IsAssignableFrom<MSBuildBuildTool>(buildMetaData.BuildEngine.BuildTool);
+
+            Assert.Equal(buildMetaData.ProjectInfo["homepage"].ToString(), "http://code.google.com/p/scotaltdotnet/");
+
+            Assert.True(buildMetaData.BuildEngine.Dependencies.Count > 0);
+        }        
+    }
 }
