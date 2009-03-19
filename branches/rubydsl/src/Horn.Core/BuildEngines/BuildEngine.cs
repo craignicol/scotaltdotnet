@@ -51,14 +51,14 @@ namespace Horn.Core.BuildEngines
         {
             foreach (Dependency dependency in Dependencies)
             {
-                var sourceFiles = packageTree.Retrieve(dependency.Name).OutputDirectory.GetFiles();
-                var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.Location);
+                var sourceFiles = packageTree.Retrieve(dependency.PackageName).OutputDirectory.GetFiles();
+                var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.Library);
 
                 string targetDir;
 
                 if (possibleTargetDir.Length == 0)
                 {
-                    targetDir = packageTree.WorkingDirectory.CreateSubdirectory(dependency.Location).FullName;
+                    targetDir = packageTree.WorkingDirectory.CreateSubdirectory(dependency.Library).FullName;
                 }
                 else
                 {

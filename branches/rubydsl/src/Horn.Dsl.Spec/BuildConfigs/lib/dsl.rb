@@ -2,12 +2,21 @@ module MetaBuilder
   module Dsl
     module Main
 
-=begin
       BuildEngines = Horn::Core::BuildEngines
       Framework = Horn::Core::Utils::Framework
-=end      
+      SCM = Horn::Core::SCM
+
       def install(name, &block)        
         yield self if block_given?
+      end
+      
+      def dependency(dependencies)
+        package = dependencies.keys[0]
+        library = dependencies[package]
+        
+       dep = BuildEngines::Dependency.new package.to_s, library
+        
+        meta.metadata.BuildEngine.Dependencies.Add dep
       end
       
       def build_with(buildEngine, version, options = {})
@@ -35,7 +44,7 @@ module MetaBuilder
          meta.metadata.Description = desc
        end
 
-      class ProjectInfo        
+      class ProjectInfoAccessor        
         
         class << self
           def instance
@@ -49,7 +58,7 @@ module MetaBuilder
         
         public
         def method_missing(meth, *args, &block)
-          puts "here"
+          meta.metadata.ProjectInfo.Add meth.to_s, args[0]
         end
         
         def Info
@@ -83,7 +92,7 @@ def meta
 end
 
 def project
-  MetaBuilder::Dsl::Main::ProjectInfo.instance
+  MetaBuilder::Dsl::Main::ProjectInfoAccessor.instance
 end
 
 class ClrAccessor
