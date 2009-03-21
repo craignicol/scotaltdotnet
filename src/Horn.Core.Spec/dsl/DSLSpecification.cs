@@ -11,7 +11,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
     public class When_Horn_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
-        private BaseConfigReader configReader;
+        private BooConfigReader configReader;
 
         protected DslFactory factory;
         private IDependencyResolver dependencyResolver;
@@ -27,7 +27,7 @@ namespace Horn.Core.Spec.Unit.dsl
             var engine = new ConfigReaderEngine();
 
             factory = new DslFactory { BaseDirectory = DirectoryHelper.GetBaseDirectory() };
-            factory.Register<BaseConfigReader>(engine);
+            factory.Register<BooConfigReader>(engine);
         }
 
         protected override void After_each_spec()
@@ -37,7 +37,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void Because()
         {
-            configReader = factory.Create<BaseConfigReader>(@"BuildConfigs/Horn/build.boo");
+            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/build.boo");
             configReader.Prepare();
         }
 
@@ -53,7 +53,7 @@ namespace Horn.Core.Spec.Unit.dsl
             dependencyResolver.AssertWasCalled(r => r.Resolve<SVNSourceControl>());
         }
 
-        private void AssertHornMetaData(BaseConfigReader reader)
+        private void AssertHornMetaData(BooConfigReader reader)
         {
             Assert.NotNull(reader);
 

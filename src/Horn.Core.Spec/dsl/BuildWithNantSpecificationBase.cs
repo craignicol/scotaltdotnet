@@ -10,7 +10,7 @@ namespace Horn.Core.Spec.Unit.dsl
 {
     public class BuildWithNantSpecificationBase : Specification
     {
-        protected BaseConfigReader configReader;
+        protected BooConfigReader configReader;
 
         protected DslFactory factory;
         protected IDependencyResolver dependencyResolver;
@@ -25,7 +25,7 @@ namespace Horn.Core.Spec.Unit.dsl
             IoC.InitializeWith(dependencyResolver);
 
             factory = new DslFactory { BaseDirectory = DirectoryHelper.GetBaseDirectory() };
-            factory.Register<BaseConfigReader>(new ConfigReaderEngine());
+            factory.Register<BooConfigReader>(new ConfigReaderEngine());
 
             packageTree = MockRepository.GenerateStub<IPackageTree>();
         }

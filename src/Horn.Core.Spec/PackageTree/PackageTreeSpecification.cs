@@ -70,7 +70,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         {
             base.Before_each_spec();
 
-            IBuildConfigReader buildConfigReader = new BuildConfigReader();
+            IBuildConfigReader buildConfigReader = new BooBuildConfigReader();
 
             dependencyResolver = CreateStub<IDependencyResolver>();
 

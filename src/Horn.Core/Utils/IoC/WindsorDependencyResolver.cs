@@ -30,7 +30,7 @@ namespace Horn.Core.Utils.IoC
             innerContainer.Register(
                 Component.For<IBuildConfigReader>()
                             .Named("buildconfigreader")
-                            .ImplementedBy<BuildConfigReader>()
+                            .ImplementedBy<BooBuildConfigReader>()
                             .LifeStyle.Transient
                             );
 

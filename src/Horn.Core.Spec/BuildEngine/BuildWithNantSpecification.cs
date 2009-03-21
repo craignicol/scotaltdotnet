@@ -12,7 +12,7 @@ namespace Horn.Core.Spec.BuildEngine
 
         protected override void Because()
         {
-            configReader = factory.Create<BaseConfigReader>(@"BuildConfigs/Horn/buildnant.boo");
+            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/buildnant.boo");
             configReader.Prepare(); 
         }
 

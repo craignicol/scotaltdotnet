@@ -4,11 +4,11 @@ using Rhino.DSL;
 
 namespace Horn.Core.Dsl
 {
-    public class BuildConfigReader : IBuildConfigReader
+    public class BooBuildConfigReader : IBuildConfigReader
     {
         protected DslFactory factory;
 
-        private BaseConfigReader configReader;
+        private BooConfigReader configReader;
 
         private const string BUILD_FILE_NAME = "build.boo";
 
@@ -17,11 +17,11 @@ namespace Horn.Core.Dsl
         public BuildMetaData GetBuildMetaData()
         {
             if (factory == null)
-                throw new ArgumentNullException("You have not called SetDslFactory on class BuildConfigReader");
+                throw new ArgumentNullException("You have not called SetDslFactory on class BooBuildConfigReader");
 
             try
             {
-                configReader = factory.Create<BaseConfigReader>(BUILD_FILE_NAME);
+                configReader = factory.Create<BooConfigReader>(BUILD_FILE_NAME);
             }
             catch (InvalidOperationException e)
             {
@@ -42,7 +42,7 @@ namespace Horn.Core.Dsl
                                 BaseDirectory = baseDirectory.FullName
                             };
 
-            factory.Register<BaseConfigReader>(new ConfigReaderEngine());
+            factory.Register<BooConfigReader>(new ConfigReaderEngine());
 
             return this;
         }

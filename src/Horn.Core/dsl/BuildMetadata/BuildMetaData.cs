@@ -20,7 +20,7 @@ namespace Horn.Core.Dsl
             ProjectInfo = new Dictionary<string, object>();
         }
 
-        public BuildMetaData(BaseConfigReader instance) : this()
+        public BuildMetaData(BooConfigReader instance) : this()
         {
             BuildEngine = instance.BuildEngine;
 
