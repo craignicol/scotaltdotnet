@@ -38,7 +38,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             componentTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\")).Repeat.Any();
 
-            packageTree.Stub(x => x.Retrieve("horn")).Return(componentTree).Repeat.Once();
+            packageTree.Stub(x => x.Retrieve("horn")).Return(componentTree);
 
             var buildFiles = new Dictionary<string, string>();
 
@@ -58,10 +58,12 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             buildMetaData.BuildEngine = buildEngine;
 
+            componentTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData);
+
             packageTree.Stub(x => x.Retrieve("horn")).Return(packageTree).IgnoreArguments().Repeat.Once();
 
             packageTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
-            componentTree.Stub(x => x.GetBuildMetaData("log4net")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
+            componentTree.Stub(x => x.GetBuildMetaData("log4net", "log4net")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
         }
 
         [Fact]

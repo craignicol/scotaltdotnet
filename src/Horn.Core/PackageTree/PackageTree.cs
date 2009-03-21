@@ -56,13 +56,25 @@ namespace Horn.Core.PackageStructure
             return result;
         }
 
-        public IBuildMetaData GetBuildMetaData(string fileName)
+        public IBuildMetaData GetBuildMetaData(string packageName, string buildFile)
         {
-            var buildFileResolver = new BuildFileResolver().Resolve(CurrentDirectory, fileName);
+            IPackageTree packageTree = Retrieve(packageName);
+
+            return GetBuildMetaData(packageTree, buildFile);
+        }
+
+        public IBuildMetaData GetBuildMetaData(string packageName)
+        {
+            return GetBuildMetaData(this, packageName);
+        }
+
+        private IBuildMetaData GetBuildMetaData(IPackageTree packageTree, string packageName)
+        {
+            var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageName);
 
             var reader = IoC.Resolve<IBuildConfigReader>(buildFileResolver.Extension);
 
-            return reader.SetDslFactory(CurrentDirectory).GetBuildMetaData(fileName);
+            return reader.SetDslFactory(CurrentDirectory).GetBuildMetaData(packageTree.CurrentDirectory, packageName);
         }
 
         public void Remove(IPackageTree item)
@@ -82,8 +94,6 @@ namespace Horn.Core.PackageStructure
                 
             return result.First();
         }
-
-
 
         private PackageTree CreateNewPackageTree(DirectoryInfo child)
         {

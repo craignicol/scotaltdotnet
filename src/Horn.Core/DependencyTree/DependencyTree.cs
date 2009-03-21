@@ -23,10 +23,10 @@ namespace Horn.Core.DependencyTree
 
         private void CalculateDependencies(IPackageTree packageTree)
         {
-            buildTree = CalculateDependencies(packageTree, null);
+            buildTree = CalculateDependencies(packageTree, null, packageTree.Name);
         }
 
-        private BuildTree CalculateDependencies(IPackageTree packageTree, BuildTree tree)
+        private BuildTree CalculateDependencies(IPackageTree packageTree, BuildTree tree, string buildFile)
         {
             if (tree == null)
             {
@@ -41,8 +41,8 @@ namespace Horn.Core.DependencyTree
                 // Insert dependencies before parents
                 tree.AddChild(packageTree);
             }
-            packageTree.GetBuildMetaData(packageTree.Name).BuildEngine.Dependencies.ForEach(
-                dependency => CalculateDependencies(PackageTree.Retrieve(dependency.PackageName), tree));
+            packageTree.GetBuildMetaData(packageTree.Name, buildFile).BuildEngine.Dependencies.ForEach(
+                dependency => CalculateDependencies(PackageTree.Retrieve(dependency.PackageName), tree, dependency.BuildFile));
 
             return tree;
 

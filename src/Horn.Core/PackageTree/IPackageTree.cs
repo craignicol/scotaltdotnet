@@ -14,7 +14,9 @@ namespace Horn.Core.PackageStructure
 
         IPackageTree Retrieve(string packageName);
 
-        IBuildMetaData GetBuildMetaData(string fileName);
+        IBuildMetaData GetBuildMetaData(string packageName);
+
+        IBuildMetaData GetBuildMetaData(string packageName, string buildFile);
 
         DirectoryInfo CurrentDirectory { get; }
 
