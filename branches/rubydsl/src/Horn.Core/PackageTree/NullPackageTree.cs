@@ -44,9 +44,14 @@ namespace Horn.Core.PackageStructure
             throw new System.NotImplementedException();
         }
 
-        public IBuildMetaData GetBuildMetaData(string fileName)
+        public IBuildMetaData GetBuildMetaData(string packageName)
         {
             return new NullBuildMetatData();
+        }
+
+        public IBuildMetaData GetBuildMetaData(string packageName, string buildFile)
+        {
+            throw new System.NotImplementedException();
         }
 
         public DirectoryInfo CurrentDirectory

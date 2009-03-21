@@ -28,11 +28,11 @@
 
             packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return("root");
-            packageTree.Stub(x => x.GetBuildMetaData("root")).Return(rootBuildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("root", "root")).Return(rootBuildMetaData);
 
             dependentTree = CreateStub<IPackageTree>();
             dependentTree.Stub(x => x.Name).Return("simpleDependency");
-            dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency")).Return(dependencyBuildMetaData);
+            dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency", "simpleDependency.boo")).Return(dependencyBuildMetaData);
 
             packageTree.Stub(x => x.Retrieve("")).IgnoreArguments().Return(dependentTree);
         }
@@ -67,11 +67,11 @@
 
             packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return("root");
-            packageTree.Stub(x => x.GetBuildMetaData("root")).Return(rootBuildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("root", "root")).Return(rootBuildMetaData);
 
             dependentTree = CreateStub<IPackageTree>();
             dependentTree.Stub(x => x.Name).Return("simpleDependency");
-            dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency")).Return(dependencyBuildMetaData);
+            dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency", "simpleDependency.boo")).Return(dependencyBuildMetaData);
 
             packageTree.Stub(x => x.Retrieve("simpleDependency")).Return(dependentTree);
             packageTree.Stub(x => x.Retrieve("root")).Return(packageTree);
@@ -103,9 +103,9 @@
 
             var packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return(packageName);
-            packageTree.Stub(x => x.GetBuildMetaData("root")).Return(buildMetaData);
-            packageTree.Stub(x => x.GetBuildMetaData("complexDependency")).Return(buildMetaData);
-            packageTree.Stub(x => x.GetBuildMetaData("sharedDependency")).Return(buildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("root", "root")).Return(buildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("complexDependency", "complexDependency.boo")).Return(buildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("sharedDependency", "sharedDependency.boo")).Return(buildMetaData);
 
             return packageTree;
 

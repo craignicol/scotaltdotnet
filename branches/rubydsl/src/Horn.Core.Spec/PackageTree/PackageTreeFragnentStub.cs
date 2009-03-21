@@ -23,6 +23,11 @@ namespace Horn.Core.Spec.Unit.HornTree
             get { throw new System.NotImplementedException(); }
         }
 
+        public IBuildMetaData GetBuildMetaData(string packageName, string buildFile)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public DirectoryInfo CurrentDirectory
         {
             get { throw new System.NotImplementedException(); }
@@ -71,7 +76,7 @@ namespace Horn.Core.Spec.Unit.HornTree
             throw new System.NotImplementedException();
         }
 
-        public IBuildMetaData GetBuildMetaData(string fileName)
+        public IBuildMetaData GetBuildMetaData(string packageName)
         {
             throw new System.NotImplementedException();
         }
