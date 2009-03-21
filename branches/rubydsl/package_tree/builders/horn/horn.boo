@@ -6,6 +6,6 @@
 dependencies:
 	depend @log4net >> "log4net"
 	depend @castle  >> "castle.core"
-	depend @castle  >> "castle.dynamicproxy"
+	#depend @castle  >> "castle.dynamicproxy"
 	#depend @castle  >> "castle.microkernel"
 	#depend @castle  >> "castle.windsor"
