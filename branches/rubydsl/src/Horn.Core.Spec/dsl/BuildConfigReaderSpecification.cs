@@ -27,7 +27,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void Because()
         {
-            reader = new BuildConfigReader();
+            reader = new BooBuildConfigReader();
         }
 
         [Fact]
@@ -43,7 +43,7 @@ namespace Horn.Core.Spec.Unit.dsl
     {
         protected override void Because()
         {
-            reader = new BuildConfigReader();
+            reader = new BooBuildConfigReader();
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             rootDirectory = new DirectoryInfo(directoryWithNoBooFile);
 
-            reader = new BuildConfigReader();
+            reader = new BooBuildConfigReader();
         }
 
         [Fact]

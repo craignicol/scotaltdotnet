@@ -24,9 +24,9 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected IBuildConfigReader reader;
 
-        public static BaseConfigReader GetConfigReaderInstance()
+        public static BooConfigReader GetConfigReaderInstance()
         {
-            BaseConfigReader ret = new ConfigReaderDouble();
+            BooConfigReader ret = new ConfigReaderDouble();
 
             ret.description(DESCRIPTION);
             ret.BuildEngine = new BuildEngines.BuildEngine(new MSBuildBuildTool(), BUILD_FILE, FrameworkVersion.FrameworkVersion35);

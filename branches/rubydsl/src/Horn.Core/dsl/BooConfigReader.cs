@@ -7,7 +7,7 @@ using Horn.Core.Utils.Framework;
 
 namespace Horn.Core.Dsl
 {
-    public abstract class BaseConfigReader
+    public abstract class BooConfigReader
     {
         public virtual BuildEngine BuildEngine { get; set; }
 

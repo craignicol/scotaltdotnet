@@ -28,7 +28,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             get = new Get(fileSystemProvider);
 
-            var baseConfigReader = CreateStub<BaseConfigReader>();
+            var baseConfigReader = CreateStub<BooConfigReader>();
 
             baseConfigReader.InstallName = "horn";
 
