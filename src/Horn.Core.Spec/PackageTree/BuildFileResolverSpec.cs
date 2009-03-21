@@ -8,13 +8,13 @@ namespace Horn.Core.Spec.Unit.HornTree
 {
     public class When_resolving_a_boo_build_file : BaseDSLSpecification
     {
-        private IBuildFileExtensionResolver fileExtensionResolver;
+        private IBuildFileResolver _fileResolver;
 
         private DirectoryInfo buildFolder;
 
         protected override void Before_each_spec()
         {
-            fileExtensionResolver = new BuildFileExtensionResolver();
+            _fileResolver = new BuildFileResolver();
         }
 
         protected override void Because()
@@ -25,7 +25,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         [Fact]
         public void Then_a_boo_extension_is_returned_from_the_resolver()
         {
-            Assert.Equal("boo", fileExtensionResolver.Resolve(buildFolder));
+            Assert.Equal("boo", _fileResolver.Resolve(buildFolder, "horn").Extension);
         }
     }
 }

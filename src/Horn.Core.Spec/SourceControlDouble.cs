@@ -23,7 +23,7 @@ namespace Horn.Core.Spec
             if (!Directory.Exists(destination))
                 Directory.CreateDirectory(destination);
 
-            FileHelper.CreateFileWithRandomData(Path.Combine(destination, "build.boo"));
+            FileHelper.CreateFileWithRandomData(Path.Combine(destination, "horn.boo"));
 
             ExportWasCalled = true;
         }

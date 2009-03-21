@@ -25,7 +25,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
             textWriter = new StringWriter();
 
-            packageTree = new PackageTree(new DirectoryInfo(root), null, new BuildFileExtensionResolver());
+            packageTree = new PackageTree(new DirectoryInfo(root), null);
         }
 
         protected void AssertOutputContains(string outoutShouldContain)

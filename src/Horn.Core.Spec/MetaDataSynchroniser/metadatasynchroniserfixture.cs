@@ -31,7 +31,7 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
         {
             Directory.CreateDirectory(rootPath);
 
-            var buildFile = Path.Combine(rootPath, "build.boo");
+            var buildFile = Path.Combine(rootPath, "horn.boo");
 
             FileHelper.CreateFileWithRandomData(buildFile);
         }
@@ -59,7 +59,7 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
         [Fact]
         public void Then_the_package_tree_contains_more_than_one_build_file()
         {
-            var files = Directory.GetFiles(rootPath, "build.boo", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(rootPath, "horn.*", SearchOption.AllDirectories);
 
             Assert.True(files.Length > 0);
         }

@@ -3,12 +3,11 @@ using Horn.Core.BuildEngines;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using log4net;
-using System;
 
 namespace Horn.Core.PackageCommands
 {
     using Dsl;
-    using Horn.Core.DependencyTree;
+    using DependencyTree;
 
     public class PackageBuilder : IPackageCommand
     {
@@ -23,20 +22,23 @@ namespace Horn.Core.PackageCommands
 
             IPackageTree componentTree = GetComponentTreeFrom(packageTree, packageName);
 
+            var componentTreeMetaData = componentTree.GetBuildMetaData(packageName);
+
             IDependencyTree dependencyTree = GetDependencyTree(componentTree);
 
-            foreach (IPackageTree nextTree in dependencyTree.BuildList)
+            for (var index = 0; index < dependencyTree.BuildList.Count; index++)
             {
-                IBuildMetaData nextMetaData = nextTree.GetBuildMetaData();
+                IPackageTree nextTree = dependencyTree.BuildList[index];
+
+                var fileName = (index == componentTreeMetaData.BuildEngine.Dependencies.Count)
+                                   ? packageName
+                                   : componentTreeMetaData.BuildEngine.Dependencies[index].BuildFile;
+
+                IBuildMetaData nextMetaData = nextTree.GetBuildMetaData(nextTree.BuildFiles[fileName]);
 
                 log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), nextMetaData.SourceControl.Url);
 
-                ExecuteSourceControlGet(nextMetaData, nextTree);            	
-            }
-
-            foreach (IPackageTree nextTree in dependencyTree.BuildList)
-            {
-                IBuildMetaData nextMetaData = nextTree.GetBuildMetaData();
+                ExecuteSourceControlGet(nextMetaData, nextTree);
 
                 log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine.BuildFile);
 

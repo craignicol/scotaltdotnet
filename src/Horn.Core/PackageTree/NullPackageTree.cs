@@ -37,12 +37,14 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public Dictionary<string, string> BuildFiles { get; set; }
+
         public IPackageTree Retrieve(string packageName)
         {
             throw new System.NotImplementedException();
         }
 
-        public IBuildMetaData GetBuildMetaData()
+        public IBuildMetaData GetBuildMetaData(string fileName)
         {
             return new NullBuildMetatData();
         }

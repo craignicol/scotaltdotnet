@@ -20,7 +20,7 @@ namespace Horn.Core
 
         public static string ErrorMessage(DirectoryInfo buildFolder)
         {
-            return string.Format("No build.boo file component {0} at path {1}.", buildFolder.Name, buildFolder.FullName);   
+            return string.Format("No build file component {0} at path {1}.", buildFolder.Name, buildFolder.FullName);   
         }
 
         public MissingBuildFileException(string message) : base(message) { }

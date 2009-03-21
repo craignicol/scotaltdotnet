@@ -139,8 +139,8 @@
     <Compile Include="MetaDataSynchroniser\metadatasynchroniser.cs" />
     <Compile Include="PackageCommands\IPackageCommand.cs" />
     <Compile Include="PackageCommands\PackageBuilder.cs" />
-    <Compile Include="PackageTree\BuildFileExtensionResolver.cs" />
-    <Compile Include="PackageTree\IBuildFileExtensionResolver.cs" />
+    <Compile Include="PackageTree\BuildFileResolver.cs" />
+    <Compile Include="PackageTree\IBuildFileResolver.cs" />
     <Compile Include="PackageTree\IPackageTree.cs" />
     <Compile Include="PackageTree\NullPackageTree.cs" />
     <Compile Include="PackageTree\PackageTree.cs" />
