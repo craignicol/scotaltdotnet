@@ -83,10 +83,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Horn.Core.DSL.Domain\Horn.Core.DSL.Domain.csproj">
-      <Project>{609B1E4E-3389-40E7-9AE4-0C186039892E}</Project>
-      <Name>Horn.Core.DSL.Domain</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Horn.Core\Horn.Core.csproj">
       <Project>{093CFA20-D720-4C58-9B8F-754F03A40D16}</Project>
       <Name>Horn.Core</Name>
