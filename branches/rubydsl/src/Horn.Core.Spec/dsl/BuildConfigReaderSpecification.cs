@@ -3,7 +3,6 @@ using System.IO;
 using Horn.Core.Dsl;
 using Horn.Core.SCM;
 using Horn.Framework.helpers;
-using Horn.Spec.Framework.Extensions;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
@@ -35,7 +34,7 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_The_Config_Reader_Returns_The_Correct_MetaData()
         {
-            var metaData = reader.SetDslFactory(rootDirectory).GetBuildMetaData();
+            var metaData = reader.SetDslFactory(rootDirectory).GetBuildMetaData("horn");
 
             AssertBuildMetaDataValues(metaData);
         }
@@ -51,7 +50,7 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_An_Argument_Null_Exception_Is_Thrown()
         {
-            Assert.Throws<ArgumentNullException>(() => reader.GetBuildMetaData());
+            Assert.Throws<ArgumentNullException>(() => reader.GetBuildMetaData("horn"));
         }
     }
 
@@ -72,7 +71,7 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_The_Config_Reader_Throws_A_Custom_Exception()
         {
-            Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(rootDirectory).GetBuildMetaData());
+            Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(rootDirectory).GetBuildMetaData("horn"));
         }
     }
 }

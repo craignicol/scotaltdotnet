@@ -5,7 +5,7 @@ using Horn.Core.PackageStructure;
 using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;
 using log4net;
-using System;
+
 
 namespace Horn.Core.BuildEngines
 {
@@ -52,13 +52,13 @@ namespace Horn.Core.BuildEngines
             foreach (Dependency dependency in Dependencies)
             {
                 var sourceFiles = packageTree.Retrieve(dependency.PackageName).OutputDirectory.GetFiles();
-                var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.Library);
+                var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.BuildFile);
 
                 string targetDir;
 
                 if (possibleTargetDir.Length == 0)
                 {
-                    targetDir = packageTree.WorkingDirectory.CreateSubdirectory(dependency.Library).FullName;
+                    targetDir = packageTree.WorkingDirectory.CreateSubdirectory(dependency.BuildFile).FullName;
                 }
                 else
                 {

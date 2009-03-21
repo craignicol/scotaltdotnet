@@ -8,7 +8,7 @@ namespace Horn.Core.Spec.Unit.dsl
     {
         protected override void Because()
         {
-            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/buildnant.boo");
+            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/hornnant.boo");
             configReader.Prepare(); 
         }
 
@@ -33,7 +33,7 @@ namespace Horn.Core.Spec.Unit.dsl
             " -t:net-3.5 -buildfile:Horn.build -D:sign=false -D:testrunner=NUnit -D:common.testrunner.enabled=true -D:common.testrunner.failonerror=true -D:build.msbuild=true ";
         protected override void Because()
         {
-            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/buildnant.boo");
+            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/hornnant.boo");
             configReader.Prepare(); 
 
             buildTool = configReader.BuildEngine.BuildTool;

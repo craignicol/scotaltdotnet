@@ -10,9 +10,11 @@ namespace Horn.Core.PackageStructure
 
         bool IsRoot { get; }
 
+        Dictionary<string, string> BuildFiles { get; set; }
+
         IPackageTree Retrieve(string packageName);
 
-        IBuildMetaData GetBuildMetaData();
+        IBuildMetaData GetBuildMetaData(string fileName);
 
         DirectoryInfo CurrentDirectory { get; }
 

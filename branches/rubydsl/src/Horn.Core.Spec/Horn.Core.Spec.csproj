@@ -121,7 +121,7 @@
     <Compile Include="Extensions\stringextensionspecs.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniserfixture.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniserfixturebase.cs" />
-    <Compile Include="PackageTree\BuildFileExtensionResolverSpec.cs" />
+    <Compile Include="PackageTree\BuildFileResolverSpec.cs" />
     <Compile Include="PackageTree\PackageTreeFragnentStub.cs" />
     <Compile Include="SourceControlDouble.cs" />
     <Compile Include="SpecificationHelper.cs" />
@@ -143,10 +143,10 @@
     <Compile Include="Utils\FrameworkLocatorSpec.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildConfigs\Horn\build.boo">
+    <Content Include="BuildConfigs\Horn\horn.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="BuildConfigs\Horn\buildnant.boo">
+    <Content Include="BuildConfigs\Horn\hornnant.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

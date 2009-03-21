@@ -40,6 +40,12 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             packageTree.Stub(x => x.Retrieve("horn")).Return(componentTree).Repeat.Once();
 
+            var buildFiles = new Dictionary<string, string>();
+
+            buildFiles.Add("horn","horn");
+
+            componentTree.BuildFiles = buildFiles;
+
             var buildTool = new BuildToolStub();
 
             var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35);
@@ -54,8 +60,8 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             packageTree.Stub(x => x.Retrieve("horn")).Return(packageTree).IgnoreArguments().Repeat.Once();
 
-            packageTree.Stub(x => x.GetBuildMetaData()).Return(buildMetaData).IgnoreArguments().Repeat.Any();
-            componentTree.Stub(x => x.GetBuildMetaData()).Return(buildMetaData).IgnoreArguments().Repeat.Any();
+            packageTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
+            componentTree.Stub(x => x.GetBuildMetaData("log4net")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
         }
 
         [Fact]

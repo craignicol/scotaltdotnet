@@ -16,6 +16,8 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected const string SVN_URL = "http://scotaltdotnet.googlecode.com/svn/trunk/";
 
+        protected const string FILE_NAME = "horn";
+
         protected const string BUILD_FILE = "src/horn.sln";
 
         public static readonly Dictionary<string, string> METADATA = new Dictionary<string, string> { { "contrib", "false" }, { "createdate", "24/01/2009" }, { "France","yuky" } };

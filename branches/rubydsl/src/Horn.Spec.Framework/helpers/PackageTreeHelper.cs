@@ -13,7 +13,7 @@ namespace Horn.Framework.helpers
             string horn = CreateDirectory(builders, "horn");
 
             string hornFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "horn.boo");
-            string buildFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "build.boo");
+            string buildFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "horn.boo");
 
             string fileToCopy = File.Exists(hornFile) ? hornFile : buildFile;
 
@@ -32,7 +32,7 @@ namespace Horn.Framework.helpers
             if (!File.Exists(sourceFile))
                 throw new FileNotFoundException(string.Format("The build file {0} does not exist", sourceFile));
 
-            string destinationBuildFile = Path.Combine(destinationFolder, "build.boo");
+            string destinationBuildFile = Path.Combine(destinationFolder, "horn.boo");
 
             File.Copy(sourceFile, destinationBuildFile, true);
         }

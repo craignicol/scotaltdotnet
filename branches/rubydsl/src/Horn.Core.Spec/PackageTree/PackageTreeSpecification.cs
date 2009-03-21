@@ -15,7 +15,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         protected override void Because()
         {
             rootDirectory = new DirectoryInfo(root);
-            rootTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
+            rootTree = new PackageTree(rootDirectory, null);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         protected override void Because()
         {
             rootDirectory = new DirectoryInfo(root);
-            hornTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
+            hornTree = new PackageTree(rootDirectory, null);
         }
 
         [Fact]
@@ -87,13 +87,13 @@ namespace Horn.Core.Spec.Unit.HornTree
         {
             rootDirectory = new DirectoryInfo(root);
 
-            hornTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());            
+            hornTree = new PackageTree(rootDirectory, null);            
         }
 
         [Fact]
         public void Then_Horn_Retrieves_The_Build_File_From_The_Structure()
         {
-            var metaData = hornTree.Retrieve("horn").GetBuildMetaData();
+            var metaData = hornTree.Retrieve("horn").GetBuildMetaData("horn");
 
             BaseDSLSpecification.AssertBuildMetaDataValues(metaData);
         }
@@ -109,7 +109,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         [Fact]
         public void Then_A_List_Of_Build_Nodes_Are_Returned()
         {
-            IPackageTree hornTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
+            IPackageTree hornTree = new PackageTree(rootDirectory, null);
 
             Assert.True(hornTree.BuildNodes().Count > 0);
 
@@ -125,7 +125,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         {
             rootDirectory = new DirectoryInfo(root);
 
-            hornTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
+            hornTree = new PackageTree(rootDirectory, null);
         }
         
         [Fact]
@@ -137,7 +137,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         [Fact]
         public void Then_A_Null_Build_Meta_Data_Object_Is_Returned()
         {
-            Assert.IsType<NullBuildMetatData>(hornTree.Retrieve("unkonwnpackage").GetBuildMetaData());
+            Assert.IsType<NullBuildMetatData>(hornTree.Retrieve("unkonwnpackage").GetBuildMetaData("unkonwnpackage"));
         }
     }
 }

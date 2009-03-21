@@ -28,7 +28,7 @@ namespace Horn.Core.Tree.MetaDataSynchroniser
         private int RootDirectoryContainsBuildFiles(string rootPath)
         {
             //HACK: Basic check for now.  Could be expanded for a core set of required build.boo files
-            return (Directory.GetFiles(rootPath, "build.boo", SearchOption.AllDirectories).Length);
+            return (Directory.GetFiles(rootPath, "Horn.*", SearchOption.AllDirectories).Length);
         }
 
         public MetaDataSynchroniser(SourceControl sourceControl)

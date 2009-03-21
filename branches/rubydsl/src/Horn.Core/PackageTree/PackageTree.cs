@@ -2,16 +2,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.Dsl;
-
+using Horn.Core.Utils;
 namespace Horn.Core.PackageStructure
 {
     public class PackageTree : IPackageTree
     {
-        private readonly IBuildFileExtensionResolver buildFileExtensionResolver;
 
         private readonly IList<IPackageTree> children;
         private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
 
+
+        public Dictionary<string, string> BuildFiles
+        {
+            get; set;
+        }
 
         public IPackageTree[] Children
         {
@@ -52,13 +56,13 @@ namespace Horn.Core.PackageStructure
             return result;
         }
 
-        public IBuildMetaData GetBuildMetaData()
+        public IBuildMetaData GetBuildMetaData(string fileName)
         {
-            var fileType = buildFileExtensionResolver.Resolve(CurrentDirectory);
+            var buildFileResolver = new BuildFileResolver().Resolve(CurrentDirectory, fileName);
 
-            var reader = IoC.Resolve<IBuildConfigReader>(fileType);
+            var reader = IoC.Resolve<IBuildConfigReader>(buildFileResolver.Extension);
 
-            return reader.SetDslFactory(CurrentDirectory).GetBuildMetaData();
+            return reader.SetDslFactory(CurrentDirectory).GetBuildMetaData(fileName);
         }
 
         public void Remove(IPackageTree item)
@@ -83,7 +87,7 @@ namespace Horn.Core.PackageStructure
 
         private PackageTree CreateNewPackageTree(DirectoryInfo child)
         {
-            return new PackageTree(child, this, buildFileExtensionResolver);
+            return new PackageTree(child, this);
         }
 
         private bool IsReservedDirectory(DirectoryInfo child)
@@ -100,12 +104,24 @@ namespace Horn.Core.PackageStructure
             OutputDirectory.Create();
         }
 
-
-
-        public PackageTree(DirectoryInfo directory, IPackageTree parent, IBuildFileExtensionResolver buildFileExtensionResolver)
+        private void RecordFiles()
         {
-            this.buildFileExtensionResolver = buildFileExtensionResolver;
+            CurrentDirectory.GetFiles("*.boo").ForEach(AddBuildFile);
 
+            CurrentDirectory.GetFiles("*.rb").ForEach(AddBuildFile);
+
+        }
+
+        private void AddBuildFile(FileInfo fileInfo)
+        {
+            BuildFiles.Add(Path.GetFileNameWithoutExtension(fileInfo.FullName), fileInfo.FullName.Substring(0, fileInfo.FullName.LastIndexOf(".")));
+        }
+
+
+
+        public PackageTree(DirectoryInfo directory, IPackageTree parent)
+        {
+            BuildFiles = new Dictionary<string, string>();
             Parent = parent;
 
             children = new List<IPackageTree>();
@@ -117,7 +133,10 @@ namespace Horn.Core.PackageStructure
             IsBuildNode = (directory.GetFiles("*.boo").Length > 0) || (directory.GetFiles("*.rb").Length > 0);
 
             if(IsBuildNode)
+            {
+                RecordFiles();
                 CreateRequiredDirectories(directory);
+            }
 
             foreach (var child in directory.GetDirectories())
             {

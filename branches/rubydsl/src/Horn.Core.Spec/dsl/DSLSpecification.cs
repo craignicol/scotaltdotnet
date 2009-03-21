@@ -37,7 +37,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void Because()
         {
-            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/build.boo");
+            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/horn.boo");
             configReader.Prepare();
         }
 
@@ -73,7 +73,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal("log4net", reader.BuildEngine.Dependencies[0].PackageName);
 
-            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].Library);
+            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].BuildFile);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Horn.Core.Spec.Unit.Get
 
             sourceControl = new SourceControlDouble("http://localhost/horn");
 
-            packageTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
+            packageTree = new PackageTree(rootDirectory, null);
 
             package = new Package("horn", SpecificationHelper.GetBuildMetaData());
 
