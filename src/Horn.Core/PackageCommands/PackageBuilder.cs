@@ -22,8 +22,6 @@ namespace Horn.Core.PackageCommands
             string packageName = GetPackageName(switches);
 
             IPackageTree componentTree = GetComponentTreeFrom(packageTree, packageName);
-            
-            IBuildMetaData buildMetaData = GetBuildMetaDataFor(packageTree, packageName);
 
             IDependencyTree dependencyTree = GetDependencyTree(componentTree);
 
@@ -60,11 +58,6 @@ namespace Horn.Core.PackageCommands
         private IPackageTree GetComponentTreeFrom(IPackageTree packageTree, string packageName)
         {
             return packageTree.Retrieve(packageName);
-        }
-
-        private IBuildMetaData GetBuildMetaDataFor(IPackageTree packageTree, string packageName)
-        {
-            return packageTree.Retrieve(packageName).GetBuildMetaData();
         }
 
         private IDependencyTree GetDependencyTree(IPackageTree componentTree)

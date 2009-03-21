@@ -121,6 +121,7 @@
     <Compile Include="Extensions\stringextensionspecs.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniserfixture.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniserfixturebase.cs" />
+    <Compile Include="PackageTree\BuildFileExtensionResolverSpec.cs" />
     <Compile Include="PackageTree\PackageTreeFragnentStub.cs" />
     <Compile Include="SourceControlDouble.cs" />
     <Compile Include="SpecificationHelper.cs" />

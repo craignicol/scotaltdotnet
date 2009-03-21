@@ -25,7 +25,7 @@ namespace Horn.Core.Dsl
             }
             catch (InvalidOperationException e)
             {
-                throw new MissingBuildFileException(string.Format("No build.boo file component {0} at path {1}.", PackageDirectory.Name, PackageDirectory.FullName), e);
+                throw new MissingBuildFileException(PackageDirectory, e);
             }
 
             configReader.Prepare();

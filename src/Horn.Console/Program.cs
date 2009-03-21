@@ -64,7 +64,7 @@ namespace Horn.Console
             if(!metaDataSynchroniser.PackageTreeExists(rootFolder.FullName))
                 metaDataSynchroniser.SynchronisePackageTree(rootFolder.FullName);
 
-            return new PackageTree(rootFolder, null);
+            return new PackageTree(rootFolder, null, new BuildFileExtensionResolver());
         }
 
         //TODO: to be replaced by user defined choice from the install perhaps?
