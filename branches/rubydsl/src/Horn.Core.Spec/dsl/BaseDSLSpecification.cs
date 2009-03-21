@@ -4,6 +4,8 @@ using Horn.Core.Dsl;
 using Horn.Core.SCM;
 using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;
+using Horn.Framework.helpers;
+using Horn.Spec.Framework.Extensions;
 using Xunit;
 using System.Linq;
 namespace Horn.Core.Spec.Unit.dsl
@@ -49,6 +51,11 @@ namespace Horn.Core.Spec.Unit.dsl
             METADATA.ForEach(x => Assert.Contains(x, metaData.BuildEngine.MetaData));
 
             Assert.Equal(BUILD_FILE, metaData.BuildEngine.BuildFile);
+        }
+
+        protected DirectoryInfo GetTestBuildConfigsFolder()
+        {
+            return new DirectoryInfo(string.Format("{0}\\BuildConfigs\\Horn", DirectoryHelper.GetBaseDirectory().ToLower().ResolvePath()));
         }
     }
 }

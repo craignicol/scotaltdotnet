@@ -22,7 +22,9 @@ namespace Horn.Core.Spec.Unit.dsl
 
             IoC.InitializeWith(dependencyResolver);
 
-            rootDirectory = new DirectoryInfo(string.Format("{0}\\BuildConfigs\\Horn", DirectoryHelper.GetBaseDirectory().ToLower().ResolvePath()));
+            GetTestBuildConfigsFolder();
+
+            rootDirectory = GetTestBuildConfigsFolder();
         }
 
         protected override void Because()

@@ -15,7 +15,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         protected override void Because()
         {
             rootDirectory = new DirectoryInfo(root);
-            rootTree = new PackageTree(rootDirectory, null);
+            rootTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         protected override void Because()
         {
             rootDirectory = new DirectoryInfo(root);
-            hornTree = new PackageTree(rootDirectory, null);
+            hornTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
         }
 
         [Fact]
@@ -74,7 +74,7 @@ namespace Horn.Core.Spec.Unit.HornTree
 
             dependencyResolver = CreateStub<IDependencyResolver>();
 
-            dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>()).Return(buildConfigReader);
+            dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>("boo")).Return(buildConfigReader);
 
             var svn = new SVNSourceControl("https://svnserver/trunk");
 
@@ -87,7 +87,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         {
             rootDirectory = new DirectoryInfo(root);
 
-            hornTree = new PackageTree(rootDirectory, null);            
+            hornTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());            
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         [Fact]
         public void Then_A_List_Of_Build_Nodes_Are_Returned()
         {
-            IPackageTree hornTree = new PackageTree(rootDirectory, null);
+            IPackageTree hornTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
 
             Assert.True(hornTree.BuildNodes().Count > 0);
 
@@ -125,7 +125,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         {
             rootDirectory = new DirectoryInfo(root);
 
-            hornTree = new PackageTree(rootDirectory, null);
+            hornTree = new PackageTree(rootDirectory, null, new BuildFileExtensionResolver());
         }
         
         [Fact]
