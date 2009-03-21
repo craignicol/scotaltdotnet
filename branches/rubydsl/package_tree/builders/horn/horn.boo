@@ -8,4 +8,4 @@ metadata:
     data "France=yuky"
 
 dependencies:
-	depend @log4net >> @lib	
+	depend @log4net >> "log4net.boo"	
