@@ -6,7 +6,7 @@ install :horn do
   get_from :svn, "http://scotaltdotnet.googlecode.com/svn/trunk/"
   
   dependency :log4net =>  "log4net"
-  dependency :castle =>   "Castle.Core"
+  dependency :castle =>   "castle.core"
 end
 
 project.homepage "http://code.google.com/p/scotaltdotnet/"
