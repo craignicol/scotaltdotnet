@@ -40,7 +40,7 @@ namespace Horn.Core.PackageCommands
 
                 ExecuteSourceControlGet(nextMetaData, nextTree);
 
-               log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine.BuildFile);
+                log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine.BuildFile);
 
                 BuildComponentTree(nextMetaData, nextTree);
             }
