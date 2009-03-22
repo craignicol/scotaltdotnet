@@ -115,7 +115,15 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>IF NOT EXIST "$(ProjectDir)BuildConfigs\lib" mkdir "$(ProjectDir)BuildConfigs\lib"
+    <PostBuildEvent>IF NOT EXIST "$(TargetDir)\lib" mkdir "$(TargetDir)BuildConfigs\lib"
+
+IF NOT EXIST "$(TargetDir)\rubylib" mkdir "$(TargetDir)\rubylib"
+
+IF NOT EXIST "$(TargetDir)\rubylib\lib" mkdir "$(TargetDir)\rubylib\lib"
+
+IF EXIST "$(ProjectDir)BuildConfigs\hornbuild.rb" copy /y "$(ProjectDir)BuildConfigs\lib\*.rb" "$(TargetDir)rubylib\lib\*.rb"
+
+IF EXIST "$(ProjectDir)BuildConfigs\hornbuild.rb" copy /y "$(ProjectDir)BuildConfigs\hornbuild.rb" "$(TargetDir)rubylib\hornbuild.rb"
 
 IF EXIST "$(ProjectDir)BuildConfigs\lib" xcopy /s /y /c /i "$(ProjectDir)BuildConfigs\lib" "$(TargetDir)lib"
 

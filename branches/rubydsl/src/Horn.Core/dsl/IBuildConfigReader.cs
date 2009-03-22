@@ -7,8 +7,8 @@ namespace Horn.Core.Dsl
     {
         BuildMetaData GetBuildMetaData(string packageName);
 
-        BuildMetaData GetBuildMetaData(DirectoryInfo buildFolder, string buildFile);
+        BuildMetaData GetBuildMetaData(IPackageTree packageTree, string buildFile);
 
-        IBuildConfigReader SetDslFactory(DirectoryInfo rootDirectory);
+        IBuildConfigReader SetDslFactory(IPackageTree packageTree);
     }
 }

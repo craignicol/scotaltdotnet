@@ -10,6 +10,7 @@ namespace Horn.Core.PackageStructure
 
         private readonly IList<IPackageTree> children;
         private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
+        private static readonly string[] libraryNodes = new[] {"rubylib", "lib", "debug"};
 
 
         public Dictionary<string, string> BuildFiles
@@ -68,15 +69,6 @@ namespace Horn.Core.PackageStructure
             return GetBuildMetaData(this, packageName);
         }
 
-        private IBuildMetaData GetBuildMetaData(IPackageTree packageTree, string packageName)
-        {
-            var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageName);
-
-            var reader = IoC.Resolve<IBuildConfigReader>(buildFileResolver.Extension);
-
-            return reader.SetDslFactory(CurrentDirectory).GetBuildMetaData(packageTree.CurrentDirectory, packageName);
-        }
-
         public void Remove(IPackageTree item)
         {
             children.Remove(item);
@@ -93,6 +85,17 @@ namespace Horn.Core.PackageStructure
                 return new NullPackageTree();
                 
             return result.First();
+        }
+
+
+
+        private IBuildMetaData GetBuildMetaData(IPackageTree packageTree, string packageName)
+        {
+            var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageName);
+
+            var reader = IoC.Resolve<IBuildConfigReader>(buildFileResolver.Extension);
+
+            return reader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, packageName);
         }
 
         private PackageTree CreateNewPackageTree(DirectoryInfo child)
@@ -127,6 +130,12 @@ namespace Horn.Core.PackageStructure
             BuildFiles.Add(Path.GetFileNameWithoutExtension(fileInfo.FullName), fileInfo.FullName.Substring(0, fileInfo.FullName.LastIndexOf(".")));
         }
 
+        private bool DirectoryIsBuildNode(DirectoryInfo directory)
+        {
+            return (((directory.GetFiles("*.boo").Length > 0) || (directory.GetFiles("*.rb").Length > 0)) &&
+                   (!libraryNodes.Contains(directory.Name.ToLower())));
+        }
+
 
 
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
@@ -140,7 +149,7 @@ namespace Horn.Core.PackageStructure
 
             CurrentDirectory = directory;
 
-            IsBuildNode = (directory.GetFiles("*.boo").Length > 0) || (directory.GetFiles("*.rb").Length > 0);
+            IsBuildNode = DirectoryIsBuildNode(directory);
 
             if(IsBuildNode)
             {

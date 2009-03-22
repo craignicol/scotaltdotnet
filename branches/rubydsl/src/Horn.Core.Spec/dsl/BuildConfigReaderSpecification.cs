@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core.Dsl;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 using Horn.Framework.helpers;
 using Xunit;
@@ -24,6 +25,8 @@ namespace Horn.Core.Spec.Unit.dsl
             GetTestBuildConfigsFolder();
 
             rootDirectory = GetTestBuildConfigsFolder();
+
+            packageTree = new PackageTree(rootDirectory, null);
         }
 
         protected override void Because()
@@ -34,7 +37,7 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_The_Config_Reader_Returns_The_Correct_MetaData()
         {
-            var metaData = reader.SetDslFactory(rootDirectory).GetBuildMetaData("horn");
+            var metaData = reader.SetDslFactory(packageTree).GetBuildMetaData("horn");
 
             AssertBuildMetaDataValues(metaData);
         }
@@ -65,13 +68,15 @@ namespace Horn.Core.Spec.Unit.dsl
 
             rootDirectory = new DirectoryInfo(directoryWithNoBooFile);
 
+            packageTree = new PackageTree(rootDirectory, null);
+
             reader = new BooBuildConfigReader();
         }
 
         [Fact]
         public void Then_The_Config_Reader_Throws_A_Custom_Exception()
         {
-            Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(rootDirectory).GetBuildMetaData("horn"));
+            Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(packageTree).GetBuildMetaData("horn"));
         }
     }
 }

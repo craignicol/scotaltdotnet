@@ -1,13 +1,14 @@
 using System.IO;
 using Horn.Core.PackageStructure;
 using IronRuby;
+using Microsoft.Scripting.Hosting;
 
 namespace Horn.Core.Dsl
 {
     public class RubyBuildConfigReader : IBuildConfigReader
     {
 
-        public DirectoryInfo PackageDirectory { get; private set; }
+        public IPackageTree PackageTree { get; private set; }
 
 
 
@@ -15,23 +16,23 @@ namespace Horn.Core.Dsl
         {
             var buildFileResolver = new BuildFileResolver();
 
-            var buildFilePath = buildFileResolver.Resolve(PackageDirectory, packageName).BuildFile;
+            var buildFilePath = buildFileResolver.Resolve(PackageTree.CurrentDirectory, packageName).BuildFile;
 
             return CreateBuildMetaData(buildFilePath);
         }
 
-        public BuildMetaData GetBuildMetaData(DirectoryInfo buildFolder, string buildFile)
+        public BuildMetaData GetBuildMetaData(IPackageTree packageTree, string buildFile)
         {
             var buildFileResolver = new BuildFileResolver();
 
-            var buildFilePath = buildFileResolver.Resolve(buildFolder, buildFile).BuildFile;
+            var buildFilePath = buildFileResolver.Resolve(packageTree.CurrentDirectory, buildFile).BuildFile;
 
             return CreateBuildMetaData(buildFilePath);
         }
 
-        public IBuildConfigReader SetDslFactory(DirectoryInfo rootDirectory)
+        public IBuildConfigReader SetDslFactory(IPackageTree packageTree)
         {
-            PackageDirectory = rootDirectory;
+            PackageTree = packageTree;
 
             return this;
         }
@@ -41,6 +42,10 @@ namespace Horn.Core.Dsl
         private BuildMetaData CreateBuildMetaData(string buildFilePath)
         {
             var engine = Ruby.CreateEngine();
+
+            var context = Ruby.GetExecutionContext(engine);
+
+            context.Loader.SetLoadPaths(new[] { PackageTree.Retrieve("rubylib").CurrentDirectory.FullName });
 
             engine.Runtime.LoadAssembly(typeof(BuildMetaData).Assembly);
 
