@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Horn.Core.Dsl;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;
@@ -25,6 +26,8 @@ namespace Horn.Core.Spec.Unit.dsl
         public  static readonly List<string> TASKS = new List<string> {"build"};
 
         protected DirectoryInfo rootDirectory;
+
+        protected IPackageTree packageTree;
 
         protected IBuildConfigReader reader;
 

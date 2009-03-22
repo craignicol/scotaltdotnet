@@ -12,7 +12,7 @@ namespace Horn.Core.Dsl
         private BooConfigReader configReader;
 
 
-        public DirectoryInfo PackageDirectory { get; private set; }
+        public IPackageTree PackageTree{ get; private set; }
 
 
 
@@ -21,15 +21,15 @@ namespace Horn.Core.Dsl
             if (factory == null)
                 throw new ArgumentNullException("You have not called SetDslFactory on class BooBuildConfigReader");
 
-            return CreateBuildMetaData(PackageDirectory, packageName);
+            return CreateBuildMetaData(PackageTree.CurrentDirectory, packageName);
         }
 
-        public BuildMetaData GetBuildMetaData(DirectoryInfo buildFolder, string buildFile)
+        public BuildMetaData GetBuildMetaData(IPackageTree packageTree, string buildFile)
         {
             if (factory == null)
                 throw new ArgumentNullException("You have not called SetDslFactory on class BooBuildConfigReader");
 
-            return CreateBuildMetaData(buildFolder, buildFile);
+            return CreateBuildMetaData(packageTree.CurrentDirectory, buildFile);
         }
 
         private BuildMetaData CreateBuildMetaData(DirectoryInfo buildFolder, string buildFile)
@@ -44,7 +44,7 @@ namespace Horn.Core.Dsl
             }
             catch (InvalidOperationException e)
             {
-                throw new MissingBuildFileException(PackageDirectory, e);
+                throw new MissingBuildFileException(buildFolder, e);
             }
           
             configReader.Prepare();
@@ -52,13 +52,13 @@ namespace Horn.Core.Dsl
             return new BuildMetaData(configReader);
         }
 
-        public virtual IBuildConfigReader SetDslFactory(DirectoryInfo baseDirectory)
+        public virtual IBuildConfigReader SetDslFactory(IPackageTree packageTree)
         {
-            PackageDirectory = baseDirectory;
+            PackageTree = packageTree;
 
             factory = new DslFactory
                             {
-                                BaseDirectory = baseDirectory.FullName
+                                BaseDirectory = packageTree.CurrentDirectory.FullName
                             };
 
             factory.Register<BooConfigReader>(new ConfigReaderEngine());

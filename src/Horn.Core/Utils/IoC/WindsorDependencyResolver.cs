@@ -26,7 +26,13 @@ namespace Horn.Core.Utils.IoC
         {
             innerContainer = new WindsorContainer();
 
-            //TODO: Scan the horn.core assembly and add the components automatically
+            innerContainer.Register(
+                Component.For<IBuildConfigReader>()
+                            .Named("rb")
+                            .ImplementedBy<RubyBuildConfigReader>()
+                            .LifeStyle.Transient
+                            );
+
             innerContainer.Register(
                 Component.For<IBuildConfigReader>()
                             .Named("boo")

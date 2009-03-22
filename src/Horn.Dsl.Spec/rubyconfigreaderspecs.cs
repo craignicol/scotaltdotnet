@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core.Dsl;
+using Horn.Core.PackageStructure;
 using Horn.Dsl.Spec.Helpers;
 using Xunit;
 
@@ -22,7 +23,9 @@ namespace Horn.Dsl.Spec.RubyConfigReader
         {
             var baseDirectory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
 
-            buildMetaData = rubyConfigReader.SetDslFactory(baseDirectory).GetBuildMetaData(baseDirectory, "whole_example");
+            IPackageTree packageTree = new PackageTree(baseDirectory, null);
+
+            buildMetaData = rubyConfigReader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, "whole_example");
         }
 
         [Fact]
