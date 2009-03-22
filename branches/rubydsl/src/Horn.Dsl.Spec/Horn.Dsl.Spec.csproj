@@ -79,6 +79,7 @@
     <Compile Include="dslparserspecs.cs" />
     <Compile Include="Helpers\DlrHelper.cs" />
     <Compile Include="MetaDataSpecs.cs" />
+    <Compile Include="rubyconfigreaderspecs.cs" />
     <Compile Include="SpikeSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -94,9 +95,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BuildConfigs\" />
+    <None Include="BuildConfigs\build_with_example.rb" />
+    <None Include="BuildConfigs\dependencies_example.rb" />
+    <None Include="BuildConfigs\description_example.rb" />
+    <None Include="BuildConfigs\get_from_svn_example.rb" />
+    <None Include="BuildConfigs\hornbuild.rb" />
+    <None Include="BuildConfigs\lib\dsl.rb" />
+    <None Include="BuildConfigs\lib\horn.rb" />
+    <None Include="BuildConfigs\meta_data_example.rb" />
+    <None Include="BuildConfigs\rubyspike.rb" />
+    <None Include="BuildConfigs\whole_example.rb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

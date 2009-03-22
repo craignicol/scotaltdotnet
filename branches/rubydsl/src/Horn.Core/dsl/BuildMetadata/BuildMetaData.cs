@@ -13,7 +13,7 @@ namespace Horn.Core.Dsl
 
         public SourceControl SourceControl { get; set; }
 
-        public Dictionary<string, object> ProjectInfo { get; private set; }
+        public Dictionary<string, object> ProjectInfo { get; set; }
 
         public BuildMetaData()
         {
