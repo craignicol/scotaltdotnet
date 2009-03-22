@@ -1,7 +1,5 @@
-using System.IO;
 using Horn.Core.PackageStructure;
 using IronRuby;
-using Microsoft.Scripting.Hosting;
 
 namespace Horn.Core.Dsl
 {
