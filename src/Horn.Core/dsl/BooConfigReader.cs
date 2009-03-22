@@ -4,11 +4,14 @@ using Boo.Lang.Compiler.Ast;
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
 using Horn.Core.Utils.Framework;
+using m = Microsoft.Scripting;
 
 namespace Horn.Core.Dsl
 {
     public abstract class BooConfigReader
     {
+        public delegate void Action();
+
         public virtual BuildEngine BuildEngine { get; set; }
 
         public virtual string Description { get; set; }

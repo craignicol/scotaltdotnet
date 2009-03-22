@@ -148,19 +148,7 @@ namespace Horn.Dsl.Spec
         [Fact]
         public void Then_the_whole_metat_data_can_be_obtained()
         {
-            Assert.Equal("A .NET build and dependency manager", buildMetaData.Description);
-
-            Assert.IsAssignableFrom<SVNSourceControl>(buildMetaData.SourceControl);
-
-            Assert.Equal("src/horn.sln", buildMetaData.BuildEngine.BuildFile);
-
-            Assert.Equal(FrameworkVersion.FrameworkVersion35, buildMetaData.BuildEngine.Version);
-
-            Assert.IsAssignableFrom<MSBuildBuildTool>(buildMetaData.BuildEngine.BuildTool);
-
-            Assert.Equal(buildMetaData.ProjectInfo["homepage"].ToString(), "http://code.google.com/p/scotaltdotnet/");
-
-            Assert.True(buildMetaData.BuildEngine.Dependencies.Count > 0);
-        }        
+            DlrHelper.AssertBuildMetaData(buildMetaData);
+        }
     }
 }
