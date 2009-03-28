@@ -5,5 +5,5 @@
 	with:
 		tasks build
 	switches:
-		#parameters "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "common.testrunner.failonerror=true", "build.msbuild=true"
+		pass
 	
