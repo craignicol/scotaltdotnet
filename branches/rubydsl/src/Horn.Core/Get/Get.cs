@@ -1,3 +1,4 @@
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 
 namespace Horn.Core.GetOperations
@@ -23,11 +24,11 @@ namespace Horn.Core.GetOperations
             return this;
         }
 
-        public virtual string ExportTo(string path)
+        public virtual IPackageTree ExportTo(IPackageTree packageTree)
         {
-            sourceControl.Export(path);
+            sourceControl.Export(packageTree);
 
-            return path;
+            return packageTree;
         }
 
         public Get(IFileSystemProvider fileSystemProvider)

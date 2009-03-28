@@ -2,14 +2,13 @@ using System.IO;
 using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
-using Horn.Core.SCM;
 using Horn.Framework.helpers;
 
 namespace Horn.Core.Spec.Unit.Get
 {
     using Utils;
 
-    public abstract class GetSpecificationBase : DirectoryStructureSpecificationBase
+    public abstract class GetSpecificationBase : DirectorySpecificationBase
     {
         protected IGet get;
         protected IFileSystemProvider fileSystemProvider;

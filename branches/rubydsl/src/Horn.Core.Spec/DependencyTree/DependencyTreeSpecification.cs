@@ -1,4 +1,4 @@
-﻿namespace Horn.Core.Spec.Unit.DependencyTree
+namespace Horn.Core.Spec.Unit.DependencyTree
 {
     using System;
     using PackageStructure;
@@ -9,7 +9,7 @@
     using Rhino.Mocks;
     using Core.DependencyTree;
 
-    public class When_We_Have_A_Single_Dependency : DirectoryStructureSpecificationBase
+    public class When_We_Have_A_Single_Dependency : DirectorySpecificationBase
     {
         protected IBuildMetaData dependencyBuildMetaData;
         protected IBuildMetaData rootBuildMetaData;
@@ -34,7 +34,7 @@
             dependentTree.Stub(x => x.Name).Return("simpleDependency");
             dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency", "simpleDependency.boo")).Return(dependencyBuildMetaData);
 
-            packageTree.Stub(x => x.Retrieve("")).IgnoreArguments().Return(dependentTree);
+            packageTree.Stub(x => x.RetrievePackage("")).IgnoreArguments().Return(dependentTree);
         }
 
         [Fact]
@@ -47,7 +47,7 @@
         }
     }
 
-    public class When_We_Have_A_Circular_Dependency : DirectoryStructureSpecificationBase
+    public class When_We_Have_A_Circular_Dependency : DirectorySpecificationBase
     {
         protected IBuildMetaData dependencyBuildMetaData;
         protected IBuildMetaData rootBuildMetaData;
@@ -73,10 +73,10 @@
             dependentTree.Stub(x => x.Name).Return("simpleDependency");
             dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency", "simpleDependency.boo")).Return(dependencyBuildMetaData);
 
-            packageTree.Stub(x => x.Retrieve("simpleDependency")).Return(dependentTree);
-            packageTree.Stub(x => x.Retrieve("root")).Return(packageTree);
-            dependentTree.Stub(x => x.Retrieve("simpleDependency")).Return(dependentTree);
-            dependentTree.Stub(x => x.Retrieve("root")).Return(packageTree);
+            packageTree.Stub(x => x.RetrievePackage("simpleDependency")).Return(dependentTree);
+            packageTree.Stub(x => x.RetrievePackage("root")).Return(packageTree);
+            dependentTree.Stub(x => x.RetrievePackage("simpleDependency")).Return(dependentTree);
+            dependentTree.Stub(x => x.RetrievePackage("root")).Return(packageTree);
         }
 
         [Fact]
@@ -87,7 +87,7 @@
         }
     }
 
-    public class When_We_Have_A_Complex_Dependency : DirectoryStructureSpecificationBase
+    public class When_We_Have_A_Complex_Dependency : DirectorySpecificationBase
     {
         protected IDependencyTree dependencyTree;
         protected IPackageTree packageTree;
@@ -123,7 +123,7 @@
             {
                 foreach (IPackageTree retrievedPackage in packages)
                 {
-                    packageStub.Stub(x => x.Retrieve(retrievedPackage.Name)).Return(retrievedPackage);                    
+                    packageStub.Stub(x => x.RetrievePackage(retrievedPackage.Name)).Return(retrievedPackage);                    
                 }
             }
         }

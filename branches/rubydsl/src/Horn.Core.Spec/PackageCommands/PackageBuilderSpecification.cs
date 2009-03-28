@@ -6,8 +6,6 @@ namespace Horn.Core.Spec.Unit.PackageCommands
     using Core.PackageCommands;
     using PackageStructure;
     using BuildEngine;
-    using Get;
-    using HornTree;
     using Utils;
     using Utils.Framework;
     using Rhino.Mocks;
@@ -19,33 +17,58 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         protected IDictionary<string, IList<string>> switches = new Dictionary<string, IList<string>>();
         protected IGet get;
         protected IBuildConfigReader buildConfigReader;
-        protected IPackageTree packageTree;
+        protected IPackageTree wholeTree;
         protected IFileSystemProvider fileSystemProvider;
 
         protected override void Because()
         {
-            switches.Add("install", new List<string>{"horn"});
-
             get = new Get(fileSystemProvider);
 
+            IBuildMetaData buildMetaData;
+
+            IPackageTree componentTree = GetComponentTree(out buildMetaData);
+
+            wholeTree = CreateStub<IPackageTree>();
+
+            wholeTree.Stub(x => x.RetrievePackage("horn")).Return(componentTree);
+
+            wholeTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
+        }
+
+        //[Fact]
+        public void Then_The_Builder_Coordinates_The_Build()
+        {
+            switches.Add("install", new List<string> { "horn" });
+
+            IPackageCommand command = new PackageBuilder(get, new StubProcessFactory());
+
+            command.Execute(wholeTree, switches);
+        }
+
+        private IPackageTree GetComponentTree(out IBuildMetaData buildMetaData)
+        {
             var baseConfigReader = CreateStub<BooConfigReader>();
 
             baseConfigReader.InstallName = "horn";
 
-            packageTree = CreateStub<IPackageTree>();
-
             var componentTree = CreateStub<IPackageTree>();
 
-            componentTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\")).Repeat.Any();
+            componentTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"c:\temp\safe")).Repeat.Any();
 
-            packageTree.Stub(x => x.Retrieve("horn")).Return(componentTree);
+            componentTree.BuildFiles = new Dictionary<string, string> { { "horn", "horn" } };
 
-            var buildFiles = new Dictionary<string, string>();
+            buildMetaData = GetBuildMetaData(baseConfigReader);
 
-            buildFiles.Add("horn","horn");
+            componentTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData);
 
-            componentTree.BuildFiles = buildFiles;
+            componentTree.Stub(x => x.GetBuildMetaData("log4net", "log4net"))
+                         .Return(buildMetaData).IgnoreArguments().Repeat.Any();
 
+            return componentTree;
+        }
+
+        private IBuildMetaData GetBuildMetaData(BooConfigReader baseConfigReader)
+        {
             var buildTool = new BuildToolStub();
 
             var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35);
@@ -58,20 +81,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             buildMetaData.BuildEngine = buildEngine;
 
-            componentTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData);
-
-            packageTree.Stub(x => x.Retrieve("horn")).Return(packageTree).IgnoreArguments().Repeat.Once();
-
-            packageTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
-            componentTree.Stub(x => x.GetBuildMetaData("log4net", "log4net")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
-        }
-
-        [Fact]
-        public void Then_The_Builder_Coordinates_The_Build()
-        {
-            IPackageCommand command = new PackageBuilder(get, new StubProcessFactory());
-
-            command.Execute(packageTree, switches);
+            return buildMetaData;
         }
     }
 }

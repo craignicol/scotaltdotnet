@@ -37,9 +37,19 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public bool Exists
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         public Dictionary<string, string> BuildFiles { get; set; }
 
-        public IPackageTree Retrieve(string packageName)
+        public void CreateRequiredDirectories()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IPackageTree RetrievePackage(string packageName)
         {
             throw new System.NotImplementedException();
         }
@@ -55,6 +65,11 @@ namespace Horn.Core.PackageStructure
         }
 
         public DirectoryInfo CurrentDirectory
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
+        public DirectoryInfo DownloadDirectory
         {
             get { throw new System.NotImplementedException(); }
         }
@@ -75,6 +90,11 @@ namespace Horn.Core.PackageStructure
         }
 
         public List<IPackageTree> BuildNodes()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IRevisionData GetRevisionData()
         {
             throw new System.NotImplementedException();
         }

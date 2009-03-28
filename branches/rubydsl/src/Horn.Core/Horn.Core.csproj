@@ -160,9 +160,11 @@
     <Compile Include="PackageTree\BuildFileResolver.cs" />
     <Compile Include="PackageTree\IBuildFileResolver.cs" />
     <Compile Include="PackageTree\IPackageTree.cs" />
+    <Compile Include="PackageTree\IRevisionData.cs" />
     <Compile Include="PackageTree\NullPackageTree.cs" />
     <Compile Include="PackageTree\PackageTree.cs" />
     <Compile Include="PackageTree\PackageTreeExtensions.cs" />
+    <Compile Include="PackageTree\RevisionData.cs" />
     <Compile Include="SourceControl\DefaultDownloadMonitor.cs" />
     <Compile Include="SourceControl\IDownloadMonitor.cs" />
     <Compile Include="SourceControl\SourceControl.cs" />
