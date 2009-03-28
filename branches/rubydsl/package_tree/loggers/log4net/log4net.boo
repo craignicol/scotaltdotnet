@@ -5,5 +5,5 @@
 	with:
 		tasks build
 	switches:
-		pass
+		parameters "mandatory=false"
 	
