@@ -35,7 +35,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             wholeTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
         }
 
-        //[Fact]
+        [Fact]
         public void Then_The_Builder_Coordinates_The_Build()
         {
             switches.Add("install", new List<string> { "horn" });
@@ -54,6 +54,8 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             var componentTree = CreateStub<IPackageTree>();
 
             componentTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"c:\temp\safe")).Repeat.Any();
+
+            componentTree.Stub(x => x.GetRevisionData()).Return(new RevisionData("3"));
 
             componentTree.BuildFiles = new Dictionary<string, string> { { "horn", "horn" } };
 
@@ -77,7 +79,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             var buildMetaData = CreateStub<IBuildMetaData>();
 
-            buildMetaData.SourceControl = new SourceControlDouble("svn://some.url");
+            buildMetaData.SourceControl = new SourceControlDoubleWithFakeFileSystem("svn://some.url");
 
             buildMetaData.BuildEngine = buildEngine;
 

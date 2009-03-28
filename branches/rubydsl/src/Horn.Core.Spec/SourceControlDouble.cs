@@ -56,6 +56,18 @@ namespace Horn.Core.Spec
         }
     }
 
+    public class SourceControlDoubleWithFakeFileSystem : SourceControlDouble
+    {
+        protected override void RecordCurrentRevision(IPackageTree tree, string revision)
+        {
+            Console.WriteLine(revision);
+        }
+
+        public SourceControlDoubleWithFakeFileSystem(string url) : base(url)
+        {
+        }
+    }
+
     public class SourceControlDoubleWitholdRevision : SourceControlDouble
     {
         public override string Revision
