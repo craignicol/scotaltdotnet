@@ -43,7 +43,7 @@ namespace Horn.Core.Dsl
 
             var context = Ruby.GetExecutionContext(engine);
 
-            context.Loader.SetLoadPaths(new[] { PackageTree.Retrieve("rubylib").CurrentDirectory.FullName });
+            context.Loader.SetLoadPaths(new[] { PackageTree.RetrievePackage("rubylib").CurrentDirectory.FullName });
 
             engine.Runtime.LoadAssembly(typeof(BuildMetaData).Assembly);
 

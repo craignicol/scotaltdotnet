@@ -1,4 +1,5 @@
 using System.IO;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 using Horn.Core.Tree.MetaDataSynchroniser;
 using Horn.Framework.helpers;
@@ -10,6 +11,8 @@ namespace Horn.Core.Integration.MetaDataSynchroniserFixtures
         private IMetaDataSynchroniser metaDataSynchroniser;
 
         private readonly string rootPath = DirectoryHelper.GetTempDirectoryName();
+
+        private IPackageTree packageTree;
 
         protected override void Before_each_spec()
         {
@@ -24,13 +27,15 @@ namespace Horn.Core.Integration.MetaDataSynchroniserFixtures
 
         protected override void Because()
         {
-            metaDataSynchroniser.SynchronisePackageTree(rootPath);
+            packageTree = new PackageTree(new DirectoryInfo(rootPath), null);
+
+            metaDataSynchroniser.SynchronisePackageTree(packageTree);
         }
 
         [Fact]
         public void Then_the_package_tree_should_be_downloaded_to_the_remote_repository()
         {
-            Assert.True(metaDataSynchroniser.PackageTreeExists(rootPath));
+            Assert.True(packageTree.Exists);
         }
     }
 }

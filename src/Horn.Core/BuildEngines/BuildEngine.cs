@@ -51,7 +51,7 @@ namespace Horn.Core.BuildEngines
         {
             foreach (Dependency dependency in Dependencies)
             {
-                var sourceFiles = packageTree.Retrieve(dependency.PackageName).OutputDirectory.GetFiles();
+                var sourceFiles = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory.GetFiles();
                 var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.BuildFile);
 
                 string targetDir;

@@ -10,9 +10,13 @@ namespace Horn.Core.PackageStructure
 
         bool IsRoot { get; }
 
+        bool Exists { get; }
+
         Dictionary<string, string> BuildFiles { get; set; }
 
-        IPackageTree Retrieve(string packageName);
+        void CreateRequiredDirectories();
+
+        IPackageTree RetrievePackage(string packageName);
 
         IBuildMetaData GetBuildMetaData(string packageName);
 
@@ -27,5 +31,7 @@ namespace Horn.Core.PackageStructure
         DirectoryInfo OutputDirectory { get; }
 
         List<IPackageTree> BuildNodes();
+
+        IRevisionData GetRevisionData();
     }
 }

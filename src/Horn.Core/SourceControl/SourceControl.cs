@@ -1,14 +1,18 @@
+using System.IO;
 using System.Threading;
+using Horn.Core.PackageStructure;
 
 namespace Horn.Core.SCM
 {
     public abstract class SourceControl
     {
+        public abstract string Revision { get; }
+
         protected  IDownloadMonitor downloadMonitor;
 
-        protected abstract void Initialise(string destination);
+        protected abstract void Initialise(IPackageTree packageTree);
 
-        protected abstract void Download(string destination);
+        protected abstract string Download(DirectoryInfo destination);
 
         public string Url {get; private set;}
 
@@ -17,22 +21,43 @@ namespace Horn.Core.SCM
             get { return downloadMonitor; }
         }
 
-        public virtual void Export(string destination)
+        public virtual void Export(IPackageTree packageTree)
         {
-            Initialise(destination);
+            if (!packageTree.GetRevisionData().ShouldUpdate(new RevisionData(Revision)))
+                return;
 
-            SetMonitor(destination);
+            Initialise(packageTree);
 
+            SetMonitor(packageTree.WorkingDirectory.FullName);
+
+            Thread monitoringThread = StartMonitoring();
+
+            var revision = Download(packageTree.WorkingDirectory);
+
+            StopMonitoring(monitoringThread);
+
+            RecordCurrentRevision(packageTree, revision);
+        }
+
+        protected virtual void RecordCurrentRevision(IPackageTree tree, string revision)
+        {
+            tree.GetRevisionData().RecordRevision(tree, revision);
+        }
+
+        protected virtual void StopMonitoring(Thread thread)
+        {
+            downloadMonitor.StopMonitoring = true;
+
+            thread.Join();
+        }
+
+        protected virtual Thread StartMonitoring()
+        {
             var thread = new Thread(downloadMonitor.StartMonitoring);
 
             thread.Start();
 
-            Download(destination);
-
-            downloadMonitor.StopMonitoring = true;
-
-            thread.Join();
-
+            return thread;
         }
 
         protected virtual void SetMonitor(string destination)

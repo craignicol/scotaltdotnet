@@ -1,4 +1,5 @@
 using System.IO;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 
 namespace Horn.Core.Tree.MetaDataSynchroniser
@@ -9,26 +10,9 @@ namespace Horn.Core.Tree.MetaDataSynchroniser
 
         public const string PACKAGE_TREE_URI = "http://scotaltdotnet.googlecode.com/svn/branches/rubydsl/package_tree/";
 
-        public void SynchronisePackageTree(string rootPath)
+        public void SynchronisePackageTree(IPackageTree packageTree)
         {
-            if(PackageTreeExists(rootPath))
-                return;
-
-            sourceControl.Export(rootPath);
-        }
-
-        public bool PackageTreeExists(string rootPath)
-        {
-            if (!Directory.Exists(rootPath))
-                return false;
-
-            return RootDirectoryContainsBuildFiles(rootPath) > 0;
-        }
-
-        private int RootDirectoryContainsBuildFiles(string rootPath)
-        {
-            //HACK: Basic check for now.  Could be expanded for a core set of required build.boo files
-            return (Directory.GetFiles(rootPath, "Horn.*", SearchOption.AllDirectories).Length);
+            sourceControl.Export(packageTree);
         }
 
         public MetaDataSynchroniser(SourceControl sourceControl)

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using Horn.Core.PackageStructure;
 using log4net;
 using SharpSvn;
 
@@ -10,21 +11,21 @@ namespace Horn.Core.SCM
     {
         private static readonly ILog log = LogManager.GetLogger(typeof (SVNSourceControl));
 
-        protected override void Initialise(string destination)
+        protected override void Initialise(IPackageTree packageTree)
         {
-            if (Directory.Exists(destination))
-            {
-                Directory.Delete(destination, true);
-            }
+            if (packageTree.WorkingDirectory.Exists)
+                packageTree.WorkingDirectory.Delete(true);
         }
 
-        protected override void Download(string destination)
+        protected override string Download(DirectoryInfo destination)
         {
+            SvnUpdateResult result = null;
+
             using (var client = new SvnClient())
             {
                 try
                 {
-                    client.Export(Url, destination);
+                    client.Export(Url, destination.FullName, out result);
                 }
                 catch(SvnRepositoryIOException sre)
                 {
@@ -36,6 +37,36 @@ namespace Horn.Core.SCM
                 {
                     HandleExceptions(sue);
                 }
+            }
+
+            return result.Revision.ToString();
+        }
+
+        public override string Revision
+        {
+            get
+            {
+                SvnInfoEventArgs info = null;
+
+                using (var client = new SvnClient())
+                {
+                    try
+                    {
+                        client.GetInfo(SvnTarget.FromUri(new Uri(Url)), out info);
+                    }
+                    catch (SvnRepositoryIOException sre)
+                    {
+                        HandleExceptions(sre);
+
+                        throw;
+                    }
+                    catch (SvnObstructedUpdateException sue)
+                    {
+                        HandleExceptions(sue);
+                    }
+                }
+
+                return info.Revision.ToString();
             }
         }
 

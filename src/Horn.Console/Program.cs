@@ -53,18 +53,17 @@ namespace Horn.Console
             log.Debug("IOC initialised.....");
         }
 
-        private static PackageTree GetPackageTree()
+        private static IPackageTree GetPackageTree()
         {
-            var rootFolder = GetRootFolderPath();
+            IPackageTree root = new PackageTree(GetRootFolderPath(), null);
 
             //TODO: Hard coded dependency.  Should be injected in or retrieved from the container
             IMetaDataSynchroniser metaDataSynchroniser =
                 new MetaDataSynchroniser(new SVNSourceControl(MetaDataSynchroniser.PACKAGE_TREE_URI));
 
-            if(!metaDataSynchroniser.PackageTreeExists(rootFolder.FullName))
-                metaDataSynchroniser.SynchronisePackageTree(rootFolder.FullName);
+            metaDataSynchroniser.SynchronisePackageTree(root);   
 
-            return new PackageTree(rootFolder, null);
+            return new PackageTree(GetRootFolderPath(), null);
         }
 
         //TODO: to be replaced by user defined choice from the install perhaps?
@@ -72,13 +71,9 @@ namespace Horn.Console
         {
             var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
-            var rootFolder = string.Format("{0}\\.horn", documents.Parent.FullName);
+            var rootFolder = Path.Combine(documents.Parent.FullName, ".horn");
 
             log.DebugFormat("root folder = {0}", rootFolder);
-
-            //TODO: remove delete of package tree on every run when a bit more stable.
-            if (Directory.Exists(rootFolder))
-                Directory.Delete(rootFolder, true);
 
             var ret = new DirectoryInfo(rootFolder);
 
