@@ -28,7 +28,7 @@ module MetaBuilder
       end
       
       def output(outputDir)
-        meta.metadata.Output = outputDir
+        meta.metadata.BuildEngine.OutputDirectory = outputDir
       end      
       
       def msbuild()
