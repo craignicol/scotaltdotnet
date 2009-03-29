@@ -27,6 +27,10 @@ module MetaBuilder
         meta.metadata.BuildEngine = BuildEngines::BuildEngine.new(buildTool, options[:buildfile], frameWorkVersion)
       end
       
+      def output(outputDir)
+        meta.metadata.Output = outputDir
+      end      
+      
       def msbuild()
         Horn::Core::MSBuildBuildTool.new
       end
