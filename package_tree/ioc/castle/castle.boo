@@ -4,7 +4,7 @@ install castle:
 	build_with nant, buildfile("default.build"), FrameworkVersion35
 	
 	with:
-		tasks build, release, quick, rebuild
+		tasks quick, rebuild
 		
 	switches:
 		parameters "mandatory=false"
