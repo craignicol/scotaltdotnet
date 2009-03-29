@@ -9,6 +9,7 @@ install :horn do
   
   dependency :log4net =>  "log4net"
   #dependency :castle =>   "castle.core"
+  #dependency :castle => "castle,Microkernel"
 end
 
 project.homepage "http://code.google.com/p/scotaltdotnet/"
