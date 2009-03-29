@@ -3,13 +3,12 @@ require 'hornbuild'
 install :horn do
   description "A .NET build and dependency manager"
   build_with :msbuild, :frameworkVersion35, :buildfile => "src/horn.sln"
-  get_from :svn, "http://scotaltdotnet.googlecode.com/branches/rubydsl/src"
-  output "Output"
-  shared_library "lib"
+  get_from :svn, "http://scotaltdotnet.googlecode.com/svn/branches/rubydsl/"
+  output "src/build/"
+  shared_library "src/lib"
   
   dependency :log4net =>  "log4net"
   #dependency :castle =>   "castle.core"
-  #dependency :castle => "castle,Microkernel"
 end
 
 project.homepage "http://code.google.com/p/scotaltdotnet/"
