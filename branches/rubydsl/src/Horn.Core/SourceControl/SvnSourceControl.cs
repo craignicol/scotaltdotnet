@@ -9,7 +9,39 @@ namespace Horn.Core.SCM
 {
     public class SVNSourceControl : SourceControl
     {
+
         private static readonly ILog log = LogManager.GetLogger(typeof (SVNSourceControl));
+
+
+        public override string Revision
+        {
+            get
+            {
+                SvnInfoEventArgs info = null;
+
+                using (var client = new SvnClient())
+                {
+                    try
+                    {
+                        client.GetInfo(SvnTarget.FromUri(new Uri(Url)), out info);
+                    }
+                    catch (SvnRepositoryIOException sre)
+                    {
+                        HandleExceptions(sre);
+
+                        throw;
+                    }
+                    catch (SvnObstructedUpdateException sue)
+                    {
+                        HandleExceptions(sue);
+                    }
+                }
+
+                return info.Revision.ToString();
+            }
+        }
+
+
 
         protected override void Initialise(IPackageTree packageTree)
         {
@@ -42,33 +74,12 @@ namespace Horn.Core.SCM
             return result.Revision.ToString();
         }
 
-        public override string Revision
+        protected override void SetMonitor(string destination)
         {
-            get
-            {
-                SvnInfoEventArgs info = null;
-
-                using (var client = new SvnClient())
-                {
-                    try
-                    {
-                        client.GetInfo(SvnTarget.FromUri(new Uri(Url)), out info);
-                    }
-                    catch (SvnRepositoryIOException sre)
-                    {
-                        HandleExceptions(sre);
-
-                        throw;
-                    }
-                    catch (SvnObstructedUpdateException sue)
-                    {
-                        HandleExceptions(sue);
-                    }
-                }
-
-                return info.Revision.ToString();
-            }
+            downloadMonitor = new DownloadMonitor(destination);
         }
+
+
 
         private void HandleExceptions(Exception ex)
         {
@@ -77,9 +88,10 @@ namespace Horn.Core.SCM
             log.Error(ex);
         }
 
-        protected override void SetMonitor(string destination)
+
+
+        public SVNSourceControl()
         {
-            downloadMonitor = new DownloadMonitor(destination);
         }
 
         public SVNSourceControl(string url)
@@ -87,8 +99,7 @@ namespace Horn.Core.SCM
         {
         }
 
-        public SVNSourceControl()
-        {
-        }
+
+
     }
 }

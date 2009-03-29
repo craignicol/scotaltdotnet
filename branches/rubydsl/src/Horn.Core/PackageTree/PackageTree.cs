@@ -15,7 +15,17 @@ namespace Horn.Core.PackageStructure
         private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
         private static readonly string[] libraryNodes = new[] {"rubylib", "lib", "debug", "buildengines"};
 
+
         public string BuildFile{ get; set; }
+
+        public IBuildMetaData BuildMetaData{ get; private set; }
+
+        public IPackageTree[] Children
+        {
+            get { return children.ToArray(); }
+        }
+
+        public DirectoryInfo CurrentDirectory { get; private set; }
 
         public bool Exists
         {
@@ -28,18 +38,14 @@ namespace Horn.Core.PackageStructure
             }
         }
 
-        private int RootDirectoryContainsBuildFiles()
+        public bool IsBuildNode { get; private set; }
+
+        public bool IsRoot
         {
-            //HACK: Basic check for now.  Could be expanded for a core set of required build.boo files
-            return (WorkingDirectory.GetFiles("Horn.*", SearchOption.AllDirectories).Length);
+            get { return (Parent == null); }
         }
 
-        public IPackageTree[] Children
-        {
-            get { return children.ToArray(); }
-        }
-
-        public DirectoryInfo CurrentDirectory { get; private set; }
+        public string Name{ get; private set; }
 
         public FileInfo Nant
         {
@@ -55,6 +61,10 @@ namespace Horn.Core.PackageStructure
             }
         }
 
+        public DirectoryInfo OutputDirectory { get; private set; }
+
+        public IPackageTree Parent { get; set; }
+
         public FileInfo Sn
         {
             get
@@ -68,24 +78,12 @@ namespace Horn.Core.PackageStructure
             }
         }
 
-        public bool IsBuildNode { get; private set; }
-
-        public bool IsRoot
-        {
-            get { return (Parent == null); }
-        }
-
-        public string Name{ get; private set; }
-
-        public DirectoryInfo OutputDirectory { get; private set; }
-
-        public IPackageTree Parent { get; set; }
-
         public DirectoryInfo WorkingDirectory
         {
             get { return IsRoot ? CurrentDirectory : workingDirectory; }
             private set { workingDirectory = value; }
         }
+
 
 
         public void Add(IPackageTree item)
@@ -103,9 +101,13 @@ namespace Horn.Core.PackageStructure
             return result;
         }
 
-        public IRevisionData GetRevisionData()
+        public virtual void CreateRequiredDirectories()
         {
-            return new RevisionData(this);
+            WorkingDirectory = new DirectoryInfo(Path.Combine(CurrentDirectory.FullName, "Working"));
+            WorkingDirectory.Create();
+
+            OutputDirectory = new DirectoryInfo(Path.Combine(CurrentDirectory.FullName, "Output"));
+            OutputDirectory.Create();
         }
 
         public IBuildMetaData GetBuildMetaData(string packageName)
@@ -113,6 +115,11 @@ namespace Horn.Core.PackageStructure
             IPackageTree packageTree = RetrievePackage(packageName);
 
             return GetBuildMetaData(packageTree);
+        }
+
+        public IRevisionData GetRevisionData()
+        {
+            return new RevisionData(this);
         }
 
         public void Remove(IPackageTree item)
@@ -133,8 +140,13 @@ namespace Horn.Core.PackageStructure
             return result.First();
         }
 
-        public IBuildMetaData BuildMetaData{ get; private set; }
 
+
+        private int RootDirectoryContainsBuildFiles()
+        {
+            //HACK: Basic check for now.  Could be expanded for a core set of required build.boo files
+            return (WorkingDirectory.GetFiles("Horn.*", SearchOption.AllDirectories).Length);
+        }
 
         private IBuildMetaData GetBuildMetaData(IPackageTree packageTree)
         {
@@ -160,15 +172,6 @@ namespace Horn.Core.PackageStructure
             return reservedDirectoryNames.Contains(child.Name.ToLower());
         }
 
-        public virtual void CreateRequiredDirectories()
-        {
-            WorkingDirectory = new DirectoryInfo(Path.Combine(CurrentDirectory.FullName, "Working"));
-            WorkingDirectory.Create();
-
-            OutputDirectory = new DirectoryInfo(Path.Combine(CurrentDirectory.FullName, "Output"));
-            OutputDirectory.Create();
-        }
-
         private bool DirectoryIsBuildNode(DirectoryInfo directory)
         {
             if (IsRoot)
@@ -178,23 +181,7 @@ namespace Horn.Core.PackageStructure
                    (!libraryNodes.Contains(directory.Name.ToLower())));
         }
 
-        private IPackageTree Root
-        {
-            get
-            {
-                if (IsRoot)
-                    return this;
 
-                IPackageTree parent = Parent;
-
-                while (!parent.IsRoot)
-                {
-                    parent = parent.Parent;
-                }
-
-                return parent;
-            }
-        }
 
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
         {
@@ -221,5 +208,25 @@ namespace Horn.Core.PackageStructure
                 children.Add(CreateNewPackageTree(child));
             }
         }
+
+
+        private IPackageTree Root
+        {
+            get
+            {
+                if (IsRoot)
+                    return this;
+
+                IPackageTree parent = Parent;
+
+                while (!parent.IsRoot)
+                {
+                    parent = parent.Parent;
+                }
+
+                return parent;
+            }
+        }
+
     }
 }

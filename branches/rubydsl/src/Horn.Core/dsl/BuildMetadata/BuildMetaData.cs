@@ -11,9 +11,11 @@ namespace Horn.Core.Dsl
 
         public string Description { get; set; }
 
+        public Dictionary<string, object> ProjectInfo { get; set; }
+
         public SourceControl SourceControl { get; set; }
 
-        public Dictionary<string, object> ProjectInfo { get; set; }
+
 
         public BuildMetaData()
         {
@@ -28,5 +30,8 @@ namespace Horn.Core.Dsl
             BuildEngine.OutputDirectory = instance.BuildEngine.OutputDirectory;
             BuildEngine.SharedLibrary = instance.BuildEngine.SharedLibrary;
         }
+
+
+
     }
 }

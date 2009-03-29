@@ -7,13 +7,12 @@ namespace Horn.Core.PackageStructure
 {
     public class RevisionData : IRevisionData
     {
+
         private readonly FileInfo revisionFileInfo;
-
         private string revision;
-
         private static readonly ILog log = LogManager.GetLogger(typeof (RevisionData));
-
         public const string FILE_NAME = "revision.horn";
+
 
         public bool Exists
         {
@@ -52,12 +51,21 @@ namespace Horn.Core.PackageStructure
             }
         }
 
+
+
         public virtual void RecordRevision(IPackageTree packageTree, string revisionVlaue)
         {
             var fileInfo = GetRevisionFile(packageTree);
 
             RecordRevision(fileInfo, revisionVlaue);
         }
+
+        public bool ShouldUpdate(IRevisionData other)
+        {
+            return (long.Parse(other.Revision) > long.Parse(Revision));
+        }
+
+
 
         private void RecordRevision(FileInfo fileInfo, string revisionValue)
         {
@@ -70,17 +78,14 @@ namespace Horn.Core.PackageStructure
             }
         }
 
-        public bool ShouldUpdate(IRevisionData other)
-        {
-            return (long.Parse(other.Revision) > long.Parse(Revision));
-        }
-
         private FileInfo GetRevisionFile(IPackageTree packageTree)
         {
             var file = Path.Combine(packageTree.CurrentDirectory.FullName, FILE_NAME);
 
             return new FileInfo(file);
         }
+
+
 
         public RevisionData(string revision)
         {
@@ -96,5 +101,8 @@ namespace Horn.Core.PackageStructure
 
             RecordRevision(revisionFileInfo, "0");
         }
+
+
+
     }
 }

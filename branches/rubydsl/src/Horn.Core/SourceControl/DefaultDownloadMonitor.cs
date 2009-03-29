@@ -5,9 +5,13 @@ namespace Horn.Core.SCM
 {
     public class DefaultDownloadMonitor : IDownloadMonitor
     {
+
         public static readonly ILog log = LogManager.GetLogger(typeof (DefaultDownloadMonitor));
 
+
         public bool StopMonitoring { get; set; }
+
+
 
         public void StartMonitoring()
         {
@@ -18,5 +22,8 @@ namespace Horn.Core.SCM
                 Thread.Sleep(3000);
             }
         }
+
+
+
     }
 }

@@ -7,22 +7,38 @@ namespace Horn.Core.SCM
 {
     public abstract class SourceControl
     {
-        public abstract string Revision { get; }
-
-        protected  IDownloadMonitor downloadMonitor;
-
-        protected abstract void Initialise(IPackageTree packageTree);
-
-        protected abstract string Download(DirectoryInfo destination);
-
-        public string Url {get; private set;}
 
         private static Dictionary<string, string> downloadedPackages = new Dictionary<string, string>();
+        protected  IDownloadMonitor downloadMonitor;
+
 
         public IDownloadMonitor DownloadMonitor
         {
             get { return downloadMonitor; }
         }
+
+        public abstract string Revision { get; }
+
+        public string Url {get; private set;}
+
+
+
+        protected abstract void Initialise(IPackageTree packageTree);
+
+        protected abstract string Download(DirectoryInfo destination);
+
+
+
+        public static T Create<T>(string url) where T : SourceControl
+        {
+            var sourceControl = IoC.Resolve<T>();
+
+            sourceControl.Url = url;
+
+            return sourceControl;
+        }
+
+
 
         public virtual void Export(IPackageTree packageTree)
         {
@@ -46,6 +62,8 @@ namespace Horn.Core.SCM
 
             downloadedPackages.Add(packageTree.Name, packageTree.Name);
         }
+
+
 
         protected virtual void RecordCurrentRevision(IPackageTree tree, string revision)
         {
@@ -73,15 +91,6 @@ namespace Horn.Core.SCM
             downloadMonitor = new DefaultDownloadMonitor();
         }
 
-        public static T Create<T>(string url) where T : SourceControl
-        {
-            var sourceControl = IoC.Resolve<T>();
-
-            sourceControl.Url = url;
-
-            return sourceControl;
-        }
-
         protected SourceControl(string url)
         {
             Url = url;
@@ -90,5 +99,8 @@ namespace Horn.Core.SCM
         protected SourceControl()
         {
         }
+
+
+
     }
 }

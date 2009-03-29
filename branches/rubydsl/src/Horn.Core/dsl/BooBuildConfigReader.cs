@@ -32,6 +32,22 @@ namespace Horn.Core.Dsl
             return CreateBuildMetaData(packageTree.CurrentDirectory, buildFile);
         }
 
+        public virtual IBuildConfigReader SetDslFactory(IPackageTree packageTree)
+        {
+            PackageTree = packageTree;
+
+            factory = new DslFactory
+                            {
+                                BaseDirectory = packageTree.CurrentDirectory.FullName
+                            };
+
+            factory.Register<BooConfigReader>(new ConfigReaderEngine());
+
+            return this;
+        }
+
+
+
         private BuildMetaData CreateBuildMetaData(DirectoryInfo buildFolder, string buildFile)
         {
             var buildFileResolver = new BuildFileResolver();
@@ -50,20 +66,6 @@ namespace Horn.Core.Dsl
             configReader.Prepare();
 
             return new BuildMetaData(configReader);
-        }
-
-        public virtual IBuildConfigReader SetDslFactory(IPackageTree packageTree)
-        {
-            PackageTree = packageTree;
-
-            factory = new DslFactory
-                            {
-                                BaseDirectory = packageTree.CurrentDirectory.FullName
-                            };
-
-            factory.Register<BooConfigReader>(new ConfigReaderEngine());
-
-            return this;
         }
 
 
