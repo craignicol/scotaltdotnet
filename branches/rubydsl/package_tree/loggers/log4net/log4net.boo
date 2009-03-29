@@ -7,5 +7,7 @@
 	switches:
 		parameters "mandatory=false"
 		
+	generate_strong_key
+		
 	output "bin/net/2.0/debug"
 	

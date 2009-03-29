@@ -55,6 +55,19 @@ namespace Horn.Core.PackageStructure
             }
         }
 
+        public FileInfo Sn
+        {
+            get
+            {
+                //TODO: Find a less explicit way to find the sn.exe
+                var path = Path.Combine(Root.CurrentDirectory.FullName, "buildengines");
+                path = Path.Combine(path, "Sn");
+                path = Path.Combine(path, "sn.exe");
+
+                return new FileInfo(path);                
+            }
+        }
+
         public bool IsBuildNode { get; private set; }
 
         public bool IsRoot
