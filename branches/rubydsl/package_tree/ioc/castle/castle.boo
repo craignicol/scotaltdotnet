@@ -6,5 +6,9 @@ install castle:
 	output "build/net-3.5/debug"
 	with:
 		tasks build release quick rebuild
+		
 	switches:
 		parameters "mandatory=false"
+	
+dependencies:
+	depend @log4net >> "log4net"
