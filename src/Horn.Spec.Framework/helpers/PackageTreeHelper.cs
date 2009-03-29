@@ -45,6 +45,8 @@ namespace Horn.Framework.helpers
 
             CreateBuildFiles(log4NetBuildFile, norevisionpackage, false);
 
+            CreateBuildEnginesStructure(rootDirectory);
+
             return new DirectoryInfo(rootDirectory);
         }
 
@@ -68,6 +70,19 @@ namespace Horn.Framework.helpers
 
                 streamWriter.Close();
             }
+        }
+
+        private static void CreateBuildEnginesStructure(string root)
+        {
+            var path = Path.Combine(root, "buildengines");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, "Nant");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, "Nant");
+            Directory.CreateDirectory(path);
+            path = Path.Combine(path, "Nant.exe");
+            var existingExecutablePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Nant.exe");
+            File.Copy(existingExecutablePath, path, true);
         }
 
         public static string CreateDirectory(string directoryPath, string newDirectoryName)

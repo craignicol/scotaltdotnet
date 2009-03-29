@@ -24,6 +24,8 @@ namespace Horn.Core.PackageStructure
 
         DirectoryInfo CurrentDirectory { get; }
 
+        FileInfo Nant { get; }
+
         DirectoryInfo WorkingDirectory { get; }
 
         bool IsBuildNode { get; }

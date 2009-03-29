@@ -43,6 +43,20 @@ namespace Horn.Core.PackageStructure
 
         public DirectoryInfo CurrentDirectory { get; private set; }
 
+        public FileInfo Nant
+        {
+            get
+            {
+                //TODO: Find a less explicit way to find the nant.exe
+                var path = Path.Combine(Root.CurrentDirectory.FullName, "buildengines");
+                path = Path.Combine(path, "Nant");
+                path = Path.Combine(path, "Nant");
+                path = Path.Combine(path, "NAnt.exe");
+
+                return new FileInfo(path);
+            }
+        }
+
         public bool IsBuildNode { get; private set; }
 
         public bool IsRoot

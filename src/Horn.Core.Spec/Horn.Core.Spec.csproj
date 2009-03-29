@@ -71,6 +71,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="NAnt, Version=0.86.2898.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Nant\NAnt.exe</HintPath>
+    </Reference>
     <Reference Include="Osherove.ThreadTester, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Osherove.ThreadTester.dll</HintPath>
@@ -123,6 +127,7 @@
     <Compile Include="helpers\TreeHelper.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniserfixture.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniserfixturebase.cs" />
+    <Compile Include="PackageTree\BuildEnginePackageSpecifications.cs" />
     <Compile Include="PackageTree\BuildFileResolverSpec.cs" />
     <Compile Include="RevisionData\RevisionDataSpecs.cs" />
     <Compile Include="SourceControlDouble.cs" />
