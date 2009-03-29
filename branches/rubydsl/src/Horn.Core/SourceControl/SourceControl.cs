@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Horn.Core.PackageStructure;
@@ -16,6 +17,8 @@ namespace Horn.Core.SCM
 
         public string Url {get; private set;}
 
+        private static Dictionary<string, string> downloadedPackages = new Dictionary<string, string>();
+
         public IDownloadMonitor DownloadMonitor
         {
             get { return downloadMonitor; }
@@ -23,6 +26,9 @@ namespace Horn.Core.SCM
 
         public virtual void Export(IPackageTree packageTree)
         {
+            if (downloadedPackages.ContainsKey(packageTree.Name))
+                return;
+
             if (!packageTree.GetRevisionData().ShouldUpdate(new RevisionData(Revision)))
                 return;
 
@@ -37,6 +43,8 @@ namespace Horn.Core.SCM
             StopMonitoring(monitoringThread);
 
             RecordCurrentRevision(packageTree, revision);
+
+            downloadedPackages.Add(packageTree.Name, packageTree.Name);
         }
 
         protected virtual void RecordCurrentRevision(IPackageTree tree, string revision)
