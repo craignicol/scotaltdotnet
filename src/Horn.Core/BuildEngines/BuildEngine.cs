@@ -71,7 +71,7 @@ namespace Horn.Core.BuildEngines
         public void GenerateKeyFile(IPackageTree packageTree)
         {
             string strongKey = Path.Combine(packageTree.WorkingDirectory.FullName,
-                                            string.Format("{0}.snk)", packageTree.Name))
+                                            string.Format("{0}.snk", packageTree.Name))
                                             ;
             string commandLine = string.Format("{0} -k {1}", packageTree.Sn, strongKey);
 
