@@ -7,7 +7,7 @@ install :horn do
   output "Output"
   shared_library "src/lib"
   
-  dependency :log4net =>  "bin/net/2.0/debug"
+  dependency :log4net =>  "log4net"
   #dependency :castle =>   "castle.core"
 end
 
