@@ -11,10 +11,11 @@ namespace Horn.Core.PackageCommands
 
     public class PackageBuilder : IPackageCommand
     {
+
         private readonly IGet get;
         private readonly IProcessFactory processFactory;
-
         private static readonly ILog log = LogManager.GetLogger(typeof (PackageBuilder));
+
 
         public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
         {
@@ -42,6 +43,8 @@ namespace Horn.Core.PackageCommands
             log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), packageName);
         }
 
+
+
         private string GetPackageName(IDictionary<string, IList<string>> switches)
         {
             string packageName = switches["install"][0];
@@ -64,12 +67,17 @@ namespace Horn.Core.PackageCommands
         private void BuildComponentTree(IBuildMetaData buildMetaData, IPackageTree componentTree)
         {
             buildMetaData.BuildEngine.Build(processFactory, componentTree);
-        }        
+        }
+
+
 
         public PackageBuilder(IGet get, IProcessFactory processFactory)
         {
             this.get = get;
             this.processFactory = processFactory;
         }
+
+
+
     }
 }

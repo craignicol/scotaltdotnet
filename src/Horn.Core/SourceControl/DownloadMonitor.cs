@@ -6,11 +6,14 @@ namespace Horn.Core.SCM
 {
     public class DownloadMonitor : IDownloadMonitor
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof (DownloadMonitor));
 
+        private static readonly ILog log = LogManager.GetLogger(typeof (DownloadMonitor));
         private readonly string downloadDirectory;
 
+
         public bool StopMonitoring { get; set; }
+
+
 
         public void StartMonitoring()
         {
@@ -32,6 +35,8 @@ namespace Horn.Core.SCM
             watcher.Deleted += OnChanged;
         }
 
+
+
         private static void OnChanged(object source, FileSystemEventArgs e)
         {
             var file = Path.GetFileName(e.FullPath);
@@ -47,9 +52,14 @@ namespace Horn.Core.SCM
             log.InfoFormat("{0} was {1} in {2}", file, e.ChangeType, dir);
         }
 
+
+
         public DownloadMonitor(string downloadDirectory)
         {
             this.downloadDirectory = downloadDirectory;
         }
+
+
+
     }
 }

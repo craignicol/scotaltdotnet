@@ -10,7 +10,6 @@ namespace Horn.Core.Dsl
 {
     public abstract class BooConfigReader
     {
-        public delegate void Action();
 
         public virtual BuildEngine BuildEngine { get; set; }
 
@@ -20,7 +19,11 @@ namespace Horn.Core.Dsl
 
         public virtual SourceControl SourceControl { get; set; }
 
+
+
         public abstract void Prepare();
+
+
 
         [Meta]
         public static Expression build_with(ReferenceExpression builder, MethodInvocationExpression build, ReferenceExpression frameWorkVersion)
@@ -40,21 +43,6 @@ namespace Horn.Core.Dsl
             return addDependencyMethod;
         }
 
-        public virtual void generate_strong_key()
-        {
-            BuildEngine.GenerateStrongKey = true;
-        }
-
-        public void AddDependencies(string[] dependencies)
-        {
-            Array.ForEach(dependencies, item =>
-                                     {
-                                         var dependency = new Dependency(item.Split('|')[0], item.Split('|')[1]);
-
-                                         BuildEngine.Dependencies.Add(dependency); 
-                                     });
-        }
-
         [Meta]
         public static Expression get_from(MethodInvocationExpression get)
         {
@@ -72,7 +60,6 @@ namespace Horn.Core.Dsl
                     action
                 );
         }
-
 
         [Meta]
         public static Expression metadata(Expression action)
@@ -143,14 +130,26 @@ namespace Horn.Core.Dsl
                 );
         }
 
-        public void AddSwitches(Action parametersDelegate)
+
+
+        public void AddDependencies(string[] dependencies)
         {
-            parametersDelegate();
+            Array.ForEach(dependencies, item =>
+                                     {
+                                         var dependency = new Dependency(item.Split('|')[0], item.Split('|')[1]);
+
+                                         BuildEngine.Dependencies.Add(dependency); 
+                                     });
         }
 
         public void AddMetaData(Action dataDelegate)
         {
             dataDelegate();
+        }
+
+        public void AddSwitches(Action parametersDelegate)
+        {
+            parametersDelegate();
         }
 
         public void AssignTasks(Action tasksDelegate)
@@ -163,9 +162,11 @@ namespace Horn.Core.Dsl
             Description = text;
         }
 
-        public void shared_library(string sharedLib)
+        public void GetInstallerMeta(string installName, Action installDelegate)
         {
-            BuildEngine.SharedLibrary = sharedLib;
+            InstallName = installName;
+
+            installDelegate();
         }
 
         public void output(string path)
@@ -173,12 +174,7 @@ namespace Horn.Core.Dsl
             BuildEngine.OutputDirectory = path;   
         }
 
-        public void GetInstallerMeta(string installName, Action installDelegate)
-        {
-            InstallName = installName;
 
-            installDelegate();
-        }
 
         protected void SetParameters(string[] parameters)
         {
@@ -222,5 +218,17 @@ namespace Horn.Core.Dsl
 
             action();
         }
+
+
+        public delegate void Action();
+        public virtual void generate_strong_key()
+        {
+            BuildEngine.GenerateStrongKey = true;
+        }
+        public void shared_library(string sharedLib)
+        {
+            BuildEngine.SharedLibrary = sharedLib;
+        }
+
     }
 }
