@@ -8,7 +8,10 @@ install :horn do
   shared_library "lib"
   
   dependency :log4net =>  "log4net"
-  dependency :castle =>   "castle.core"
+  dependency :castle =>    "castle.core"
+  dependency :castle =>    "Castle.DynamicProxy2"
+  dependency :castle =>    "castle.microKernel"
+  dependency :castle =>    "castle.windsor"
 end
 
 project.homepage "http://code.google.com/p/scotaltdotnet/"
