@@ -84,6 +84,11 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public FileInfo Sn
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         public DirectoryInfo DownloadDirectory
         {
             get { throw new System.NotImplementedException(); }

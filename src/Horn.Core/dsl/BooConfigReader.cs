@@ -40,6 +40,11 @@ namespace Horn.Core.Dsl
             return addDependencyMethod;
         }
 
+        public virtual void generate_strong_key()
+        {
+            BuildEngine.GenerateStrongKey = true;
+        }
+
         public void AddDependencies(string[] dependencies)
         {
             Array.ForEach(dependencies, item =>

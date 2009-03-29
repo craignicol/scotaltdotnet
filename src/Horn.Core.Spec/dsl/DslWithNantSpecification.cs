@@ -20,6 +20,8 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.Equal(4, configReader.BuildEngine.Tasks.Count);
 
             Assert.Equal(5, configReader.BuildEngine.Parameters.Count);
+
+            Assert.True(configReader.BuildEngine.GenerateStrongKey);
         }
     }
 

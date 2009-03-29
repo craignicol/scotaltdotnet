@@ -33,6 +33,8 @@ namespace Horn.Core.BuildEngines
 
         public string SharedLibrary { get; set; }
 
+        public bool GenerateStrongKey { get; set; }
+
         public void AssignMataData(string[] parameters)
         {
             if ((parameters == null) || (parameters.Length == 0))
@@ -66,12 +68,38 @@ namespace Horn.Core.BuildEngines
             Tasks = new List<string>(tasks);
         }
 
+        public void GenerateKeyFile(IPackageTree packageTree)
+        {
+            string strongKey = Path.Combine(packageTree.WorkingDirectory.FullName,
+                                            string.Format("{0}.snk)", packageTree.Name))
+                                            ;
+            string commandLine = string.Format("{0} -k {1}", packageTree.Sn, strongKey);
+
+            ProcessStartInfo PSI = new ProcessStartInfo("cmd.exe");
+            
+            PSI.RedirectStandardInput = true;
+            
+            PSI.RedirectStandardOutput = true;
+            
+            PSI.RedirectStandardError = true;
+            
+            PSI.UseShellExecute = false;
+            Process p = Process.Start(PSI);
+            StreamWriter SW = p.StandardInput;
+            StreamReader SR = p.StandardOutput;
+            SW.WriteLine(commandLine);
+            SW.Close();
+        }
+
         public virtual BuildEngine Build(IProcessFactory processFactory, IPackageTree packageTree)
         {
             if (builtPackages.ContainsKey(packageTree.Name))
                 return this;
 
             string pathToBuildFile = GetBuildFilePath(packageTree);
+
+            if (GenerateStrongKey)
+                GenerateKeyFile(packageTree);
 
             var cmdLineArguments = BuildTool.CommandLineArguments(pathToBuildFile, this, packageTree, Version);
 

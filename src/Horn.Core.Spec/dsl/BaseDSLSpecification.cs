@@ -44,6 +44,7 @@ namespace Horn.Core.Spec.Unit.dsl
             ret.BuildEngine.AssignTasks(TASKS.ToArray());
             ret.BuildEngine.OutputDirectory = OUTPUT_DIRECTORY;
             ret.BuildEngine.SharedLibrary = ".";
+            ret.BuildEngine.GenerateStrongKey = true;
 
             return ret;
         }

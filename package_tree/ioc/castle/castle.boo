@@ -7,7 +7,7 @@ install castle:
 		tasks quick, rebuild
 		
 	switches:
-		parameters "sign=false"
+		parameters "sign=true"
 		
 	shared_library "SharedLibs/net/2.0"
 	output "build/net-3.5/debug"		
