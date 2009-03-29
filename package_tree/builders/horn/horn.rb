@@ -5,7 +5,7 @@ install :horn do
   build_with :msbuild, :frameworkVersion35, :buildfile => "src/horn.sln"
   get_from :svn, "http://scotaltdotnet.googlecode.com/svn/branches/rubydsl/"
   output "src/build/"
-  shared_library "src/lib"
+  shared_library "lib"
   
   dependency :log4net =>  "log4net"
   #dependency :castle =>   "castle.core"
