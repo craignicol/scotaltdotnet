@@ -4,8 +4,8 @@
 	
 	build_with nant, buildfile("log4net.build"), FrameworkVersion35
 	
-	output "bin/net/2.0/debug"
-	
 	switches:
 		parameters "mandatory=false"
+		
+	output "bin/net/2.0/debug"
 	
