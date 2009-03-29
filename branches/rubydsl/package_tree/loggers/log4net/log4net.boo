@@ -9,5 +9,5 @@
 		
 	generate_strong_key
 		
-	output "bin/net/2.0/debug"
+	output "bin/net/2.0/release"
 	
