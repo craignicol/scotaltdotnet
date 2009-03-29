@@ -6,5 +6,5 @@
 	with:
 		tasks build
 	switches:
-		parameters "mandatory=false", "project.build.config=release"
+		parameters "mandatory=false"
 	

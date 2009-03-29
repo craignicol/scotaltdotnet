@@ -3,7 +3,7 @@
 	get_from svn("http://scotaltdotnet.googlecode.com/svn/trunk/")
 	build_with nant, buildfile("src/horn.build"), FrameworkVersion35
 	with:
-		tasks build
+		tasks build, release, quick, rebuild
 	switches:
 		parameters "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "common.testrunner.failonerror=true", "build.msbuild=true"
 
