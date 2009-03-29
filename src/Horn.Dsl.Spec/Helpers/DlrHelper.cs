@@ -41,6 +41,8 @@ namespace Horn.Dsl.Spec.Helpers
             Assert.Equal(buildMetaData.BuildEngine.OutputDirectory, "Output");
 
             Assert.True(buildMetaData.BuildEngine.Dependencies.Count > 0);
+
+            Assert.Equal(buildMetaData.BuildEngine.SharedLibrary, ".");
         }
     }
 }

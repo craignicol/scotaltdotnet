@@ -31,6 +31,10 @@ module MetaBuilder
         meta.metadata.BuildEngine.OutputDirectory = outputDir
       end
       
+      def shared_library(sharedLib)
+        meta.metadata.BuildEngine.SharedLibrary = sharedLib
+      end      
+      
       def msbuild()
         Horn::Core::MSBuildBuildTool.new
       end

@@ -16,13 +16,9 @@ namespace Horn.Core.Dsl
 
         public virtual string Description { get; set; }
 
-        public virtual string OutputDirectory { get; set; }
-
         public virtual string InstallName { get; set; }
 
         public virtual SourceControl SourceControl { get; set; }
-
-        
 
         public abstract void Prepare();
 
@@ -162,9 +158,14 @@ namespace Horn.Core.Dsl
             Description = text;
         }
 
+        public void shared_library(string sharedLib)
+        {
+            BuildEngine.SharedLibrary = sharedLib;
+        }
+
         public void output(string path)
         {
-            OutputDirectory = path;   
+            BuildEngine.OutputDirectory = path;   
         }
 
         public void GetInstallerMeta(string installName, Action installDelegate)

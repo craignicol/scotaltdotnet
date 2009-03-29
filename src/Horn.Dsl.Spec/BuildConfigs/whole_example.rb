@@ -5,6 +5,7 @@ install :horn do
   build_with :msbuild, :frameworkVersion35, :buildfile => "src/horn.sln"
   get_from :svn, "http://scotaltdotnet.googlecode.com/svn/trunk/"
   output "Output"
+  shared_library "."
   
   dependency :boo =>       "boo.lang"
   dependency :boo =>       "boo.lang"
