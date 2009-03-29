@@ -31,6 +31,19 @@ namespace Horn.Core.BuildEngines
 
         public string SharedLibrary { get; set; }
 
+        public void AssignMataData(string[] parameters)
+        {
+            if ((parameters == null) || (parameters.Length == 0))
+                return;
+
+            parameters.ForEach(x =>
+            {
+                var parts = x.Split('=');
+
+                MetaData.Add(parts[0], parts[1]);
+            });
+        }
+
         public void AssignParameters(string[] parameters)
         {
             if ((parameters == null) || (parameters.Length == 0))
@@ -49,27 +62,6 @@ namespace Horn.Core.BuildEngines
         public virtual void AssignTasks(string[] tasks)
         {
             Tasks = new List<string>(tasks);
-        }
-
-        private void CopyDependenciesTo(IPackageTree packageTree)
-        {
-            foreach (Dependency dependency in Dependencies)
-            {
-                var dependencyDirectory = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory;
-
-                var sourceFiles = dependencyDirectory.GetFiles(string.Format("{0}.*", dependency.Library));
-
-                var targetDir = GetDirectoryFromParts(packageTree.WorkingDirectory, SharedLibrary);
-
-                foreach (FileInfo nextFile in sourceFiles)
-                {
-                    string destination = Path.Combine(targetDir.FullName, Path.GetFileName(nextFile.FullName));
-
-                    log.InfoFormat("Dependency: Copying {0} to {1} ...", nextFile.FullName, destination);
-
-                    nextFile.CopyTo(destination, true);
-                }
-            }
         }
 
         public virtual BuildEngine Build(IProcessFactory processFactory, IPackageTree packageTree)
@@ -96,6 +88,16 @@ namespace Horn.Core.BuildEngines
 
             process.WaitForExit();
 
+            if (OutputDirectory == ".")
+                return this;
+
+            CopyArtifactsToBuildDirectory(packageTree);
+
+            return this;
+        }
+
+        private void CopyArtifactsToBuildDirectory(IPackageTree packageTree)
+        {
             DirectoryInfo buildDir = GetDirectoryFromParts(packageTree.WorkingDirectory, OutputDirectory);
 
             if(packageTree.OutputDirectory.Exists)
@@ -106,7 +108,7 @@ namespace Horn.Core.BuildEngines
             foreach (var directory in buildDir.GetDirectories())
             {
                 var artifact = Path.Combine(packageTree.OutputDirectory.FullName,
-                                                   directory.Name);
+                                            directory.Name);
 
                 if(Directory.Exists(artifact))
                     Directory.Delete(artifact, true);
@@ -123,8 +125,27 @@ namespace Horn.Core.BuildEngines
 
                 File.Copy(file.FullName, outputFile);
             }
+        }
 
-            return this;
+        private void CopyDependenciesTo(IPackageTree packageTree)
+        {
+            foreach (Dependency dependency in Dependencies)
+            {
+                var dependencyDirectory = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory;
+
+                var sourceFiles = dependencyDirectory.GetFiles(string.Format("{0}.*", dependency.Library));
+
+                var targetDir = GetDirectoryFromParts(packageTree.WorkingDirectory, SharedLibrary);
+
+                foreach (FileInfo nextFile in sourceFiles)
+                {
+                    string destination = Path.Combine(targetDir.FullName, Path.GetFileName(nextFile.FullName));
+
+                    log.InfoFormat("Dependency: Copying {0} to {1} ...", nextFile.FullName, destination);
+
+                    nextFile.CopyTo(destination, true);
+                }
+            }
         }
 
         private DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
@@ -158,19 +179,6 @@ namespace Horn.Core.BuildEngines
             MetaData = new Dictionary<string, string>();
 
             Dependencies = new List<Dependency>();
-        }
-
-        public void AssignMataData(string[] parameters)
-        {
-            if ((parameters == null) || (parameters.Length == 0))
-                return;
-
-            parameters.ForEach(x =>
-            {
-                var parts = x.Split('=');
-
-                MetaData.Add(parts[0], parts[1]);
-            });
         }
     }
 }
