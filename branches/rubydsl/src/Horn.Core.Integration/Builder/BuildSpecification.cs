@@ -41,6 +41,8 @@ namespace Horn.Core.Integration.Builder
 
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(workingPath));
 
+            packageTree.Stub(x => x.Name).Return("horn");
+
             var solutionPath = Path.Combine(rootPath, "Horn.sln");
 
             buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35);

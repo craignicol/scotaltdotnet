@@ -30,9 +30,13 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             wholeTree = CreateStub<IPackageTree>();
 
+            wholeTree.Stub(x => x.Name).Return("horn");
+
             wholeTree.Stub(x => x.RetrievePackage("horn")).Return(componentTree);
 
             wholeTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
+
+            wholeTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(@"C:\somewhere\output"));
         }
 
         [Fact]
@@ -60,6 +64,10 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             buildMetaData = GetBuildMetaData(baseConfigReader);
 
             componentTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData);
+
+            componentTree.Stub(x => x.Name).Return("log4net");
+
+            componentTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(@"C:\somewhere\output"));
 
             componentTree.Stub(x => x.GetBuildMetaData("log4net"))
                          .Return(buildMetaData).IgnoreArguments().Repeat.Any();

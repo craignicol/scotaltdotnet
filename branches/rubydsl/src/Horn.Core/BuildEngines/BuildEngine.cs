@@ -13,6 +13,8 @@ namespace Horn.Core.BuildEngines
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(MSBuildBuildTool));
 
+        private static readonly Dictionary<string, string> builtPackages = new Dictionary<string, string>();
+
         public string BuildFile { get; private set; }
 
         public Dictionary<string, string> MetaData { get; set; }
@@ -66,6 +68,9 @@ namespace Horn.Core.BuildEngines
 
         public virtual BuildEngine Build(IProcessFactory processFactory, IPackageTree packageTree)
         {
+            if (builtPackages.ContainsKey(packageTree.Name))
+                return this;
+
             string pathToBuildFile = GetBuildFilePath(packageTree);
 
             var cmdLineArguments = BuildTool.CommandLineArguments(pathToBuildFile, this, packageTree, Version);
@@ -92,6 +97,8 @@ namespace Horn.Core.BuildEngines
                 return this;
 
             CopyArtifactsToBuildDirectory(packageTree);
+
+            builtPackages.Add(packageTree.Name, packageTree.Name);
 
             return this;
         }
@@ -150,6 +157,9 @@ namespace Horn.Core.BuildEngines
 
         private DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
         {
+            if (string.IsNullOrEmpty(parts))
+                return sourceDirectory;
+
             var outputPath = sourceDirectory.FullName;
 
             if (parts.Trim() == ".")
