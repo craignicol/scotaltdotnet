@@ -69,6 +69,11 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public FileInfo Nant
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         public DirectoryInfo DownloadDirectory
         {
             get { throw new System.NotImplementedException(); }

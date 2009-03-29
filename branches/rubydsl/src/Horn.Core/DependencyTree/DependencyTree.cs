@@ -41,8 +41,17 @@ namespace Horn.Core.DependencyTree
                 // Insert dependencies before parents
                 tree.AddChild(packageTree);
             }
-            packageTree.GetBuildMetaData(packageTree.Name, buildFile).BuildEngine.Dependencies.ForEach(
-                dependency => CalculateDependencies(PackageTree.RetrievePackage(dependency.PackageName), tree, dependency.BuildFile));
+            packageTree.GetBuildMetaData(packageTree.Name, buildFile)
+                .BuildEngine
+                .Dependencies
+                .ForEach(
+                dependency =>
+                CalculateDependencies
+                    (
+                            PackageTree.RetrievePackage(dependency.PackageName), 
+                            tree, 
+                            dependency.BuildFile)
+                        );
 
             return tree;
 
