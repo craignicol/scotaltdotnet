@@ -8,7 +8,7 @@ namespace Horn.Core.Spec.BuildEngine
     public class When_The_Build_MetaData_Specifies_Nant : BuildWithNantSpecificationBase
     {
         private const string EXPECTED =
-            "-t:net-3.5 -buildfile:Horn.build -D:sign=false -D:testrunner=NUnit -D:common.testrunner.enabled=true -D:common.testrunner.failonerror=true -D:build.msbuild=true";
+            "build release quick rebuild  -t:net-3.5 -buildfile:Horn.build -D:sign=false -D:testrunner=NUnit -D:common.testrunner.enabled=true -D:common.testrunner.failonerror=true -D:build.msbuild=true";
 
         protected override void Because()
         {

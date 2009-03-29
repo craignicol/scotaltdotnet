@@ -6,6 +6,8 @@
 		tasks build, release, quick, rebuild
 	switches:
 		parameters "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "common.testrunner.failonerror=true", "build.msbuild=true"
+		
+	generate_strong_key
 
 metadata:
     data "contrib=false", "createdate=24/01/2009"
