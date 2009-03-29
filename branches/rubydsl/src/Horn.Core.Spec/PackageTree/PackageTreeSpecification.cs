@@ -50,13 +50,13 @@ namespace Horn.Core.Spec.Unit.HornTree
         [Fact]
         public void Then_The_Node_Will_have_a_Child()
         {
-            Assert.Equal(1, hornTree.Children[0].Children.Length);
+            Assert.Equal(1, hornTree.Children[1].Children.Length);
         }
         
         [Fact]
         public void Then_The_Node_Is_A_Build_Node()
         {
-            Assert.True(hornTree.Children[0].Children[0].IsBuildNode);
+            Assert.True(hornTree.Children[1].Children[0].IsBuildNode);
         }
     }
 

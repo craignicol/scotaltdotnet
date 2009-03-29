@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Horn.Core.SCM;
 using Horn.Framework.helpers;
 using Rhino.DSL;
@@ -73,7 +73,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal("log4net", reader.BuildEngine.Dependencies[0].PackageName);
 
-            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].BuildFile);
+            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].Library);
         }
     }
 }

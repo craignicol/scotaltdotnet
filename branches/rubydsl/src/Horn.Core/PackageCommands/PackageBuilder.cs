@@ -30,11 +30,7 @@ namespace Horn.Core.PackageCommands
             {
                 IPackageTree nextTree = dependencyTree.BuildList[index];
 
-                var fileName = (index == componentTreeMetaData.BuildEngine.Dependencies.Count)
-                                   ? packageName
-                                   : componentTreeMetaData.BuildEngine.Dependencies[index].BuildFile;
-
-                IBuildMetaData nextMetaData = nextTree.GetBuildMetaData(nextTree.BuildFiles[fileName]);
+                IBuildMetaData nextMetaData = nextTree.GetBuildMetaData(nextTree.BuildFile);
 
                 log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), nextMetaData.SourceControl.Url);
 

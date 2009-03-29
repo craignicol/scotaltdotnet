@@ -42,6 +42,11 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public string BuildFile
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         public Dictionary<string, string> BuildFiles { get; set; }
 
         public void CreateRequiredDirectories()

@@ -1,9 +1,7 @@
 namespace Horn.Core.DependencyTree
 {
-    using System;
     using System.Collections.Generic;
-    using Horn.Core.Dsl;
-    using Horn.Core.PackageStructure;
+    using PackageStructure;
 
     public interface IDependencyTree
     {

@@ -57,13 +57,11 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             componentTree.Stub(x => x.GetRevisionData()).Return(new RevisionData("3"));
 
-            componentTree.BuildFiles = new Dictionary<string, string> { { "horn", "horn" } };
-
             buildMetaData = GetBuildMetaData(baseConfigReader);
 
             componentTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData);
 
-            componentTree.Stub(x => x.GetBuildMetaData("log4net", "log4net"))
+            componentTree.Stub(x => x.GetBuildMetaData("log4net"))
                          .Return(buildMetaData).IgnoreArguments().Repeat.Any();
 
             return componentTree;

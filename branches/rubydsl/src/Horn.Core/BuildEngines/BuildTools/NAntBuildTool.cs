@@ -17,7 +17,7 @@ namespace Horn.Core
 
         public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)
         {
-            return Path.Combine(packageTree.WorkingDirectory.FullName, @"lib\Nant\NAnt.exe");
+            return packageTree.Nant.FullName;
         }
 
         public string GetFrameworkVersionForBuildTool(FrameworkVersion version)

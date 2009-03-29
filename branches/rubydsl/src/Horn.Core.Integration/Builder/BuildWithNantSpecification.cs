@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Horn.Core.BuildEngines;
 using Horn.Core.Utils.Framework;
@@ -25,6 +26,10 @@ namespace Horn.Core.Integration.Builder
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(workingPath)).Repeat.Once();
 
             buildEngine = new BuildEngine(new NAntBuildTool(), path, FrameworkVersion.FrameworkVersion35);
+
+            var nant = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Nant.exe"));
+
+            packageTree.Stub(x => x.Nant).Return(nant);
 
             buildEngine.AssignParameters(new[] { "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "common.testrunner.failonerror=true", "build.msbuild=true"});
 
