@@ -42,6 +42,8 @@ namespace Horn.Core.Spec.Unit.dsl
             ret.SourceControl = new SVNSourceControl(SVN_URL);
             ret.BuildEngine.MetaData = METADATA;
             ret.BuildEngine.AssignTasks(TASKS.ToArray());
+            ret.BuildEngine.OutputDirectory = OUTPUT_DIRECTORY;
+            ret.BuildEngine.SharedLibrary = ".";
 
             return ret;
         }
@@ -60,6 +62,8 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.Equal(BUILD_FILE, metaData.BuildEngine.BuildFile);
 
             Assert.Equal(OUTPUT_DIRECTORY, metaData.BuildEngine.OutputDirectory);
+
+            Assert.Equal(".", metaData.BuildEngine.SharedLibrary);
         }
 
         protected DirectoryInfo GetTestBuildConfigsFolder()

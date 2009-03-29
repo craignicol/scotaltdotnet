@@ -4,7 +4,7 @@ install :horn do
   description "A .NET build and dependency manager"
   build_with :msbuild, :frameworkVersion35, :buildfile => "src/horn.sln"
   get_from :svn, "http://scotaltdotnet.googlecode.com/svn/branches/rubydsl/"
-  output "src/build/"
+  output "src/Horn.Console/bin/debug"
   shared_library "lib"
   
   dependency :log4net =>  "log4net"

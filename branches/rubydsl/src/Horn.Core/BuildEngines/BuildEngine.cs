@@ -29,6 +29,8 @@ namespace Horn.Core.BuildEngines
 
         public string OutputDirectory { get; set; }
 
+        public string SharedLibrary { get; set; }
+
         public void AssignParameters(string[] parameters)
         {
             if ((parameters == null) || (parameters.Length == 0))
@@ -53,30 +55,19 @@ namespace Horn.Core.BuildEngines
         {
             foreach (Dependency dependency in Dependencies)
             {
-                var outputPath = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory.FullName;
+                var dependencyDirectory = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory;
 
-                var buildDirectory = new DirectoryInfo(outputPath);
+                var sourceFiles = dependencyDirectory.GetFiles(string.Format("{0}.*", dependency.Library));
 
-                var sourceFiles = buildDirectory.GetFiles();
-
-                var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.Library);
-
-                string targetDir;
-
-                if (possibleTargetDir.Length == 0)
-                {
-                    targetDir = packageTree.WorkingDirectory.CreateSubdirectory(dependency.Library).FullName;
-                }
-                else
-                {
-                    targetDir = possibleTargetDir[0].FullName;
-                }
-
+                var targetDir = GetDirectoryFromParts(packageTree.WorkingDirectory, SharedLibrary);
 
                 foreach (FileInfo nextFile in sourceFiles)
                 {
-                    log.InfoFormat("Dependency: Copying {0} to {1} ...", nextFile.FullName, targetDir);
-                    nextFile.CopyTo(Path.Combine(targetDir, nextFile.Name), true);
+                    string destination = Path.Combine(targetDir.FullName, Path.GetFileName(nextFile.FullName));
+
+                    log.InfoFormat("Dependency: Copying {0} to {1} ...", nextFile.FullName, destination);
+
+                    nextFile.CopyTo(destination, true);
                 }
             }
         }
@@ -105,7 +96,7 @@ namespace Horn.Core.BuildEngines
 
             process.WaitForExit();
 
-            DirectoryInfo buildDir = GetDirFromParts(packageTree.WorkingDirectory, OutputDirectory);
+            DirectoryInfo buildDir = GetDirectoryFromParts(packageTree.WorkingDirectory, OutputDirectory);
 
             if(packageTree.OutputDirectory.Exists)
                 packageTree.OutputDirectory.Delete(true);
@@ -136,9 +127,12 @@ namespace Horn.Core.BuildEngines
             return this;
         }
 
-        private DirectoryInfo GetDirFromParts(DirectoryInfo sourceDirectory, string parts)
+        private DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
         {
             var outputPath = sourceDirectory.FullName;
+
+            if (parts.Trim() == ".")
+                return sourceDirectory;
 
             foreach (var part in parts.Split('/'))
             {
