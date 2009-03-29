@@ -28,11 +28,11 @@ namespace Horn.Core.Spec.Unit.DependencyTree
 
             packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return("root");
-            packageTree.Stub(x => x.GetBuildMetaData("root", "root")).Return(rootBuildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("root")).Return(rootBuildMetaData);
 
             dependentTree = CreateStub<IPackageTree>();
             dependentTree.Stub(x => x.Name).Return("simpleDependency");
-            dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency", "simpleDependency.boo")).Return(dependencyBuildMetaData);
+            dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency")).Return(dependencyBuildMetaData);
 
             packageTree.Stub(x => x.RetrievePackage("")).IgnoreArguments().Return(dependentTree);
         }
@@ -67,11 +67,11 @@ namespace Horn.Core.Spec.Unit.DependencyTree
 
             packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return("root");
-            packageTree.Stub(x => x.GetBuildMetaData("root", "root")).Return(rootBuildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("root")).Return(rootBuildMetaData);
 
             dependentTree = CreateStub<IPackageTree>();
             dependentTree.Stub(x => x.Name).Return("simpleDependency");
-            dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency", "simpleDependency.boo")).Return(dependencyBuildMetaData);
+            dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency")).Return(dependencyBuildMetaData);
 
             packageTree.Stub(x => x.RetrievePackage("simpleDependency")).Return(dependentTree);
             packageTree.Stub(x => x.RetrievePackage("root")).Return(packageTree);
@@ -98,14 +98,14 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             buildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Utils.Framework.FrameworkVersion.FrameworkVersion35);
             foreach (string dependencyName in dependencyNames)
             {
-                buildMetaData.BuildEngine.Dependencies.Add(new Dependency(dependencyName, String.Format("{0}.boo", dependencyName)));                
+                buildMetaData.BuildEngine.Dependencies.Add(new Dependency(dependencyName, String.Format("{0}", dependencyName)));                
             }
 
             var packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return(packageName);
-            packageTree.Stub(x => x.GetBuildMetaData("root", "root")).Return(buildMetaData);
-            packageTree.Stub(x => x.GetBuildMetaData("complexDependency", "complexDependency.boo")).Return(buildMetaData);
-            packageTree.Stub(x => x.GetBuildMetaData("sharedDependency", "sharedDependency.boo")).Return(buildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("root")).Return(buildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("complexDependency")).Return(buildMetaData);
+            packageTree.Stub(x => x.GetBuildMetaData("sharedDependency")).Return(buildMetaData);
 
             return packageTree;
 

@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 using Horn.Core.Dsl;
 using Horn.Core.Utils;
+using IronRuby.Builtins;
+
 namespace Horn.Core.PackageStructure
 {
     public class PackageTree : IPackageTree
@@ -11,8 +13,9 @@ namespace Horn.Core.PackageStructure
         private readonly IList<IPackageTree> children;
         private DirectoryInfo workingDirectory;
         private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
-        private static readonly string[] libraryNodes = new[] {"rubylib", "lib", "debug"};
+        private static readonly string[] libraryNodes = new[] {"rubylib", "lib", "debug", "buildengines"};
 
+        public string BuildFile{ get; set; }
 
         public bool Exists
         {
@@ -29,11 +32,6 @@ namespace Horn.Core.PackageStructure
         {
             //HACK: Basic check for now.  Could be expanded for a core set of required build.boo files
             return (WorkingDirectory.GetFiles("Horn.*", SearchOption.AllDirectories).Length);
-        }
-
-        public Dictionary<string, string> BuildFiles
-        {
-            get; set;
         }
 
         public IPackageTree[] Children
@@ -97,16 +95,11 @@ namespace Horn.Core.PackageStructure
             return new RevisionData(this);
         }
 
-        public IBuildMetaData GetBuildMetaData(string packageName, string buildFile)
+        public IBuildMetaData GetBuildMetaData(string packageName)
         {
             IPackageTree packageTree = RetrievePackage(packageName);
 
-            return GetBuildMetaData(packageTree, buildFile);
-        }
-
-        public IBuildMetaData GetBuildMetaData(string packageName)
-        {
-            return GetBuildMetaData(this, packageName);
+            return GetBuildMetaData(packageTree);
         }
 
         public void Remove(IPackageTree item)
@@ -129,13 +122,13 @@ namespace Horn.Core.PackageStructure
 
 
 
-        private IBuildMetaData GetBuildMetaData(IPackageTree packageTree, string packageName)
+        private IBuildMetaData GetBuildMetaData(IPackageTree packageTree)
         {
-            var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageName);
+            var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageTree.Name);
 
             var reader = IoC.Resolve<IBuildConfigReader>(buildFileResolver.Extension);
 
-            return reader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, packageName);
+            return reader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, Path.GetFileNameWithoutExtension(buildFileResolver.BuildFile));
         }
 
         private PackageTree CreateNewPackageTree(DirectoryInfo child)
@@ -155,19 +148,6 @@ namespace Horn.Core.PackageStructure
 
             OutputDirectory = new DirectoryInfo(Path.Combine(CurrentDirectory.FullName, "Output"));
             OutputDirectory.Create();
-        }
-
-        private void RecordFiles()
-        {
-            CurrentDirectory.GetFiles("*.boo").ForEach(AddBuildFile);
-
-            CurrentDirectory.GetFiles("*.rb").ForEach(AddBuildFile);
-
-        }
-
-        private void AddBuildFile(FileInfo fileInfo)
-        {
-            BuildFiles.Add(Path.GetFileNameWithoutExtension(fileInfo.FullName), fileInfo.FullName.Substring(0, fileInfo.FullName.LastIndexOf(".")));
         }
 
         private bool DirectoryIsBuildNode(DirectoryInfo directory)
@@ -199,7 +179,6 @@ namespace Horn.Core.PackageStructure
 
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
         {
-            BuildFiles = new Dictionary<string, string>();
             Parent = parent;
 
             children = new List<IPackageTree>();
@@ -212,7 +191,6 @@ namespace Horn.Core.PackageStructure
 
             if(IsBuildNode)
             {
-                RecordFiles();
                 CreateRequiredDirectories();
             }
 
@@ -224,6 +202,5 @@ namespace Horn.Core.PackageStructure
                 children.Add(CreateNewPackageTree(child));
             }
         }
-
     }
 }

@@ -52,13 +52,13 @@ namespace Horn.Core.BuildEngines
             foreach (Dependency dependency in Dependencies)
             {
                 var sourceFiles = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory.GetFiles();
-                var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.BuildFile);
+                var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.Library);
 
                 string targetDir;
 
                 if (possibleTargetDir.Length == 0)
                 {
-                    targetDir = packageTree.WorkingDirectory.CreateSubdirectory(dependency.BuildFile).FullName;
+                    targetDir = packageTree.WorkingDirectory.CreateSubdirectory(dependency.Library).FullName;
                 }
                 else
                 {

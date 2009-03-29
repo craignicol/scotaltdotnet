@@ -12,15 +12,13 @@ namespace Horn.Core.PackageStructure
 
         bool Exists { get; }
 
-        Dictionary<string, string> BuildFiles { get; set; }
+        string BuildFile { get; }
 
         void CreateRequiredDirectories();
 
         IPackageTree RetrievePackage(string packageName);
 
         IBuildMetaData GetBuildMetaData(string packageName);
-
-        IBuildMetaData GetBuildMetaData(string packageName, string buildFile);
 
         DirectoryInfo CurrentDirectory { get; }
 
