@@ -17,9 +17,7 @@ namespace Horn.Core.Spec.Unit.dsl
         {
             Assert.IsAssignableFrom<NAntBuildTool>(configReader.BuildEngine.BuildTool);
 
-            Assert.Equal(1, configReader.BuildEngine.Tasks.Count);
-
-            Assert.Equal("build", configReader.BuildEngine.Tasks[0]);
+            Assert.Equal(4, configReader.BuildEngine.Tasks.Count);
 
             Assert.Equal(5, configReader.BuildEngine.Parameters.Count);
         }
@@ -30,7 +28,7 @@ namespace Horn.Core.Spec.Unit.dsl
         private IBuildTool buildTool;
 
         private const string EXPECTED_CMD_LINE_ARGUMENTS =
-            " -t:net-3.5 -buildfile:Horn.build -D:sign=false -D:testrunner=NUnit -D:common.testrunner.enabled=true -D:common.testrunner.failonerror=true -D:build.msbuild=true ";
+            "build release quick rebuild  -t:net-3.5 -buildfile:Horn.build -D:sign=false -D:testrunner=NUnit -D:common.testrunner.enabled=true -D:common.testrunner.failonerror=true -D:build.msbuild=true";
         protected override void Because()
         {
             configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/hornnant.boo");
