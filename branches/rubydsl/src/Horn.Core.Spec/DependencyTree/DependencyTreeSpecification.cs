@@ -22,9 +22,9 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             rootBuildMetaData = CreateStub<IBuildMetaData>();
             dependencyBuildMetaData = CreateStub<IBuildMetaData>();
 
-            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35);
-            rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency.boo"));
-            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency"));
+            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency", Utils.Framework.FrameworkVersion.FrameworkVersion35);
 
             packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return("root");
@@ -35,12 +35,13 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             dependentTree.Stub(x => x.GetBuildMetaData("simpleDependency")).Return(dependencyBuildMetaData);
 
             packageTree.Stub(x => x.RetrievePackage("")).IgnoreArguments().Return(dependentTree);
+
+            dependencyTree = new DependencyTree(packageTree);
         }
 
         [Fact]
         public void Then_The_Dependency_Is_Built_Before_The_Root()
         {
-            dependencyTree = new DependencyTree(packageTree);
             Assert.Contains(packageTree, dependencyTree.BuildList);
             Assert.Contains(dependentTree, dependencyTree.BuildList);
             Assert.InRange(dependencyTree.BuildList.IndexOf(dependentTree), 0, dependencyTree.BuildList.IndexOf(packageTree));

@@ -29,5 +29,11 @@ namespace Horn.Core.Dsl
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
         }
+
+        public string OutputDirectory
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
     }
 }

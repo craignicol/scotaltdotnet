@@ -59,6 +59,11 @@ namespace Horn.Core.PackageStructure
             throw new System.NotImplementedException();
         }
 
+        public IBuildMetaData BuildMetaData
+        {
+            get { throw new System.NotImplementedException(); }
+        }
+
         public IBuildMetaData GetBuildMetaData(string packageName)
         {
             return new NullBuildMetatData();

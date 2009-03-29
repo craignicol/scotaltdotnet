@@ -16,6 +16,8 @@ namespace Horn.Core.Dsl
 
         public virtual string Description { get; set; }
 
+        public virtual string OutputDirectory { get; set; }
+
         public virtual string InstallName { get; set; }
 
         public virtual SourceControl SourceControl { get; set; }
@@ -160,7 +162,10 @@ namespace Horn.Core.Dsl
             Description = text;
         }
 
-
+        public void output(string path)
+        {
+            OutputDirectory = path;   
+        }
 
         public void GetInstallerMeta(string installName, Action installDelegate)
         {
