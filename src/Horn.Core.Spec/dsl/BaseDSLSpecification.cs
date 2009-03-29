@@ -25,6 +25,8 @@ namespace Horn.Core.Spec.Unit.dsl
 
         public  static readonly List<string> TASKS = new List<string> {"build"};
 
+        public const string OUTPUT_DIRECTORY = "Output";
+
         protected DirectoryInfo rootDirectory;
 
         protected IPackageTree packageTree;
@@ -56,6 +58,8 @@ namespace Horn.Core.Spec.Unit.dsl
             METADATA.ForEach(x => Assert.Contains(x, metaData.BuildEngine.MetaData));
 
             Assert.Equal(BUILD_FILE, metaData.BuildEngine.BuildFile);
+
+            Assert.Equal(OUTPUT_DIRECTORY, metaData.BuildEngine.OutputDirectory);
         }
 
         protected DirectoryInfo GetTestBuildConfigsFolder()

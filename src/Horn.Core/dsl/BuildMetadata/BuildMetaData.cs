@@ -25,6 +25,7 @@ namespace Horn.Core.Dsl
             BuildEngine = instance.BuildEngine;
 
             SourceControl = instance.SourceControl;
+            BuildEngine.OutputDirectory = instance.OutputDirectory;
         }
     }
 }

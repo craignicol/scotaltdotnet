@@ -4,6 +4,7 @@ install :horn do
   description "A .NET build and dependency manager"
   build_with :msbuild, :frameworkVersion35, :buildfile => "src/horn.sln"
   get_from :svn, "http://scotaltdotnet.googlecode.com/svn/trunk/"
+  output "Output"
   
   dependency :boo =>       "boo.lang"
   dependency :boo =>       "boo.lang"

@@ -16,13 +16,13 @@ namespace Horn.Core.PackageCommands
 
         private static readonly ILog log = LogManager.GetLogger(typeof (PackageBuilder));
 
+        private Dictionary<string, string> buildFiles = new Dictionary<string, string>();
+
         public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
         {
             string packageName = GetPackageName(switches);
 
             IPackageTree componentTree = packageTree.RetrievePackage(packageName);
-
-            var componentTreeMetaData = componentTree.GetBuildMetaData(packageName);
 
             IDependencyTree dependencyTree = GetDependencyTree(componentTree);
 

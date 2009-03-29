@@ -120,15 +120,21 @@ namespace Horn.Core.PackageStructure
             return result.First();
         }
 
+        public IBuildMetaData BuildMetaData{ get; private set; }
 
 
         private IBuildMetaData GetBuildMetaData(IPackageTree packageTree)
         {
+            if (BuildMetaData != null)
+                return BuildMetaData;
+
             var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageTree.Name);
 
             var reader = IoC.Resolve<IBuildConfigReader>(buildFileResolver.Extension);
 
-            return reader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, Path.GetFileNameWithoutExtension(buildFileResolver.BuildFile));
+            BuildMetaData = reader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, Path.GetFileNameWithoutExtension(buildFileResolver.BuildFile));
+
+            return BuildMetaData;
         }
 
         private PackageTree CreateNewPackageTree(DirectoryInfo child)

@@ -38,6 +38,8 @@ namespace Horn.Dsl.Spec.Helpers
 
             //Assert.Equal(buildMetaData.ProjectInfo["homepage"].ToString(), "http://code.google.com/p/scotaltdotnet/");
 
+            Assert.Equal(buildMetaData.BuildEngine.OutputDirectory, "Output");
+
             Assert.True(buildMetaData.BuildEngine.Dependencies.Count > 0);
         }
     }

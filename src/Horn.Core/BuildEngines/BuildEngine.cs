@@ -27,6 +27,8 @@ namespace Horn.Core.BuildEngines
 
         public List<Dependency> Dependencies { get; private set; }
 
+        public string OutputDirectory { get; set; }
+
         public void AssignParameters(string[] parameters)
         {
             if ((parameters == null) || (parameters.Length == 0))
@@ -51,7 +53,12 @@ namespace Horn.Core.BuildEngines
         {
             foreach (Dependency dependency in Dependencies)
             {
-                var sourceFiles = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory.GetFiles();
+                var outputPath = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory.FullName;
+
+                var buildDirectory = new DirectoryInfo(outputPath);
+
+                var sourceFiles = buildDirectory.GetFiles();
+
                 var possibleTargetDir = packageTree.WorkingDirectory.GetDirectories(dependency.Library);
 
                 string targetDir;
@@ -98,7 +105,47 @@ namespace Horn.Core.BuildEngines
 
             process.WaitForExit();
 
+            DirectoryInfo buildDir = GetDirFromParts(packageTree.WorkingDirectory, OutputDirectory);
+
+            if(packageTree.OutputDirectory.Exists)
+                packageTree.OutputDirectory.Delete(true);
+
+            packageTree.OutputDirectory.Create();
+
+            foreach (var directory in buildDir.GetDirectories())
+            {
+                var artifact = Path.Combine(packageTree.OutputDirectory.FullName,
+                                                   directory.Name);
+
+                if(Directory.Exists(artifact))
+                    Directory.Delete(artifact, true);
+
+                Directory.Move(directory.FullName, artifact);
+            }
+
+            foreach (var file in buildDir.GetFiles())
+            {
+                var outputFile = Path.Combine(packageTree.OutputDirectory.FullName, Path.GetFileName(file.FullName));
+
+                if(File.Exists(outputFile))
+                    File.Delete(outputFile);
+
+                File.Copy(file.FullName, outputFile);
+            }
+
             return this;
+        }
+
+        private DirectoryInfo GetDirFromParts(DirectoryInfo sourceDirectory, string parts)
+        {
+            var outputPath = sourceDirectory.FullName;
+
+            foreach (var part in parts.Split('/'))
+            {
+                outputPath = Path.Combine(outputPath, part);
+            }
+
+            return new DirectoryInfo(outputPath);
         }
 
         private string GetBuildFilePath(IPackageTree tree)
