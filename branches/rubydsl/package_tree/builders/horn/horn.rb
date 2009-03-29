@@ -2,7 +2,7 @@ require 'hornbuild'
 
 install :horn do
   description "A .NET build and dependency manager"
-  build_with :msbuild, :frameworkVersion35, :buildfile => "src/horn.sln"
+  build_with :msbuild, :frameworkVersion35, :buildfile => "src/Horn.Console/Horn.Console.csproj"
   get_from :svn, "http://scotaltdotnet.googlecode.com/svn/branches/rubydsl/"
   output "src/Horn.Console/bin/debug"
   shared_library "lib"
