@@ -7,7 +7,7 @@ install nhibernate:
 		parameters "with.examples=false"
 		
 	shared_library "lib/net/3.5"
-	output "NHibernate-2.1.0.Alpha2-debug/bin/net-3.5"		
+	output "build/NHibernate-2.1.0.Alpha2-debug/bin/net-3.5"		
 	
 dependencies:
 	depend @log4net >> "log4net"
