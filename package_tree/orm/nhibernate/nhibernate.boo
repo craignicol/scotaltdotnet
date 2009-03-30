@@ -6,7 +6,7 @@ install nhibernate:
 	switches:
 		parameters "with.examples=false"
 		
-	shared_library "lib/net/3.5"
+	shared_library "lib/net/2.0"
 	output "build/NHibernate-2.1.0.Alpha2-debug/bin/net-3.5"		
 	
 dependencies:
