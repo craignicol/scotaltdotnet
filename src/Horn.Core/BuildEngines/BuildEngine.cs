@@ -106,7 +106,7 @@ namespace Horn.Core.BuildEngines
                                             ;
             string commandLine = string.Format("{0} -k {1}", packageTree.Sn, strongKey);
 
-            ProcessStartInfo PSI = new ProcessStartInfo("cmd.exe")
+            var PSI = new ProcessStartInfo("cmd.exe")
                                        {
                                            RedirectStandardInput = true,
                                            RedirectStandardOutput = true,
