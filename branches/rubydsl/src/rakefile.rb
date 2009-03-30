@@ -5,7 +5,7 @@ require 'ftools'
 
 task :default => :build 
 
-task :build  => [:geminstall :clean, :init, :copy_package_tree, :copy_referenced_assemblies, :build_horn_core, :build_horn_console] do
+task :build  => [:clean, :init, :copy_package_tree, :copy_referenced_assemblies, :build_horn_core, :build_horn_console] do
   
 end 
 
