@@ -1,10 +1,5 @@
 namespace ddd.belfast.ioc
 {
-    public interface IReportSender
-    {
-        void Send(Report report);
-    }
-
     public class ReportSender
     {
         private readonly EmailSender _emailSender;
