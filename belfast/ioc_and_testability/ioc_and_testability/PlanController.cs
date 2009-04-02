@@ -13,21 +13,19 @@ namespace ddd.belfast
 
         public void Execute(RequestContext requestContext)
         {
-            var i = _planDao.GetPlan();
-            var j = _documentService.GetEmailList();
-            var k = _documentService.GetPlanDocumentInstance();
         }
 
 
 
-        public PlanController(IPlanDao planDao, IDocumentService distributionService )
+        public PlanController(IPlanDao planDao, 
+                                IDocumentService distributionService )
         {
             _planDao = planDao;
             _documentService = distributionService;
         }
     }
 
-    public internal interface IDistributionService
+    public interface IDistributionService
     {
     }
 

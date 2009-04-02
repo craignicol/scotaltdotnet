@@ -8,8 +8,8 @@ namespace ddd.belfast.ioc
         {
             var attachments = new[] {report.FilePath};
 
-            _emailSender.Send("admin.somebody.com", 
-                                "somepeople.somewhere.com", 
+            _emailSender.Send("admin@somebody.com", 
+                                "somepeople@somewhere.com", 
                                 "report is ready", 
                                 "Here are the reports",
                                 attachments);
