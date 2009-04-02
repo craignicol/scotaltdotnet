@@ -13,7 +13,6 @@ namespace ddd.belfast.ioc
         private IPlanDao _planDao;
         private IDocumentService _documentService;
         private IEmailSender _emailSender;
-        private bool _result;
 
         private MockRepository _mockRepository;
 
@@ -38,7 +37,7 @@ namespace ddd.belfast.ioc
         {
             _mockRepository.Playback();
 
-            _result = _planController.CheckIn(_plan.Uid);
+            _planController.CheckIn(_plan.Uid);
         }
 
         [Test]
