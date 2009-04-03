@@ -4,9 +4,6 @@ namespace ddd.belfast.ioc
 {
     public class ReportController : Controller
     {
-        private ReportBuilder _reportBuilder;
-        private ReportSender _reportSender;
-
         public virtual bool SendAuditReports()
         {
             var reportBuilder = new ReportBuilder();
