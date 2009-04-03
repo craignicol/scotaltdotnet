@@ -2,7 +2,12 @@ using System.Collections.Generic;
 
 namespace ddd.belfast.ioc
 {
-    public class ReportBuilder
+    public interface IReportBuilder
+    {
+        IList<Report> CreateReports();
+    }
+
+    public class ReportBuilder : IReportBuilder
     {
         public IList<Report> CreateReports()
         {
