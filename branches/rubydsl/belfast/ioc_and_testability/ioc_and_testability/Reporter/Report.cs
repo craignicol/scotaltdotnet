@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace ddd.belfast.ioc
+namespace ddd.belfast
 {
     public class Report
     {
