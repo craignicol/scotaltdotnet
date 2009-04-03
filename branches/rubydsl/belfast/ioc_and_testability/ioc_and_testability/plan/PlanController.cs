@@ -6,14 +6,11 @@ namespace ddd.belfast.plan
     public class PlanController : Controller 
     {
         private readonly IPlanDao _planDao;
-        private readonly IEmailSender _sender;
 
 
-
-        public PlanController(IPlanDao planDao, IEmailSender sender)
+        public PlanController(IPlanDao planDao)
         {
             _planDao = planDao;
-            _sender = sender;
         }
     }
 }
