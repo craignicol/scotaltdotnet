@@ -9,13 +9,13 @@ namespace ddd.belfast.ioc
 
         public virtual bool SendAuditReports()
         {
-            _reportBuilder = new ReportBuilder();
+            var reportBuilder = new ReportBuilder();
             var emailSender = new EmailSender();
-            _reportSender = new ReportSender(emailSender);
+            var reportSender = new ReportSender(emailSender);
 
-            foreach(var report in _reportBuilder.CreateReports())
+            foreach(var report in reportBuilder.CreateReports())
             {
-                _reportSender.Send(report);
+                reportSender.Send(report);
             }
 
             return true;
