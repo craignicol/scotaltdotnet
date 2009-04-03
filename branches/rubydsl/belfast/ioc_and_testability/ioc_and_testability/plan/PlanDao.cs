@@ -10,7 +10,12 @@ namespace ddd.belfast.plan
     {
         public Plan GetPlan(Guid planUid)
         {
-            return new Plan(Guid.NewGuid(), "Test Plan");
+            var plan =  new Plan(Guid.NewGuid(), "Test Plan");
+
+            plan.DistributionList.Add(new Contact("dagda1@scotalt.net"));
+            plan.DistributionList.Add(new Contact("paul.cowan@continuity2.com"));
+
+            return plan;
         }
     }
 }
