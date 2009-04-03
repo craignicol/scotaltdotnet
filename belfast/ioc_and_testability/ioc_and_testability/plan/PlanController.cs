@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
 using ddd.belfast.ioc;
 
-namespace ddd.belfast
+namespace ddd.belfast.plan
 {
     public class PlanController : Controller 
     {

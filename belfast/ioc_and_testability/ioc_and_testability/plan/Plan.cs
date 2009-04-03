@@ -1,6 +1,6 @@
 using System;
 
-namespace ddd.belfast
+namespace ddd.belfast.plan
 {
     public class Plan
     {
