@@ -2,6 +2,7 @@ using NUnit.Framework;
 
 namespace ddd.belfast
 {
+    [TestFixture]
     public abstract class ContextSpecification
     {
         [TestFixtureTearDown]
