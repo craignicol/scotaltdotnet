@@ -1,4 +1,5 @@
 using System.IO;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 using Horn.Core.Tree.MetaDataSynchroniser;
 using Horn.Framework.helpers;
@@ -11,6 +12,8 @@ namespace Horn.Core.Integration.MetaDataSynchroniserFixtures
 
         private readonly string rootPath = DirectoryHelper.GetTempDirectoryName();
 
+        private IPackageTree packageTree;
+
         protected override void Before_each_spec()
         {
             metaDataSynchroniser = new MetaDataSynchroniser(new SVNSourceControl(MetaDataSynchroniser.PACKAGE_TREE_URI));
@@ -18,19 +21,21 @@ namespace Horn.Core.Integration.MetaDataSynchroniserFixtures
 
         protected override void After_each_spec()
         {
-            if(Directory.Exists(rootPath))
+            if (Directory.Exists(rootPath))
                 Directory.Delete(rootPath, true);
         }
 
         protected override void Because()
         {
-            metaDataSynchroniser.SynchronisePackageTree(rootPath);
+            packageTree = new PackageTree(new DirectoryInfo(rootPath), null);
+
+            metaDataSynchroniser.SynchronisePackageTree(packageTree);
         }
 
         [Fact]
         public void Then_the_package_tree_should_be_downloaded_to_the_remote_repository()
         {
-            Assert.True(metaDataSynchroniser.PackageTreeExists(rootPath));
+            Assert.True(packageTree.Exists);
         }
     }
 }

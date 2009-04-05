@@ -1,5 +1,5 @@
 using Horn.Core.BuildEngines;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Horn.Core.PackageCommands;
 using Horn.Core.SCM;
 using Xunit;

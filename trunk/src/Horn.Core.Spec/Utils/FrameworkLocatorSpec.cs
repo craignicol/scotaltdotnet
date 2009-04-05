@@ -11,7 +11,7 @@ namespace Horn.Core.Spec.Integration.Utils
 
         protected override void Because()
         {
-            msbuildPath = FrameworkLocator.Instance[FrameworkVersion.frameworkVersion35].MSBuild.AssemblyPath;
+            msbuildPath = FrameworkLocator.Instance[FrameworkVersion.FrameworkVersion35].MSBuild.AssemblyPath;
         }
 
         [Fact]

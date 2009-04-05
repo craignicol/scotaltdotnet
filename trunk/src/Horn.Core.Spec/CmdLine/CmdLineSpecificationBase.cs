@@ -1,4 +1,5 @@
 using Horn.Core.PackageStructure;
+using Horn.Core.Spec.helpers;
 
 namespace Horn.Core.Spec.Unit.CmdLine
 {
@@ -7,11 +8,11 @@ namespace Horn.Core.Spec.Unit.CmdLine
     using Utils.CmdLine;
     using Xunit;
 
-    public abstract class CmdLineSpecificationBase : DirectoryStructureSpecificationBase
+    public abstract class CmdLineSpecificationBase : Specification
     {
         private TextWriter textWriter;
         protected SwitchParser parser;
-        protected PackageTree packageTree;
+        protected IPackageTree packageTree;
 
         protected IDictionary<string, IList<string>> ParsedArgs { get; set; }
 
@@ -25,7 +26,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
             textWriter = new StringWriter();
 
-            packageTree = new PackageTree(new DirectoryInfo(root), null);
+            packageTree = TreeHelper.GetTempPackageTree();
         }
 
         protected void AssertOutputContains(string outoutShouldContain)

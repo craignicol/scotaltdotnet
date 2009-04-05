@@ -1,13 +1,11 @@
 namespace Horn.Core.Spec.Unit.PackageCommands
 {
     using System.Collections.Generic;
-    using Core.dsl;
+    using Core.Dsl;
     using GetOperations;
     using Core.PackageCommands;
     using PackageStructure;
     using BuildEngine;
-    using Get;
-    using HornTree;
     using Utils;
     using Utils.Framework;
     using Rhino.Mocks;
@@ -19,51 +17,79 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         protected IDictionary<string, IList<string>> switches = new Dictionary<string, IList<string>>();
         protected IGet get;
         protected IBuildConfigReader buildConfigReader;
-        protected IPackageTree packageTree;
+        protected IPackageTree wholeTree;
         protected IFileSystemProvider fileSystemProvider;
 
         protected override void Because()
         {
-            switches.Add("install", new List<string>{"horn"});
-
             get = new Get(fileSystemProvider);
 
-            var baseConfigReader = CreateStub<BaseConfigReader>();
+            IBuildMetaData buildMetaData;
 
-            baseConfigReader.InstallName = "horn";
+            IPackageTree componentTree = GetComponentTree(out buildMetaData);
 
-            packageTree = CreateStub<IPackageTree>();
+            wholeTree = CreateStub<IPackageTree>();
 
-            var componentTree = CreateStub<IPackageTree>();
+            wholeTree.Stub(x => x.Name).Return("horn");
 
-            componentTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\")).Repeat.Any();
+            wholeTree.Stub(x => x.RetrievePackage("horn")).Return(componentTree);
 
-            packageTree.Stub(x => x.Retrieve("horn")).Return(componentTree).Repeat.Once();
+            wholeTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
 
-            var buildTool = new BuildToolStub();
-
-            var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.frameworkVersion35);
-
-            baseConfigReader.BuildEngine = buildEngine;
-
-            var buildMetaData = CreateStub<IBuildMetaData>();
-
-            buildMetaData.SourceControl = new SourceControlDouble("svn://some.url");
-
-            buildMetaData.BuildEngine = buildEngine;
-
-            packageTree.Stub(x => x.Retrieve("horn")).Return(packageTree).IgnoreArguments().Repeat.Once();
-
-            packageTree.Stub(x => x.GetBuildMetaData()).Return(buildMetaData).IgnoreArguments().Repeat.Any();
-            componentTree.Stub(x => x.GetBuildMetaData()).Return(buildMetaData).IgnoreArguments().Repeat.Any();
+            wholeTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(@"C:\somewhere\output"));
         }
 
         [Fact]
         public void Then_The_Builder_Coordinates_The_Build()
         {
+            switches.Add("install", new List<string> { "horn" });
+
             IPackageCommand command = new PackageBuilder(get, new StubProcessFactory());
 
-            command.Execute(packageTree, switches);
+            command.Execute(wholeTree, switches);
+        }
+
+        private IPackageTree GetComponentTree(out IBuildMetaData buildMetaData)
+        {
+            var baseConfigReader = CreateStub<BooConfigReader>();
+
+            baseConfigReader.InstallName = "horn";
+
+            var componentTree = CreateStub<IPackageTree>();
+
+            componentTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"c:\temp\safe")).Repeat.Any();
+
+            componentTree.Stub(x => x.GetRevisionData()).Return(new RevisionData("3"));
+
+            buildMetaData = GetBuildMetaData(baseConfigReader);
+
+            componentTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData);
+
+            componentTree.Stub(x => x.Name).Return("log4net");
+
+            componentTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(@"C:\somewhere\output"));
+
+            componentTree.Stub(x => x.GetBuildMetaData("log4net"))
+                         .Return(buildMetaData).IgnoreArguments().Repeat.Any();
+
+            return componentTree;
+        }
+
+        private IBuildMetaData GetBuildMetaData(BooConfigReader baseConfigReader)
+        {
+            var buildTool = new BuildToolStub();
+
+            var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35);
+
+            baseConfigReader.BuildEngine = buildEngine;
+
+            var buildMetaData = CreateStub<IBuildMetaData>();
+
+            buildMetaData.SourceControl = new SourceControlDoubleWithFakeFileSystem("svn://some.url");
+
+            buildMetaData.BuildEngine = buildEngine;
+
+            return buildMetaData;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using Horn.Core.PackageStructure;
 using log4net;
 using SharpSvn;
 
@@ -8,25 +9,57 @@ namespace Horn.Core.SCM
 {
     public class SVNSourceControl : SourceControl
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof (SVNSourceControl));
 
-        protected override void Initialise(string destination)
+        private static readonly ILog log = LogManager.GetLogger(typeof(SVNSourceControl));
+
+
+        public override string Revision
         {
-            if (Directory.Exists(destination))
+            get
             {
-                Directory.Delete(destination, true);
+                SvnInfoEventArgs info = null;
+
+                using (var client = new SvnClient())
+                {
+                    try
+                    {
+                        client.GetInfo(SvnTarget.FromUri(new Uri(Url)), out info);
+                    }
+                    catch (SvnRepositoryIOException sre)
+                    {
+                        HandleExceptions(sre);
+
+                        throw;
+                    }
+                    catch (SvnObstructedUpdateException sue)
+                    {
+                        HandleExceptions(sue);
+                    }
+                }
+
+                return info.Revision.ToString();
             }
         }
 
-        protected override void Download(string destination)
+
+
+        protected override void Initialise(IPackageTree packageTree)
         {
+            if (packageTree.WorkingDirectory.Exists)
+                packageTree.WorkingDirectory.Delete(true);
+        }
+
+        protected override string Download(DirectoryInfo destination)
+        {
+            SvnUpdateResult result = null;
+
             using (var client = new SvnClient())
             {
                 try
                 {
-                    client.Export(Url, destination);
+                    client.Export(Url, destination.FullName, out result);
                 }
-                catch(SvnRepositoryIOException sre)
+                catch (SvnRepositoryIOException sre)
                 {
                     HandleExceptions(sre);
 
@@ -37,7 +70,16 @@ namespace Horn.Core.SCM
                     HandleExceptions(sue);
                 }
             }
+
+            return result.Revision.ToString();
         }
+
+        protected override void SetMonitor(string destination)
+        {
+            downloadMonitor = new DownloadMonitor(destination);
+        }
+
+
 
         private void HandleExceptions(Exception ex)
         {
@@ -46,9 +88,10 @@ namespace Horn.Core.SCM
             log.Error(ex);
         }
 
-        protected override void SetMonitor(string destination)
+
+
+        public SVNSourceControl()
         {
-            downloadMonitor = new DownloadMonitor(destination);
         }
 
         public SVNSourceControl(string url)
@@ -56,8 +99,7 @@ namespace Horn.Core.SCM
         {
         }
 
-        public SVNSourceControl()
-        {
-        }
+
+
     }
 }

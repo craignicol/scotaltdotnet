@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace Horn.Core
 {
@@ -7,6 +8,20 @@ namespace Horn.Core
     {
 
         public MissingBuildFileException() { }
+
+        public MissingBuildFileException(DirectoryInfo buildFolder) : base(ErrorMessage(buildFolder))
+        {
+        }
+
+
+        public MissingBuildFileException(DirectoryInfo buildFolder, Exception inner) : base(ErrorMessage(buildFolder), inner)
+        {
+        }
+
+        public static string ErrorMessage(DirectoryInfo buildFolder)
+        {
+            return string.Format("No build file component {0} at path {1}.", buildFolder.Name, buildFolder.FullName);   
+        }
 
         public MissingBuildFileException(string message) : base(message) { }
         

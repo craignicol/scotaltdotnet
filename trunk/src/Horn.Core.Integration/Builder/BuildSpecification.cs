@@ -16,9 +16,11 @@ namespace Horn.Core.Integration.Builder
 
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(workingPath));
 
-            var solutionPath = Path.Combine(rootPath, "Horn.sln");
+            packageTree.Stub(x => x.Name).Return("horn");
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.frameworkVersion35);
+            var solutionPath = Path.Combine(Path.Combine(rootPath, "Horn.Core"), "Horn.Core.csproj");
+
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35){OutputDirectory = "."};
         }
 
         [Fact]
@@ -32,7 +34,6 @@ namespace Horn.Core.Integration.Builder
 
     public class When_The_Build_Meta_Data_Specifies_A_Dependency : BuildSpecificationBase
     {
-        private string libDir;
         private string dependentFilename;
 
         protected override void Because()
@@ -41,23 +42,29 @@ namespace Horn.Core.Integration.Builder
 
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(workingPath));
 
+            packageTree.Stub(x => x.Name).Return("horn");
+
             var solutionPath = Path.Combine(rootPath, "Horn.sln");
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.frameworkVersion35);
-            libDir = "lib";
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35);
 
             string dependentPath = CreateDirectory("Dependent");
+
             dependentFilename = "dependency.dll";
-            
-            buildEngine.Dependencies.Add(new Dependency("dependency", libDir));
+
+            buildEngine.OutputDirectory = ".";
+
+            buildEngine.Dependencies.Add(new Dependency("dependency", "dependency"));
 
             IPackageTree dependentTree = MockRepository.GenerateStub<IPackageTree>();
 
             DirectoryInfo dependentDir = new DirectoryInfo(dependentPath);
+
             dependentTree.Stub(x => x.OutputDirectory).Return(dependentDir);
+            
             File.Create(Path.Combine(dependentPath, dependentFilename)).Close();
 
-            packageTree.Stub(x => x.Retrieve("dependency")).Return(dependentTree);
+            packageTree.Stub(x => x.RetrievePackage("dependency")).Return(dependentTree);
         }
 
         [Fact]
@@ -65,7 +72,7 @@ namespace Horn.Core.Integration.Builder
         {
             buildEngine.Build(new DiagnosticsProcessFactory(), packageTree);
 
-            string dependentLibFile = Path.Combine(Path.Combine(workingPath, libDir), dependentFilename);
+            string dependentLibFile = Path.Combine(workingPath, dependentFilename);
             Assert.True(File.Exists(dependentLibFile));
         }
     }

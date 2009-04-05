@@ -1,4 +1,7 @@
+using System;
 using System.IO;
+using System.Threading;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 using Horn.Framework.helpers;
 
@@ -8,27 +11,75 @@ namespace Horn.Core.Spec
     {
         public bool ExportWasCalled;
 
-        protected override void Initialise(string destination)
+        protected override Thread StartMonitoring()
         {
-            System.Console.WriteLine("In initialise");
+            Console.WriteLine("Source control download monitoring started.");
+
+            return null;
         }
 
-        protected override void Download(string destination)
+        protected override void StopMonitoring(Thread thread)
         {
-            System.Console.WriteLine("In Download");
+            Console.WriteLine("Source control download monitoring stopped.");
         }
 
-        public override void Export(string destination)
+        protected override void Initialise(IPackageTree packageTree)
         {
-            if (!Directory.Exists(destination))
-                Directory.CreateDirectory(destination);
+            Console.WriteLine("In initialise");
+        }
 
-            FileHelper.CreateFileWithRandomData(Path.Combine(destination, "build.boo"));
+        public override string Revision
+        {
+            get
+            {
+                return long.MaxValue.ToString();
+            }
+        }
+
+        protected override string Download(DirectoryInfo destination)
+        {
+            Console.WriteLine("In Download");
+
+            if (!destination.Exists)
+                destination.Create();
+
+            FileHelper.CreateFileWithRandomData(Path.Combine(destination.FullName, "horn.boo"));
 
             ExportWasCalled = true;
+
+            return long.MaxValue.ToString();
         }
 
         public SourceControlDouble(string url)
+            : base(url)
+        {
+        }
+    }
+
+    public class SourceControlDoubleWithFakeFileSystem : SourceControlDouble
+    {
+        protected override void RecordCurrentRevision(IPackageTree tree, string revision)
+        {
+            Console.WriteLine(revision);
+        }
+
+        public SourceControlDoubleWithFakeFileSystem(string url)
+            : base(url)
+        {
+        }
+    }
+
+    public class SourceControlDoubleWitholdRevision : SourceControlDouble
+    {
+        public override string Revision
+        {
+            get
+            {
+                return "0";
+            }
+        }
+
+        public SourceControlDoubleWitholdRevision(string url)
             : base(url)
         {
         }

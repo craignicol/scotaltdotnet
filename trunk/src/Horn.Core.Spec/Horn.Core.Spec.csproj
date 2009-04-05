@@ -71,6 +71,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="NAnt, Version=0.86.2898.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Nant\NAnt.exe</HintPath>
+    </Reference>
     <Reference Include="Osherove.ThreadTester, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Osherove.ThreadTester.dll</HintPath>
@@ -115,20 +119,24 @@
     <Compile Include="BuildEngine\StubProcessFactory.cs" />
     <Compile Include="CmdLine\RefreshCommandLineFixture.cs" />
     <Compile Include="DependencyTree\DependencyTreeSpecification.cs" />
+    <Compile Include="DirectorySpecificationBase.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
     <Compile Include="Extensions\DirectoryExtensions.cs" />
     <Compile Include="Extensions\stringextensionspecs.cs" />
+    <Compile Include="helpers\TreeHelper.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniserfixture.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniserfixturebase.cs" />
-    <Compile Include="PackageTree\PackageTreeFragnentStub.cs" />
+    <Compile Include="PackageTree\BuildEnginePackageSpecifications.cs" />
+    <Compile Include="PackageTree\BuildFileResolverSpec.cs" />
+    <Compile Include="RevisionDataSpec\RevisionDataSpecs.cs" />
     <Compile Include="SourceControlDouble.cs" />
+    <Compile Include="SourceControl\SourceControlSpecs.cs" />
     <Compile Include="SpecificationHelper.cs" />
     <Compile Include="BuildEngine\BuildEngineSpec.cs" />
     <Compile Include="Utils\FileSystemProvider.cs" />
     <Compile Include="CmdLine\CmdLineSpecificationBase.cs" />
     <Compile Include="CmdLine\CmdLineSpecification.cs" />
-    <Compile Include="DirectoryStructureSpecificationBase.cs" />
     <Compile Include="dsl\BaseDSLSpecification.cs" />
     <Compile Include="dsl\BuildMetaDataSpecification.cs" />
     <Compile Include="dsl\BuildConfigReaderSpecification.cs" />
@@ -138,14 +146,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PackageCommands\PackageBuilderSpecification.cs" />
     <Compile Include="PackageTree\PackageTreeSpecification.cs" />
-    <Compile Include="PackageTree\PackageTreeSpecificationBase.cs" />
     <Compile Include="Utils\FrameworkLocatorSpec.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildConfigs\Horn\build.boo">
+    <Content Include="BuildConfigs\Horn\horn.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="BuildConfigs\Horn\buildnant.boo">
+    <Content Include="BuildConfigs\Horn\hornnant.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -162,9 +169,6 @@
       <Project>{03B7A9D2-30E7-4EBB-A91F-AB06F8AC1EE9}</Project>
       <Name>Horn.Spec.Framework</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SourceControl\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

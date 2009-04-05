@@ -1,10 +1,11 @@
 using Boo.Lang.Compiler.Ast;
 using Boo.Lang.Compiler.Steps;
 
-namespace Horn.Core.dsl
+namespace Horn.Core.Dsl
 {
     public class RightShiftToMethodCompilerStep : AbstractTransformerCompilerStep
     {
+
         public override void OnBlockExpression(BlockExpression node)
         {
             var dependencies = new ArrayLiteralExpression();
@@ -43,5 +44,8 @@ namespace Horn.Core.dsl
         {
             Visit(CompileUnit);
         }
+
+
+
     }
 }

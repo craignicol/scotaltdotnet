@@ -1,7 +1,7 @@
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Horn.Core.BuildEngines;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
 using Horn.Core.SCM;
@@ -30,7 +30,7 @@ namespace Horn.Core.Utils.IoC
             innerContainer.Register(
                 Component.For<IBuildConfigReader>()
                             .Named("buildconfigreader")
-                            .ImplementedBy<BuildConfigReader>()
+                            .ImplementedBy<BooBuildConfigReader>()
                             .LifeStyle.Transient
                             );
 

@@ -1,10 +1,23 @@
+using System.Collections.Generic;
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
 
-namespace Horn.Core.dsl
+namespace Horn.Core.Dsl
 {
     public class NullBuildMetatData : IBuildMetaData
     {
+        public string Description
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public Dictionary<string, object> ProjectInfo
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
         public BuildEngine BuildEngine
         {
             get { throw new System.NotImplementedException(); }
@@ -12,6 +25,12 @@ namespace Horn.Core.dsl
         }
 
         public SourceControl SourceControl
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public string OutputDirectory
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
