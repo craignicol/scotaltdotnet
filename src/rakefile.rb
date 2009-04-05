@@ -9,6 +9,21 @@ task :build  => [:clean, :init, :copy_package_tree, :copy_referenced_assemblies,
   
 end 
 
+task :geminstall do
+	Gem::Specification.new do |s|
+	   s.name = %q{horn}
+	   s.version = "0.0.1"
+	   s.date = %q{2007-09-03}
+	   s.authors = ["Scotalt.net"]
+	   s.email = %q{wdierkes@5dollarwhitebox.org}
+	   s.summary = %q{ParseConfig provides simple parsing of standard *nix style config files.}
+	   s.homepage = %q{http://www.5dollarwhitebox.org/}
+	   s.description = %q{A .net build manager.}
+	   s.files = [ "README", "Changelog", "LICENSE", "demo.rb", "demo.conf", "lib/parseconfig.rb"]
+	end 
+
+end
+
 task :build_horn_core => [:generate_assembly_info] do
   compile_dll "Horn.Core/Horn.Core.csproj"
 end

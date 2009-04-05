@@ -1,11 +1,14 @@
 using System.IO;
+using Horn.Core.PackageStructure;
 
-namespace Horn.Core.dsl
+namespace Horn.Core.Dsl
 {
     public interface IBuildConfigReader
     {
-        BuildMetaData GetBuildMetaData();
+        BuildMetaData GetBuildMetaData(string packageName);
 
-        IBuildConfigReader SetDslFactory(DirectoryInfo rootDirectory);
+        BuildMetaData GetBuildMetaData(IPackageTree packageTree, string buildFile);
+
+        IBuildConfigReader SetDslFactory(IPackageTree packageTree);
     }
 }

@@ -26,9 +26,9 @@ namespace Horn.Core
         {
             switch(version)
             {
-                case FrameworkVersion.frameworkVersion2:
+                case FrameworkVersion.FrameworkVersion2:
                     return "v2.0";
-                case FrameworkVersion.frameworkVersion35:
+                case FrameworkVersion.FrameworkVersion35:
                     return "v3.5";
                 default:
                     throw new ArgumentException(string.Format("Unknown framework version: {0}", version));

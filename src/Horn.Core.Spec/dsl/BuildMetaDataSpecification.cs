@@ -1,11 +1,11 @@
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
 {
     public class When_Horn_Parses_A_Successful_Configuration : BaseDSLSpecification
     {
-        private BaseConfigReader configReader;
+        private BooConfigReader configReader;
 
         protected override void Because()
         {
@@ -22,7 +22,7 @@ namespace Horn.Core.Spec.Unit.dsl
         }
     }
 
-    public class ConfigReaderDouble : BaseConfigReader
+    public class ConfigReaderDouble : BooConfigReader
     {
         public override void Prepare()
         {

@@ -1,29 +1,17 @@
 using System;
 using System.IO;
+using Horn.Core.PackageStructure;
 using Horn.Framework.helpers;
 
 namespace Horn.Core.Spec.Integration.Get
 {
-    public class SourceControlTestBase
+    public abstract class SourceControlTestBase : TestBase
     {
-        public class SubversionTestBase : TestBase
+        protected IPackageTree packageTree;
+
+        protected override void  Before_each_spec()
         {
-            protected DirectoryInfo tempSandBox = new DirectoryInfo(DirectoryHelper.GetTempDirectoryName());
-
-            protected override void Because()
-            {
-            }
-
-            protected void SetUpTemporarySandBox()
-            {
-                DeleteTempSandBox();
-            }
-
-            protected void DeleteTempSandBox()
-            {
-                if (tempSandBox.Exists)
-                    tempSandBox.Delete(true);
-            }
-        }        
+            packageTree = new PackageTree(PackageTreeHelper.CreateEmptyDirectoryStructureForTesting(), null);
+        }
     }
 }

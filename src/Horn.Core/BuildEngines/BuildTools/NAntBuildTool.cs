@@ -10,28 +10,31 @@ namespace Horn.Core
 {
     public class NAntBuildTool : IBuildTool
     {
+
         public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
-            return string.Format(" -t:net-{0} -buildfile:{1} {2}",  GetFrameworkVersionForBuildTool(version), pathToBuildFile, GenerateParameters(buildEngine.Parameters));
-        }
-
-        public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)
-        {
-            return Path.Combine(packageTree.WorkingDirectory.FullName, @"lib\Nant\NAnt.exe");
+            return string.Format(" {0} -t:net-{1} -buildfile:{2} {3}", GenerateTasks(buildEngine.Tasks), GetFrameworkVersionForBuildTool(version), pathToBuildFile, GenerateParameters(buildEngine.Parameters)).Trim();
         }
 
         public string GetFrameworkVersionForBuildTool(FrameworkVersion version)
         {
             switch (version)
             {
-                case FrameworkVersion.frameworkVersion2:
+                case FrameworkVersion.FrameworkVersion2:
                     return "2.0";
-                case FrameworkVersion.frameworkVersion35:
+                case FrameworkVersion.FrameworkVersion35:
                     return "3.5";
             }
 
             throw new InvalidEnumArgumentException("Invalid Framework version paased to NAntBuildTool.GetFrameworkVersion", (int)version, typeof(FrameworkVersion));
         }
+
+        public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)
+        {
+            return packageTree.Nant.FullName;
+        }
+
+
 
         private string GenerateParameters(Dictionary<string, string> parameters)
         {
@@ -57,6 +60,9 @@ namespace Horn.Core
 
             return ret;
         }
+
+
+
     }
 }
  

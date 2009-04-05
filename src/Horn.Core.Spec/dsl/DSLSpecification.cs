@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 using Horn.Core.SCM;
 using Horn.Framework.helpers;
 using Rhino.DSL;
 
 namespace Horn.Core.Spec.Unit.dsl
 {
-    using Core.dsl;
+    using Core.Dsl;
     using Rhino.Mocks;
     using Xunit;
 
     public class When_Horn_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
-        private BaseConfigReader configReader;
+        private BooConfigReader configReader;
 
         protected DslFactory factory;
         private IDependencyResolver dependencyResolver;
@@ -27,7 +27,7 @@ namespace Horn.Core.Spec.Unit.dsl
             var engine = new ConfigReaderEngine();
 
             factory = new DslFactory { BaseDirectory = DirectoryHelper.GetBaseDirectory() };
-            factory.Register<BaseConfigReader>(engine);
+            factory.Register<BooConfigReader>(engine);
         }
 
         protected override void After_each_spec()
@@ -37,7 +37,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void Because()
         {
-            configReader = factory.Create<BaseConfigReader>(@"BuildConfigs/Horn/build.boo");
+            configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/horn.boo");
             configReader.Prepare();
         }
 
@@ -53,7 +53,7 @@ namespace Horn.Core.Spec.Unit.dsl
             dependencyResolver.AssertWasCalled(r => r.Resolve<SVNSourceControl>());
         }
 
-        private void AssertHornMetaData(BaseConfigReader reader)
+        private void AssertHornMetaData(BooConfigReader reader)
         {
             Assert.NotNull(reader);
 
@@ -71,9 +71,9 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(1, reader.BuildEngine.Dependencies.Count);
 
-            Assert.Equal("log4net", reader.BuildEngine.Dependencies[0].Name);
+            Assert.Equal("log4net", reader.BuildEngine.Dependencies[0].PackageName);
 
-            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].Location);
+            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].Library);
         }
     }
 }

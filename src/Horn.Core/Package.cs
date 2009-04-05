@@ -1,12 +1,15 @@
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 
 namespace Horn.Core
 {
     public class Package
     {
-        public string Name { get; private set; }
 
         public IBuildMetaData BuildMetaData{ get; private set;}
+
+        public string Name { get; private set; }
+
+
 
         public Package(string name, IBuildMetaData buildMetaData)
         {
@@ -14,5 +17,8 @@ namespace Horn.Core
 
             Name = name;
         }
+
+
+
     }
 }

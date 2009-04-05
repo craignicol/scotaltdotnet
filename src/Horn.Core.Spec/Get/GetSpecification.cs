@@ -13,8 +13,8 @@ namespace Horn.Core.Spec.Unit.Get
 
             destinationPath = get.Package(package)
                                 .From(sourceControl)
-                                .ExportTo(packageTree
-                                .Retrieve("horn").WorkingDirectory.FullName);
+                                .ExportTo(packageTree)
+                                .RetrievePackage("horn").WorkingDirectory.FullName;
         }
 
         [Fact]

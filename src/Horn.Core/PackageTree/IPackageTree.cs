@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
 
 namespace Horn.Core.PackageStructure
 {
@@ -10,11 +10,23 @@ namespace Horn.Core.PackageStructure
 
         bool IsRoot { get; }
 
-        IPackageTree Retrieve(string packageName);
+        bool Exists { get; }
 
-        IBuildMetaData GetBuildMetaData();
+        string BuildFile { get; }
+
+        void CreateRequiredDirectories();
+
+        IPackageTree RetrievePackage(string packageName);
+
+        IBuildMetaData BuildMetaData { get; }
+
+        IBuildMetaData GetBuildMetaData(string packageName);
 
         DirectoryInfo CurrentDirectory { get; }
+
+        FileInfo Nant { get; }
+
+        FileInfo Sn { get;}
 
         DirectoryInfo WorkingDirectory { get; }
 
@@ -23,5 +35,7 @@ namespace Horn.Core.PackageStructure
         DirectoryInfo OutputDirectory { get; }
 
         List<IPackageTree> BuildNodes();
+
+        IRevisionData GetRevisionData();
     }
 }

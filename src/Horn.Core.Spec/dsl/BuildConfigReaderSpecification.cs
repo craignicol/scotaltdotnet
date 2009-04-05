@@ -1,10 +1,9 @@
 using System;
 using System.IO;
-using Horn.Core.dsl;
+using Horn.Core.Dsl;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
-using Horn.Core.Spec.Unit.Get;
 using Horn.Framework.helpers;
-using Horn.Spec.Framework.Extensions;
 using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
@@ -23,18 +22,22 @@ namespace Horn.Core.Spec.Unit.dsl
 
             IoC.InitializeWith(dependencyResolver);
 
-            rootDirectory = new DirectoryInfo(string.Format("{0}\\BuildConfigs\\Horn", DirectoryHelper.GetBaseDirectory().ToLower().ResolvePath()));
+            GetTestBuildConfigsFolder();
+
+            rootDirectory = GetTestBuildConfigsFolder();
+
+            packageTree = new PackageTree(rootDirectory, null);
         }
 
         protected override void Because()
         {
-            reader = new BuildConfigReader();
+            reader = new BooBuildConfigReader();
         }
 
         [Fact]
         public void Then_The_Config_Reader_Returns_The_Correct_MetaData()
         {
-            var metaData = reader.SetDslFactory(rootDirectory).GetBuildMetaData();
+            var metaData = reader.SetDslFactory(packageTree).GetBuildMetaData("horn");
 
             AssertBuildMetaDataValues(metaData);
         }
@@ -44,13 +47,13 @@ namespace Horn.Core.Spec.Unit.dsl
     {
         protected override void Because()
         {
-            reader = new BuildConfigReader();
+            reader = new BooBuildConfigReader();
         }
 
         [Fact]
         public void Then_An_Argument_Null_Exception_Is_Thrown()
         {
-            Assert.Throws<ArgumentNullException>(() => reader.GetBuildMetaData());
+            Assert.Throws<ArgumentNullException>(() => reader.GetBuildMetaData("horn"));
         }
     }
 
@@ -65,13 +68,15 @@ namespace Horn.Core.Spec.Unit.dsl
 
             rootDirectory = new DirectoryInfo(directoryWithNoBooFile);
 
-            reader = new BuildConfigReader();
+            packageTree = new PackageTree(rootDirectory, null);
+
+            reader = new BooBuildConfigReader();
         }
 
         [Fact]
         public void Then_The_Config_Reader_Throws_A_Custom_Exception()
         {
-            Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(rootDirectory).GetBuildMetaData());
+            Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(packageTree).GetBuildMetaData("horn"));
         }
     }
 }
