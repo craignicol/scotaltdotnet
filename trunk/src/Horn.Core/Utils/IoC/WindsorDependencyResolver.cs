@@ -26,10 +26,9 @@ namespace Horn.Core.Utils.IoC
         {
             innerContainer = new WindsorContainer();
 
-            //TODO: Scan the horn.core assembly and add the components automatically
             innerContainer.Register(
                 Component.For<IBuildConfigReader>()
-                            .Named("buildconfigreader")
+                            .Named("boo")
                             .ImplementedBy<BooBuildConfigReader>()
                             .LifeStyle.Transient
                             );
@@ -66,7 +65,7 @@ namespace Horn.Core.Utils.IoC
                             .Named("processfactory")
                             .ImplementedBy<DiagnosticsProcessFactory>()
                             .LifeStyle.Transient
-                            
+
                 );
         }
     }
