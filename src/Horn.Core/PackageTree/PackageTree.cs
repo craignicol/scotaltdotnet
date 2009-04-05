@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.Dsl;
-using Horn.Core.Utils;
-using IronRuby.Builtins;
 
 namespace Horn.Core.PackageStructure
 {
@@ -13,7 +11,7 @@ namespace Horn.Core.PackageStructure
         private readonly IList<IPackageTree> children;
         private DirectoryInfo workingDirectory;
         private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
-        private static readonly string[] libraryNodes = new[] {"rubylib", "lib", "debug", "buildengines"};
+        private static readonly string[] libraryNodes = new[] {"lib", "debug", "buildengines"};
 
 
         public string BuildFile{ get; set; }

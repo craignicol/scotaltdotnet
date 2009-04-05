@@ -4,7 +4,6 @@ using Boo.Lang.Compiler.Ast;
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
 using Horn.Core.Utils.Framework;
-using m = Microsoft.Scripting;
 
 namespace Horn.Core.Dsl
 {
