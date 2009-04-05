@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Horn.Core.MSBuildBuildTool">
+    <Position X="4.25" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>BuildEngines\BuildTools\MSBuildBuildTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Horn.Core.NAntBuildTool">
+    <Position X="7.5" Y="3.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAiAAAAAAAAEAAAAAAAAAAAQAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>BuildEngines\BuildTools\NAntBuildTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Horn.Core.IBuildTool">
+    <Position X="5.75" Y="1.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>BuildEngines\BuildTools\IBuildTool.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
