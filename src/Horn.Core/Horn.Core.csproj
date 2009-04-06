@@ -103,6 +103,12 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="dsl\BaseConfigReader.cs" />
+    <Compile Include="dsl\BooBuildConfigReader.cs" />
+    <Compile Include="dsl\BooConfigReader.cs" />
+    <Compile Include="dsl\CompilerSteps\RightShiftToMethodCompilerStep.cs" />
+    <Compile Include="dsl\DslEngines\ConfigReaderEngine.cs" />
+    <Compile Include="dsl\IBuildConfigReader.cs" />
     <Compile Include="extensions\StringExtensions.cs" />
     <Compile Include="MetaDataSynchroniser\imetadatasynchroniser.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniser.cs" />

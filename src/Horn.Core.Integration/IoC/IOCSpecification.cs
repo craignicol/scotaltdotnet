@@ -1,8 +1,7 @@
 
-
+using Horn.Core.Dsl;
 using Horn.Core.PackageCommands;
 using Horn.Domain.BuildEngines;
-using Horn.Domain.Dsl;
 using Horn.Domain.SCM;
 using Xunit;
 

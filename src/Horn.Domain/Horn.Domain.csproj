@@ -89,12 +89,6 @@
     <Compile Include="DependencyTree\CircularDependencyException.cs" />
     <Compile Include="DependencyTree\DependencyTree.cs" />
     <Compile Include="DependencyTree\IDependencyTree.cs" />
-    <Compile Include="dsl\BaseConfigReader.cs" />
-    <Compile Include="dsl\BooBuildConfigReader.cs" />
-    <Compile Include="dsl\BooConfigReader.cs" />
-    <Compile Include="dsl\CompilerSteps\RightShiftToMethodCompilerStep.cs" />
-    <Compile Include="dsl\DslEngines\ConfigReaderEngine.cs" />
-    <Compile Include="dsl\IBuildConfigReader.cs" />
     <Compile Include="EnumerableExtensionMethods.cs" />
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
     <Compile Include="exceptions\MissingBuildFileException.cs" />

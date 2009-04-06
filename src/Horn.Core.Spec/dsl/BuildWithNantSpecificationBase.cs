@@ -1,4 +1,5 @@
 using System;
+using Horn.Core.Dsl;
 using Horn.Domain.Dsl;
 using Horn.Domain.PackageStructure;
 using Horn.Domain.SCM;

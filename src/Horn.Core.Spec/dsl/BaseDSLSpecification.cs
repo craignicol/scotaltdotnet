@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Horn.Core.Dsl;
 using Horn.Domain.Dsl;
 using Horn.Domain.Framework;
 using Horn.Domain.PackageStructure;

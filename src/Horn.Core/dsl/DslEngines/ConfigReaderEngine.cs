@@ -1,6 +1,6 @@
 using Rhino.DSL;
 
-namespace Horn.Domain.Dsl
+namespace Horn.Core.Dsl
 {
     using Boo.Lang.Compiler.Steps;
 

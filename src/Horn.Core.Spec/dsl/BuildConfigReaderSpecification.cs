@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core;
+using Horn.Core.Dsl;
 using Horn.Domain.Dsl;
 using Horn.Domain.Exceptions;
 using Horn.Domain.PackageStructure;

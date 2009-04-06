@@ -1,4 +1,4 @@
-using Horn.Domain.Dsl;
+using Horn.Core.Dsl;
 using Horn.Domain.Framework;
 using Xunit;
 
