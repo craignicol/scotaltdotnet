@@ -1,10 +1,11 @@
 using System;
 using System.IO;
+using Horn.Domain.Dsl;
 using Horn.Domain.Exceptions;
 using Horn.Domain.PackageStructure;
 using Rhino.DSL;
 
-namespace Horn.Domain.Dsl
+namespace Horn.Core.Dsl
 {
     public class BooBuildConfigReader : IBuildConfigReader
     {

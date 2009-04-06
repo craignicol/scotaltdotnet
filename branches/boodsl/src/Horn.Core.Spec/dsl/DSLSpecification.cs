@@ -1,3 +1,4 @@
+using Horn.Core.Dsl;
 using Horn.Domain.Dsl;
 using Horn.Domain.SCM;
 using Horn.Framework.helpers;

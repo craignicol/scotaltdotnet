@@ -1,6 +1,7 @@
+using Horn.Domain.Dsl;
 using Horn.Domain.PackageStructure;
 
-namespace Horn.Domain.Dsl
+namespace Horn.Core.Dsl
 {
     public interface IBuildConfigReader
     {

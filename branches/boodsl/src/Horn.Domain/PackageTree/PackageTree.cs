@@ -154,9 +154,9 @@ namespace Horn.Domain.PackageStructure
 
             var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageTree.Name);
 
-            var reader = new BooBuildConfigReader();
+            //var reader = new BooBuildConfigReader();
 
-            BuildMetaData = reader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, Path.GetFileNameWithoutExtension(buildFileResolver.BuildFile));
+            //BuildMetaData = reader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, Path.GetFileNameWithoutExtension(buildFileResolver.BuildFile));
 
             return BuildMetaData;
         }
