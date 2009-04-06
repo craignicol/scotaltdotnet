@@ -1,9 +1,10 @@
-using Horn.Core.PackageStructure;
-using Horn.Core.Spec.helpers;
+
+using Horn.Domain.PackageStructure;
+using Horn.Domain.Spec.helpers;
 using Horn.Framework.helpers;
 using Xunit;
 
-namespace Horn.Core.Spec.RevisionDataSpecs
+namespace Horn.Domain.Spec.RevisionDataSpecs
 {   
     public class When_a_package_has_no_revision_data : Specification
     {

@@ -1,4 +1,6 @@
-using Horn.Core.Dsl;
+
+
+using Horn.Domain.Dsl;
 
 namespace Horn.Core
 {

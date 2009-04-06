@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AF098A85-A89C-4A4C-8AF2-B10F0EB79EEA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Horn.Domain</RootNamespace>
+    <AssemblyName>Horn.Domain</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Boo.Lang, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Compiler, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Extensions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Parser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.DSL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino.DSL.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpSvn, Version=1.5001.662.32487, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpSvn-x86\SharpSvn.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuildEngines\BuildEngine.cs" />
+    <Compile Include="BuildEngines\BuildTools\IBuildTool.cs" />
+    <Compile Include="BuildEngines\BuildTools\MSBuildBuildTool.cs" />
+    <Compile Include="BuildEngines\BuildTools\NAntBuildTool.cs" />
+    <Compile Include="BuildEngines\BuildTools\RakeBuildTool.cs" />
+    <Compile Include="BuildEngines\Dependency.cs" />
+    <Compile Include="BuildEngines\Process\DiagnosticsProcess.cs" />
+    <Compile Include="BuildEngines\Process\DiagnosticsProcessFactory.cs" />
+    <Compile Include="BuildEngines\Process\iprocess.cs" />
+    <Compile Include="BuildEngines\Process\IProcessFactory.cs" />
+    <Compile Include="dsl\BuildMetadata\BuildMetaData.cs" />
+    <Compile Include="dsl\BuildMetadata\IBuildMetaData.cs" />
+    <Compile Include="dsl\BuildMetadata\NullBuildMetatData.cs" />
+    <Compile Include="DependencyTree\CircularDependencyException.cs" />
+    <Compile Include="DependencyTree\DependencyTree.cs" />
+    <Compile Include="DependencyTree\IDependencyTree.cs" />
+    <Compile Include="dsl\BaseConfigReader.cs" />
+    <Compile Include="dsl\BooBuildConfigReader.cs" />
+    <Compile Include="dsl\BooConfigReader.cs" />
+    <Compile Include="dsl\CompilerSteps\RightShiftToMethodCompilerStep.cs" />
+    <Compile Include="dsl\DslEngines\ConfigReaderEngine.cs" />
+    <Compile Include="dsl\IBuildConfigReader.cs" />
+    <Compile Include="EnumerableExtensionMethods.cs" />
+    <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
+    <Compile Include="exceptions\MissingBuildFileException.cs" />
+    <Compile Include="Framework\Framework.cs" />
+    <Compile Include="Framework\FrameworkLocator.cs" />
+    <Compile Include="Framework\MSBuild.cs" />
+    <Compile Include="IComposite.cs" />
+    <Compile Include="PackageTree\BuildFileResolver.cs" />
+    <Compile Include="PackageTree\IBuildFileResolver.cs" />
+    <Compile Include="PackageTree\IPackageTree.cs" />
+    <Compile Include="PackageTree\IRevisionData.cs" />
+    <Compile Include="PackageTree\NullPackageTree.cs" />
+    <Compile Include="PackageTree\PackageTree.cs" />
+    <Compile Include="PackageTree\PackageTreeExtensions.cs" />
+    <Compile Include="PackageTree\RevisionData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceControl\DefaultDownloadMonitor.cs" />
+    <Compile Include="SourceControl\DownloadMonitor.cs" />
+    <Compile Include="SourceControl\IDownloadMonitor.cs" />
+    <Compile Include="SourceControl\SourceControl.cs" />
+    <Compile Include="SourceControl\SvnSourceControl.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

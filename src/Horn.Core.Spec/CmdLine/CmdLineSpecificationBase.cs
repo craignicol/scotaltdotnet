@@ -1,13 +1,12 @@
-using Horn.Core.PackageStructure;
-using Horn.Core.Spec.helpers;
+using System.Collections.Generic;
+using System.IO;
+using Horn.Core.Utils.CmdLine;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.Spec.helpers;
+using Xunit;
 
-namespace Horn.Core.Spec.Unit.CmdLine
+namespace Horn.Domain.Spec.Unit.CmdLine
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using Utils.CmdLine;
-    using Xunit;
-
     public abstract class CmdLineSpecificationBase : Specification
     {
         private TextWriter textWriter;

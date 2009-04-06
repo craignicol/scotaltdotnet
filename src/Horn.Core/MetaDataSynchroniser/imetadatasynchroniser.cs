@@ -1,5 +1,4 @@
-using System.IO;
-using Horn.Core.PackageStructure;
+using Horn.Domain.PackageStructure;
 
 namespace Horn.Core.Tree.MetaDataSynchroniser
 {

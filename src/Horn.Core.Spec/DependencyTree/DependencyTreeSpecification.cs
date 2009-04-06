@@ -1,14 +1,15 @@
-namespace Horn.Core.Spec.Unit.DependencyTree
-{
-    using System;
-    using PackageStructure;
-    using BuildEngines;
-    using Xunit;
-    using BuildEngine;
-    using Dsl;
-    using Rhino.Mocks;
-    using Core.DependencyTree;
+using System;
+using Horn.Domain.BuildEngines;
+using Horn.Domain.DependencyTree;
+using Horn.Domain.Dsl;
+using Horn.Domain.Framework;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.Spec.BuildEngine;
+using Rhino.Mocks;
+using Xunit;
 
+namespace Horn.Domain.Spec.Unit.TreeDependency
+{
     public class When_We_Have_A_Single_Dependency : DirectorySpecificationBase
     {
         protected IBuildMetaData dependencyBuildMetaData;
@@ -22,9 +23,9 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             rootBuildMetaData = CreateStub<IBuildMetaData>();
             dependencyBuildMetaData = CreateStub<IBuildMetaData>();
 
-            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            rootBuildMetaData.BuildEngine = new BuildEngines.BuildEngine(new BuildToolStub(), "root.boo",  Framework.FrameworkVersion.FrameworkVersion35);
             rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency"));
-            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency", Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            dependencyBuildMetaData.BuildEngine = new BuildEngines.BuildEngine(new BuildToolStub(), "simpleDependency", Framework.FrameworkVersion.FrameworkVersion35);
 
             packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return("root");
@@ -36,7 +37,7 @@ namespace Horn.Core.Spec.Unit.DependencyTree
 
             packageTree.Stub(x => x.RetrievePackage("")).IgnoreArguments().Return(dependentTree);
 
-            dependencyTree = new DependencyTree(packageTree);
+            dependencyTree = new Domain.DependencyTree.DependencyTree(packageTree);
         }
 
         [Fact]
@@ -61,9 +62,9 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             rootBuildMetaData = CreateStub<IBuildMetaData>();
             dependencyBuildMetaData = CreateStub<IBuildMetaData>();
 
-            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            rootBuildMetaData.BuildEngine = new BuildEngines.BuildEngine(new BuildToolStub(), "root.boo", Framework.FrameworkVersion.FrameworkVersion35);
             rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency.boo"));
-            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            dependencyBuildMetaData.BuildEngine = new BuildEngines.BuildEngine(new BuildToolStub(), "simpleDependency.boo", Framework.FrameworkVersion.FrameworkVersion35);
             dependencyBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("root", "root.boo"));
 
             packageTree = CreateStub<IPackageTree>();
@@ -83,7 +84,7 @@ namespace Horn.Core.Spec.Unit.DependencyTree
         [Fact]
         public void Then_An_Exception_Is_Raised()
         {
-            Exception ex = Assert.Throws<CircularDependencyException>(() => new DependencyTree(packageTree));
+            Exception ex = Assert.Throws<CircularDependencyException>(() => new DependencyTree.DependencyTree(packageTree));
             Assert.Equal("root is a dependent of itself", ex.Message);
         }
     }
@@ -96,7 +97,7 @@ namespace Horn.Core.Spec.Unit.DependencyTree
         private IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
         {
             var buildMetaData = CreateStub<IBuildMetaData>();
-            buildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            buildMetaData.BuildEngine = new BuildEngines.BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), FrameworkVersion.FrameworkVersion35);
             foreach (string dependencyName in dependencyNames)
             {
                 buildMetaData.BuildEngine.Dependencies.Add(new Dependency(dependencyName, String.Format("{0}", dependencyName)));                
@@ -132,7 +133,7 @@ namespace Horn.Core.Spec.Unit.DependencyTree
         [Fact]
         public void Then_No_Exception_Is_Raised()
         {
-            dependencyTree = new DependencyTree(packageTree);
+            dependencyTree = new DependencyTree.DependencyTree(packageTree);
             Assert.NotNull(dependencyTree);
         }
     }

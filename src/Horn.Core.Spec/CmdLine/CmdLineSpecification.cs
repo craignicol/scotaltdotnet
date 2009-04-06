@@ -1,7 +1,7 @@
 using Horn.Core.Utils.CmdLine;
 using Xunit;
 
-namespace Horn.Core.Spec.Unit.CmdLine
+namespace Horn.Domain.Spec.Unit.CmdLine
 {
     public class When_horn_recevies_an_Install_Switch_From_The_Command_Line : CmdLineSpecificationBase
     {

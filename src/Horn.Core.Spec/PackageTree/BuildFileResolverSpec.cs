@@ -1,10 +1,9 @@
-using System;
 using System.IO;
-using Horn.Core.PackageStructure;
-using Horn.Core.Spec.Unit.dsl;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.Spec.Unit.dsl;
 using Xunit;
 
-namespace Horn.Core.Spec.Unit.HornTree
+namespace Horn.Domain.Spec.Unit.HornTree
 {
     public class When_resolving_a_boo_build_file : BaseDSLSpecification
     {

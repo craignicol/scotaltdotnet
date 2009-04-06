@@ -1,7 +1,8 @@
-using Horn.Core.Dsl;
+
+using Horn.Domain.Dsl;
 using Xunit;
 
-namespace Horn.Core.Spec.Unit.dsl
+namespace Horn.Domain.Spec.Unit.dsl
 {
     public class When_Horn_Parses_A_Successful_Configuration : BaseDSLSpecification
     {
@@ -15,7 +16,8 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_A_Build_Meta_Data_Object_Is_Created()
         {
-            var buildMetaData = new BuildMetaData(configReader);
+            //TODO: Fix
+            var buildMetaData = new BuildMetaData(null, null);
 
             AssertBuildMetaDataValues(buildMetaData);
 

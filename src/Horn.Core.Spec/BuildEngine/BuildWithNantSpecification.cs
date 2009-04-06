@@ -1,9 +1,9 @@
-using Horn.Core.Dsl;
-using Horn.Core.Spec.Unit.dsl;
-using Horn.Core.Utils.Framework;
+using Horn.Domain.Dsl;
+using Horn.Domain.Framework;
+using Horn.Domain.Spec.Unit.dsl;
 using Xunit;
 
-namespace Horn.Core.Spec.BuildEngine
+namespace Horn.Domain.Spec.BuildEngine
 {
     public class When_The_Build_MetaData_Specifies_Nant : BuildWithNantSpecificationBase
     {

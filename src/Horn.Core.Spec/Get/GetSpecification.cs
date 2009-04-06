@@ -1,15 +1,13 @@
 using Xunit;
-namespace Horn.Core.Spec.Unit.Get
+namespace Horn.Domain.Spec.Unit.Get
 {
-    using GetOperations;
-
     public class When_a_get_request_is_made_to_retrieve_the_source : GetSpecificationBase
     {
         private string destinationPath;
 
         protected override void Because()
         {
-            get = new Get(fileSystemProvider);
+            get = new Core.GetOperations.Get(fileSystemProvider);
 
             destinationPath = get.Package(package)
                                 .From(sourceControl)

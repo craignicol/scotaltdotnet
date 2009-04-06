@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.PackageCommands;
-using Horn.Core.PackageStructure;
-using Horn.Core.SCM;
+
+
 using Horn.Core.Tree.MetaDataSynchroniser;
 using Horn.Core.Utils.CmdLine;
 using Horn.Core.Utils.IoC;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.SCM;
 using log4net;
 using log4net.Config;
 

@@ -1,8 +1,8 @@
 using System.IO;
-using Horn.Core.PackageStructure;
+
 using Horn.Framework.helpers;
 
-namespace Horn.Core.Spec
+namespace Horn.Domain.Spec
 {
     public abstract class DirectorySpecificationBase : Specification
     {

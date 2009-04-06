@@ -1,14 +1,13 @@
 using System.Collections.Generic;
-using Horn.Core.BuildEngines;
 using Horn.Core.GetOperations;
-using Horn.Core.PackageStructure;
+using Horn.Domain.BuildEngines;
+using Horn.Domain.DependencyTree;
+using Horn.Domain.Dsl;
+using Horn.Domain.PackageStructure;
 using log4net;
 
 namespace Horn.Core.PackageCommands
 {
-    using Dsl;
-    using DependencyTree;
-
     public class PackageBuilder : IPackageCommand
     {
 

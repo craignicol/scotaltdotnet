@@ -1,6 +1,6 @@
 using System.IO;
-using Horn.Core.PackageStructure;
-using Horn.Core.SCM;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.SCM;
 
 namespace Horn.Core.Tree.MetaDataSynchroniser
 {

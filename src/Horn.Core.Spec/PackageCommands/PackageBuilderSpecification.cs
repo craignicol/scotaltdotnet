@@ -1,17 +1,17 @@
-namespace Horn.Core.Spec.Unit.PackageCommands
-{
-    using System.Collections.Generic;
-    using Core.Dsl;
-    using GetOperations;
-    using Core.PackageCommands;
-    using PackageStructure;
-    using BuildEngine;
-    using Utils;
-    using Utils.Framework;
-    using Rhino.Mocks;
-    using Xunit;
-    using System.IO;
+using System.Collections.Generic;
+using System.IO;
+using Horn.Core.GetOperations;
+using Horn.Core.PackageCommands;
+using Horn.Core.Utils;
+using Horn.Domain.Dsl;
+using Horn.Domain.Framework;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.Spec.BuildEngine;
+using Rhino.Mocks;
+using Xunit;
 
+namespace Horn.Domain.Spec.Unit.PackageCommands
+{
     public class When_The_Builder_Receives_An_Install_Switch : Specification
     {
         protected IDictionary<string, IList<string>> switches = new Dictionary<string, IList<string>>();
@@ -22,7 +22,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
         protected override void Because()
         {
-            get = new Get(fileSystemProvider);
+            get = new Core.GetOperations.Get(fileSystemProvider);
 
             IBuildMetaData buildMetaData;
 

@@ -1,14 +1,12 @@
-using System;
-using Horn.Core.SCM;
+using Horn.Domain.Dsl;
+using Horn.Domain.SCM;
 using Horn.Framework.helpers;
 using Rhino.DSL;
+using Rhino.Mocks;
+using Xunit;
 
-namespace Horn.Core.Spec.Unit.dsl
+namespace Horn.Domain.Spec.Unit.dsl
 {
-    using Core.Dsl;
-    using Rhino.Mocks;
-    using Xunit;
-
     public class When_Horn_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
         private BooConfigReader configReader;

@@ -1,7 +1,5 @@
-using System;
-using Horn.Core.BuildEngines;
-
-namespace Horn.Core.Spec.BuildEngine
+using Horn.Domain.BuildEngines;
+namespace Horn.Domain.Spec.BuildEngine
 {
     public class StubProcessFactory : IProcessFactory 
     {

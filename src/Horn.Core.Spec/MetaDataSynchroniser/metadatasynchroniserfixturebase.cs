@@ -2,7 +2,7 @@ using System.IO;
 using Horn.Core.Tree.MetaDataSynchroniser;
 using Horn.Framework.helpers;
 
-namespace Horn.Core.Spec.MetaSynchroniserfixture
+namespace Horn.Domain.Spec.MetaSynchroniserfixture
 {
     public abstract class MetaSynchroniserFixtureBase : Specification
     {

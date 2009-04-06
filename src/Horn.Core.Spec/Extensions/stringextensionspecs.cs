@@ -3,7 +3,7 @@ using Horn.Core.extensions;
 using Horn.Framework.helpers;
 using Xunit;
 
-namespace Horn.Core.Spec.Extensions
+namespace Horn.Domain.Spec.Extensions
 {
     public class When_Given_A_String : Specification
     {

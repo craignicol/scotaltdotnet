@@ -1,11 +1,11 @@
 using System;
 using System.IO;
 using System.Threading;
-using Horn.Core.PackageStructure;
-using Horn.Core.SCM;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.SCM;
 using Horn.Framework.helpers;
 
-namespace Horn.Core.Spec
+namespace Horn.Domain.Spec
 {
     public class SourceControlDouble : SVNSourceControl
     {

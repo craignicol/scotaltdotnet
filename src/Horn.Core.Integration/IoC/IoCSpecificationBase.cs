@@ -1,6 +1,6 @@
 using Horn.Core.Utils.IoC;
 
-namespace Horn.Core.Spec.Integration
+namespace Horn.Domain.Spec.Integration
 {
     public class IoCSpecificationBase : Specification
     {

@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using Horn.Core.PackageStructure;
+using Horn.Domain.PackageStructure;
 using Horn.Framework.helpers;
 
-namespace Horn.Core.Spec.Integration.Get
+namespace Horn.Domain.Spec.Integration.Get
 {
     public abstract class SourceControlTestBase : TestBase
     {

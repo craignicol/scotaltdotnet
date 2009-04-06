@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Horn.Core.PackageStructure;
+using Horn.Domain.PackageStructure;
 
 namespace Horn.Core.Utils.CmdLine
 {

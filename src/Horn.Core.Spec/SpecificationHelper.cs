@@ -1,7 +1,8 @@
-using Horn.Core.Dsl;
-using Horn.Core.Spec.Unit.dsl;
 
-namespace Horn.Core.Spec
+using Horn.Domain.Dsl;
+using Horn.Domain.Spec.Unit.dsl;
+
+namespace Horn.Domain.Spec
 {
     public static class SpecificationHelper
     {
@@ -9,7 +10,9 @@ namespace Horn.Core.Spec
         {
             var configReader = BaseDSLSpecification.GetConfigReaderInstance();
 
-            return new BuildMetaData(configReader);            
+            //TODO: Fix
+            return null;
+            //return new BuildMetaData(configReader.);            
         }
     }
 }
