@@ -67,6 +67,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo.Lang.Parser.dll</HintPath>
     </Reference>
+    <Reference Include="Horn.Boo.Dsl, Version=1.0.3384.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Horn.Boo.Dsl\Horn.Boo.Dsl\bin\Debug\Horn.Boo.Dsl.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
