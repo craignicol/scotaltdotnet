@@ -1,4 +1,4 @@
-namespace Horn.Domain.Boo.DSL
+namespace Horn.Boo.Dsl
 import System
 import Boo.Lang
 import Boo.Lang.Compiler
@@ -11,7 +11,7 @@ abstract class BooConfigReader:
 	public desc as string
 	
 	[property(InstallName)]
-	public installName as string	
+	public installName as string
 	    
 	abstract def Prepare():
 	  pass
