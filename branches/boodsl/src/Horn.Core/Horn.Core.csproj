@@ -103,8 +103,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
-    <Compile Include="exceptions\MissingBuildFileException.cs" />
     <Compile Include="extensions\StringExtensions.cs" />
     <Compile Include="MetaDataSynchroniser\imetadatasynchroniser.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniser.cs" />

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Horn.Core;
 using Horn.Domain.Dsl;
+using Horn.Domain.Exceptions;
 using Horn.Domain.PackageStructure;
 using Horn.Domain.SCM;
 using Horn.Framework.helpers;

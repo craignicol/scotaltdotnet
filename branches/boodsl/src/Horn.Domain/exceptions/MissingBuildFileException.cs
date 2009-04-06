@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Horn.Core
+namespace Horn.Domain.Exceptions
 {
     [global::System.Serializable]
     public class MissingBuildFileException : Exception
