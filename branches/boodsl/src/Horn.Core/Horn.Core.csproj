@@ -103,57 +103,18 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="BuildEngines\Dependency.cs" />
-    <Compile Include="BuildEngines\Process\DiagnosticsProcess.cs" />
-    <Compile Include="BuildEngines\BuildTools\IBuildTool.cs" />
-    <Compile Include="BuildEngines\Process\iprocess.cs" />
-    <Compile Include="BuildEngines\Process\IProcessFactory.cs" />
-    <Compile Include="BuildEngines\BuildTools\MSBuildBuildTool.cs" />
-    <Compile Include="BuildEngines\Process\DiagnosticsProcessFactory.cs" />
-    <Compile Include="BuildEngines\BuildTools\NAntBuildTool.cs" />
-    <Compile Include="BuildEngines\BuildTools\RakeBuildTool.cs" />
-    <Compile Include="DependencyTree\CircularDependencyException.cs" />
-    <Compile Include="DependencyTree\DependencyTree.cs" />
-    <Compile Include="DependencyTree\IDependencyTree.cs" />
-    <Compile Include="dsl\BooConfigReader.cs" />
-    <Compile Include="dsl\BuildMetadata\IBuildMetaData.cs" />
-    <Compile Include="dsl\BuildMetadata\NullBuildMetatData.cs" />
-    <Compile Include="dsl\CompilerSteps\RightShiftToMethodCompilerStep.cs" />
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
     <Compile Include="exceptions\MissingBuildFileException.cs" />
-    <Compile Include="dsl\BooBuildConfigReader.cs" />
-    <Compile Include="BuildEngines\BuildEngine.cs" />
-    <Compile Include="dsl\BuildMetadata\BuildMetaData.cs" />
-    <Compile Include="dsl\DslEngines\ConfigReaderEngine.cs" />
-    <Compile Include="dsl\IBuildConfigReader.cs" />
     <Compile Include="extensions\StringExtensions.cs" />
-    <Compile Include="IComposite.cs" />
     <Compile Include="MetaDataSynchroniser\imetadatasynchroniser.cs" />
     <Compile Include="MetaDataSynchroniser\metadatasynchroniser.cs" />
     <Compile Include="PackageCommands\IPackageCommand.cs" />
     <Compile Include="PackageCommands\PackageBuilder.cs" />
-    <Compile Include="PackageTree\BuildFileResolver.cs" />
-    <Compile Include="PackageTree\IBuildFileResolver.cs" />
-    <Compile Include="PackageTree\IPackageTree.cs" />
-    <Compile Include="PackageTree\IRevisionData.cs" />
-    <Compile Include="PackageTree\NullPackageTree.cs" />
-    <Compile Include="PackageTree\PackageTree.cs" />
-    <Compile Include="PackageTree\PackageTreeExtensions.cs" />
-    <Compile Include="PackageTree\RevisionData.cs" />
-    <Compile Include="SourceControl\DefaultDownloadMonitor.cs" />
-    <Compile Include="SourceControl\IDownloadMonitor.cs" />
-    <Compile Include="SourceControl\SourceControl.cs" />
     <Compile Include="Get\Get.cs" />
-    <Compile Include="SourceControl\DownloadMonitor.cs" />
-    <Compile Include="SourceControl\SvnSourceControl.cs" />
     <Compile Include="Utils\CmdLine\HelpReturnValue.cs" />
     <Compile Include="Utils\CmdLine\Parameter.cs" />
     <Compile Include="Utils\CmdLine\SwitchParser.cs" />
-    <Compile Include="Utils\Framework\Framework.cs" />
-    <Compile Include="Utils\Framework\FrameworkLocator.cs" />
-    <Compile Include="Utils\Framework\MSBuild.cs" />
     <Compile Include="Utils\IoC\IoC.cs" />
-    <Compile Include="Utils\EnumerableExtensionMethods.cs" />
     <Compile Include="Utils\IFileSystemProvider.cs" />
     <Compile Include="Get\IGet.cs" />
     <Compile Include="Package.cs" />
@@ -166,9 +127,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Horn.Core.build" />
-    <None Include="Model\BuildEngine.cd" />
-    <None Include="Model\SemanticModel.cd" />
-    <None Include="Model\SourceControl.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Horn.Domain\Horn.Domain.csproj">
+      <Project>{AF098A85-A89C-4A4C-8AF2-B10F0EB79EEA}</Project>
+      <Name>Horn.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,9 +1,9 @@
 using System.IO;
-using Horn.Core.PackageStructure;
-using Horn.Core.Spec.helpers;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.Spec.helpers;
 using Xunit;
 
-namespace Horn.Core.Spec.Unit.HornTree
+namespace Horn.Domain.Spec.Unit.HornTree
 {
     public class When_the_nant_executable_is_required : Specification
     {

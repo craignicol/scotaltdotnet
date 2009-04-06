@@ -1,12 +1,12 @@
 using System;
-using Horn.Core.Dsl;
-using Horn.Core.PackageStructure;
-using Horn.Core.SCM;
+using Horn.Domain.Dsl;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.SCM;
 using Horn.Framework.helpers;
 using Rhino.DSL;
 using Rhino.Mocks;
 
-namespace Horn.Core.Spec.Unit.dsl
+namespace Horn.Domain.Spec.Unit.dsl
 {
     public class BuildWithNantSpecificationBase : Specification
     {

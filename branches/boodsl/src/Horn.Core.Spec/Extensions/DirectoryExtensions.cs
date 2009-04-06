@@ -4,7 +4,7 @@ using Horn.Core.extensions;
 using Horn.Framework.helpers;
 using Xunit;
 
-namespace Horn.Core.Spec.Extensions
+namespace Horn.Domain.Spec.Extensions
 {
     public static class DirectoryInfoExtensions
     {

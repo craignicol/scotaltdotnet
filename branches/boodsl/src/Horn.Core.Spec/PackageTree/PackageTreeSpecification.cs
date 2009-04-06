@@ -1,14 +1,13 @@
-using System.IO;
-using Horn.Core.Dsl;
-using Horn.Core.SCM;
-using Horn.Core.Spec.helpers;
+using Horn.Domain.Dsl;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.SCM;
+using Horn.Domain.Spec.helpers;
+using Horn.Domain.Spec.Unit.dsl;
 using Horn.Framework.helpers;
 using Rhino.Mocks;
-using Horn.Core.PackageStructure;
-using Horn.Core.Spec.Unit.dsl;
 using Xunit;
 
-namespace Horn.Core.Spec.Unit.HornTree
+namespace Horn.Domain.Spec.Unit.HornTree
 {
     public class When_Given_The_Package_Root_Directory : DirectorySpecificationBase
     {

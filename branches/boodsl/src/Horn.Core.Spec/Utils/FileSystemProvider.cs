@@ -1,6 +1,6 @@
 using Horn.Framework.helpers;
 
-namespace Horn.Core.Spec.Integration.Utils
+namespace Horn.Domain.Spec.Integration.Utils
 {
     using System;
     using System.IO;

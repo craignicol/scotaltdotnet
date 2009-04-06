@@ -1,17 +1,14 @@
 using System;
+using Horn.Domain.Framework;
+using Horn.Domain.PackageStructure;
 
-namespace Horn.Core.Spec.BuildEngine
+namespace Horn.Domain.Spec.BuildEngine
 {
-    using System.Collections.Generic;
-    using PackageStructure;
-    using Utils.Framework;
-    using BuildEngines;
-
     public class BuildToolStub : IBuildTool
     {
         public string PathToBuildFile { get; private set; }
 
-        public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
+        public string CommandLineArguments(string pathToBuildFile, BuildEngines.BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
             Console.WriteLine(pathToBuildFile);
             Console.WriteLine(buildEngine);

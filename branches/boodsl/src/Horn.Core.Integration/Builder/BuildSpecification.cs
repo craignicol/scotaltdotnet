@@ -1,12 +1,13 @@
-using System.Collections.Generic;
+
 using System.IO;
-using Horn.Core.BuildEngines;
-using Horn.Core.Utils.Framework;
+using Horn.Domain.BuildEngines;
+using Horn.Domain.Framework;
+using Horn.Domain.PackageStructure;
 using Rhino.Mocks;
 using Xunit;
-using Horn.Core.PackageStructure;
 
-namespace Horn.Core.Integration.Builder
+
+namespace Horn.Domain.Integration.Builder
 {
     public class When_The_Build_Meta_Data_Specifies_MSBuild : BuildSpecificationBase
     {

@@ -1,13 +1,11 @@
 using System;
-using Horn.Core.BuildEngines;
+using Horn.Domain.BuildEngines;
 using log4net;
 
-namespace Horn.Core.Spec.BuildEngine
+namespace Horn.Domain.Spec.BuildEngine
 {
     public class StubProcess : IProcess
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof (StubProcess));
-
         public string GetLineOrOutput()
         {
             return null;

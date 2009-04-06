@@ -122,6 +122,10 @@
       <Project>{093CFA20-D720-4C58-9B8F-754F03A40D16}</Project>
       <Name>Horn.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Horn.Domain\Horn.Domain.csproj">
+      <Project>{AF098A85-A89C-4A4C-8AF2-B10F0EB79EEA}</Project>
+      <Name>Horn.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Horn.Spec.Framework\Horn.Spec.Framework.csproj">
       <Project>{03B7A9D2-30E7-4EBB-A91F-AB06F8AC1EE9}</Project>
       <Name>Horn.Spec.Framework</Name>

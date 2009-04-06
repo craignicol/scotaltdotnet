@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using System.IO;
-using Horn.Core.PackageStructure;
-using Horn.Core.Utils.Framework;
+using Horn.Domain.Framework;
+using Horn.Domain.PackageStructure;
 using Rhino.Mocks;
 using Xunit;
 
-namespace Horn.Core.Spec.BuildEngine
+namespace Horn.Domain.Spec.BuildEngine
 {
     using BuildEngines;
 

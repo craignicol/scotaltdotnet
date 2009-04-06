@@ -1,8 +1,7 @@
-using Horn.Core.Integration.Builder;
-using Horn.Core.SCM;
+using Horn.Domain.SCM;
 using Xunit;
 
-namespace Horn.Core.Spec.Integration.Get
+namespace Horn.Domain.Spec.Integration.Get
 {
     public class When_Horn_Is_In_The_BuildMetaData : SourceControlTestBase
     {

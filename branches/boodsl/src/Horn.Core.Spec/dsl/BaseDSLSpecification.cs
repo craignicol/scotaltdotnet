@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.IO;
-using Horn.Core.Dsl;
-using Horn.Core.PackageStructure;
-using Horn.Core.SCM;
-using Horn.Core.Utils;
-using Horn.Core.Utils.Framework;
+using Horn.Domain.Dsl;
+using Horn.Domain.Framework;
+using Horn.Domain.PackageStructure;
+using Horn.Domain.SCM;
+using Horn.Domain.Utils;
 using Horn.Framework.helpers;
 using Horn.Spec.Framework.Extensions;
 using Xunit;
-using System.Linq;
-namespace Horn.Core.Spec.Unit.dsl
+
+namespace Horn.Domain.Spec.Unit.dsl
 {
     public abstract class BaseDSLSpecification : Specification
     {

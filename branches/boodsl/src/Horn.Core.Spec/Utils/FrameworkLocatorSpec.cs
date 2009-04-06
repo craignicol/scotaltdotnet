@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using Horn.Core.Utils.Framework;
+using Horn.Domain.Framework;
 using Xunit;
 
-namespace Horn.Core.Spec.Integration.Utils
+namespace Horn.Domain.Spec.Integration.Utils
 {
     public class When_Version_35_Is_Requested : Specification
     {

@@ -1,10 +1,11 @@
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
-using Horn.Core.BuildEngines;
-using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
-using Horn.Core.SCM;
+using Horn.Domain.BuildEngines;
+using Horn.Domain.Dsl;
+using Horn.Domain.SCM;
+
 
 namespace Horn.Core.Utils.IoC
 {
@@ -33,11 +34,6 @@ namespace Horn.Core.Utils.IoC
                             .LifeStyle.Transient
                             );
 
-            innerContainer.Register(
-                Component.For<SVNSourceControl>()
-                            .Named("svn")
-                            .LifeStyle.Transient
-                );
 
             innerContainer.Register(
                 Component.For<IPackageCommand>()

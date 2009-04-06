@@ -1,13 +1,14 @@
 using System;
 using System.IO;
-using Horn.Core.BuildEngines;
+
 using Horn.Core.extensions;
-using Horn.Core.PackageStructure;
+using Horn.Domain.BuildEngines;
+using Horn.Domain.PackageStructure;
 using Horn.Framework.helpers;
 using Horn.Spec.Framework.Extensions;
 using Rhino.Mocks;
 
-namespace Horn.Core.Integration.Builder
+namespace Horn.Domain.Integration.Builder
 {
     public abstract class BuildSpecificationBase : Specification
     {

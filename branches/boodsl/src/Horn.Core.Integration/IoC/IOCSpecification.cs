@@ -1,10 +1,12 @@
-using Horn.Core.BuildEngines;
-using Horn.Core.Dsl;
+
+
 using Horn.Core.PackageCommands;
-using Horn.Core.SCM;
+using Horn.Domain.BuildEngines;
+using Horn.Domain.Dsl;
+using Horn.Domain.SCM;
 using Xunit;
 
-namespace Horn.Core.Spec.Integration
+namespace Horn.Domain.Spec.Integration
 {
     public class When_An_IBuildConfigReader_Is_Requested_From_The_Container : IoCSpecificationBase
     {

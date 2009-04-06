@@ -1,6 +1,6 @@
 using Horn.Core.Utils.CmdLine;
 
-namespace Horn.Core.Spec.Unit.CmdLine
+namespace Horn.Domain.Spec.Unit.CmdLine
 {
     public class When_horn_receives_a_refresh_command : CmdLineSpecificationBase
     {

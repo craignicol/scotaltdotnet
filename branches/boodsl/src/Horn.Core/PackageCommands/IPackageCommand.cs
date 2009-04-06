@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Horn.Core.PackageStructure;
+using Horn.Domain.PackageStructure;
 
 namespace Horn.Core.PackageCommands
 {

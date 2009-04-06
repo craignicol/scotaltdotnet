@@ -1,8 +1,8 @@
-using Horn.Core.Dsl;
-using Horn.Core.Utils.Framework;
+using Horn.Domain.Dsl;
+using Horn.Domain.Framework;
 using Xunit;
 
-namespace Horn.Core.Spec.Unit.dsl
+namespace Horn.Domain.Spec.Unit.dsl
 {
     public class When_Nant_Is_Specified_In_The_Dsl_As_The_Build_Tool : BuildWithNantSpecificationBase
     {
