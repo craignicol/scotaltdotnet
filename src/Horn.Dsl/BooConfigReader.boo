@@ -31,18 +31,20 @@ abstract class BooConfigReader:
 	
 	[Meta]
 	static def build_with(builder as ReferenceExpression, build as MethodInvocationExpression, frameWorkVersion as ReferenceExpression):
-	  targetName = builder.Name
-	  return MethodInvocationExpression(ReferenceExpression(targetName), 
-				build.Arguments[0], 
-					StringLiteralExpression(frameWorkVersion.Name))
+		buildFile = build.Arguments[0]
+		version = StringLiteralExpression(frameWorkVersion.Name)		
+		return [|
+			$builder($buildFile, $version)
+		|]
+				
 					
 	[Meta]
 	static def dependencies(addDependencyMethod as MethodInvocationExpression):
-	  return addDependencyMethod
+		return addDependencyMethod
 					       		
 	[Meta]
 	static def export_from(expression as MethodInvocationExpression):
-	  return expression
+		return expression
 
 	[Meta]
 	static def install(expression as ReferenceExpression, action as Expression):  	
@@ -54,7 +56,6 @@ abstract class BooConfigReader:
 
 	def AddDependencies(dependencies as (string)):
 		for i in range(dependencies.Length):
-			System.Diagnostics.Debugger.Break()
 			dependency = Horn.Domain.BuildEngines.Dependency(dependencies[i].Split(Char.Parse('|'))[0], dependencies[i].Split(Char.Parse('|'))[1])
 			BuildEngine.Dependencies.Add(dependency)
 
@@ -66,8 +67,8 @@ abstract class BooConfigReader:
 		action()
 		
 	def msbuild(buildFile as string, frameworkVersion):
-	  version = System.Enum.Parse(typeof(Horn.Domain.Framework.FrameworkVersion), frameworkVersion)
-	  BuildEngine = BuildEngines.BuildEngine(Horn.Domain.MSBuildBuildTool(), buildFile, version)
+		version = System.Enum.Parse(typeof(Horn.Domain.Framework.FrameworkVersion), frameworkVersion)
+		BuildEngine = BuildEngines.BuildEngine(Horn.Domain.MSBuildBuildTool(), buildFile, version)
 		
 	def svn(url as string):
 		

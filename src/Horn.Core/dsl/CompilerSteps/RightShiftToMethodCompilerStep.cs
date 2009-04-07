@@ -12,6 +12,9 @@ namespace Horn.Core.Dsl
 
             foreach (Statement statement in node.Body.Statements)
             {
+                if(statement is Boo.Lang.Compiler.Ast.Block)
+                    continue;
+
                 MethodInvocationExpression expression = (MethodInvocationExpression)((ExpressionStatement) statement).Expression;
 
                 foreach(Expression arg in expression.Arguments)
