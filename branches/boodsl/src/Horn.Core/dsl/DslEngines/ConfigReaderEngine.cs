@@ -8,7 +8,7 @@ namespace Horn.Core.Dsl
 
         protected override void CustomizeCompiler(BooCompiler compiler, CompilerPipeline pipeline, string[] urls)
         {
-            pipeline.Insert(1, new ImplicitBaseClassCompilerStep(typeof(Boo.Dsl.BooConfigReader), "Prepare", "Horn.Boo.Dsl"));
+            pipeline.Insert(1, new ImplicitBaseClassCompilerStep(typeof(Horn.Dsl.BooConfigReader), "Prepare", "Horn.Dsl"));
             pipeline.InsertBefore(typeof(ProcessMethodBodiesWithDuckTyping), new RightShiftToMethodCompilerStep());
             pipeline.Insert(2, new UnderscorNamingConventionsToPascalCaseCompilerStep());
             pipeline.Insert(3, new UseSymbolsStep());
