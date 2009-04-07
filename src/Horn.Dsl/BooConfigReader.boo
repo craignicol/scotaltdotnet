@@ -32,12 +32,12 @@ abstract class BooConfigReader:
 	[Meta]
 	static def build_with(builder as ReferenceExpression, build as MethodInvocationExpression, frameWorkVersion as ReferenceExpression):
 		buildFile = build.Arguments[0]
-		version = StringLiteralExpression(frameWorkVersion.Name)		
+		version = StringLiteralExpression(frameWorkVersion.Name)	
+			
 		return [|
 			$builder($buildFile, $version)
 		|]
-				
-					
+									
 	[Meta]
 	static def dependencies(addDependencyMethod as MethodInvocationExpression):
 		return addDependencyMethod
@@ -70,8 +70,7 @@ abstract class BooConfigReader:
 		version = System.Enum.Parse(typeof(Horn.Domain.Framework.FrameworkVersion), frameworkVersion)
 		BuildEngine = BuildEngines.BuildEngine(Horn.Domain.MSBuildBuildTool(), buildFile, version)
 		
-	def svn(url as string):
-		
+	def svn(url as string):		
 		sourceControl = SCM.SVNSourceControl(url)	  
 	  		
 
