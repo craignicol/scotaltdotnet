@@ -20,6 +20,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Horn.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <Name>Horn.Domain</Name>
+      <AssemblyName>Horn.Domain.dll</AssemblyName>
+      <HintPath>..\Horn.Domain\bin\Debug\Horn.Domain.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -40,6 +46,13 @@
     <Compile Include="BooConfigReader.boo">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Horn.Domain\Horn.Domain.csproj">
+      <Name>Horn.Domain</Name>
+      <Project>{af098a85-a89c-4a4c-8af2-b10f0eb79eea}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(BooBinPath)\Boo.Microsoft.Build.targets" />
 </Project>
