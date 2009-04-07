@@ -77,15 +77,13 @@ abstract class BooConfigReader:
 macro output: 
 	assert output.Arguments.Count == 1
 	value = (output.Arguments[0] as Ast.StringLiteralExpression).Value
-	code = [|
+	return [|
 			block:
 				 BuildEngine.OutputDirectory = $value
-	|]
-	return code.Blockmacro shared_library: 
+	|].Blockmacro shared_library: 
 	assert shared_library.Arguments.Count == 1
 	value = (shared_library.Arguments[0] as Ast.StringLiteralExpression).Value
-	code = [|
+	return [|
 			block:
 				 BuildEngine.SharedLibrary = $value
-	|]
-	return code.Block
+	|].Block
