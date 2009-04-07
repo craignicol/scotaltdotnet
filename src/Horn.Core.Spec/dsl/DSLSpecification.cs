@@ -59,11 +59,7 @@ namespace Horn.Domain.Spec.Unit.dsl
 
             Assert.Equal(DESCRIPTION, reader.Description);
 
-            Assert.Equal(".", reader.SharedLibrary);
-
-            Assert.Equal("Output", reader.Output);
-
-            /*Assert.IsAssignableFrom<SVNSourceControl>(reader.SourceControl);
+            Assert.IsAssignableFrom<SVNSourceControl>(reader.SourceControl);
 
             Assert.Equal(SVN_URL, reader.SourceControl.Url);
 
@@ -71,11 +67,15 @@ namespace Horn.Domain.Spec.Unit.dsl
 
             Assert.Equal(BUILD_FILE, reader.BuildEngine.BuildFile);
 
+            Assert.Equal(".", reader.BuildEngine.SharedLibrary);
+
+            Assert.Equal("Output", reader.BuildEngine.OutputDirectory);
+
             Assert.Equal(1, reader.BuildEngine.Dependencies.Count);
 
             Assert.Equal("log4net", reader.BuildEngine.Dependencies[0].PackageName);
 
-            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].Library);*/
+            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].Library);
         }
     }
 }
