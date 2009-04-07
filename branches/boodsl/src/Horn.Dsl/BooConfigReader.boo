@@ -12,6 +12,12 @@ abstract class BooConfigReader:
 	
 	[property(InstallName)]
 	public installName as string
+	
+	[property(SharedLibrary)]
+	public library as string	
+	
+	[property(Output)]
+	public outputDirectory as string		
 	    
 	abstract def Prepare():
 	  pass
@@ -20,20 +26,29 @@ abstract class BooConfigReader:
 	static def install(expression as ReferenceExpression, action as Expression):  	
 		name = StringLiteralExpression(expression.Name) 
 		
-		return MethodInvocationExpression(ReferenceExpression("GetInstallerMeta"), name, action)
+		return [|
+			self.GetInstallerMeta($name, $action)
+		|]
 
 	def GetInstallerMeta(name as string, action as Action):
-	  installName = name
-	  action()
+		installName = name
+		action()
 
 	def description(text as string):
-		desc = text
+		desc = text		
 
- //macro install: 
-  //assert install.Arguments.Count == 1
-  //name = (install.Arguments[0] as Ast.ReferenceExpression).Name
-  //code = [|
-			//block:
-			  //GetInstallerMeta($name)
-  //|]
-  //return code.Blo		
+macro output: 
+	assert output.Arguments.Count == 1
+	value = (output.Arguments[0] as Ast.StringLiteralExpression).Value
+	code = [|
+			block:
+				 outputDirectory = $value
+	|]
+	return code.Blockmacro shared_library: 
+	assert shared_library.Arguments.Count == 1
+	value = (shared_library.Arguments[0] as Ast.StringLiteralExpression).Value
+	code = [|
+			block:
+				 library = $value
+	|]
+	return code.Block

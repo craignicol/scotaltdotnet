@@ -59,6 +59,10 @@ namespace Horn.Domain.Spec.Unit.dsl
 
             Assert.Equal(DESCRIPTION, reader.Description);
 
+            Assert.Equal(".", reader.SharedLibrary);
+
+            Assert.Equal("Output", reader.Output);
+
             /*Assert.IsAssignableFrom<SVNSourceControl>(reader.SourceControl);
 
             Assert.Equal(SVN_URL, reader.SourceControl.Url);
