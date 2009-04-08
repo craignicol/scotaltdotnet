@@ -21,7 +21,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected const string BUILD_FILE = "src/horn.sln";
 
-        public static readonly Dictionary<string, string> METADATA = new Dictionary<string, string> { { "contrib", "false" }, { "createdate", "24/01/2009" }, { "France","yuky" } };
+        public static readonly Dictionary<string, object> METADATA = new Dictionary<string, object> { { "homepage", "http://code.google.com/p/scotaltdotnet/" }, { "forum", "http://groups.google.co.uk/group/horn-development?hl=en" }, { "contrib", false} };
 
         public  static readonly List<string> TASKS = new List<string> {"build"};
 
@@ -40,7 +40,7 @@ namespace Horn.Core.Spec.Unit.dsl
             ret.description(DESCRIPTION);
             ret.BuildEngine = new BuildEngines.BuildEngine(new MSBuildBuildTool(), BUILD_FILE, FrameworkVersion.FrameworkVersion35);
             ret.SourceControl = new SVNSourceControl(SVN_URL);
-            ret.BuildEngine.MetaData = METADATA;
+            ret.PackageMetaData.PackageInfo = METADATA;
             ret.BuildEngine.AssignTasks(TASKS.ToArray());
             ret.BuildEngine.OutputDirectory = OUTPUT_DIRECTORY;
             ret.BuildEngine.SharedLibrary = ".";
@@ -57,8 +57,9 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.IsAssignableFrom<MSBuildBuildTool>(metaData.BuildEngine.BuildTool);
             
-            Assert.Equal(METADATA.Count, metaData.BuildEngine.MetaData.Count);
-            METADATA.ForEach(x => Assert.Contains(x, metaData.BuildEngine.MetaData));
+            Assert.Equal(METADATA.Count, metaData.ProjectInfo.Count);
+
+            METADATA.ForEach(x => Assert.Contains(x, metaData.ProjectInfo));
 
             Assert.Equal(BUILD_FILE, metaData.BuildEngine.BuildFile);
 

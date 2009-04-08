@@ -24,8 +24,6 @@ namespace Horn.Core.BuildEngines
 
         public bool GenerateStrongKey { get; set; }
 
-        public Dictionary<string, string> MetaData { get; set; }
-
         public string OutputDirectory { get; set; }
 
         public Dictionary<string, string> Parameters{ get; private set;}
@@ -35,21 +33,6 @@ namespace Horn.Core.BuildEngines
         public List<string> Tasks { get; private set; }
 
         public FrameworkVersion Version { get; private set; }
-
-
-
-        public void AssignMataData(string[] parameters)
-        {
-            if ((parameters == null) || (parameters.Length == 0))
-                return;
-
-            parameters.ForEach(x =>
-            {
-                var parts = x.Split('=');
-
-                MetaData.Add(parts[0], parts[1]);
-            });
-        }
 
         public void AssignParameters(string[] parameters)
         {
@@ -226,8 +209,6 @@ namespace Horn.Core.BuildEngines
             BuildFile = buildFile;
 
             Version = version;
-
-            MetaData = new Dictionary<string, string>();
 
             Dependencies = new List<Dependency>();
         }

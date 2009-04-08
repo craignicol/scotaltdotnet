@@ -172,11 +172,6 @@ namespace Horn.Core.Dsl
             BuildEngine.AssignParameters(parameters);
         }
 
-        protected void SetData(string[] parameters)
-        {
-            BuildEngine.AssignMataData(parameters);
-        }
-
         protected void SetBuildTargets(string[] taskActions)
         {
             BuildEngine.AssignTasks(taskActions);
