@@ -59,20 +59,13 @@ namespace Horn.Core.Dsl
         [Meta]
         public static Expression install(ReferenceExpression expression, Expression action)
         {
+            Global.package.PackageInfo.Clear();            
+
             var installName = new StringLiteralExpression(expression.Name);
 
             return new MethodInvocationExpression(
                     new ReferenceExpression("GetInstallerMeta"),
                     installName,
-                    action
-                );
-        }
-
-        [Meta]
-        public static Expression metadata(Expression action)
-        {
-            return new MethodInvocationExpression(
-                    new ReferenceExpression("AddMetaData"),
                     action
                 );
         }
@@ -147,11 +140,6 @@ namespace Horn.Core.Dsl
 
                                          BuildEngine.Dependencies.Add(dependency); 
                                      });
-        }
-
-        public void AddMetaData(Action dataDelegate)
-        {
-            dataDelegate();
         }
 
         public void AddSwitches(Action parametersDelegate)
