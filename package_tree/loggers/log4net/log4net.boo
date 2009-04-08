@@ -11,3 +11,7 @@
 		
 	output "bin/net/2.0/release"
 	
+package.homepage = "http://logging.apache.org/log4net/index.html"
+package.forum    = "http://mail-archives.apache.org/mod_mbox/logging-log4net-user/"
+
+	
