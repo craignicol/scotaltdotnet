@@ -1,15 +1,17 @@
 namespace Horn.Dsl
 import System
+import System.Collections.Generic
 import Boo.Lang
 import Boo.Lang.Compiler
 import Boo.Lang.Compiler.Ast
 import Horn.Domain
+import System.Runtime.CompilerServices	    
 
-abstract class BooConfigReader: 
+abstract class BooConfigReader(IQuackFu): 
 	callable Action()   
     
 	[property(BuildEngine)]
-	public buildEngine as BuildEngines.BuildEngine    
+	public buildEngine as BuildEngines.BuildEngine
     
 	[property(Description)]
 	public desc as string
@@ -25,9 +27,13 @@ abstract class BooConfigReader:
 		
 	[property(SourceControl)]
 	public sourceControl as Horn.Domain.SCM.SourceControl
+	
+	public MetaData as Package:
+		get:
+			return package
 	    
 	abstract def Prepare():
-	  pass
+		pass
 	
 	[Meta]
 	static def build_with(builder as ReferenceExpression, build as MethodInvocationExpression, frameWorkVersion as ReferenceExpression):
@@ -56,7 +62,7 @@ abstract class BooConfigReader:
 
 	def AddDependencies(dependencies as (string)):
 		for i in range(dependencies.Length):
-			dependency = Horn.Domain.BuildEngines.Dependency(dependencies[i].Split(Char.Parse('|'))[0], dependencies[i].Split(Char.Parse('|'))[1])
+			dependency = BuildEngines.Dependency(dependencies[i].Split(Char.Parse('|'))[0], dependencies[i].Split(Char.Parse('|'))[1])
 			BuildEngine.Dependencies.Add(dependency)
 
 	def description(text as string):

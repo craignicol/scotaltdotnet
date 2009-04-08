@@ -71,11 +71,13 @@ namespace Horn.Domain.Spec.Unit.dsl
 
             Assert.Equal("Output", reader.BuildEngine.OutputDirectory);
 
-            Assert.Equal(1, reader.BuildEngine.Dependencies.Count);
+            Assert.Equal(5, reader.BuildEngine.Dependencies.Count);
 
             Assert.Equal("log4net", reader.BuildEngine.Dependencies[0].PackageName);
 
             Assert.Equal("lib", reader.BuildEngine.Dependencies[0].Library);
+
+            Assert.Equal(3, reader.MetaData.PackageInfo.Count);
         }
     }
 }
