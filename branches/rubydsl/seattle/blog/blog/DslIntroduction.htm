@@ -1,20 +1,43 @@
 ﻿I am writing a series of posts to help me prepare for my talk at <a href="http://www.sellsbrothers.com/conference/" target="_blank">Dsl DevCon</a>.
 
-I am blogging what my talk will consist of at <a href="http://www.sellsbrothers.com/conference/" target="_blank">Dsl DevCon</a>.
+I am blogging what my talk will consist of at the <a href="http://www.sellsbrothers.com/conference/" target="_blank">Dsl DevCon</a> conference.
 
-You can read a series of introductions to the projects which can be found <a href="http://thesoftwaresimpleton.blogspot.com/2009/03/horn-package-management-system.html" target="_blank">here</a>, <a href="http://thesoftwaresimpleton.blogspot.com/2009/03/horn-dsl.html" target="_blank">here</a> and <a href="http://thesoftwaresimpleton.blogspot.com/2009/03/horn-architecure-overview.html" target="_blank">here</a>.
+You can read a series of introductions to the horn package manager <a href="http://thesoftwaresimpleton.blogspot.com/2009/03/horn-package-management-system.html" target="_blank">here</a>, <a href="http://thesoftwaresimpleton.blogspot.com/2009/03/horn-dsl.html" target="_blank">here</a> and <a href="http://thesoftwaresimpleton.blogspot.com/2009/03/horn-architecure-overview.html" target="_blank">here</a>.
 
-First up, begs the question who am I?  Compared to most of the speakers at the conference, I am putting myself forward as the devloper in the field.  If any of you are familiar with the "hitch hiker's guide to the galaxy", I am the developer who would get evaporated by the <a href="http://fscked.org/writings/TotalPerspectiveVortex/" target="_blank">total perspective vortex</a> if he actually seen himself positioned iin his rightful place in the developer ecosystem.  
+First up, begs the question who am I?  Compared to most of the speakers at the conference, I am putting myself forward as the developer in the field.  If any of you are familiar with the "hitch hiker's guide to the galaxy", then I am the developer who would get evaporated by the <a href="http://fscked.org/writings/TotalPerspectiveVortex/" target="_blank">total perspective vortex</a> if he actually seen himself positioned in his rightful place in the developer ecosystem.  
 
-I do not really have much call or need to express the complex nature of the business rules for the type of application I work on in a DSL.  The domain at hand is just not rich enough to be expressed in the gushing terms of Eric Evan's DDD, never mind warranting the time to create a semi English prose that will help us to unearth new models in our problem space.  In fact having just started my own business, such time spent on a flight of fancy like this would hurt me where it hurts most, in the pocket.  That said I am a passionate developer, I do want to work on such projects but this is where I currently am.
+I do not really have much call or need to express the complex nature of the business rules for the type of application I work on in a DSL.  The domain that powers the development of my current software line is just not rich enough to be expressed in the gushing terms of Eric Evan's DDD, never mind warranting the time to create a semi English prose that will help us to unearth new models in our problem space.  In fact having just started my own business, such time spent on a flight of fancy like this would hurt me where it hurts most, in the pocket.  That said I am a passionate developer, not only do I code for a living but I code in my spare time. I have helped start and have thus far been the main contributor in an open source project that hopes to cure a genuine lacking in the .NET space.
 
-I have been very active in the <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> package management open source project.  I can safely say without any worry of offending anyone that the majority of the code has been written by yours truly.  Horn development was moving at a reasonable pace considering the available manpower.  That is until I submitted a talk to <a href="http://www.sellsbrothers.com/conference/" target="_blank">Dsl DevCon</a> which was accepted.  After my initial euphoria 
+So what of this open source project.  As with most open source projects, the goal is to alleviate a certain pain point.  There is a very real and persistent pain in the .NET space.
 
-The horn package manager has set out to ease the pain of building open source projects and their dependencies.  We are trying to plug a hole in the market that has been so adequately plugged in ruby by <a target="_blank" href="http://rubygems.org/">rubygems</a>, <a href="http://maven.apache.org/" target="_blank">maven</a> for in and <a href="http://www.app-get.com/whatisappget/" target="_blank">appget</a>.  We want to simply be able to type in a command such as <strong>horn -install:nhibernate</strong> and horn will take care of retrieving the nhibernate source from their subversion repository and building the source with the build tool of your choice or more likely, the build tool of the vendor's choice.  
+The horn package manager as we have lovingly christened it sets out to ease the pain of building open source projects and their dependencies.  We are trying to plug a point of extreme pain that has been so adequately plugged in ruby by <a target="_blank" href="http://rubygems.org/">rubygems</a>, <a href="http://maven.apache.org/" target="_blank">maven</a> for Java and <a href="http://www.app-get.com/whatisappget/" target="_blank">appget</a>.  Our goal is to enter some text at the command prompt and watch as our glorious software system takes charge of retrieving the source of a project like <a target="_blank" href="http://www.hibernate.org/343.html" >Nhibernate</a> from a source control management system and build the binary packages as we watch the text of the output stream elegantly slide down the command prompt window.  We want to not only build the source of the package but also any dependencies that the package is more than likely to have.  Horn predominantly and initially wants to build packages from source code, we believe this will give us the maximum in flexibility and is the only way we can truly cure the pain of upgrading our open source packages. Allow me to give further context to this very real pain.
 
 Our target audience is that of developers who like to live on the trunk or as we like to romantically think of it, <strong>the bleeding edge</strong>.  The bleeding edge in this context is what is known as <i>"working off the trunk"</i>.  My current stack of open source projects that I use to help me with my daily software development asks include such open source parts as:
+<ul>
+    <li><a target="_blank" href="http://www.hibernate.org/343.html" >Nhibernate</a></li>
+    <li><a target="_blank" href="http://www.castleproject.org/">The Castle stack</a></li>
+    <li><a target="_blank" href="http://www.codeplex.com/MVCContrib">MVC Contrib</a></li>
+    <li><a target="_blank" href="http://ayende.com/Blog/category/487.aspx">The Rhino Stack</a></li>
+    <li><a target="_blank" href="http://ayende.com/Blog/category/487.aspx">Log4net</a></li>
+</ul>
+There is a deep and contrived dependency map between all these projects.  A recent happening will better explain the treadmill of change that we face as developers if one of the house of cards decide to flip or upgrade itself.  
+
+If you are familiar with the .NET space then you will surely have noticed the release of the ASP.NET MVC framework.  This caused a lot of ALT.NET developers to quickly grab their svn client of choice and start rebuilding their stack.  Why?
+<ul>
+    <li>MVC Contrib has dependency on the newly released ASP.NET MVC Contrib.  It will need to be rebuilt agains the release candidate binaries.</li>
+    <li>MVC Contrib has a dependency on the Castle Windsor IoC container.</li>
+    <li>Rhino has a dependency on the Castle stack.</li>
+    <li>Nhibernate has a dependency on the castle stack.</li>
+    <li>etc., etc.</li>
+    <li>The treadmill of change has been triggered.</li>
+</ul>
+And so it goes on.  This upgrade is a most time consuming and painful upgrade.  This is our intial goal of horn.  We want to build our stack whenever we want with the minimum of interuption.
 
 
+
+After my initial euphoria at being accepted, I started to feel overawed when I looked at a combination of the other speakers and the existing Dsl of that time.  I then decided to pour all my energies into the DSL part of our open source project.
+
+I have been very active in the <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> package management open source project.  I can safely say without any worry of offending anyone that the majority of the code has been written by yours truly.  Horn development was moving at a reasonable pace considering the available manpower.  That is until I submitted a talk to <a href="http://www.sellsbrothers.com/conference/" target="_blank">Dsl DevCon</a> which was accepted.
 
 An intregal part of the horn metaphor is the package description DSL.  The horn DSL contains all the data needed to build a typical component.  
 
