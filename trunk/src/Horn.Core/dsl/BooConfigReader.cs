@@ -58,9 +58,7 @@ namespace Horn.Core.Dsl
 
         [Meta]
         public static Expression install(ReferenceExpression expression, Expression action)
-        {
-            Global.package.PackageInfo.Clear();            
-
+        {       
             var installName = new StringLiteralExpression(expression.Name);
 
             return new MethodInvocationExpression(
@@ -216,9 +214,15 @@ namespace Horn.Core.Dsl
         {
             BuildEngine.GenerateStrongKey = true;
         }
+
         public void shared_library(string sharedLib)
         {
             BuildEngine.SharedLibrary = sharedLib;
+        }
+
+        protected BooConfigReader()
+        {
+            Global.package.PackageInfo.Clear();
         }
 
     }
