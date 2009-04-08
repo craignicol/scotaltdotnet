@@ -29,6 +29,7 @@ namespace Horn.Core.Dsl
             SourceControl = instance.SourceControl;
             BuildEngine.OutputDirectory = instance.BuildEngine.OutputDirectory;
             BuildEngine.SharedLibrary = instance.BuildEngine.SharedLibrary;
+            ProjectInfo = instance.PackageMetaData.PackageInfo;
         }
 
 

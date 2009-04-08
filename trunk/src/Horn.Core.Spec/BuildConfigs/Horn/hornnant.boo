@@ -11,8 +11,12 @@
 	generate_strong_key
 
 dependencies:
-	depend @log4net >> @lib
+	depend @log4net >> "lib"
+	depend @castle  >> "castle.core"
+	depend @castle  >> "Castle.DynamicProxy2"
+	depend @castle  >> "castle.microKernel"
+	depend @castle  >> "castle.windsor"
 
-metadata:
-    data "contrib=false", "createdate=24/01/2009"
-    data "France=yuky"
+package.homepage = "http://code.google.com/p/scotaltdotnet/"
+package.forum    = "http://groups.google.co.uk/group/horn-development?hl=en"
+package.contrib  = false
