@@ -16,6 +16,14 @@ namespace Horn.Core.Dsl
 
         public virtual string InstallName { get; set; }
 
+        public virtual PackageMetaData PackageMetaData
+        {
+            get
+            {
+                return Global.package;
+            }
+        }
+
         public virtual SourceControl SourceControl { get; set; }
 
 
@@ -173,8 +181,6 @@ namespace Horn.Core.Dsl
             BuildEngine.OutputDirectory = path;   
         }
 
-
-
         protected void SetParameters(string[] parameters)
         {
             BuildEngine.AssignParameters(parameters);
@@ -218,8 +224,6 @@ namespace Horn.Core.Dsl
             action();
         }
 
-
-        public delegate void Action();
         public virtual void generate_strong_key()
         {
             BuildEngine.GenerateStrongKey = true;

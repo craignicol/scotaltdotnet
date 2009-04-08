@@ -119,6 +119,8 @@
     <Compile Include="dsl\BuildMetadata\IBuildMetaData.cs" />
     <Compile Include="dsl\BuildMetadata\NullBuildMetatData.cs" />
     <Compile Include="dsl\CompilerSteps\RightShiftToMethodCompilerStep.cs" />
+    <Compile Include="dsl\Global.cs" />
+    <Compile Include="dsl\PackageMetaData.cs" />
     <Compile Include="exceptions\InvalidCommandLineArgumentException.cs" />
     <Compile Include="exceptions\MissingBuildFileException.cs" />
     <Compile Include="dsl\BooBuildConfigReader.cs" />
