@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="Dsl-Part-I.htm" />
     <Content Include="DslIntroduction.htm" />
     <Content Include="Web.config" />
   </ItemGroup>
