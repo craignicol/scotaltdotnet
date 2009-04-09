@@ -1,9 +1,26 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
-<head>
-    <title></title>
-</head>
-<body>
+﻿In my previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/horn-package-manager-introduction.html">post</a> I introduced both the <a target="_blank" href="http://code.google.com/p/scotaltdotnet/">horn package manager</a> open source project I have been contributing for and the fact that I am blogging these posts to help me prepare for my talk at the <a href="http://www.sellsbrothers.com/conference/" target="_blank">Dsl DevCon</a> conference.
 
-</body>
-</html>
+In my previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/horn-package-manager-introduction.html">post</a>, I mentioned that we would be basing the the <a target="_blank" href="http://code.google.com/p/scotaltdotnet/">horn package manager</a> on the excellent <a target="_blank" href="http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=2&chap=1">gentoo portage</a> package management system.  At the heart of the portage system is the concept of ebuilds that contain information that allow the portage system to both compile and install software packages.
+
+Our first step in the evolution of <i>the</i> horn was to author the Dsl of build and metadata instructions that we would model on portage's ebuilds.  
+
+Being a keen follower of the Alt.NET space, one person above all other has helped to both educate through their blog and provide alternative tooling through their excellent open source stack.  The blog alone has been a great source of new and interesting practices that I would have otherwise been oblivious to.
+
+I do of course refer to the excellent <a href="http://ayende.com/Blog/" target="_blank">Ayende</a> or Oren Einie.  This guy has been a great motivating force to a lot of developers who seek alternatives to the some of the main stream microsoft tooling.  I use parts of the excellent Rhino stack and it is the pain of upgrading such open source pacakages as Rhino that horn is trying to alleviate.
+
+Rhino has a number of DSLs that are used to help give a higher level of abstraction to certain tasks.  There is Binsor that has a DSL for initialisiing the Castle Windsor IoC container and Rhino.ETL which uses a DSL to express the transformations in an ETL workflow.  In both cases the DSLs are internal DSLs with <a target="_blank" href="http://docs.codehaus.org/display/BOO/Home">boo</a> used as the host language.  I have experience of using both these projects so the choice of our internal Dsl was an obvious one.  I had also recently read the excellent <a target="_blank" href="http://www.manning.com/rahien/">Building Domain Specific Languages in Boo</a> on a recent long haul flight from the UK to Vietnam.  I will be paraphrasing from the aforementioned book, so it is only fair I mention both the tome and the author.
+
+I must take this time to both introduce boo to those in the audience who are unfamiliar with it and to speak gushingly about it's elegance.
+
+I see Boo as a slightly schizophrenic CLR language.  I see it this way as it is a static language with many qualities that are more associated with dynamic languages.
+
+Boo has the following characteristics that make it an ideal language for hosting DSLs:<ul>
+<li><strong>Significant Whitespace</strong> - Boo uses a colon to initiate a control block and the level of indentation to indicate the scope.  When I came to experiment with rewriting the DSL in ironruby as we will see later, I found the <i>do</i> and <i>end</i> control block markers almost impalatable after working with boo.</li>
+<li><strong>Type Inference and automatic type casting</strong> - this can be more explicitly achieved in C# with the var keyword.</li>
+<li><strong>Duck Typing</strong> - You can by implementing the excellently named IQuackFu interface ask the compiler to relax the strong typing constraints and provide an experience that is very similar to constructs like <i>method_missing</i> in Ruby.</li>
+<li><strong>Compiler Extensibility</strong> - As I will show later, boo has some stunning compiler extensibility points that set it truly apart from other languages.</li></ul>
+
+In my next post, we disect a horn package build script and explore how the end result was achieved with boo.
+
+If any of this is of interest to you then please join the <a target="_blank" href="http://groups.google.co.uk/group/horn-development?hl=en">Horn user group</a> for updates or check out the source <a href="http://code.google.com/p/scotaltdotnet/">here</a>.
+
