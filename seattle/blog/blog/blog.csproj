@@ -54,8 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
-    <Content Include="Dsl-Part-I.htm" />
-    <Content Include="DslIntroduction.htm" />
+    <Content Include="horn\Dsl-Part-I.htm" />
+    <Content Include="horn\DslIntroduction.htm" />
+    <Content Include="horn\the_horn_boo_dsl.htm" />
+    <Content Include="horn\The_purpose_of_horn.htm" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
