@@ -1,0 +1,29 @@
+﻿In my previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/decision-to-use-booas-horn-internal-dsl.html">post</a>, I stated that we had chosen <a target="_blank" href="http://boo.codehaus.org/">boo</a> as the host language of our internal Dsl.  
+
+What I omitted to mention was the purpose of the Horn Dsl.  I now run the risk of losing whatever interest that the readers (if there are indeed any) may have by <strong>still</strong> not mentioning the Dsl but instead mentioning what purpose it is supposed to serve.  I feel I must further waiver from the technical details in order to give proper context to the Dsl's reason to exist.
+
+As I mentioned in the <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/horn-package-manager-introduction.html">introduction</a>, horn is based on the <a target="_blank" href="http://www.gentoo.org/doc/en/handbook/handbook-x86.xml?part=2&chap=1">gentoo portage</a> package manager.  At the heart of both portage and indeed horn is the metaphor of the package tree.  The package tree is conceptually a tree that contains leaves of package build instructions.  In reality it is a directory structure that contains Dsl instance files of package build instructions. Below is how the horn package tree looks at this time of writing. 
+
+If you examine the image above, you can see that we have one top level node that is rather unimaginatively named <strong><i>package_tree</i></strong>.  Below the root package_tree node are child nodes that represent package categories like ORM's, IOC's, loggers etc.  The rational being that the we can use these next level nodes as search criteria to list all the object relational mappers for example that horn could install.  Contained in each of the category nodes are the individual package nodes like Nhiberate.  In the example above you can see that <a href="http://www.hibernate.org/343.html" target="_blank">Nhibernate</a> is rightly positioned under a category parent node named orm.  Contained within the indiviual Nhiberante package node is one build file named nhibernate.boo which contains the build metadata needed to install not only <a href="http://www.hibernate.org/343.html" target="_blank">Nhibernate</a> but any dependencies that are specified in the build file.  The observant amongst you will notice that the package tree is persisted and retrieved from a <a target="_blank" href="http://subversion.tigris.org/">subversion</a> repository.
+
+The package tree can be thought of a database of packages and their build instructions.  When a user enters a command into the command prompt like the one below:
+
+the horn software system will search through the package tree to try and find a node named the same as the value of the <strong>-install</strong> switch which in this case is <a href="http://www.hibernate.org/343.html" target="_blank">Nhibernate</a>.  Upon finding the correct node, horn will then parse the contents of the build file which in this case is nhbiernate.boo into an object model that will be persisted in memory for the duration of the installation and more importantly contain all the information required to build and install the requested package.  
+
+Below is the object model the Dsl will describe:
+
+The Dsl describes a <strong>BuildMetaData</strong> object that contains a <strong>SourceControl object</strong> and a <strong>BuildEngine</strong> object.
+
+Typically, the source code for a particular package will be retrieved from a source control management system.  This has been modelled as a <strong>SourceControl</strong> abstract class with particular implementations derived with their own specific implementation details.  We currently have support for <a target="_blank" href="http://subversion.tigris.org/">subversion</a> only.
+
+Once we have exported the source code to the client's file system, the next logical step in the workflow is to build the source code.  Horn has the concept of a <strong>BuildEngine</strong> object which is charged with building the source code.  The Dsl has as part of it's definition a directive that tells horn which <strong>BuildTool</strong> to build the source from.  Currently we have 3 <strong>BuildTool</strong> implementations, <a target="_blank" href="http://nant.sourceforge.net/">Nant</a>, <a target="_blank" href="http://msdn.microsoft.com/en-us/library/wea2sca5.aspx">msbuild</a> and <a target="_blank" href="http://rake.rubyforge.org/">rake</a>.  In most cases, the build of an open source system is complex and contrived.  Typically the source code will contain a build script which orchestrates this complicated build process.  We need to utilise these existing build scripts which in the .NET space are more times than not defined in <a target="_blank" href="http://nant.sourceforge.net/">Nant</a>.  The MSBuild build tool will generally work with single components.
+
+Once we have constructed this object model filled with the values in the DSL then horn can build and install the requested package.
+
+In the next article I will finally get to the <a target="_blank" href="http://boo.codehaus.org/">boo</a> DSL.
+
+If any of this is of interest to you then please join the <a target="_blank" href="http://groups.google.co.uk/group/horn-development?hl=en">Horn user group</a> for updates or check out the source <a href="http://code.google.com/p/scotaltdotnet/">here</a>.
+
+
+
+
