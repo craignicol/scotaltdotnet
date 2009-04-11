@@ -4,7 +4,9 @@ In another previous <a target="_blank" href="http://thesoftwaresimpleton.blogspo
 
 The Dsl contains the build metadata that is required by horn in order to both retrieve an open source project from a remote soure control management system and details of how to build or compile the components.
 
-Below is the horn.boo file that tells the horn software system how to retrieve and build itself.  We like to think we are dog fooding but others may differ.  I mentioned in the previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/purpose-of-horn-dsl.html">post</a> that the purpose of the DSL is to create the in-memory domain model or <a href="http://martinfowler.com/dslwip/SemanticModel.html">semantic model</a> that horn uses to retrieve and build open source software packages.
+I mentioned in the previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/purpose-of-horn-dsl.html">post</a> that the purpose of the DSL is to create the in-memory domain model or <a href="http://martinfowler.com/dslwip/SemanticModel.html">semantic model</a> that horn uses to retrieve and build open source software packages.
+
+Below is the horn.boo file that tells the horn software system how to retrieve and build itself:
 <div style="font-family: Courier New; color: black; background: white;">
 <pre style="margin: 0px;">install horn:
 &nbsp;&nbsp;&nbsp;&nbsp;description "A .NET build and dependency manager"
@@ -20,37 +22,59 @@ dependencies:
 &nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.microKernel"
 &nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.windsor"</pre>
 </div>
-I am hoping that we did achieve our goal of constructing a semi English like prose of build instructions.
+We like to think we are dog fooding by providing a build script for horn but others may differ.  I am hoping that we did achieve our goal of constructing a semi English like prose of build instructions but I will have to leave that judgement to the interpretation of the reader, if you think it could be improved then please leave a comment.
 
-I mentioned in the previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/purpose-of-horn-dsl.html">post</a> that when horn receives a command line instruction such as <strong>horn -install:horn</strong> that horn will search through the horn package tree or directory structure of build files until it finds the requested package's build file.  In this case the DSL instance outlined above. 
+I mentioned in the previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/purpose-of-horn-dsl.html">post</a> that when horn receives a command line instruction such as <strong>horn -install:horn</strong> that horn will search through the horn package tree or directory structure of build files until it finds the requested package's build file.  In this case the DSL script outlined above. 
 
-The main engine of horn or the core is a .NET assembly written in C#.  We also have a thin client .NET console application also written in C# that accepts command line instructions before passing them onto the core for execution.  The code to retrieve and search the package tree for the requested build file is non-interesting and standard so we will not mention it.  Suffice to say that it retrieves the correct build file before parsing it.  We will now take time to first of all explain how we go about parsing a boo build file.
+The main engine of horn or the core as it is known is a .NET assembly written in C#.  We also have a thin client .NET console application also written in C# that accepts command line instructions before passing them onto the core for execution.  The code to retrieve and search the package tree for the requested build file is non-interesting and standard so we will not mention it.  Suffice to say that it retrieves the correct build file before parsing it.  We will now take time to first of all explain how we go about parsing a boo build file.
 
-I must mention at this point that if I had not read <a target="_blank" href="http://ayende.com/blog/">Ayende</a>'s excellent book <a target="_blank" href="http://www.manning.com/rahien/">creating domain specific languages in boo</a> then I do not think I would have been able to use boo as our host language of choice for the DSL.  I will be paraphrasing from this book mainly because of the scant amount of boo documentation out there.  This book really is the best reference guideand trust me, I have looked.
+I must mention at this point that if I had not read <a target="_blank" href="http://ayende.com/blog/">Ayende</a>'s excellent book <a target="_blank" href="http://www.manning.com/rahien/">creating domain specific languages in boo</a> then I do not think I would have been able to use boo as our host language of choice for the DSL.  This book really is the best reference guide out there and trust me, I have looked.
 
-One of the main reasons why boo is such an exciting choice of language for hosting internal Dsls is the extensible compiler architecture used by boo.  Boo allows developers to introduce new actions as well as reuse and/or replace specific compiler components such as the source code parser.  These requirements are realised in boo through an extensible compiler pipeline defined by a set set of loosely coupled objects known as compiler steps.  New pipelines and steps can be defined at will.
+One thing to bear in mind when writing a DSL in boo when compared to a more typical internal host language choice such as python or ruby which are interpeted languages is that we do not have an interpeter to parse our scripts.  The DSL is compiled down to IL before it is executed.  Boo has an extensible compiler architecture that allows us to create a more palatable Dsl.
+
+The very basic structure of the Boo compiler is the pipeline; it is how the compiler transforms bits of text in a file into executable code.  The boo language allows you, the user to plug your own steps into the compiler pipeline.  This allows you to add to the syntax of the language, just like the language designers did in C# 3.0 by adding query expressions. A compiler step can interact with the parsed code and change the abstract syntax tree.  New pipelines and steps can be defined at will. The compiler pipeline is a collection of loosely coupled objects each within their own task to complete. 
+
+The technique we have chosen for horn is to create what is known as an <i>anonymous base class</i> that is the basis of our Dsl.  The anonymous base class is a standard approach for building a Dsl in boo.  It is composed of a base class in our
+application code, and a compiler step in boo that will turn the Dsl script into a class that is derived from the defined base class.  It is known as an anonymous base class because there is no mention of the base class in the Dsl script.
+
+Below is the listing of the basic outline of the BooConfigReader anonymous base class we have define in horn to act as a base class for our Dsl scripts:
+
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">abstract</span> <span style="color: blue;">class</span> <span style="color: #2b91af;">BooConfigReader</span></pre>
+<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; {</pre>
+<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; }</pre>
+</div>
+And below is the same class written in boo:
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; abstract class BooConfigReader(IQuackFu): </pre>
+</div>
+
+It is at this point that I will introduce the excellent Rhino.Dsl library.  I gave a mention earlier to <a target="_blank" href="http://ayende.com/blog/">Ayende</a> who is the creator and probably the main contributor to the <a target="_blank" href="http://sourceforge.net/projects/rhino-tools/">Rhino Tools</a> open source project.  I use many of these tools in my day job so it came as no suprise to discover that there is a <strong>Rhino.Dsl</strong> project that contains components that provide labour intensive functionality for building and running DSLs written in boo.
+
+The Rhino.Dsl library provides a number of classes that will take care of a lot of the heavy lifting for the common Dsl taks that we would otherwise have to code in horn ourselves.  Examples of such tasks are parsing the Dsl files and shielding us fromthe repetitive boiler plate code that is need to add an anonymous base class to the boo compiler pipeline.
+
+Let us examine the following code that uses 2 such Rhino.Dsl classes:
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;">var factory = <span style="color: blue;">new</span> <span style="color: #2b91af;">DslFactory</span></pre>
+<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</pre>
+<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; BaseDirectory = packageTree.CurrentDirectory.FullName</pre>
+<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };</pre>
+<pre style="margin: 0px;">&nbsp;</pre>
+<pre style="margin: 0px;">factory.Register&lt;<span style="color: #2b91af;">BooConfigReader</span>&gt;(<span style="color: blue;">new</span> <span style="color: #2b91af;">ConfigReaderEngine</span>());</pre>
+</div>
+In the above code we are creating an instance of the Rhino.Dsl.DslFactory and telling it to load all the build scripts in a specific folder.  
+
+We then have the following line:
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;">factory.Register&lt;<span style="color: #2b91af;">BooConfigReader</span>&gt;(<span style="color: blue;">new</span> <span style="color: #2b91af;">ConfigReaderEngine</span>());</pre>
+</div>
+The Register method of the DslFactory allows us to register instances of another Rhino.Dsl class called DslEngine.  The DslEngine class abstracts away a lot of the boiler plate code that is required to compile instances of Dsl scripts.  The DslEngine contains a number of extension points.  One of these extension points is a method called <i>CustomizeCompiler</i>.  This method allows us to customise the Compiler pipeline.  We mentioned earlier that the main mechanics for the horn Dsl was to create an anonymous base class and register it in the boo compiler pipeline.  We are passing in the type of anonymous base class a generic argument in the base class.
+
+As mentioned above, the Rhino.Dsl.Engine class provides extension points for boo compiler pipeline extensibility.  
 
 
 
 
 
-
-The very basic structure of the Boo compiler is the pipeline; it is how the compiler transforms bits of text in a file into executable code.  The boo language allows you, the user to plug your own steps into the compiler pipeline.  This allows you to add to the syntax of the language, just like the language designers did in C# 3.0 by adding query expressions.
-
-One thing to bear in mind when writing a DSL in boo when compared to a probably a more typical internal host language choice such as python or ruby is that we do not have an interpeter to parse our scripts.  The DSL is compiled down to IL before it is executed. 
-
-The aforementioned <a target="_blank" href="http://ayende.com/blog/">Ayende</a> is the creator and probably the main contributor to the <a target="_blank" href="http://sourceforge.net/projects/rhino-tools/">Rhino Tools</a> open source project.  I use many of these tools in my day job so it was of no suprise that there is a <strong>Rhino.Dsl</strong> project that contains components that provide labour intensive functionality for building and running DSLs written in Boo.  
-
-One such class is the <strong>DslEngine</strong>.  The DslEngine gives us a number of extension points on top of boo's extensible compiler with the main one being the <strong>CustomizeCompiler</strong> method which allows you to customise and add steps into what is known as the compiler pipeline.  In horn we override th
-
-
-
-One such Rhino.Dsl class is the <strong>DslFactory</strong> which is mainly about handling compilation of the Dsl and also managing instances of another Rhino.Dsl class called <strong>DslEngine</strong>.  The <strong>DslEngine</strong> is tasked with taking the burden or monotony of dealing with the BooCompiler which we customise in order to build an elegant Dsl.  Before I get into how the BooCompiler can be customised lets see the code that is used in horn to create and register a Dsl instance in horn.
-
-Below is the code that creates a new DslFactory instance and registers a DslEngine instance that is used in order to parse the horn Dsl that we showed in the code sample above.
-
-<div style="font-family: Courier New; font-size: 18pt; color: black; background: white;"><pre style="margin: 0px;"><span style="color: #2b91af;">&nbsp;&nbsp;&nbsp;39</span>&nbsp; var factory = <span style="color: blue;">new</span> <span style="color: #2b91af;">DslFactory</span></pre><pre style="margin: 0px;"><span style="color: #2b91af;">&nbsp;&nbsp;&nbsp;40</span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {</pre><pre style="margin: 0px;"><span style="color: #2b91af;">&nbsp;&nbsp;&nbsp;41</span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; BaseDirectory = packageTree.CurrentDirectory.FullName</pre><pre style="margin: 0px;"><span style="color: #2b91af;">&nbsp;&nbsp;&nbsp;42</span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };</pre><pre style="margin: 0px;"><span style="color: #2b91af;">&nbsp;&nbsp;&nbsp;43</span>&nbsp;</pre><pre style="margin: 0px;"><span style="color: #2b91af;">&nbsp;&nbsp;&nbsp;44</span>&nbsp;factory.Register&lt;<span style="color: #2b91af;">BooConfigReader</span>&gt;(<span style="color: blue;">new</span> <span style="color: #2b91af;">ConfigReaderEngine</span>());</pre></div>
-
-In line 41 of the code above, we are telling the DslFactory where the directory of build file was found which is in this case hron.boo.  In line 44 we are registering the BooConfigReader class in the DslFactory.  The BooConfigReaderEn
 
 

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Horn.Core.MSBuildBuildTool">
-    <Position X="4.25" Y="3.25" Width="2.5" />
+    <Position X="6.5" Y="4" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>BuildEngines\BuildTools\MSBuildBuildTool.cs</FileName>
@@ -9,15 +9,37 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Horn.Core.NAntBuildTool">
-    <Position X="7.5" Y="3.25" Width="2.75" />
+    <Position X="9.75" Y="4" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAiAAAAAAAAEAAAAAAAAAAAQAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>BuildEngines\BuildTools\NAntBuildTool.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="Horn.Core.BuildEngines.BuildEngine">
+    <Position X="4.25" Y="2.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IACABAgAAAAAKgCAAAAACAABQAgAgAAJAIAIBAAgAAA=</HashCode>
+      <FileName>BuildEngines\BuildEngine.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BuildTool" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Horn.Core.RakeBuildTool">
+    <Position X="12.75" Y="4" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAEAAAAAAAAAAAAAAAAgAAAABAAAAAAAAA=</HashCode>
+      <FileName>BuildEngines\BuildTools\RakeBuildTool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="Horn.Core.IBuildTool">
-    <Position X="5.75" Y="1.25" Width="3" />
+    <Position X="8.75" Y="2" Width="3" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>BuildEngines\BuildTools\IBuildTool.cs</FileName>

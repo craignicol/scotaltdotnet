@@ -12,7 +12,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Horn.Core.SCM.SVNSourceControl">
-    <Position X="6.25" Y="1.5" Width="2" />
+    <Position X="3.25" Y="4.75" Width="2" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />

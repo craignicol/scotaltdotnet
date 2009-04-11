@@ -8,32 +8,7 @@ import Horn.Domain
 import System.Runtime.CompilerServices	    
 
 abstract class BooConfigReader(IQuackFu): 
-	callable Action()   
-    
-	[property(BuildEngine)]
-	public buildEngine as BuildEngines.BuildEngine
-    
-	[property(Description)]
-	public desc as string
-	
-	[property(InstallName)]
-	public installName as string
-	
-	[property(Output)]
-	public outputDirectory as string		
-	
-	[property(SharedLibrary)]
-	public library as string	
-		
-	[property(SourceControl)]
-	public sourceControl as Horn.Domain.SCM.SourceControl
-	
-	public MetaData as Package:
-		get:
-			return package
-	    
-	abstract def Prepare():
-		pass
+	callable Action()      
 	
 	[Meta]
 	static def build_with(builder as ReferenceExpression, build as MethodInvocationExpression, frameWorkVersion as ReferenceExpression):
@@ -78,7 +53,31 @@ abstract class BooConfigReader(IQuackFu):
 		
 	def svn(url as string):		
 		sourceControl = SCM.SVNSourceControl(url)	  
-	  		
+
+	[property(BuildEngine)]
+	public buildEngine as BuildEngines.BuildEngine
+    
+	[property(Description)]
+	public desc as string
+	
+	[property(InstallName)]
+	public installName as string
+	
+	[property(Output)]
+	public outputDirectory as string		
+	
+	[property(SharedLibrary)]
+	public library as string	
+		
+	[property(SourceControl)]
+	public sourceControl as Horn.Domain.SCM.SourceControl
+	
+	public MetaData as Package:
+		get:
+			return package
+	    
+	abstract def Prepare():
+		pass	  		
 
 macro output: 
 	assert output.Arguments.Count == 1
