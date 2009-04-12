@@ -56,6 +56,8 @@
     <Content Include="Default.aspx" />
     <Content Include="horn\Dsl-Part-I.htm" />
     <Content Include="horn\DslIntroduction.htm" />
+    <Content Include="horn\duck_typing_in_a_static_language.htm" />
+    <Content Include="horn\Subtle_language_enhancements_in_boo.htm" />
     <Content Include="horn\the_horn_boo_dsl.htm" />
     <Content Include="horn\the_horn_boo_dsl_syntax.htm" />
     <Content Include="horn\The_purpose_of_horn.htm" />

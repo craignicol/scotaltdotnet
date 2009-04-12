@@ -65,21 +65,21 @@ Dsl script instances will inherit from this inherit from this class.  Below is t
 You can see that we have methods in the base classes that correspond to methods in the Dsl Script.  We will explain how this works in the next post.
 
 And below is a code snippet of the same anonymous base class written in <a target="_blank" href="http://boo.codehaus.org/">boo</a>:
-<div style="font-family: Courier New; color: black; background: white;">
-<pre style="margin: 0px;">abstract class BooConfigReader(IQuackFu): 
-&nbsp;&nbsp;&nbsp;&nbsp;callable Action()
-&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;[Meta]
-&nbsp;&nbsp;&nbsp;&nbsp;static def install(expression as ReferenceExpression, action as Expression):
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = StringLiteralExpression(expression.Name)
-&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return [|
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.GetInstallerMeta($name, $action)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|]	                
-&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;def description(text as string):
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desc = text</pre>
-</div>
+    <div style="font-family: Courier New; color: black; background: white;">
+    <pre style="margin: 0px;">abstract class BooConfigReader(IQuackFu): 
+    &nbsp;&nbsp;&nbsp;&nbsp;callable Action()
+    &nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;[Meta]
+    &nbsp;&nbsp;&nbsp;&nbsp;static def install(expression as ReferenceExpression, action as Expression):
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = StringLiteralExpression(expression.Name)
+    &nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return [|
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.GetInstallerMeta($name, $action)
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|]	                
+    &nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;def description(text as string):
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desc = text</pre>
+    </div>
 As with before, I will explain this code in more detail in the next post.  I want to concentrate on how to actually parse individual dsl scripts in this post.
 
 It is at this point that I will introduce the excellent Rhino.Dsl library.  I gave a mention earlier to <a target="_blank" href="http://ayende.com/blog/">Ayende</a> who is the creator and probably the main contributor to the <a target="_blank" href="http://sourceforge.net/projects/rhino-tools/">Rhino Tools</a> open source project.  I use many of these tools in my day job so it came as no suprise to discover that there is a <strong>Rhino.Dsl</strong> project that contains components that provide labour intensive functionality for building and running DSLs written in <a target="_blank" href="http://boo.codehaus.org/">boo</a>.
