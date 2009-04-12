@@ -1,8 +1,8 @@
 ﻿In a previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/parsing-horn-dsl.html">post</a> , I outined how horn build scripts where retrieved from the file system and compiled down into IL with the help of some wrapper or facade classes defined in the excellent Rhino.Dsl class.
 
-I also mentioned that the technique used is to create what is known as an anonymous base class that is inserted into the boo compiler pipeline.  This anonymous base class becomes the base class for the Dsl build script Dsl instances.  The anonymous base class exists in the horn application code.
+I also mentioned that the technique used is to create what is known as an anonymous base class that is inserted into the <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler pipeline.  This anonymous base class becomes the base class for the Dsl build script Dsl instances.  The anonymous base class exists in the horn application code.
 
-First up let us look at a Dsl build script instance.  The code below is the Dsl script used to describe the metadata that is required to build horn:
+Let us now breakdown an example Dsl script file to see how we customise the <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler to achieve a nice syntax.  The code below is the Dsl script used to describe the metadata that is required to build horn:
 <div style="font-family: Courier New; color: black; background: white;">
 <pre style="margin: 0px;">install horn:
 &nbsp;&nbsp;&nbsp;&nbsp;description "A .NET build and dependency manager"
@@ -10,7 +10,7 @@ First up let us look at a Dsl build script instance.  The code below is the Dsl 
 &nbsp;&nbsp;&nbsp;&nbsp;build_with msbuild, buildfile("src/horn.sln"), FrameworkVersion35
 &nbsp;&nbsp;&nbsp;&nbsp;output "Output"
 &nbsp;&nbsp;&nbsp;&nbsp;shared_library "."
-	                
+                 
 dependencies:
 &nbsp;&nbsp;&nbsp;&nbsp;depend @log4net >> "lib"
 &nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.core"
@@ -18,7 +18,7 @@ dependencies:
 &nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.microKernel"
 &nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.windsor"</pre>
 </div>
-As we mentioned previously, the build script listed above is effectively a derived class of the BooConfigReader class that we have inserted into the boo compiler pipeline with the following code:
+As we mentioned previously, the build script listed above is effectively a derived class of the BooConfigReader class that we have inserted into the <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler pipeline with the following code:
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
 <pre style="margin: 0px;">var factory = <span style="color: blue;">new</span> <span style="color: #2b91af;">DslFactory</span>
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
@@ -48,19 +48,19 @@ Below is a code snippet of the basic outline of the BooConfigReader anonymous ba
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Description = text;
 &nbsp;&nbsp;&nbsp; }</pre>
 </div>
-I will list code in both C# and boo for the BooConfigReader anonymous base class that will illustrate how we parse the code from Dsl script into our semantic or domain model which horn will use to build the required component.
+I will list code in both C# and <a target="_blank" href="http://boo.codehaus.org/">boo</a> for the BooConfigReader anonymous base class that will illustrate how we parse the code from Dsl script into our semantic or domain model which <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> will use to build the required component.
 
 Let us start at line 1 as that is a very good place to start:
 <div style="font-family: Courier New; color: black; background: white;">
 <pre style="margin: 0px;">install horn:</pre>
 </div>
-We have several extension points in boo when it comes to extending the language, from compiler steps to meta-methods, from AST attributes to AST macros.  This means you can write extensions in the compiler when the boo code compiles.  
+We have several extension points in <a target="_blank" href="http://boo.codehaus.org/">boo</a> when it comes to extending the language, from compiler steps to meta-methods, from AST attributes to AST macros.  This means you can write extensions in the compiler when the <a target="_blank" href="http://boo.codehaus.org/">boo</a> code compiles.  
 
-One of these techniques is what is known in boo speak as a meta-method.  A meta-method is a short cut to the compiler that accepts an AST node and returns an AST node.
+One of these techniques is what is known in <a target="_blank" href="http://boo.codehaus.org/">boo</a> speak as a meta-method.  A meta-method is a short cut to the compiler that accepts an AST node and returns an AST node.
 
-It is important to comprehend what an AST node is.  One of the steps in the boo compiler pipeline is known as the parsing stage which parses the source code stream into an <a target="_blank" href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">abstract syntax tree</a>.  Subtrees or AST nodes will be passed to compiler extension points such as meta-methods or macros during compilation.
+It is important to comprehend what an AST node is.  One of the steps in the <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler pipeline is known as the parsing stage which parses the source code stream into an <a target="_blank" href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">abstract syntax tree</a>.  Subtrees or AST nodes will be passed to compiler extension points such as meta-methods or macros during compilation.
 
-Meta-methods must be static and marked with the MetaAttribute for the compiler to recognise them as so.  The BooConfigReader contains a meta-method named install that will take the AST node <strong>install horn:</strong> and transform it into an instance method of the BooConfigReader class.  Because boo supports parenthisis-less method invocations we can call the install method as is listed above or it could be called with the parenthis <strong>install(horn)</strong>.
+Meta-methods must be static and marked with the MetaAttribute for the compiler to recognise them as so.  The BooConfigReader contains a meta-method named install that will take the AST node <strong>install horn:</strong> and transform it into an instance method of the BooConfigReader class.  Because <a target="_blank" href="http://boo.codehaus.org/">boo</a> supports parenthisis-less method invocations we can call the install method as is listed above or it could be called with the parenthis <strong>install(horn)</strong>.
 
 Below is the C# listing of the install meta-method:
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
@@ -84,12 +84,12 @@ It is important to remember that the meta-method is invoked at compile time. Whe
 &nbsp;&nbsp;&nbsp;&nbsp;output "Output"
 &nbsp;&nbsp;&nbsp;&nbsp;shared_library "."
 </div>
-If we rexamine the method signature of the install meta-method code:
+Let us re-examine the method signature of the install meta-method code:
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
 <pre style="margin: 0px;">[<span style="color: #2b91af;">Meta</span>]
 <span style="color: blue;">public</span> <span style="color: blue;">static</span> <span style="color: #2b91af;">Expression</span> install(<span style="color: #2b91af;">ReferenceExpression</span> expression, <span style="color: #2b91af;">BlockExpression</span> action)</pre>
 </div>
-The the <strong><i>horn</i></strong> part of the <strong><i>install horn:</i></strong> expression is passed to the meta-method as a ReferenceExpression type.  A ReferenceExpression type can be simply thought of as a <strong><i>token</i></strong> or block of text that is passed to the meta-method as an argument.
+The <strong><i>horn</i></strong> part of the <strong><i>install horn:</i></strong> expression is passed to the meta-method as a ReferenceExpression type.  A ReferenceExpression type can be simply thought of as a <strong><i>token</i></strong> or block of text that is passed to the meta-method as an argument.
 
 The anonymous method block is passed to the meta-method as a BlockExpression type.
 
@@ -102,7 +102,7 @@ Let us further examine the method body of the <strong><i>install</i></strong> me
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; installName,
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; action
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; );
-</div>
+</pre></div>
 I Will reiterate once more that the install meta-method is called at compile time.  The meta-method takes an AST node and returns an AST node.  In the code above we are creating the result of calling the meta-method that will replace the AST that was passed to it.  In the above code, we are creating what is known as a MethodInvocationExpression that is creating a call to an instance method of the BooConfigReader class called GetInstallerName and the arguments that will be passed to it.
 
 To sum up, the compiler replaces the <strong>install horn:</strong> expression with the following call to an instance of the BooConfigReader class <strong><i>GetInstallerMeta("horn", action);</i></strong>.
@@ -116,7 +116,7 @@ The <strong><i>GetInstallerMeta</i></strong> method is listed below for complete
 &nbsp;&nbsp;&nbsp; installDelegate();
 }</pre>
 </div>
-The same result can be achieved by defining the same meta-method in boo:
+The same result can be achieved by defining the same meta-method in <a target="_blank" href="http://boo.codehaus.org/">boo</a>:
 <div style="font-family: Courier New; color: black; background: white;">
 <pre style="margin: 0px;">abstract class BooConfigReader(IQuackFu): 
 &nbsp;&nbsp;&nbsp;&nbsp;callable Action()
@@ -127,9 +127,83 @@ The same result can be achieved by defining the same meta-method in boo:
 &nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return [|
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.GetInstallerMeta($name, $action)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|]	                
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|]                 
+</pre></div>
+The return statement of the install method introduces a concept that makes <a target="_blank" href="http://boo.codehaus.org/">boo</a> more suited to writing code for compiler manipulation.  This strange expression creation is what is known as <strong><i>quasi quotation</i></strong>.
+
+<strong><i>Quasi quotation</i></strong> is only accessible through <a target="_blank" href="http://boo.codehaus.org/">boo</a> and you will not be able to recreate this experience in any other .NET language.  Writing the code to create the AST node in the C# version of the install method can quickly get tedious.  <strong><i>Quasi quotation</i></strong> allows us to produce this AST code in a more concise manner.
+
+When the compiler encounters this code, it does the usual parsing of the code, but instead of outputting the IL instructions that would execute the code, it outputs the code to build the required AST, much in the same way we built the MethodInvocationExpression in the C# example.
+
+The most alluring part of quasi-quotation is that we are not limited to static binding.  We can refer to external variables and the compiler will take care of creating the correct AST node.  In the example above, we can access the name variable and the action argument in the quasi quotation.  The experience is analagous to closures where you can access external variables that are not defined in the inner block.
+
+We can now move swiftly through the rest of the Dsl:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">get_from svn("http://scotaltdotnet.googlecode.com/svn/trunk/")</pre>
 </div>
-The return statement of the install method introduces a concept that makes boo more suited to writing code for compiler manipulation.  This strange expression creation is what is known as <strong><i>quasi quotation</i></strong>.
+This line tells <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> which source control management system to retrieve the source from and the uri of the source control expression.
+This is painfully easy to handle and we use another meta-method to implement this that I have listed below:
+We define another :
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">
+&nbsp;&nbsp;&nbsp;&nbsp;[Meta]
+&nbsp;&nbsp;&nbsp;&nbsp;static def get_from(expression as MethodInvocationExpression):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return expression</pre>
+</div>
+The <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler will pass in the <strong><i>svn("http://scotaltdotnet.googlecode.com/svn/trunk/")</i></strong> AST node in the form of a MethodInvocationExpression into the get_from meta-method.  We will simply return this expression.  If you remember, a meta-method takes an AST node as an argument and returns an AST node that will replace the meta-method in the IL.  
 
-<strong><i>quasi quotation</i></strong> is only accessible through boo and you will not to recreate this experience in any other .NET language.
+The compiler will replace the meta-method with the call to <strong><i>svn("http://scotaltdotnet.googlecode.com/svn/trunk/")</i></strong>.  This does of course rely on us having an svn instance method in our anonymouse base class which of course we do.  I have listed it below for completeness.
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">
+&nbsp;&nbsp;&nbsp;&nbsp;def svn(url as string):
+&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sourceControl = SCM.SVNSourceControl(url)</pre>
+</div>
+The last fragment of Dsl script code I want to examine in this post is listed below:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">build_with msbuild, buildfile("src/horn.sln"), FrameworkVersion35</pre>
+</div>
+This line of code instructs <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> which build engine we will use, the relative path to the build file and what version of the .NET framework <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> will use to compile the source against.
 
+It will come as no great suprise to learn that we have handled this yet again with a meta-method:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">
+&nbsp;&nbsp;&nbsp;&nbsp;[Meta]
+&nbsp;&nbsp;&nbsp;&nbsp;def build_with(builder as ReferenceExpression, build as MethodInvocationExpression, frameWorkVersion as ReferenceExpression):
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buildFile = build.Arguments[0]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version = StringLiteralExpression(frameWorkVersion.Name) 
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return [|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$builder($buildFile, $version)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|]
+</pre>
+</div>
+The above code listing shows us how we can start to build more complex expressions using quasi quotation that will be returned from the meta-method.
+
+You can see that we are using the builder argument to dynamically state which instance method to invoke.  We are also referencing to external variables.
+
+Below is the same method defined in C#.
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;">[<span style="color: #2b91af;">Meta</span>]
+<span style="color: blue;">public</span> <span style="color: blue;">static</span> <span style="color: #2b91af;">Expression</span> build_with(<span style="color: #2b91af;">ReferenceExpression</span> builder, <span style="color: #2b91af;">MethodInvocationExpression</span> build, <span style="color: #2b91af;">ReferenceExpression</span> frameWorkVersion)
+{
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">var</span> targetName = builder.Name;
+&nbsp;
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">return</span> <span style="color: blue;">new</span> <span style="color: #2b91af;">MethodInvocationExpression</span>(
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue;">new</span> <span style="color: #2b91af;">ReferenceExpression</span>(targetName),
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; build.Arguments[0],
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue;">new</span> <span style="color: #2b91af;">StringLiteralExpression</span>(frameWorkVersion.Name)
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; );
+}</pre>
+</div>
+Both these methods will return a call to an instance method named msbuild which of course must be present for the compilation to succeed.
+
+Below is the msbuild method:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">
+&nbsp;&nbsp;&nbsp;&nbsp;def msbuild(buildFile as string, frameworkVersion):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version = System.Enum.Parse(typeof(Horn.Domain.Framework.FrameworkVersion), frameworkVersion)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BuildEngine = BuildEngines.BuildEngine(Horn.Domain.MSBuildBuildTool(), buildFile, version)
+</pre>
+</div>
+If any of this is of interest to you then please join the <a target="_blank" href="http://groups.google.co.uk/group/horn-development?hl=en">Horn user group</a> for updates or check out the source <a href="http://code.google.com/p/scotaltdotnet/">here</a>.
