@@ -1,3 +1,4 @@
+using Boo.Lang.Compiler;
 using Rhino.DSL;
 
 namespace Horn.Core.Dsl
@@ -7,7 +8,7 @@ namespace Horn.Core.Dsl
     public class ConfigReaderEngine : DslEngine
     {
 
-        protected override void CustomizeCompiler(Boo.Lang.Compiler.BooCompiler compiler, Boo.Lang.Compiler.CompilerPipeline pipeline, string[] urls)
+        protected override void CustomizeCompiler(BooCompiler compiler, CompilerPipeline pipeline, string[] urls)
         {
             pipeline.Insert(1, new ImplicitBaseClassCompilerStep(typeof(BooConfigReader), "Prepare", "Horn.Core.Dsl"));
             pipeline.InsertBefore(typeof(ProcessMethodBodiesWithDuckTyping), new RightShiftToMethodCompilerStep());
