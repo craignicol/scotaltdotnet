@@ -52,7 +52,7 @@ abstract class BooConfigReader(IQuackFu):
 		BuildEngine = BuildEngines.BuildEngine(Horn.Domain.MSBuildBuildTool(), buildFile, version)
 		
 	def svn(url as string):		
-		sourceControl = SCM.SVNSourceControl(url)	  
+			
 
 	[property(BuildEngine)]
 	public buildEngine as BuildEngines.BuildEngine
