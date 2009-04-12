@@ -48,7 +48,7 @@ Below is a code snippet of the basic outline of the BooConfigReader anonymous ba
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Description = text;
 &nbsp;&nbsp;&nbsp; }</pre>
 </div>
-I will list code in both C# and boo for the BooConfigReader anonymous base class that illustrate how we parse the code in the Dsl into our semantic or domain model which horn will use to build the required component.
+I will list code in both C# and boo for the BooConfigReader anonymous base class that will illustrate how we parse the code from Dsl script into our semantic or domain model which horn will use to build the required component.
 
 Let us start at line 1 as that is a very good place to start:
 <div style="font-family: Courier New; color: black; background: white;">
@@ -56,7 +56,7 @@ Let us start at line 1 as that is a very good place to start:
 </div>
 We have several extension points in boo when it comes to extending the language, from compiler steps to meta-methods, from AST attributes to AST macros.  This means you can write extensions in the compiler when the boo code compiles.  
 
-One of these techniques is what is known in boo speak as a meta-method.  A meta-method is a short cut to the compiler that accepts an AST node and returns an AST node.  A meta-method replaces the AST node at the point of invocation with the AST node returned from the meta-method.  
+One of these techniques is what is known in boo speak as a meta-method.  A meta-method is a short cut to the compiler that accepts an AST node and returns an AST node.
 
 It is important to comprehend what an AST node is.  One of the steps in the boo compiler pipeline is known as the parsing stage which parses the source code stream into an <a target="_blank" href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">abstract syntax tree</a>.  Subtrees or AST nodes will be passed to compiler extension points such as meta-methods or macros during compilation.
 
@@ -76,7 +76,7 @@ Below is the C# listing of the install meta-method:
 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; );
 }</pre>
 </div>
-It is important to remember that the meta-method is invoked at compile time.  When compiling the Dsl script into IL code, the compiler sees the call to the <strong>install</strong> meta-method, it does'nt emit the code to call the method at runtime.  Instead during compilation the meta-method is executed.  Passed to the install meta-method are the two AST nodes, the first being the <strong><i>horn</i></strong> part of the <strong><i>install horn:</i></strong> expression.  The second is an <strong><i>anonymous block</i></strong> which is everything after the colon and is scoped by indentation.  The code below is the anonyomous block.  
+It is important to remember that the meta-method is invoked at compile time. When the compiler sees the call to the <strong>install</strong> meta-method during compilation of the Dsl script, it does'nt emit the code to call the method at runtime.  Instead during compilation the meta-method is executed.  Passed to the install meta-method is an AST of the arguments of the method code, the first being the <strong><i>horn</i></strong> part of the <strong><i>install horn:</i></strong> expression.  The second being the <strong><i>anonymous block</i></strong> which is everything after the colon and is scoped by indentation.  The code below is the anonyomous block.  
 <div style="font-family: Courier New; color: black; background: white;">
 &nbsp;&nbsp;&nbsp;&nbsp;description "A .NET build and dependency manager"
 &nbsp;&nbsp;&nbsp;&nbsp;get_from svn("http://scotaltdotnet.googlecode.com/svn/trunk/")
@@ -89,6 +89,47 @@ If we rexamine the method signature of the install meta-method code:
 <pre style="margin: 0px;">[<span style="color: #2b91af;">Meta</span>]
 <span style="color: blue;">public</span> <span style="color: blue;">static</span> <span style="color: #2b91af;">Expression</span> install(<span style="color: #2b91af;">ReferenceExpression</span> expression, <span style="color: #2b91af;">BlockExpression</span> action)</pre>
 </div>
-The the <strong><i>horn</i></strong> part of the <strong><i>install horn:</i></strong> expression is passed to the meta-method as a ReferenceExpression type.  The anonymous method block is passed to the meta-method as a BlockExpression type.
+The the <strong><i>horn</i></strong> part of the <strong><i>install horn:</i></strong> expression is passed to the meta-method as a ReferenceExpression type.  A ReferenceExpression type can be simply thought of as a <strong><i>token</i></strong> or block of text that is passed to the meta-method as an argument.
 
+The anonymous method block is passed to the meta-method as a BlockExpression type.
+
+Let us further examine the method body of the <strong><i>install</i></strong> meta-method:
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: blue;">var</span> installName = <span style="color: blue;">new</span> <span style="color: #2b91af;">StringLiteralExpression</span>(expression.Name);
+&nbsp;
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">return</span> <span style="color: blue;">new</span> <span style="color: #2b91af;">MethodInvocationExpression</span>(
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue;">new</span> <span style="color: #2b91af;">ReferenceExpression</span>(<span style="color: #a31515;">"GetInstallerMeta"</span>),
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; installName,
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; action
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; );
+</div>
+I Will reiterate once more that the install meta-method is called at compile time.  The meta-method takes an AST node and returns an AST node.  In the code above we are creating the result of calling the meta-method that will replace the AST that was passed to it.  In the above code, we are creating what is known as a MethodInvocationExpression that is creating a call to an instance method of the BooConfigReader class called GetInstallerName and the arguments that will be passed to it.
+
+To sum up, the compiler replaces the <strong>install horn:</strong> expression with the following call to an instance of the BooConfigReader class <strong><i>GetInstallerMeta("horn", action);</i></strong>.
+
+The <strong><i>GetInstallerMeta</i></strong> method is listed below for completeness.
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;"><span style="color: blue;">public</span> <span style="color: blue;">void</span> GetInstallerMeta(<span style="color: blue;">string</span> installName, <span style="color: #2b91af;">Action</span> installDelegate)
+{
+&nbsp;&nbsp;&nbsp; InstallName = installName;
+&nbsp;
+&nbsp;&nbsp;&nbsp; installDelegate();
+}</pre>
+</div>
+The same result can be achieved by defining the same meta-method in boo:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">abstract class BooConfigReader(IQuackFu): 
+&nbsp;&nbsp;&nbsp;&nbsp;callable Action()
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[Meta]
+&nbsp;&nbsp;&nbsp;&nbsp;static def install(expression as ReferenceExpression, action as Expression):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = StringLiteralExpression(expression.Name)
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return [|
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.GetInstallerMeta($name, $action)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|]	                
+</div>
+The return statement of the install method introduces a concept that makes boo more suited to writing code for compiler manipulation.  This strange expression creation is what is known as <strong><i>quasi quotation</i></strong>.
+
+<strong><i>quasi quotation</i></strong> is only accessible through boo and you will not to recreate this experience in any other .NET language.
 
