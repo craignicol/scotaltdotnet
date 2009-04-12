@@ -1,0 +1,56 @@
+﻿In the previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/parsing-horn-dsl.html">post</a> , I outined how horn build scripts where retrieved from the file stream and compiled down into IL with the help of some wrapper classes defined in the excellent Rhino.Dsl class.
+
+I also mentioned that the technique used was to create what is known as an anonymous base class that is inserted into the boo compiler pipeline.  This anonymous base class becomes the base class for the Dsl build script Dsl instances.
+
+First up let us look at a Dsl build script instance.  The code below is the Dsl script used to describe the metadata that is required to build horn:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">install horn:
+&nbsp;&nbsp;&nbsp;&nbsp;description "A .NET build and dependency manager"
+&nbsp;&nbsp;&nbsp;&nbsp;get_from svn("http://scotaltdotnet.googlecode.com/svn/trunk/")
+&nbsp;&nbsp;&nbsp;&nbsp;build_with msbuild, buildfile("src/horn.sln"), FrameworkVersion35
+&nbsp;&nbsp;&nbsp;&nbsp;output "Output"
+&nbsp;&nbsp;&nbsp;&nbsp;shared_library "."
+	                
+dependencies:
+&nbsp;&nbsp;&nbsp;&nbsp;depend @log4net >> "lib"
+&nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.core"
+&nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "Castle.DynamicProxy2"
+&nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.microKernel"
+&nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.windsor"</pre>
+</div>
+As we mentioned previously, piple build script listed above is effectively a derived class of the BooConfigReader class that we have inserted into the boo compiler pipeline with the following code:
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;">var factory = <span style="color: blue;">new</span> <span style="color: #2b91af;">DslFactory</span>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; BaseDirectory = packageTree.CurrentDirectory.FullName
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; };
+&nbsp;
+factory.Register&lt;<span style="color: #2b91af;">BooConfigReader</span>&gt;(<span style="color: blue;">new</span> <span style="color: #2b91af;">ConfigReaderEngine</span>());</pre>
+</div>
+I will list code in both C# and boo for the BooConfigReader anonymous base class that illustrate how we parse the code in the Dsl into our semantic or domain model which horn will use to build the required component.
+
+Let us start at line 1 as that is a very good place to start:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">install horn:</pre>
+</div>
+We have several extension points in boo when it comes to extending the language, from compiler steps to meta-methods, from AST attributes to AST macros.  This means you can write extensions in the compiler when your boo code compiles.  
+
+One of these techniques is what is known in boo speak as a meta-method.  A meta-method is a short cut to the compiler that accepts an AST node and returns an AST node.  A meta-method replaces the AST node at the point of invocation with the AST node returned from the meta-method.  Meta-methods are must be static and marked with the MetaAttribute for the compiler to recognise them as so.  The BooConfigReader contains a meta-method named install that will take the AST node <strong>install horn:</strong> and transform it into an instance method of the BooConfigReader class.  Because boo supports parenthisis-less method invocations we can call the install method as is listed above, it could also be called <strong>install(horn)</strong>.
+
+Below is the C# listing of the install meta-method:
+<div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
+<pre style="margin: 0px;">[<span style="color: #2b91af;">Meta</span>]
+<span style="color: blue;">public</span> <span style="color: blue;">static</span> <span style="color: #2b91af;">Expression</span> install(<span style="color: #2b91af;">ReferenceExpression</span> expression, <span style="color: #2b91af;">Expression</span> action)
+{&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">var</span> installName = <span style="color: blue;">new</span> <span style="color: #2b91af;">StringLiteralExpression</span>(expression.Name);
+&nbsp;
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">return</span> <span style="color: blue;">new</span> <span style="color: #2b91af;">MethodInvocationExpression</span>(
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue;">new</span> <span style="color: #2b91af;">ReferenceExpression</span>(<span style="color: #a31515;">"GetInstallerMeta"</span>),
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; installName,
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; action
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; );
+}</pre>
+</div>
+
+
+
