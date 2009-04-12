@@ -11,6 +11,21 @@ abstract class BooConfigReader(IQuackFu):
 	callable Action()      
 	
 	[Meta]
+	static def install(expression as ReferenceExpression, action as Expression):  	
+		name = StringLiteralExpression(expression.Name) 
+		
+		return [|
+			self.GetInstallerMeta($name, $action)
+		|]
+		
+	def description(text as string):
+		desc = text
+		
+	[Meta]
+	static def export_from(expression as MethodInvocationExpression):
+		return expression
+	
+	[Meta]
 	static def build_with(builder as ReferenceExpression, build as MethodInvocationExpression, frameWorkVersion as ReferenceExpression):
 		buildFile = build.Arguments[0]
 		version = StringLiteralExpression(frameWorkVersion.Name)	
@@ -21,27 +36,12 @@ abstract class BooConfigReader(IQuackFu):
 									
 	[Meta]
 	static def dependencies(addDependencyMethod as MethodInvocationExpression):
-		return addDependencyMethod
-					       		
-	[Meta]
-	static def export_from(expression as MethodInvocationExpression):
-		return expression
-
-	[Meta]
-	static def install(expression as ReferenceExpression, action as Expression):  	
-		name = StringLiteralExpression(expression.Name) 
-		
-		return [|
-			self.GetInstallerMeta($name, $action)
-		|]
+		return addDependencyMethod					      
 
 	def AddDependencies(dependencies as (string)):
 		for i in range(dependencies.Length):
 			dependency = BuildEngines.Dependency(dependencies[i].Split(Char.Parse('|'))[0], dependencies[i].Split(Char.Parse('|'))[1])
 			BuildEngine.Dependencies.Add(dependency)
-
-	def description(text as string):
-		desc = text
 
 	def GetInstallerMeta(name as string, action as Action):
 		installName = name
