@@ -64,9 +64,10 @@ Dsl script instances will inherit from this inherit from this class.  Below is t
 </div>
 You can see that we have methods in the base classes that correspond to methods in the Dsl Script.  We will explain how this works in the next post.
 
-And below is a code snippet of the same class written in <a target="_blank" href="http://boo.codehaus.org/">boo</a>:
+And below is a code snippet of the same anonymous base class written in <a target="_blank" href="http://boo.codehaus.org/">boo</a>:
 <div style="font-family: Courier New; color: black; background: white;">
 <pre style="margin: 0px;">abstract class BooConfigReader(IQuackFu): 
+&nbsp;&nbsp;&nbsp;&nbsp;callable Action()
 &nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;[Meta]
 &nbsp;&nbsp;&nbsp;&nbsp;static def install(expression as ReferenceExpression, action as Expression):
@@ -74,14 +75,12 @@ And below is a code snippet of the same class written in <a target="_blank" href
 &nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return [|
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.GetInstallerMeta($name, $action)
-&nbsp;&nbsp;&nbsp;&nbsp;|]	                
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|]	                
 &nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;depend @log4net >> "lib"
-&nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.core"
-&nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "Castle.DynamicProxy2"
-&nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.microKernel"
-&nbsp;&nbsp;&nbsp;&nbsp;depend @castle  >> "castle.windsor"</pre>
+&nbsp;&nbsp;&nbsp;&nbsp;def description(text as string):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;desc = text</pre>
 </div>
+As with before, I will explain this code in more detail in the next post.  I want to concentrate on how to actually parse individual dsl scripts in this post.
 
 It is at this point that I will introduce the excellent Rhino.Dsl library.  I gave a mention earlier to <a target="_blank" href="http://ayende.com/blog/">Ayende</a> who is the creator and probably the main contributor to the <a target="_blank" href="http://sourceforge.net/projects/rhino-tools/">Rhino Tools</a> open source project.  I use many of these tools in my day job so it came as no suprise to discover that there is a <strong>Rhino.Dsl</strong> project that contains components that provide labour intensive functionality for building and running DSLs written in <a target="_blank" href="http://boo.codehaus.org/">boo</a>.
 
@@ -102,9 +101,9 @@ We then have the following line:
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
 <pre style="margin: 0px;">factory.Register&lt;<span style="color: #2b91af;">BooConfigReader</span>&gt;(<span style="color: blue;">new</span> <span style="color: #2b91af;">ConfigReaderEngine</span>());</pre>
 </div>
-The Register method of the DslFactory allows us to register instances of another Rhino.Dsl class named DslEngine or as in the case above with the ConfigReaderEngine, classes that derive from DslEngine.  The DslEngine class abstracts away a lot of the boiler plate code that is required to compile instances of Dsl scripts.  The DslEngine contains a number of extension points.  One of these extension points is a method called <i>CustomizeCompiler</i>.  This method allows us to customise the Compiler pipeline.  We mentioned earlier that the main mechanics for the <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> Dsl was to create an anonymous base class and register it in the <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler pipeline.  We are passing in the type of anonymous base class a generic argument in the base class.
+The Register method of the DslFactory allows us to register instances of another Rhino.Dsl class named DslEngine or as in the case above with the ConfigReaderEngine, classes that derive from DslEngine.  The DslEngine class abstracts away a lot of the boiler plate code that is required to compile instances of Dsl scripts.  The DslEngine contains a number of extension points.  One of these extension points is a method called <i>CustomizeCompiler</i>.  This method allows us to customise the Compiler pipeline.  We mentioned earlier that the main mechanics for the <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> Dsl was to create an anonymous base class and register it in the <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler pipeline.  We are passing in the type of anonymous base class as a generic argument in the register method.
 
-As mentioned earlier, the Rhino.Dsl.Engine class provides extension points for <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler pipeline extensibility.  The point of extension we use in <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> is the CustomizeCompiler method.  Below is the code listing for ConfigReader class that inherits from DslEngine and we use in <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> to add our own compiler modifications and that we registered in the DslFactory in the previous code listing.
+As mentioned earlier, the Rhino.Dsl.Engine class provides extension points for <a target="_blank" href="http://boo.codehaus.org/">boo</a> compiler pipeline extensibility.  The point of extension we use in <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> is the <i>CustomizeCompiler</i> method.  Below is the code listing for ConfigReader class that inherits from DslEngine and we use in <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> to add our own compiler modifications and that we registered in the DslFactory in the previous code listing.
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
 <pre style="margin: 0px;"><span style="color: blue;">public</span> <span style="color: blue;">class</span> <span style="color: #2b91af;">ConfigReaderEngine</span> : <span style="color: #2b91af;">DslEngine</span>
 {
@@ -119,11 +118,11 @@ As mentioned earlier, the Rhino.Dsl.Engine class provides extension points for <
 </div>
 The code above is showing how we can add our own custom steps into the compiler pipeline.
 
-Main line of code to observe in the above example is the following:
+The important line of code to observe in the above example is the following:
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
 <pre style="margin: 0px;">pipeline.Insert(1, <span style="color: blue;">new</span> <span style="color: #2b91af;">ImplicitBaseClassCompilerStep</span>(<span style="color: blue;">typeof</span>(<span style="color: #2b91af;">BooConfigReader</span>), <span style="color: #a31515;">"Prepare"</span>, <span style="color: #a31515;">"Horn.Core.Dsl"</span>));</pre>
 </div>
-This takes care of adding our anonymous base class to the pipeline which will mean that every build script we parse will inherit from this class.  We use another Rhino class named ImplicitBaseClassCompilerStep that will again hide us from a lot of the <a target="_blank" href="http://boo.codehaus.org/">boo</a> infrastructure code to register an anonymous base class.
+This takes care of adding our anonymous base class to the pipeline which will mean that every build script we parse will inherit from this class.  We use another Rhino class named ImplicitBaseClassCompilerStep that will again hide us from a lot of the <a target="_blank" href="http://boo.codehaus.org/">boo</a> infrastructure code to register an anonymous base class.  The ImplicitBaseClassCompilerStep takes as arguments to it's constructor, the type of anonyomous base class, the abstract method that will be called to invoke the script and the namespace of the anonymous base class.
 
 In <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> we register the anonymous base class compiler class and we add another compiler step with the code below:
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
