@@ -9,6 +9,29 @@ namespace Horn.Core.Dsl
 {
     public abstract class BooConfigReader
     {
+        [Meta]
+        public static Expression install(ReferenceExpression expression, Expression action)
+        {
+            var installName = new StringLiteralExpression(expression.Name);
+
+            return new MethodInvocationExpression(
+                    new ReferenceExpression("GetInstallerMeta"),
+                    installName,
+                    action
+                );
+        }
+
+        public void description(string text)
+        {
+            Description = text;
+        }
+
+        [Meta]
+        public static Expression get_from(MethodInvocationExpression get)
+        {
+            return get;
+        }
+
         public abstract void Prepare();
 
         [Meta]
@@ -27,24 +50,6 @@ namespace Horn.Core.Dsl
         public static Expression dependencies(MethodInvocationExpression addDependencyMethod)
         {
             return addDependencyMethod;
-        }
-
-        [Meta]
-        public static Expression get_from(MethodInvocationExpression get)
-        {
-            return get;
-        }
-
-        [Meta]
-        public static Expression install(ReferenceExpression expression, Expression action)
-        {       
-            var installName = new StringLiteralExpression(expression.Name);
-
-            return new MethodInvocationExpression(
-                    new ReferenceExpression("GetInstallerMeta"),
-                    installName,
-                    action
-                );
         }
 
         [Meta]
@@ -127,11 +132,6 @@ namespace Horn.Core.Dsl
         public void AssignTasks(Action tasksDelegate)
         {
             tasksDelegate();
-        }
-
-        public void description(string text)
-        {
-            Description = text;
         }
 
         public void GetInstallerMeta(string installName, Action installDelegate)

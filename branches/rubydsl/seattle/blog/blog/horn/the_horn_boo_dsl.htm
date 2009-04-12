@@ -30,18 +30,40 @@ The main engine of <a href="http://code.google.com/p/scotaltdotnet/" target="_bl
 
 I must mention at this point that if I had not read <a target="_blank" href="http://ayende.com/blog/">Ayende</a>'s excellent book <a target="_blank" href="http://www.manning.com/rahien/">creating domain specific languages in boo</a> then I do not think I would have been able to use <a target="_blank" href="http://boo.codehaus.org/">boo</a> as our host language of choice for the DSL.  This book really is the best reference guide out there and trust me, I have looked.
 
-One thing to bear in mind when writing a DSL in <a target="_blank" href="http://boo.codehaus.org/">boo</a> when compared to a more typical internal host language choice such as python or ruby which are interpeted languages is that we do not have an interpeter to parse our scripts.  The DSL is compiled down to IL before it is executed.  Boo has an extensible compiler architecture that allows us to create a more palatable Dsl.
+One thing to bear in mind when writing a DSL in <a target="_blank" href="http://boo.codehaus.org/">boo</a> when compared to a more typical internal host language choice like python or ruby is that we do not have an interpeter to parse our scripts.  The DSL is compiled down to IL before it is executed.  Boo has an extensible compiler architecture that allows us to create a more palatable Dsl.
 
-The very basic structure of the Boo compiler is the pipeline; it is how the compiler transforms bits of text in a file into executable code.  The <a target="_blank" href="http://boo.codehaus.org/">boo</a> language allows you, the user to plug your own steps into the compiler pipeline.  This allows you to add to the syntax of the language, just like the language designers did in C# 3.0 by adding query expressions. A compiler step can interact with the parsed code and change the abstract syntax tree.  New pipelines and steps can be defined at will. The compiler pipeline is a collection of loosely coupled objects each within their own task to complete. 
+The very basic structure of the Boo compiler is the pipeline; it is how the compiler transforms bits of text in a file into executable code.  The <a target="_blank" href="http://boo.codehaus.org/">boo</a> language allows you, the user to plug your own steps into the compiler pipeline.  This allows you to add to the syntax of the language, just like the language designers did in C# 3.0 by adding query expressions. A compiler step can interact with the parsed code and change the abstract syntax tree.  New pipelines and steps can be defined at will. The compiler pipeline is a collection of loosely coupled objects each with their own task to complete. 
 
-The technique we have chosen for <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> is to create what is known as an <i>anonymous base class</i> that is the basis of our Dsl.  The anonymous base class is a standard approach for building a Dsl in <a target="_blank" href="http://boo.codehaus.org/">boo</a>.  It is composed of a base class in our application code, and a compiler step in <a target="_blank" href="http://boo.codehaus.org/">boo</a> that will turn the Dsl script into a class that is derived from the defined base class.  It is known as an anonymous base class because there is no mention of the base class in the Dsl script.
+The technique we have chosen for <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> is to create what is known as an <i>anonymous base class</i> that is the basis of our Dsl.  The anonymous base class is a standard approach for building a Dsl in <a target="_blank" href="http://boo.codehaus.org/">boo</a>.  It is composed of a base class in our application code, and a compiler step in <a target="_blank" href="http://boo.codehaus.org/">boo</a> that will turn the Dsl script into a class that is derived from the defined base class.  It is known as an anonymous base class because there is no mention of the base class in the Dsl script. If you look at the horn.boo dsl script at the top of the page you can think of the keywords <strong><i>install</i></strong>, <strong><i>description</i></strong>, <strong><i>get_from</i></strong> etc. as methods on the base class that we are simply calling in our script.
 
-Below is the listing of the basic outline of the BooConfigReader anonymous base class we have define in <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> to act as a base class for our Dsl scripts:
+Below is a code snippet of the basic outline of the BooConfigReader anonymous base class we have defined in the <a href="http://code.google.com/p/scotaltdotnet/" target="_blank">horn</a> application code to act as a base class for our Dsl scripts:
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
-<pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">abstract</span> <span style="color: blue;">class</span> <span style="color: #2b91af;">BooConfigReader</span>
+<pre style="margin: 0px;"><span style="color: blue;">public</span> <span style="color: blue;">abstract</span> <span style="color: blue;">class</span> <span style="color: #2b91af;">BooConfigReader</span>
+{
+&nbsp;&nbsp;&nbsp; [<span style="color: #2b91af;">Meta</span>]
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">static</span> <span style="color: #2b91af;">Expression</span> install(<span style="color: #2b91af;">ReferenceExpression</span> expression, <span style="color: #2b91af;">Expression</span> action)
 &nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue;">var</span> installName = <span style="color: blue;">new</span> <span style="color: #2b91af;">StringLiteralExpression</span>(expression.Name);
+&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue;">return</span> <span style="color: blue;">new</span> <span style="color: #2b91af;">MethodInvocationExpression</span>(
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span style="color: blue;">new</span> <span style="color: #2b91af;">ReferenceExpression</span>(<span style="color: #a31515;">"GetInstallerMeta"</span>),
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; installName,
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; action
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; );
 &nbsp;&nbsp;&nbsp; }
-</pre></div>
+&nbsp;
+&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">void</span> description(<span style="color: blue;">string</span> text)
+&nbsp;&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Description = text;
+&nbsp;&nbsp;&nbsp; }</pre>
+</div>
+Dsl script instances will inherit from this inherit from this class.  Below is the first two lines of the horn.boo Dsl build script:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">install horn:
+&nbsp;&nbsp;&nbsp;&nbsp;description "A .NET build and dependency manager"</pre>
+</div>
+You can see that we have methods in the base classes that correspond to methods in the Dsl Script.  We will explain how this works in the next post.
+
 And below is the same class written in <a target="_blank" href="http://boo.codehaus.org/">boo</a>:
 <div style="font-family: Courier New; font-size: 11pt; color: black; background: white;">
 <pre style="margin: 0px;">&nbsp;&nbsp;&nbsp; abstract class BooConfigReader(IQuackFu): </pre>
