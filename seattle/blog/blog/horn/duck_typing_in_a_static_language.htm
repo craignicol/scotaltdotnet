@@ -1,0 +1,37 @@
+﻿In the previous <a target="_blank" href="http://thesoftwaresimpleton.blogspot.com/2009/04/boo-compiler-extension-in-horn-dsl.html">post</a> I explained how the horn software system inserts an anonyomous base class into the pipeline in order to effectively become the base class which all Dsl scripts will inherit from.
+
+I now want to explain how the following syntax was achieved
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">dependencies:
+&nbsp;&nbsp;&nbsp;&nbsp;package.homepage = "http://code.google.com/p/scotaltdotnet/"
+&nbsp;&nbsp;&nbsp;&nbsp;package.forum    = "http://groups.google.co.uk/group/horn-development?hl=en"
+&nbsp;&nbsp;&nbsp;&nbsp;package.contrib  = false
+</div>
+You might be wondering what in the world is unusual about this code and you would be correct to query the worth of explaining such trivial code.  
+
+It seems even more trivial when you examine the horn source code and discover that there is a Package object which is defined below:
+<div style="font-family: Courier New; color: black; background: white;">
+<pre style="margin: 0px;">class Package(IQuackFu): 
+&nbsp;&nbsp;&nbsp;&nbsp;[property(PackageInfo)]
+&nbsp;&nbsp;&nbsp;&nbsp;public packageInfo as Dictionary[of string, object]
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;def QuackGet(name as string, parameters as (object)) as object:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pass
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;def QuackInvoke(name as string, args as (object)) as object:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pass
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;def QuackSet(name as string, parameters as (object), value) as object:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;packageInfo.Add(name, value)
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;def constructor():
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;packageInfo = Dictionary[of string, object]()
+</div>
+The first thing of note is that there is not a homepage method or a forum method or indeed a contrib method but yet the horn dsl script compiles and is able to add the values to the horn domain model.
+
+You might also note above that the Package object implements the IQuackFu interface which is quite possibly the best named interface the .NET framework.
+
+The IQuackFu is boo's answer to method missing method not understood in dynamic languages.
+
+
+
