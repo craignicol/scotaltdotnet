@@ -16,4 +16,5 @@ dependencies:
 	
 package.homepage = "http://www.hibernate.org/343.html"
 package.forum    = "http://groups.google.co.uk/group/nhusers?hl=en"
+
 	
