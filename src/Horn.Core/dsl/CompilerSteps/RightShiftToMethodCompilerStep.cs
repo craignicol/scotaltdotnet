@@ -12,9 +12,9 @@ namespace Horn.Core.Dsl
 
             foreach (Statement statement in node.Body.Statements)
             {
-                MethodInvocationExpression expression = (MethodInvocationExpression)((ExpressionStatement) statement).Expression;
+                var expression = (MethodInvocationExpression)((ExpressionStatement) statement).Expression;
 
-                foreach(Expression arg in expression.Arguments)
+                foreach(var arg in expression.Arguments)
                 {
                     if ((!(arg is BinaryExpression)) || ((BinaryExpression)arg).Operator != BinaryOperatorType.ShiftRight) 
                         continue;
