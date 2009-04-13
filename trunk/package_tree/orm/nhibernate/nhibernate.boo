@@ -13,7 +13,7 @@ dependencies:
 	depend @log4net >> "log4net"
 	depend @castle  >>  "Castle.Core"
 	depend @castle  >>  "Castle.DynamicProxy2"
-	
+
 package.homepage = "http://www.hibernate.org/343.html"
 package.forum    = "http://groups.google.co.uk/group/nhusers?hl=en"
 
