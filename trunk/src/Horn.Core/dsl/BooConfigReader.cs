@@ -10,7 +10,8 @@ namespace Horn.Core.Dsl
     public abstract class BooConfigReader
     {
         [Meta]
-        public static Expression install(ReferenceExpression expression, BlockExpression action)
+        public static Expression install(ReferenceExpression expression, 
+                                                        BlockExpression action)
         {
             var installName = new StringLiteralExpression(expression.Name);
 
