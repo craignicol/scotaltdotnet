@@ -46,6 +46,10 @@ namespace Horn.Core.SCM
 
         public virtual void Export(IPackageTree packageTree)
         {
+            //TODO: DELETE THE FOLLOWING IF STATEMENT AND FIND OUT WHY THE LOG4NET REVISION NUMBER IS ALWAYS GREATER
+            if (packageTree.Name.ToLower().Equals("log4net"))
+                return;
+
             if (downloadedPackages.ContainsKey(packageTree.Name))
                 return;
 
