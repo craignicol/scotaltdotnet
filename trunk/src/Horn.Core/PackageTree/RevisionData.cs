@@ -30,8 +30,8 @@ namespace Horn.Core.PackageStructure
                 {
                     using(var stream =  revisionFileInfo.OpenRead())
                     {
-                        byte[] b = new byte[1024];
-                        UTF8Encoding temp = new UTF8Encoding(true);
+                        var b = new byte[1024];
+                        var temp = new UTF8Encoding(true);
 
                         while (stream.Read(b, 0, b.Length) > 0)
                         {
@@ -62,6 +62,10 @@ namespace Horn.Core.PackageStructure
 
         public bool ShouldUpdate(IRevisionData other)
         {
+            log.InfoFormat("Current Revision is = {0}", Revision);
+
+            log.InfoFormat("Revision at remote scm is {0}", other.Revision);
+
             return (long.Parse(other.Revision) > long.Parse(Revision));
         }
 
@@ -94,6 +98,8 @@ namespace Horn.Core.PackageStructure
 
         public RevisionData(IPackageTree packageTree)
         {
+            log.InfoFormat("Reading the current revision for {0}", packageTree.Name);
+
             revisionFileInfo = GetRevisionFile(packageTree);
 
             if (revisionFileInfo.Exists) 
