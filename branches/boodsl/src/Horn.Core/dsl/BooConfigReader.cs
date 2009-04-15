@@ -10,20 +10,6 @@ namespace Horn.Core.Dsl
     public abstract class BooConfigReader
     {
 
-        public virtual BuildEngine BuildEngine { get; set; }
-
-        public virtual string Description { get; set; }
-
-        public virtual string InstallName { get; set; }
-
-        public virtual SourceControl SourceControl { get; set; }
-
-
-
-        public abstract void Prepare();
-
-
-
         [Meta]
         public static Expression build_with(ReferenceExpression builder, MethodInvocationExpression build, ReferenceExpression frameWorkVersion)
         {
@@ -218,6 +204,17 @@ namespace Horn.Core.Dsl
             action();
         }
 
+        public virtual BuildEngine BuildEngine { get; set; }
+
+        public virtual string Description { get; set; }
+
+        public virtual string InstallName { get; set; }
+
+        public virtual SourceControl SourceControl { get; set; }
+
+
+
+        public abstract void Prepare();
 
         public delegate void Action();
         public virtual void generate_strong_key()
