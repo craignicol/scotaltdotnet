@@ -7,7 +7,7 @@ import Boo.Lang.Compiler.Ast
 import Horn.Domain
 import System.Runtime.CompilerServices	    
 
-abstract class BooConfigReader(IQuackFu): 
+abstract class BooConfigReader: 
 	callable Action()      
 	
 	[Meta]
@@ -93,4 +93,45 @@ macro shared_library:
 	return [|
 			block:
 				 BuildEngine.SharedLibrary = $value
-	|].Block
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class AnonBaseClass(AbstractTransformerCompilerStep):  
+	def Run():  
+		Visit(CompileUnit)
+	
+	override def OnModule(node as Module):  
+		baseClass = [|
+			class $(node.Name) (MyDsl):
+				override def Build():
+					$(node.Globals)
+			|]
+
+		node.Globals = Block()
+		node.Members.Add(baseClass)	
