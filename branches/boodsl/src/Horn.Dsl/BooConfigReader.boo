@@ -122,16 +122,26 @@ macro shared_library:
 
 
 
-class AnonBaseClass(AbstractTransformerCompilerStep):  
-	def Run():  
+
+class MyDslAsAnonymousBaseClassStep(AbstractTransformerCompilerStep):
+	# This is the method that the compiler pipeline will execute
+	def Run():
+		# The visitor pattern make it very easy to pick and choose
+		# what we want to process
 		Visit(CompileUnit)
-	
-	override def OnModule(node as Module):  
+	# Here we are choosing to process all the modules
+	override def OnModule(node as Module):
+		
+		# We use quasi quotation to generate a class definition
+		# with all the code that was in the module inside it.
+		# We use the same name as the module and inherit from MyDsl
 		baseClass = [|
-			class $(node.Name) (MyDsl):
+			class $(node.Name) (BooConfigReader):
 				override def Build():
 					$(node.Globals)
-			|]
-
+		|]
+	
+		# Then we clear the module’s globals and add the newly
+		# created class to the node’s members.
 		node.Globals = Block()
-		node.Members.Add(baseClass)	
+		node.Members.Add(baseClass)
