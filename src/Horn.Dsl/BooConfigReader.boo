@@ -93,6 +93,7 @@ macro shared_library:
 	return [|
 			block:
 				 BuildEngine.SharedLibrary = $value
+	|].Block
 	
 
 
