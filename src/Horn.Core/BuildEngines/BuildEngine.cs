@@ -66,7 +66,7 @@ namespace Horn.Core.BuildEngines
 
             var cmdLineArguments = BuildTool.CommandLineArguments(pathToBuildFile, this, packageTree, Version);
 
-            var pathToBuildTool = BuildTool.PathToBuildTool(packageTree, Version);
+            var pathToBuildTool = string.Format("\"{0}\"", BuildTool.PathToBuildTool(packageTree, Version));
 
             CopyDependenciesTo(packageTree);
 
