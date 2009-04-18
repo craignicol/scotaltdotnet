@@ -8,10 +8,10 @@ namespace Horn.Core.BuildEngines
         public IProcess GetProcess(string pathToBuildTool, string cmdLineArguments, string workingDirectoryPath)
         {
             var psi = new ProcessStartInfo(pathToBuildTool, cmdLineArguments)
-            {
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                WorkingDirectory = workingDirectoryPath
+                          {
+                              UseShellExecute = false,
+                              RedirectStandardOutput = true,
+                              WorkingDirectory = workingDirectoryPath
             };  
 
             return new DiagnosticsProcess(Process.Start(psi));
