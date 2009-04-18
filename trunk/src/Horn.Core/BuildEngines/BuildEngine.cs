@@ -197,7 +197,9 @@ namespace Horn.Core.BuildEngines
 
         private string GetBuildFilePath(IPackageTree tree)
         {
-            return Path.Combine(tree.WorkingDirectory.FullName, BuildFile).Replace('/', '\\');
+            var relativePath = BuildFile.Replace('/', '\\');
+
+            return string.Format("\"{0}\"", Path.Combine(tree.WorkingDirectory.FullName, relativePath));
         }
 
 
