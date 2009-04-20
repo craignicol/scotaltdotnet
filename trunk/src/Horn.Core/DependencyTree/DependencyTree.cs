@@ -1,13 +1,13 @@
-namespace Horn.Core.Dependencies
+namespace Horn.Core.DependencyTree
 {
-    using System.Collections;
     using System.Collections.Generic;
-    using PackageStructure;
+    using Horn.Core.PackageStructure;
 
     public class DependencyTree : IDependencyTree
     {
 
         private BuildTree buildTree;
+
 
         public IList<IPackageTree> BuildList
         {
@@ -17,27 +17,29 @@ namespace Horn.Core.Dependencies
             }
         }
 
-        private IPackageTree PackageTree { get; set; }
+        public IPackageTree PackageTree { get; private set; }
+
+
 
         private void CalculateDependencies(IPackageTree packageTree)
         {
             buildTree = CalculateDependencies(packageTree, null);
         }
 
-        private BuildTree CalculateDependencies(IPackageTree packageTree, BuildTree currentTree)
+        private BuildTree CalculateDependencies(IPackageTree packageTree, BuildTree tree)
         {
-            if (currentTree == null)
+            if (tree == null)
             {
-                currentTree = new BuildTree(packageTree);
+                tree = new BuildTree(packageTree);
             }
             else
             {
-                if (HasACircularDependency(currentTree, packageTree))
+                if (tree.GetAncestors().Contains(packageTree))
                 {
                     throw new CircularDependencyException(packageTree.Name);
                 }
-                
-                InsertDependenciesBeforeParent(currentTree, packageTree);
+                // Insert dependencies before parents
+                tree.AddChild(packageTree);
             }
             packageTree.GetBuildMetaData(packageTree.Name)
                 .BuildEngine
@@ -46,23 +48,14 @@ namespace Horn.Core.Dependencies
                 dependency =>
                 CalculateDependencies
                     (
-                    PackageTree.RetrievePackage(dependency.PackageName),
-                    currentTree)
-                );
+                            PackageTree.RetrievePackage(dependency.PackageName), 
+                            tree)
+                        );
 
-            return currentTree;
+            return tree;
 
         }
 
-        private void InsertDependenciesBeforeParent(BuildTree tree, IPackageTree packageTree)
-        {
-            tree.AddChild(packageTree);
-        }
-
-        private bool HasACircularDependency(BuildTree tree, IPackageTree packageTree)
-        {
-            return tree.GetAncestors().Contains(packageTree);
-        }
 
 
         public DependencyTree(IPackageTree packageTree)
@@ -81,12 +74,12 @@ namespace Horn.Core.Dependencies
             private IPackageTree Node;
             
             public BuildTree(IPackageTree node): this(node, new List<BuildTree>(), null)
-            {
-            }
+		    {
+		    }
 
             public BuildTree(IPackageTree node, BuildTree parent) : this(node, new List<BuildTree>(), parent)
-            {
-            }
+		    {
+		    }
 
             public BuildTree(IPackageTree node, IList<BuildTree> children, BuildTree parent)
             {
@@ -130,16 +123,6 @@ namespace Horn.Core.Dependencies
                 return GetBuildList(new List<IPackageTree>());
             }
 
-        }
-
-        public IEnumerator<IPackageTree> GetEnumerator()
-        {
-            return BuildList.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }
