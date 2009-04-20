@@ -1,13 +1,13 @@
-namespace Horn.Core.Spec.Unit.DependencyTree
+namespace Horn.Core.Spec.Dependencies
 {
     using System;
-    using PackageStructure;
-    using BuildEngines;
-    using Xunit;
     using BuildEngine;
+    using BuildEngines;
+    using Core.Dependencies;
     using Dsl;
+    using PackageStructure;
     using Rhino.Mocks;
-    using Core.DependencyTree;
+    using Xunit;
 
     public class When_We_Have_A_Single_Dependency : DirectorySpecificationBase
     {
@@ -22,9 +22,9 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             rootBuildMetaData = CreateStub<IBuildMetaData>();
             dependencyBuildMetaData = CreateStub<IBuildMetaData>();
 
-            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency"));
-            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency", Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency", Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
 
             packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return("root");
@@ -61,9 +61,9 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             rootBuildMetaData = CreateStub<IBuildMetaData>();
             dependencyBuildMetaData = CreateStub<IBuildMetaData>();
 
-            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency.boo"));
-            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             dependencyBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("root", "root.boo"));
 
             packageTree = CreateStub<IPackageTree>();
@@ -96,7 +96,7 @@ namespace Horn.Core.Spec.Unit.DependencyTree
         private IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
         {
             var buildMetaData = CreateStub<IBuildMetaData>();
-            buildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            buildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             foreach (string dependencyName in dependencyNames)
             {
                 buildMetaData.BuildEngine.Dependencies.Add(new Dependency(dependencyName, String.Format("{0}", dependencyName)));                

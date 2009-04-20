@@ -2,19 +2,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Horn.Core.PackageStructure;
-using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;
 using log4net;
-
+using Horn.Core.extensions;
 
 namespace Horn.Core.BuildEngines
 {
+    using Dependencies;
+
     public class BuildEngine
     {
 
         private static readonly ILog log = LogManager.GetLogger(typeof(MSBuildBuildTool));
         private static readonly Dictionary<string, string> builtPackages = new Dictionary<string, string>();
-
+        private IDependencyDispatcher dependencyDispatcher;
 
         public string BuildFile { get; private set; }
 
@@ -158,23 +159,7 @@ namespace Horn.Core.BuildEngines
 
         private void CopyDependenciesTo(IPackageTree packageTree)
         {
-            foreach (Dependency dependency in Dependencies)
-            {
-                var dependencyDirectory = packageTree.RetrievePackage(dependency.PackageName).OutputDirectory;
-
-                var sourceFiles = dependencyDirectory.GetFiles(string.Format("{0}.*", dependency.Library));
-
-                var targetDir = GetDirectoryFromParts(packageTree.WorkingDirectory, SharedLibrary);
-
-                foreach (FileInfo nextFile in sourceFiles)
-                {
-                    string destination = Path.Combine(targetDir.FullName, Path.GetFileName(nextFile.FullName));
-
-                    log.InfoFormat("Dependency: Copying {0} to {1} ...", nextFile.FullName, destination);
-
-                    nextFile.CopyTo(destination, true);
-                }
-            }
+            dependencyDispatcher.Dispatch(packageTree, Dependencies, SharedLibrary);
         }
 
         private DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
@@ -204,15 +189,13 @@ namespace Horn.Core.BuildEngines
 
 
 
-        public BuildEngine(IBuildTool buildTool, string buildFile, FrameworkVersion version)
+        public BuildEngine(IBuildTool buildTool, string buildFile, FrameworkVersion version, IDependencyDispatcher dependencyDispatcher)
         {
             BuildTool = buildTool;
-
             BuildFile = buildFile;
-
             Version = version;
-
             Dependencies = new List<Dependency>();
+            this.dependencyDispatcher = dependencyDispatcher;
         }
 
 
