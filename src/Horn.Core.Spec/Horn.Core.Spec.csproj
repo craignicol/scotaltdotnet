@@ -119,6 +119,7 @@
     <Compile Include="BuildEngine\StubProcessFactory.cs" />
     <Compile Include="CmdLine\RefreshCommandLineFixture.cs" />
     <Compile Include="Dependencies\DependencyDispatcherSpecification.cs" />
+    <Compile Include="Dependencies\DependencyOrderFixture.cs" />
     <Compile Include="Dependencies\DependencyTreeSpecification.cs" />
     <Compile Include="Dependencies\dependency_dispatcher_context.cs" />
     <Compile Include="Dependencies\DependentUpdaterExecutorSpecification.cs" />
