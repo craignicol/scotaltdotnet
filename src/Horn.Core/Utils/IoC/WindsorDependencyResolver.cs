@@ -8,9 +8,6 @@ using Horn.Core.SCM;
 
 namespace Horn.Core.Utils.IoC
 {
-    using System.Reflection;
-    using Dependencies;
-
     public class WindsorDependencyResolver : IDependencyResolver
     {
         private readonly WindsorContainer innerContainer;
@@ -28,7 +25,6 @@ namespace Horn.Core.Utils.IoC
         public WindsorDependencyResolver()
         {
             innerContainer = new WindsorContainer();
-            innerContainer.Kernel.Resolver.AddSubResolver(new EnumerableResolver(innerContainer.Kernel));
 
             innerContainer.Register(
                 Component.For<IBuildConfigReader>()
@@ -70,19 +66,6 @@ namespace Horn.Core.Utils.IoC
                             .ImplementedBy<DiagnosticsProcessFactory>()
                             .LifeStyle.Transient
 
-                );
-
-            innerContainer.Register(
-                Component.For<IDependencyDispatcher>()
-                    .ImplementedBy<DependencyDispatcher>()
-                    .LifeStyle.Transient,
-
-                Component.For<IDependentUpdaterExecutor>()
-                    .ImplementedBy<DependentUpdaterExecutor>()
-                    .LifeStyle.Transient,
-
-                AllTypes.Of<IDependentUpdater>().FromAssembly(Assembly.GetExecutingAssembly())
-                    .WithService.FirstInterface().Configure(config => config.LifeStyle.Transient)
                 );
         }
     }

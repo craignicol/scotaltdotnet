@@ -1,9 +1,9 @@
-namespace Horn.Core.extensions
+namespace Horn.Core.Utils
 {
     using System;
     using System.Collections.Generic;
 
-    public static class EnumerableExtensions
+    public static class EnumerableExtensionMethods
     {
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> items, Action<T> action)
         {
@@ -12,6 +12,5 @@ namespace Horn.Core.extensions
 
             return items;
         }
-
     }
 }

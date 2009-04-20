@@ -4,8 +4,6 @@ using Horn.Core.Dsl;
 
 namespace Horn.Core.PackageStructure
 {
-    using System;
-
     public class NullPackageTree : IPackageTree
     {
         public void Add(IPackageTree item)

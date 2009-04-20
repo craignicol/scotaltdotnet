@@ -98,25 +98,12 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildEngines\Dependency.cs" />
-    <Compile Include="Dependencies\DependencyCopier.cs" />
-    <Compile Include="Dependencies\DependencyDispatcher.cs" />
-    <Compile Include="Dependencies\DependentUpdaterExecutor.cs" />
-    <Compile Include="Dependencies\IDependencyDispatcher.cs" />
-    <Compile Include="Dependencies\IDependentUpdater.cs" />
-    <Compile Include="Dependencies\IDependentUpdaterExecutor.cs" />
-    <Compile Include="Dependencies\VisualStudioDependentUpdater.cs" />
-    <Compile Include="Utils\WithLogging.cs" />
-    <Compile Include="extensions\DirectoryInfoExtensions.cs" />
     <Compile Include="BuildEngines\Process\DiagnosticsProcess.cs" />
     <Compile Include="BuildEngines\BuildTools\IBuildTool.cs" />
     <Compile Include="BuildEngines\Process\iprocess.cs" />
@@ -125,9 +112,9 @@
     <Compile Include="BuildEngines\Process\DiagnosticsProcessFactory.cs" />
     <Compile Include="BuildEngines\BuildTools\NAntBuildTool.cs" />
     <Compile Include="BuildEngines\BuildTools\RakeBuildTool.cs" />
-    <Compile Include="Dependencies\CircularDependencyException.cs" />
-    <Compile Include="Dependencies\DependencyTree.cs" />
-    <Compile Include="Dependencies\IDependencyTree.cs" />
+    <Compile Include="DependencyTree\CircularDependencyException.cs" />
+    <Compile Include="DependencyTree\DependencyTree.cs" />
+    <Compile Include="DependencyTree\IDependencyTree.cs" />
     <Compile Include="dsl\BooConfigReader.cs" />
     <Compile Include="dsl\BuildMetadata\IBuildMetaData.cs" />
     <Compile Include="dsl\BuildMetadata\NullBuildMetatData.cs" />
@@ -141,7 +128,6 @@
     <Compile Include="dsl\BuildMetadata\BuildMetaData.cs" />
     <Compile Include="dsl\DslEngines\ConfigReaderEngine.cs" />
     <Compile Include="dsl\IBuildConfigReader.cs" />
-    <Compile Include="extensions\EnumerableExtensions.cs" />
     <Compile Include="extensions\StringExtensions.cs" />
     <Compile Include="IComposite.cs" />
     <Compile Include="MetaDataSynchroniser\imetadatasynchroniser.cs" />
@@ -168,8 +154,8 @@
     <Compile Include="Utils\Framework\Framework.cs" />
     <Compile Include="Utils\Framework\FrameworkLocator.cs" />
     <Compile Include="Utils\Framework\MSBuild.cs" />
-    <Compile Include="Utils\IoC\EnumerableResolver.cs" />
     <Compile Include="Utils\IoC\IoC.cs" />
+    <Compile Include="Utils\EnumerableExtensionMethods.cs" />
     <Compile Include="Utils\IFileSystemProvider.cs" />
     <Compile Include="Get\IGet.cs" />
     <Compile Include="Package.cs" />

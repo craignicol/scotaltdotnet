@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using Horn.Core.Utils;
 namespace Horn.Core.PackageStructure
 {
-    using extensions;
-
     public class BuildFileResolver : IBuildFileResolver
     {
 
