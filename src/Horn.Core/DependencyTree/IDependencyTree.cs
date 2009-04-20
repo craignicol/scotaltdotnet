@@ -1,9 +1,9 @@
-namespace Horn.Core.Dependencies
+namespace Horn.Core.DependencyTree
 {
     using System.Collections.Generic;
     using PackageStructure;
 
-    public interface IDependencyTree : IEnumerable<IPackageTree>
+    public interface IDependencyTree
     {
         IList<IPackageTree> BuildList { get; }
     }
