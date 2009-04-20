@@ -1,3 +1,5 @@
+using Horn.Core.Spec.helpers;
+
 namespace Horn.Core.Spec.Dependencies
 {
     using System;
@@ -93,30 +95,11 @@ namespace Horn.Core.Spec.Dependencies
         protected IDependencyTree dependencyTree;
         protected IPackageTree packageTree;
 
-        private IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
-        {
-            var buildMetaData = CreateStub<IBuildMetaData>();
-            buildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
-            foreach (string dependencyName in dependencyNames)
-            {
-                buildMetaData.BuildEngine.Dependencies.Add(new Dependency(dependencyName, String.Format("{0}", dependencyName)));                
-            }
-
-            var packageTree = CreateStub<IPackageTree>();
-            packageTree.Stub(x => x.Name).Return(packageName);
-            packageTree.Stub(x => x.GetBuildMetaData("root")).Return(buildMetaData);
-            packageTree.Stub(x => x.GetBuildMetaData("complexDependency")).Return(buildMetaData);
-            packageTree.Stub(x => x.GetBuildMetaData("sharedDependency")).Return(buildMetaData);
-
-            return packageTree;
-
-        }
-
         protected override void Because()
         {
-            packageTree = CreatePackageTreeNode("root", new string[] {"complexDependency", "sharedDependency"});
-            IPackageTree dependentTree = CreatePackageTreeNode("complexDependency", new[] {"sharedDependency"});
-            IPackageTree sharedTree = CreatePackageTreeNode("sharedDependency", new string[] { });
+            packageTree = TreeHelper.CreatePackageTreeNode("root", new string[] { "complexDependency", "sharedDependency" });
+            IPackageTree dependentTree = TreeHelper.CreatePackageTreeNode("complexDependency", new[] { "sharedDependency" });
+            IPackageTree sharedTree = TreeHelper.CreatePackageTreeNode("sharedDependency", new string[] { });
 
             IPackageTree[] packages = new[] { packageTree, dependentTree, sharedTree };
 
