@@ -7,6 +7,8 @@ using Horn.Core.Utils.Framework;
 
 namespace Horn.Core.Dsl
 {
+    using Dependencies;
+
     public abstract class BooConfigReader
     {
         [Meta]
@@ -119,7 +121,7 @@ namespace Horn.Core.Dsl
         {
             Array.ForEach(dependencies, item =>
                                      {
-                                         var dependency = new Dependency(item.Split('|')[0], item.Split('|')[1]);
+                                         var dependency = Dependency.Parse(item);
 
                                          BuildEngine.Dependencies.Add(dependency); 
                                      });
@@ -166,21 +168,26 @@ namespace Horn.Core.Dsl
         {
             var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
 
-            BuildEngine = new BuildEngine(new NAntBuildTool(), buildFile, version);
+            SetBuildEngine(new NAntBuildTool(), buildFile, version);
+        }
+
+        private void SetBuildEngine(IBuildTool tool, string buildFile, FrameworkVersion version)
+        {
+            BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
         }
 
         protected void msbuild(string buildFile, string frameWorkVersion)
         {
             var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
 
-            BuildEngine = new BuildEngine(new MSBuildBuildTool(), buildFile, version);
+            SetBuildEngine(new MSBuildBuildTool(), buildFile, version);
         }
 
         protected void rake(string buildFile, Action action, string frameWorkVersion)
         {
             var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
 
-            BuildEngine = new BuildEngine(new RakeBuildTool(), buildFile, version);
+            SetBuildEngine(new RakeBuildTool(), buildFile, version);
 
             action();
         }

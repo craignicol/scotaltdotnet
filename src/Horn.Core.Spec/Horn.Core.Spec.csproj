@@ -118,7 +118,14 @@
     <Compile Include="BuildEngine\StubProcess.cs" />
     <Compile Include="BuildEngine\StubProcessFactory.cs" />
     <Compile Include="CmdLine\RefreshCommandLineFixture.cs" />
-    <Compile Include="DependencyTree\DependencyTreeSpecification.cs" />
+    <Compile Include="Dependencies\DependencyDispatcherSpecification.cs" />
+    <Compile Include="Dependencies\DependencyOrderFixture.cs" />
+    <Compile Include="Dependencies\DependencyTreeSpecification.cs" />
+    <Compile Include="Dependencies\dependency_dispatcher_context.cs" />
+    <Compile Include="Dependencies\DependentUpdaterExecutorSpecification.cs" />
+    <Compile Include="Dependencies\dependent_updater_executor_context.cs" />
+    <Compile Include="Dependencies\VisualStudioDependentUpdaterSpecification.cs" />
+    <Compile Include="Dependencies\visual_studio_dependent_updater_context.cs" />
     <Compile Include="DirectorySpecificationBase.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />

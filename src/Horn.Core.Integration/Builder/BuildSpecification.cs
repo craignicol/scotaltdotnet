@@ -8,6 +8,8 @@ using Horn.Core.PackageStructure;
 
 namespace Horn.Core.Integration.Builder
 {
+    using Dependencies;
+
     public class When_The_Build_Meta_Data_Specifies_MSBuild : BuildSpecificationBase
     {
         protected override void Because()
@@ -20,7 +22,7 @@ namespace Horn.Core.Integration.Builder
 
             var solutionPath = Path.Combine(Path.Combine(rootPath, "Horn.Core"), "Horn.Core.csproj");
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35){OutputDirectory = "."};
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>()){OutputDirectory = "."};
         }
 
         [Fact]
@@ -46,7 +48,7 @@ namespace Horn.Core.Integration.Builder
 
             var solutionPath = Path.Combine(rootPath, "Horn.sln");
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35);
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35, new DependencyDispatcher(CreateStub<IDependentUpdaterExecutor>()));
 
             string dependentPath = CreateDirectory("Dependent");
 

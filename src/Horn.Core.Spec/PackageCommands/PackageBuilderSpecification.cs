@@ -1,6 +1,7 @@
 namespace Horn.Core.Spec.Unit.PackageCommands
 {
     using System.Collections.Generic;
+    using Core.Dependencies;
     using Core.Dsl;
     using GetOperations;
     using Core.PackageCommands;
@@ -79,7 +80,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             var buildTool = new BuildToolStub();
 
-            var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35);
+            var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
 
             baseConfigReader.BuildEngine = buildEngine;
 
