@@ -1,4 +1,4 @@
-namespace Horn.Core.DependencyTree
+namespace Horn.Core.Dependencies
 {
     using System;
 

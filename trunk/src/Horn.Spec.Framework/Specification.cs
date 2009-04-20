@@ -6,4 +6,9 @@ public abstract class Specification : TestBase
     {
         return MockRepository.GenerateStub<T>();
     }
+
+    protected static T CreateStub<T>(params object[] param) where T : class
+    {
+        return MockRepository.GenerateStub<T>(param);
+    }
 }

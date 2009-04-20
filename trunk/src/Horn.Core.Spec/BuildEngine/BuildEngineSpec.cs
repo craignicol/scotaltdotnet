@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
@@ -8,6 +7,7 @@ using Xunit;
 namespace Horn.Core.Spec.BuildEngine
 {
     using BuildEngines;
+    using Core.Dependencies;
 
     public class When_The_Build_Engine_Is_Ran : Specification
     {
@@ -23,7 +23,7 @@ namespace Horn.Core.Spec.BuildEngine
             
             buildToolStub = CreateStub<IBuildTool>();
 
-            buildEngine = new BuildEngine(buildToolStub, "deeper/than/this/somebuild.file", FrameworkVersion.FrameworkVersion35);
+            buildEngine = new BuildEngine(buildToolStub, "deeper/than/this/somebuild.file", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             
             buildEngine.Build(new StubProcessFactory(), packageTree);
         }
@@ -43,7 +43,7 @@ namespace Horn.Core.Spec.BuildEngine
 
         protected override void Because()
         {            
-            buildEngine = new BuildEngine(null, "", FrameworkVersion.FrameworkVersion35);
+            buildEngine = new BuildEngine(null, "", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
 
             buildEngine.AssignParameters(switches);
         }

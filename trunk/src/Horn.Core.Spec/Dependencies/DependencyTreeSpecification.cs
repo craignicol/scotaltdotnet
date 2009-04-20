@@ -1,13 +1,15 @@
-namespace Horn.Core.Spec.Unit.DependencyTree
+using Horn.Core.Spec.helpers;
+
+namespace Horn.Core.Spec.Dependencies
 {
     using System;
-    using PackageStructure;
-    using BuildEngines;
-    using Xunit;
     using BuildEngine;
+    using BuildEngines;
+    using Core.Dependencies;
     using Dsl;
+    using PackageStructure;
     using Rhino.Mocks;
-    using Core.DependencyTree;
+    using Xunit;
 
     public class When_We_Have_A_Single_Dependency : DirectorySpecificationBase
     {
@@ -22,9 +24,9 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             rootBuildMetaData = CreateStub<IBuildMetaData>();
             dependencyBuildMetaData = CreateStub<IBuildMetaData>();
 
-            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency"));
-            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency", Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency", Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
 
             packageTree = CreateStub<IPackageTree>();
             packageTree.Stub(x => x.Name).Return("root");
@@ -61,9 +63,9 @@ namespace Horn.Core.Spec.Unit.DependencyTree
             rootBuildMetaData = CreateStub<IBuildMetaData>();
             dependencyBuildMetaData = CreateStub<IBuildMetaData>();
 
-            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            rootBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "root.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             rootBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("simpleDependency", "simpleDependency.boo"));
-            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency.boo", Horn.Core.Utils.Framework.FrameworkVersion.FrameworkVersion35);
+            dependencyBuildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), "simpleDependency.boo", Utils.Framework.FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             dependencyBuildMetaData.BuildEngine.Dependencies.Add(new Dependency("root", "root.boo"));
 
             packageTree = CreateStub<IPackageTree>();
@@ -93,30 +95,11 @@ namespace Horn.Core.Spec.Unit.DependencyTree
         protected IDependencyTree dependencyTree;
         protected IPackageTree packageTree;
 
-        private IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
-        {
-            var buildMetaData = CreateStub<IBuildMetaData>();
-            buildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Utils.Framework.FrameworkVersion.FrameworkVersion35);
-            foreach (string dependencyName in dependencyNames)
-            {
-                buildMetaData.BuildEngine.Dependencies.Add(new Dependency(dependencyName, String.Format("{0}", dependencyName)));                
-            }
-
-            var packageTree = CreateStub<IPackageTree>();
-            packageTree.Stub(x => x.Name).Return(packageName);
-            packageTree.Stub(x => x.GetBuildMetaData("root")).Return(buildMetaData);
-            packageTree.Stub(x => x.GetBuildMetaData("complexDependency")).Return(buildMetaData);
-            packageTree.Stub(x => x.GetBuildMetaData("sharedDependency")).Return(buildMetaData);
-
-            return packageTree;
-
-        }
-
         protected override void Because()
         {
-            packageTree = CreatePackageTreeNode("root", new string[] {"complexDependency", "sharedDependency"});
-            IPackageTree dependentTree = CreatePackageTreeNode("complexDependency", new[] {"sharedDependency"});
-            IPackageTree sharedTree = CreatePackageTreeNode("sharedDependency", new string[] { });
+            packageTree = TreeHelper.CreatePackageTreeNode("root", new string[] { "complexDependency", "sharedDependency" });
+            IPackageTree dependentTree = TreeHelper.CreatePackageTreeNode("complexDependency", new[] { "sharedDependency" });
+            IPackageTree sharedTree = TreeHelper.CreatePackageTreeNode("sharedDependency", new string[] { });
 
             IPackageTree[] packages = new[] { packageTree, dependentTree, sharedTree };
 

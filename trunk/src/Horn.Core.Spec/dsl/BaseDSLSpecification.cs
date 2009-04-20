@@ -3,14 +3,16 @@ using System.IO;
 using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
-using Horn.Core.Utils;
 using Horn.Core.Utils.Framework;
 using Horn.Framework.helpers;
 using Horn.Spec.Framework.Extensions;
 using Xunit;
-using System.Linq;
+
 namespace Horn.Core.Spec.Unit.dsl
 {
+    using Core.Dependencies;
+    using extensions;
+
     public abstract class BaseDSLSpecification : Specification
     {
         protected const string DESCRIPTION = "A .NET build and dependency manager";
@@ -38,7 +40,7 @@ namespace Horn.Core.Spec.Unit.dsl
             BooConfigReader ret = new ConfigReaderDouble();
 
             ret.description(DESCRIPTION);
-            ret.BuildEngine = new BuildEngines.BuildEngine(new MSBuildBuildTool(), BUILD_FILE, FrameworkVersion.FrameworkVersion35);
+            ret.BuildEngine = new BuildEngines.BuildEngine(new MSBuildBuildTool(), BUILD_FILE, FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
             ret.SourceControl = new SVNSourceControl(SVN_URL);
             ret.PackageMetaData.PackageInfo = METADATA;
             ret.BuildEngine.AssignTasks(TASKS.ToArray());
