@@ -8,6 +8,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
     using PackageStructure;
     using BuildEngine;
     using Utils;
+    using Utils.CmdLine;
     using Utils.Framework;
     using Rhino.Mocks;
     using Xunit;
@@ -43,11 +44,13 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         [Fact]
         public void Then_The_Builder_Coordinates_The_Build()
         {
-            switches.Add("install", new List<string> { "horn" });
-
             IPackageCommand command = new PackageBuilder(get, new StubProcessFactory());
+            var arguments = new CommandLineArguments
+                                {
+                                    PackageName = "horn"
+                                };
 
-            command.Execute(wholeTree, switches);
+            command.Execute(wholeTree, arguments);
         }
 
         private IPackageTree GetComponentTree(out IBuildMetaData buildMetaData)

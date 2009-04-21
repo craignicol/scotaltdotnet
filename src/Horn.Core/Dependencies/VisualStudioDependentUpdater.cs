@@ -36,7 +36,7 @@ namespace Horn.Core.Dependencies
             if (firstAssemblyPath == null)
                 return;
 
-            LoadSolutionFiles(dependentUpdaterContext.Package.WorkingDirectory);
+            LoadSolutionFiles(dependentUpdaterContext.WorkingDirectory);
             LoadProjectFiles();
             UpdateProjectDependencies(firstAssemblyPath, dependentUpdaterContext.Dependency.Library);
         }
