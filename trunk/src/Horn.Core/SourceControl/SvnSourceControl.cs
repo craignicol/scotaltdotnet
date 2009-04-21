@@ -46,7 +46,7 @@ namespace Horn.Core.SCM
         protected override void Initialise(IPackageTree packageTree)
         {
             if(!packageTree.Root.Name.StartsWith(PackageTree.RootPackageTreeName))
-                throw new InvalidOperationException("The root of the package tree is not named horn");
+                throw new InvalidOperationException("The root of the package tree is not named .horn");
 
             if (packageTree.WorkingDirectory.Exists)
                 packageTree.WorkingDirectory.Delete(true);

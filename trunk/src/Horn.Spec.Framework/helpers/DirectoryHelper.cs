@@ -7,15 +7,15 @@ namespace Horn.Framework.helpers
     {
         public static string GetTempDirectoryName()
         {
-            var tempPackageTreePath = new DirectoryInfo(Path.Combine(Environment.GetEnvironmentVariable("temp"), "temppackagetrees"));
+            var temp = new DirectoryInfo(Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString()));
 
-            InitialiseTempTreeFolder(tempPackageTreePath);
+            InitialiseTempTreeFolder(temp);
 
-            var ret = new DirectoryInfo(Path.Combine(tempPackageTreePath.FullName, Guid.NewGuid().ToString()));
+            var packageRoot = new DirectoryInfo(Path.Combine(temp.FullName, ".horn"));
 
-            ret.Create();
+            packageRoot.Create();
 
-            return ret.FullName;
+            return packageRoot.FullName;
         }
 
         private static void InitialiseTempTreeFolder(DirectoryInfo tempTreeRootFolder)
@@ -35,6 +35,11 @@ namespace Horn.Framework.helpers
                     continue;
                 }
             }
+
+            var revisionDataFile = new FileInfo(Path.Combine(tempTreeRootFolder.FullName, "revision.horn"));
+
+            if (revisionDataFile.Exists)
+                revisionDataFile.Delete();
         }
 
         public static string GetBaseDirectory()

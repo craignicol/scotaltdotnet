@@ -58,9 +58,9 @@ namespace Horn.Core.Integration.Builder
 
             buildEngine.Dependencies.Add(new Dependency("dependency", "dependency"));
 
-            IPackageTree dependentTree = MockRepository.GenerateStub<IPackageTree>();
+            var dependentTree = MockRepository.GenerateStub<IPackageTree>();
 
-            DirectoryInfo dependentDir = new DirectoryInfo(dependentPath);
+            var dependentDir = new DirectoryInfo(dependentPath);
 
             dependentTree.Stub(x => x.OutputDirectory).Return(dependentDir);
             
@@ -75,6 +75,7 @@ namespace Horn.Core.Integration.Builder
             buildEngine.Build(new DiagnosticsProcessFactory(), packageTree);
 
             string dependentLibFile = Path.Combine(workingPath, dependentFilename);
+
             Assert.True(File.Exists(dependentLibFile));
         }
     }

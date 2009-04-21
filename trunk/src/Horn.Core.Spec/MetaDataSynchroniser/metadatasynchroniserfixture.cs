@@ -16,6 +16,8 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
 
         protected override void Because()
         {
+            SCM.SourceControl.ClearDownLoadedPackages();
+
             packageTree = TreeHelper.GetTempEmptyPackageTree();
 
             metaDataSynchroniser.SynchronisePackageTree(packageTree);

@@ -65,11 +65,11 @@ namespace Horn.Core.BuildEngines
             if (GenerateStrongKey)
                 GenerateKeyFile(packageTree);
 
+            CopyDependenciesTo(packageTree);
+
             var cmdLineArguments = BuildTool.CommandLineArguments(pathToBuildFile, this, packageTree, Version);
 
             var pathToBuildTool = string.Format("\"{0}\"", BuildTool.PathToBuildTool(packageTree, Version));
-
-            CopyDependenciesTo(packageTree);
 
             ProcessBuild(packageTree, processFactory, pathToBuildTool, cmdLineArguments);
 
@@ -86,8 +86,8 @@ namespace Horn.Core.BuildEngines
         public virtual void GenerateKeyFile(IPackageTree packageTree)
         {
             string strongKey = Path.Combine(packageTree.WorkingDirectory.FullName,
-                                            string.Format("{0}.snk", packageTree.Name))
-                                            ;
+                                            string.Format("{0}.snk", packageTree.Name));
+                                            
             string commandLine = string.Format("{0} -k {1}", packageTree.Sn, strongKey);
 
             var PSI = new ProcessStartInfo("cmd.exe")
@@ -126,7 +126,7 @@ namespace Horn.Core.BuildEngines
 
 
 
-        private void CopyArtifactsToBuildDirectory(IPackageTree packageTree)
+        protected virtual void CopyArtifactsToBuildDirectory(IPackageTree packageTree)
         {
             DirectoryInfo buildDir = GetDirectoryFromParts(packageTree.WorkingDirectory, OutputDirectory);
 
@@ -157,12 +157,12 @@ namespace Horn.Core.BuildEngines
             }
         }
 
-        private void CopyDependenciesTo(IPackageTree packageTree)
+        protected virtual void CopyDependenciesTo(IPackageTree packageTree)
         {
             dependencyDispatcher.Dispatch(packageTree, Dependencies, SharedLibrary);
         }
 
-        private DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
+        protected virtual DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
         {
             if (string.IsNullOrEmpty(parts))
                 return sourceDirectory;
@@ -180,7 +180,7 @@ namespace Horn.Core.BuildEngines
             return new DirectoryInfo(outputPath);
         }
 
-        private string GetBuildFilePath(IPackageTree tree)
+        protected virtual string GetBuildFilePath(IPackageTree tree)
         {
             var relativePath = BuildFile.Replace('/', '\\');
 
