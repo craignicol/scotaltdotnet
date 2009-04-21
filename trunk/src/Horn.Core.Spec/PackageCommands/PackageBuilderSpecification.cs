@@ -1,3 +1,5 @@
+using Horn.Framework.helpers;
+
 namespace Horn.Core.Spec.Unit.PackageCommands
 {
     using System.Collections.Generic;
@@ -58,7 +60,9 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             var componentTree = CreateStub<IPackageTree>();
 
-            componentTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"c:\temp\safe")).Repeat.Any();
+            var tempDirectory = new DirectoryInfo(DirectoryHelper.GetTempDirectoryName());
+
+            componentTree.Stub(x => x.WorkingDirectory).Return(tempDirectory).Repeat.Any();
 
             componentTree.Stub(x => x.GetRevisionData()).Return(new RevisionData("3"));
 
