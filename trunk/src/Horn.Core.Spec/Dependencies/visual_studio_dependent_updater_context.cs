@@ -1,3 +1,5 @@
+using Horn.Core.Spec.Doubles;
+
 namespace Horn.Core.Spec.Dependencies
 {
     using System;
@@ -96,14 +98,14 @@ namespace Horn.Core.Spec.Dependencies
   </Target>
   -->
 </Project>";
-        protected FakePackageTree packageTree;
+        protected PackageTreeStub _packageTreeStub;
 
         protected override void Before_each_spec()
         {
             workingPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Guid.NewGuid().ToString());
             dependencyFilePaths = new[] {Path.Combine(workingPath, dependencyFilename) };
 
-            packageTree = CreateStub<FakePackageTree>(new[] {workingPath});
+            _packageTreeStub = CreateStub<PackageTreeStub>(new[] {workingPath});
 
             CreateDirectories();
             CreateDummySolutionFile();
@@ -111,14 +113,14 @@ namespace Horn.Core.Spec.Dependencies
 
             dependentUpdater = new VisualStudioDependentUpdaterDouble();
 
-            updaterContext = new DependentUpdaterContext(packageTree, dependencyFilePaths, new Dependency("", Path.GetFileNameWithoutExtension(dependencyFilename)));
+            updaterContext = new DependentUpdaterContext(_packageTreeStub, dependencyFilePaths, new Dependency("", Path.GetFileNameWithoutExtension(dependencyFilename)));
         }
 
         protected override void Because() { }
 
         private void CreateDummyProjectFile()
         {
-            string projectDirectory = Path.Combine(packageTree.WorkingDirectory.FullName, "Fake.Project");
+            string projectDirectory = Path.Combine(_packageTreeStub.WorkingDirectory.FullName, "Fake.Project");
             projectPath = Path.Combine(projectDirectory, "Fake.Project.csproj");
             var info = new DirectoryInfo(projectDirectory);
 
@@ -131,7 +133,7 @@ namespace Horn.Core.Spec.Dependencies
         private void CreateDirectories()
         {
             Directory.CreateDirectory(workingPath);
-            packageTree.WorkingDirectory.Create();
+            _packageTreeStub.WorkingDirectory.Create();
         }
 
         protected override void After_each_spec()
@@ -142,7 +144,7 @@ namespace Horn.Core.Spec.Dependencies
 
         private void CreateDummySolutionFile()
         {
-            string solutionPath = Path.Combine(packageTree.WorkingDirectory.FullName, "dummy.sln");
+            string solutionPath = Path.Combine(_packageTreeStub.WorkingDirectory.FullName, "dummy.sln");
             File.WriteAllText(solutionPath, solutionContents);
         }
     }

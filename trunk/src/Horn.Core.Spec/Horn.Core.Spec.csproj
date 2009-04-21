@@ -127,6 +127,7 @@
     <Compile Include="Dependencies\VisualStudioDependentUpdaterSpecification.cs" />
     <Compile Include="Dependencies\visual_studio_dependent_updater_context.cs" />
     <Compile Include="DirectorySpecificationBase.cs" />
+    <Compile Include="Stubs\BuildEngineStub.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
     <Compile Include="Extensions\DirectoryExtensions.cs" />
@@ -141,6 +142,8 @@
     <Compile Include="SourceControl\SourceControlSpecs.cs" />
     <Compile Include="SpecificationHelper.cs" />
     <Compile Include="BuildEngine\BuildEngineSpec.cs" />
+    <Compile Include="Stubs\BuildMetaDataStub.cs" />
+    <Compile Include="Stubs\PackageTreeStub.cs" />
     <Compile Include="Utils\FileSystemProvider.cs" />
     <Compile Include="CmdLine\CmdLineSpecificationBase.cs" />
     <Compile Include="CmdLine\CmdLineSpecification.cs" />

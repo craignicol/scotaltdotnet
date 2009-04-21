@@ -39,10 +39,14 @@ namespace Horn.Core.Dependencies
                 
                 InsertDependenciesBeforeParent(currentTree, packageTree);
             }
-            packageTree.GetBuildMetaData(packageTree.Name)
-                .BuildEngine
-                .Dependencies
-                .ForEach(
+
+            var buildMetaData = packageTree.GetBuildMetaData(packageTree.Name);
+
+            var buildEngine = buildMetaData.BuildEngine;
+
+            var dependencies = buildEngine.Dependencies;
+            
+            dependencies.ForEach(
                 dependency =>
                 CalculateDependencies
                     (
