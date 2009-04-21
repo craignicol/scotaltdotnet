@@ -25,7 +25,7 @@ namespace Horn.Core.extensions
 
         public static IEnumerable<string> Search(this DirectoryInfo root, string searchPattern)
         {
-            Queue<string> dirs = new Queue<string>();
+            var dirs = new Queue<string>();
             dirs.Enqueue(root.FullName);
 
             while (dirs.Count > 0)
