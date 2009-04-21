@@ -9,6 +9,8 @@ namespace Horn.Core.Spec.Unit.Get
 
         protected override void Because()
         {
+            SCM.SourceControl.ClearDownLoadedPackages();
+
             get = new Get(fileSystemProvider);
 
             destinationPath = get.Package(package)
