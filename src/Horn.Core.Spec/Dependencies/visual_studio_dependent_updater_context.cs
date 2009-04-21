@@ -136,8 +136,8 @@ namespace Horn.Core.Spec.Dependencies
 
         protected override void After_each_spec()
         {
-            //if (Directory.Exists(workingPath))
-            //    Directory.Delete(workingPath, true);
+            if (Directory.Exists(workingPath))
+                Directory.Delete(workingPath, true);
         }
 
         private void CreateDummySolutionFile()
