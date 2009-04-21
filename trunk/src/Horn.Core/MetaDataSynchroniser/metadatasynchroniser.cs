@@ -8,7 +8,7 @@ namespace Horn.Core.Tree.MetaDataSynchroniser
     {
 
         private readonly SourceControl sourceControl;
-        public const string PACKAGE_TREE_URI = "http://scotaltdotnet.googlecode.com/svn/trunk/package_tree/";
+        public const string PACKAGE_TREE_URI = "http://scotaltdotnet.googlecode.com/svn/branches/dependencyspike/package_tree/";
 
 
         public void SynchronisePackageTree(IPackageTree packageTree)

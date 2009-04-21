@@ -1,6 +1,7 @@
 namespace Horn.Core.Dependencies
 {
     using System.Collections.Generic;
+    using System.IO;
     using BuildEngines;
     using PackageStructure;
 
@@ -22,9 +23,9 @@ namespace Horn.Core.Dependencies
             this.dependency = dependency;
         }
 
-        public IPackageTree Package
+        public DirectoryInfo WorkingDirectory
         {
-            get { return package; }
+            get { return package.WorkingDirectory; }
         }
 
         public IEnumerable<string> DependencyPaths
