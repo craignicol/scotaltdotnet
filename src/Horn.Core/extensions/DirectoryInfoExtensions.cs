@@ -32,33 +32,21 @@ namespace Horn.Core.extensions
             {
                 string dir = dirs.Dequeue();
 
-                // files
-                string[] paths = null;
-                try
-                {
-                    paths = Directory.GetFiles(dir, searchPattern);
-                }
-                catch { } // swallow
+                string[] filePaths  = Directory.GetFiles(dir, searchPattern);
 
-                if (paths != null && paths.Length > 0)
+                if (filePaths != null && filePaths.Length > 0)
                 {
-                    foreach (string file in paths)
+                    foreach (string file in filePaths)
                     {
                         yield return file;
                     }
                 }
 
-                // sub-directories
-                paths = null;
-                try
-                {
-                    paths = Directory.GetDirectories(dir);
-                }
-                catch { } // swallow
+                var directoryPaths = Directory.GetDirectories(dir);
 
-                if (paths != null && paths.Length > 0)
+                if (directoryPaths != null && directoryPaths.Length > 0)
                 {
-                    foreach (string subDir in paths)
+                    foreach (string subDir in directoryPaths)
                     {
                         dirs.Enqueue(subDir);
                     }
