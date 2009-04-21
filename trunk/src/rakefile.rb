@@ -9,32 +9,19 @@ task :build  => [:clean, :init, :copy_package_tree, :copy_referenced_assemblies,
   
 end 
 
-task :geminstall do
-	Gem::Specification.new do |s|
-	   s.name = %q{horn}
-	   s.version = "0.0.1"
-	   s.date = %q{2007-09-03}
-	   s.authors = ["Scotalt.net"]
-	   s.email = %q{wdierkes@5dollarwhitebox.org}
-	   s.summary = %q{ParseConfig provides simple parsing of standard *nix style config files.}
-	   s.homepage = %q{http://www.5dollarwhitebox.org/}
-	   s.description = %q{A .net build manager.}
-	   s.files = [ "README", "Changelog", "LICENSE", "demo.rb", "demo.conf", "lib/parseconfig.rb"]
-	end 
-
+task :build do
+	Rake::Task["build_horn_integration"].execute 
 end
 
 task :build_horn_core => [:generate_assembly_info] do
   compile_dll "Horn.Core/Horn.Core.csproj"
 end
-
 task :build_horn_console do
   compile_dll "Horn.Console/Horn.Console.csproj"
   if ENV["runtests"] == "true"
     Rake::Task["build_horn_spec"].execute     
     
-    #TODO: Integration tests not running on the build server
-    #Rake::Task["build_horn_integration"].execute 
+    Rake::Task["build_horn_integration"].execute 
   end
 end
 
