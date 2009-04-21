@@ -8,6 +8,8 @@ namespace Horn.Core.PackageStructure
     public class PackageTree : IPackageTree
     {
 
+        public const string RootPackageTreeName = ".horn";
+
         private readonly IList<IPackageTree> children;
         private DirectoryInfo workingDirectory;
         private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
@@ -208,7 +210,7 @@ namespace Horn.Core.PackageStructure
         }
 
 
-        private IPackageTree Root
+        public IPackageTree Root
         {
             get
             {

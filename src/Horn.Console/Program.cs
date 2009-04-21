@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
@@ -11,46 +13,37 @@ using log4net.Config;
 
 namespace Horn.Console
 {
-    using Boo.Lang;
-    using Console=System.Console;
-
     class Program
     {
+
         private static readonly ILog log = LogManager.GetLogger(typeof(Program));
+
 
         static void Main(string[] args)
         {
             log.Debug("Horn starting.........");
-            
-            CommandLineArguments commandLineArgs = GetCommandLineArgs(args);
 
-            if (!IsAValidRequest(commandLineArgs))
-            {
-                commandLineArgs.PrintOptions();
-                return;
-            }
-            
             XmlConfigurator.Configure();
 
             InitialiseIoC();
 
-            var info = GetRootFolderPath(commandLineArgs);
-            var packageTree = GetPackageTree(info);
+            var output = new StringWriter();
 
-            IoC.Resolve<IPackageCommand>("install").Execute(packageTree, commandLineArgs);
-        }
+            var packageTree = GetPackageTree();
 
-        private static bool IsAValidRequest(CommandLineArguments arguments)
-        {
-            return arguments.PackageName != null;
-        }
+            var parser = new SwitchParser(output, packageTree);
 
-        private static CommandLineArguments GetCommandLineArgs(string[] args)
-        {
-            var commandLineArgs = new CommandLineArguments();
-            commandLineArgs.Parse(args);
-            LogArguments(commandLineArgs);
-            return commandLineArgs;
+            var parsedArgs = parser.Parse(args);
+
+            if (!IsAValidRequest(parser, parsedArgs))
+            {
+                log.Error(output.ToString());
+                return;
+            }
+
+            LogArguments(parsedArgs);
+
+            IoC.Resolve<IPackageCommand>(parsedArgs.First().Key).Execute(packageTree, parsedArgs);
         }
 
         private static void InitialiseIoC()
@@ -62,9 +55,9 @@ namespace Horn.Console
             log.Debug("IOC initialised.....");
         }
 
-        private static IPackageTree GetPackageTree(DirectoryInfo rootFolderPath)
+        private static IPackageTree GetPackageTree()
         {
-            IPackageTree root = new PackageTree(rootFolderPath, null);
+            IPackageTree root = new PackageTree(GetRootFolderPath(), null);
 
             //TODO: Hard coded dependency.  Should be injected in or retrieved from the container
             IMetaDataSynchroniser metaDataSynchroniser =
@@ -72,12 +65,15 @@ namespace Horn.Console
 
             metaDataSynchroniser.SynchronisePackageTree(root);
 
-            return new PackageTree(rootFolderPath, null);
+            return new PackageTree(GetRootFolderPath(), null);
         }
 
-        private static DirectoryInfo GetRootFolderPath(CommandLineArguments arguments)
+        //TODO: to be replaced by user defined choice from the install perhaps?
+        private static DirectoryInfo GetRootFolderPath()
         {
-            string rootFolder = LoadRootPath(arguments);
+            var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+
+            var rootFolder = Path.Combine(documents.Parent.FullName, PackageTree.RootPackageTreeName);
 
             log.DebugFormat("root folder = {0}", rootFolder);
 
@@ -88,30 +84,28 @@ namespace Horn.Console
             return ret;
         }
 
-        // HACK: Quick and dirty fix for allowing for a different path to be define and rememebered
-        private static string LoadRootPath(CommandLineArguments arguments)
+        private static bool IsAValidRequest(SwitchParser parser, IDictionary<string, IList<string>> parsedArgs)
         {
-            if (!string.IsNullOrEmpty(arguments.Path))
-            {
-                File.WriteAllText("horn.ini", arguments.Path);
-                return arguments.Path;
-            }
+            if (IsHelpTextSwitch(parsedArgs))
+                return false;
 
-            if (File.Exists("horn.ini"))
-            {
-                return File.ReadAllText("horn.ini");
-            }
-
-            var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
-
-            var rootFolder = Path.Combine(documents.Parent.FullName, ".horn");
-
-            return rootFolder;
+            return parser.IsValid(parsedArgs);
         }
 
-        private static void LogArguments(CommandLineArguments args)
+        private static bool IsHelpTextSwitch(IDictionary<string, IList<string>> parsedArgs)
         {
-            log.Info(args);
+            return parsedArgs != null && parsedArgs is HelpReturnValue;
+        }
+
+        private static void LogArguments(Dictionary<string, IList<string>> args)
+        {
+            foreach (var arg in args)
+            {
+                log.InfoFormat("Command {0} was issued with values:", arg.Key);
+
+                foreach (var value in arg.Value)
+                    log.InfoFormat("{0}\n", value);
+            }
         }
 
 

@@ -86,6 +86,11 @@ namespace Horn.Core.Spec.Dependencies
             get { throw new NotImplementedException(); }
         }
 
+        public IPackageTree Root
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public string Name
         {
             get { throw new NotImplementedException(); }
