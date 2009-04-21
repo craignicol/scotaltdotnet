@@ -38,9 +38,15 @@ namespace Horn.Core.Integration.Builder
     {
         private string dependentFilename;
 
+        private IDependentUpdaterExecutor updaterExecutor;
+
+        private MockRepository mockRepository;
+
         protected override void Because()
         {
             string rootPath = GetRootPath();
+
+            mockRepository = new MockRepository();
 
             packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(workingPath));
 
@@ -48,7 +54,11 @@ namespace Horn.Core.Integration.Builder
 
             var solutionPath = Path.Combine(rootPath, "Horn.sln");
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35, new DependencyDispatcher(CreateStub<IDependentUpdaterExecutor>()));
+            updaterExecutor = CreateStub<IDependentUpdaterExecutor>();
+
+            var dispatcher = new DependencyDispatcher(updaterExecutor);
+
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35, dispatcher);
 
             string dependentPath = CreateDirectory("Dependent");
 
@@ -72,11 +82,11 @@ namespace Horn.Core.Integration.Builder
         [Fact]
         public void Then_The_Build_Copies_The_Dependency()
         {
+            mockRepository.Playback();
+
             buildEngine.Build(new DiagnosticsProcessFactory(), packageTree);
 
-            string dependentLibFile = Path.Combine(workingPath, dependentFilename);
-
-            Assert.True(File.Exists(dependentLibFile));
+            updaterExecutor.AssertWasCalled(x => x.Execute(Arg<IPackageTree>.Is.TypeOf, Arg<IEnumerable<string>>.Is.TypeOf, Arg<Dependency>.Is.TypeOf));
         }
     }
 }
