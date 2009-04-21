@@ -5,8 +5,9 @@ namespace Horn.Core.Dependencies
     using BuildEngines;
     using extensions;
     using PackageStructure;
+    using Utils;
 
-    public class DependentUpdaterExecutor :  IDependentUpdaterExecutor
+    public class DependentUpdaterExecutor :  WithLogging, IDependentUpdaterExecutor
     {
         private readonly HashSet<IDependentUpdater> updaters;
 
@@ -20,8 +21,10 @@ namespace Horn.Core.Dependencies
             if (!HasADependencyToUpdate(dependencyPaths))
                 return;
 
-            updaters.ForEach(updater => updater.Update(new DependentUpdaterContext(packageTree, dependencyPaths, dependency)));
+            InfoFormat("Dependency: Executing Dependency Updaters for {0}", packageTree.Name);
 
+            var dependentUpdaterContext = new DependentUpdaterContext(packageTree, dependencyPaths, dependency);
+            updaters.ForEach(updater => updater.Update(dependentUpdaterContext));
         }
 
         private bool HasADependencyToUpdate(IEnumerable<string> dependencyPaths)

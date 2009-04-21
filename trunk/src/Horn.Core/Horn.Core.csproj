@@ -61,6 +61,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo.Lang.Parser.dll</HintPath>
     </Reference>
+    <Reference Include="Boo.Lang.Useful, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Useful.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Castle.Core.dll</HintPath>
@@ -115,6 +119,7 @@
     <Compile Include="Dependencies\IDependentUpdater.cs" />
     <Compile Include="Dependencies\IDependentUpdaterExecutor.cs" />
     <Compile Include="Dependencies\VisualStudioDependentUpdater.cs" />
+    <Compile Include="Utils\CmdLine\CommandLineArguments.cs" />
     <Compile Include="Utils\WithLogging.cs" />
     <Compile Include="extensions\DirectoryInfoExtensions.cs" />
     <Compile Include="BuildEngines\Process\DiagnosticsProcess.cs" />
@@ -162,9 +167,6 @@
     <Compile Include="Get\Get.cs" />
     <Compile Include="SourceControl\DownloadMonitor.cs" />
     <Compile Include="SourceControl\SvnSourceControl.cs" />
-    <Compile Include="Utils\CmdLine\HelpReturnValue.cs" />
-    <Compile Include="Utils\CmdLine\Parameter.cs" />
-    <Compile Include="Utils\CmdLine\SwitchParser.cs" />
     <Compile Include="Utils\Framework\Framework.cs" />
     <Compile Include="Utils\Framework\FrameworkLocator.cs" />
     <Compile Include="Utils\Framework\MSBuild.cs" />
