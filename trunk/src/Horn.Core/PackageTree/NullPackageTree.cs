@@ -29,6 +29,11 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public IPackageTree Root
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public string Name
         {
             get { throw new System.NotImplementedException(); }

@@ -73,7 +73,7 @@ namespace Horn.Console
         {
             var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
 
-            var rootFolder = Path.Combine(documents.Parent.FullName, ".horn");
+            var rootFolder = Path.Combine(documents.Parent.FullName, PackageTree.RootPackageTreeName);
 
             log.DebugFormat("root folder = {0}", rootFolder);
 

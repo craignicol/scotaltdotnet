@@ -6,6 +6,8 @@ namespace Horn.Core.PackageStructure
 {
     public interface IPackageTree : IComposite<IPackageTree>
     {
+        IPackageTree Root { get; }
+
         string Name { get; }
 
         bool IsRoot { get; }
