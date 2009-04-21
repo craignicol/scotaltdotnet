@@ -44,12 +44,12 @@ namespace Horn.Core.extensions
 
                 var directoryPaths = Directory.GetDirectories(dir);
 
-                if (directoryPaths != null && directoryPaths.Length > 0)
+                if (directoryPaths == null || directoryPaths.Length <= 0) 
+                    continue;
+
+                foreach (string subDir in directoryPaths)
                 {
-                    foreach (string subDir in directoryPaths)
-                    {
-                        dirs.Enqueue(subDir);
-                    }
+                    dirs.Enqueue(subDir);
                 }
             }
         }
