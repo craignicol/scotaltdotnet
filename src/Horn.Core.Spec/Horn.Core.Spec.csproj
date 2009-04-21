@@ -67,6 +67,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo.Lang.Parser.dll</HintPath>
     </Reference>
+    <Reference Include="Boo.Lang.Useful, Version=2.0.0.0, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.Lang.Useful.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.dll</HintPath>
@@ -117,7 +121,6 @@
     <Compile Include="BuildEngine\BuildWithNantSpecification.cs" />
     <Compile Include="BuildEngine\StubProcess.cs" />
     <Compile Include="BuildEngine\StubProcessFactory.cs" />
-    <Compile Include="CmdLine\RefreshCommandLineFixture.cs" />
     <Compile Include="Dependencies\DependencyDispatcherSpecification.cs" />
     <Compile Include="Dependencies\DependencyOrderFixture.cs" />
     <Compile Include="Dependencies\DependencyTreeSpecification.cs" />
@@ -142,8 +145,6 @@
     <Compile Include="SpecificationHelper.cs" />
     <Compile Include="BuildEngine\BuildEngineSpec.cs" />
     <Compile Include="Utils\FileSystemProvider.cs" />
-    <Compile Include="CmdLine\CmdLineSpecificationBase.cs" />
-    <Compile Include="CmdLine\CmdLineSpecification.cs" />
     <Compile Include="dsl\BaseDSLSpecification.cs" />
     <Compile Include="dsl\BuildMetaDataSpecification.cs" />
     <Compile Include="dsl\BuildConfigReaderSpecification.cs" />

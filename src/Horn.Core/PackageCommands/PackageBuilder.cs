@@ -9,6 +9,7 @@ namespace Horn.Core.PackageCommands
     using Dependencies;
     using Dsl;
     using SCM;
+    using Utils.CmdLine;
 
     public class PackageBuilder : IPackageCommand
     {
@@ -17,7 +18,7 @@ namespace Horn.Core.PackageCommands
         private readonly IProcessFactory processFactory;
         private static readonly ILog log = LogManager.GetLogger(typeof (PackageBuilder));
 
-        public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
+        public void Execute(IPackageTree packageTree, CommandLineArguments switches)
         {
             string packageName = GetPackageName(switches);
 
@@ -45,9 +46,9 @@ namespace Horn.Core.PackageCommands
         }
 
 
-        private string GetPackageName(IDictionary<string, IList<string>> switches)
+        private string GetPackageName(CommandLineArguments commandLineArguments)
         {
-            string packageName = switches["install"][0];
+            string packageName = commandLineArguments.PackageName;
 
             log.InfoFormat("installing {0}.\n", packageName);
 
