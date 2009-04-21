@@ -91,7 +91,6 @@ namespace Horn.Console
         // HACK: Quick and dirty fix for allowing for a different path to be define and rememebered
         private static string LoadRootPath(CommandLineArguments arguments)
         {
-            string rootFolder;
             if (!string.IsNullOrEmpty(arguments.Path))
             {
                 File.WriteAllText("horn.ini", arguments.Path);
@@ -103,7 +102,9 @@ namespace Horn.Console
                 return File.ReadAllText("horn.ini");
             }
 
-            rootFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var documents = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+
+            var rootFolder = Path.Combine(documents.Parent.FullName, ".horn");
 
             return rootFolder;
         }
