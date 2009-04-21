@@ -10,6 +10,8 @@ namespace Horn.Core.Spec.Integration.Get
 
         protected override void Because()
         {
+            SourceControl.ClearDownLoadedPackages();
+
             SourceControl svn = new SVNSourceControl(HORN_URL);
 
             svn.Export(packageTree);
