@@ -17,25 +17,25 @@ namespace Horn.Core.BuildEngines
         private static readonly Dictionary<string, string> builtPackages = new Dictionary<string, string>();
         private IDependencyDispatcher dependencyDispatcher;
 
-        public string BuildFile { get; private set; }
+        public virtual string BuildFile { get; private set; }
 
-        public IBuildTool BuildTool { get; private set; }
+        public virtual IBuildTool BuildTool { get; private set; }
 
-        public List<Dependency> Dependencies { get; private set; }
+        public virtual List<Dependency> Dependencies { get; protected set; }
 
-        public bool GenerateStrongKey { get; set; }
+        public virtual bool GenerateStrongKey { get; set; }
 
-        public string OutputDirectory { get; set; }
+        public virtual string OutputDirectory { get; set; }
 
-        public Dictionary<string, string> Parameters{ get; private set;}
+        public virtual Dictionary<string, string> Parameters { get; private set; }
 
-        public string SharedLibrary { get; set; }
+        public virtual string SharedLibrary { get; set; }
 
-        public List<string> Tasks { get; private set; }
+        public virtual List<string> Tasks { get; private set; }
 
-        public FrameworkVersion Version { get; private set; }
+        public virtual FrameworkVersion Version { get; private set; }
 
-        public void AssignParameters(string[] parameters)
+        public virtual void AssignParameters(string[] parameters)
         {
             if ((parameters == null) || (parameters.Length == 0))
                 return;

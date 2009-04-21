@@ -1,3 +1,5 @@
+using Horn.Core.Spec.Doubles;
+
 namespace Horn.Core.Spec.Dependencies
 {
     using System;
@@ -22,7 +24,7 @@ namespace Horn.Core.Spec.Dependencies
         protected override void Before_each_spec()
         { 
             targetDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Guid.NewGuid().ToString());
-            packageTree = CreateStub<FakePackageTree>(new[] { targetDirectory });
+            packageTree = CreateStub<PackageTreeStub>(new[] { targetDirectory });
             dependentUpdater = CreateStub<IDependentUpdaterExecutor>();
 
             dependencies = new[] { new Dependency("Test", "Test.Dependency"), };
@@ -58,123 +60,6 @@ namespace Horn.Core.Spec.Dependencies
         {
             //if (Directory.Exists(targetDirectory))
             //    Directory.Delete(targetDirectory, true);
-        }
-    }
-
-    public class FakePackageTree : IPackageTree
-    {
-        private readonly string baseDirectory;
-
-        public void Add(IPackageTree item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(IPackageTree item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IPackageTree Parent
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public IPackageTree[] Children
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IPackageTree Root
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string Name
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsRoot
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool Exists
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string BuildFile
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public void CreateRequiredDirectories()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IPackageTree RetrievePackage(string packageName)
-        {
-            return this;
-        }
-
-        public IBuildMetaData BuildMetaData
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IBuildMetaData GetBuildMetaData(string packageName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DirectoryInfo CurrentDirectory
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public FileInfo Nant
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public FileInfo Sn
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public DirectoryInfo WorkingDirectory
-        {
-            get { return new DirectoryInfo(Path.Combine(baseDirectory, "working")); }
-        }
-
-        public bool IsBuildNode
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public DirectoryInfo OutputDirectory
-        {
-            get { return new DirectoryInfo(Path.Combine(baseDirectory, "output")); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public List<IPackageTree> BuildNodes()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IRevisionData GetRevisionData()
-        {
-            throw new NotImplementedException();
-        }
-
-        public FakePackageTree(string baseDirectory)
-        {
-            this.baseDirectory = baseDirectory;
         }
     }
 }
