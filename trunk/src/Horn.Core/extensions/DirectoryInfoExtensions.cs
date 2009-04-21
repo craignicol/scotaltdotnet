@@ -1,3 +1,5 @@
+using System;
+
 namespace Horn.Core.extensions
 {
     using System.Collections.Generic;
@@ -32,7 +34,17 @@ namespace Horn.Core.extensions
             {
                 string dir = dirs.Dequeue();
 
-                string[] filePaths  = Directory.GetFiles(dir, searchPattern);
+                string[] filePaths = null;
+
+                //I do not like swallowing exceptions but there is a good reason
+                // http://msdn.microsoft.com/en-us/library/bb513869.aspx
+                try
+                {
+                    filePaths = Directory.GetFiles(dir, searchPattern);
+                }
+                catch
+                {                    
+                }
 
                 if (filePaths != null && filePaths.Length > 0)
                 {
@@ -42,7 +54,16 @@ namespace Horn.Core.extensions
                     }
                 }
 
-                var directoryPaths = Directory.GetDirectories(dir);
+                string[] directoryPaths = null;
+
+                try
+                {
+                    directoryPaths = Directory.GetDirectories(dir);
+                }
+                catch
+                {                    
+                }
+                
 
                 if (directoryPaths == null || directoryPaths.Length <= 0) 
                     continue;
