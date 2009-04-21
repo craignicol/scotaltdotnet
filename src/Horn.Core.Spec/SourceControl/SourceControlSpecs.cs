@@ -12,6 +12,8 @@ namespace Horn.Core.Spec.SourceControl
 
         protected override void Because()
         {
+            SCM.SourceControl.ClearDownLoadedPackages();
+
             var packageTree = TreeHelper.GetTempEmptyPackageTree();
 
             sourceControl = new SourceControlDouble("http://someurl.com/");
@@ -32,7 +34,7 @@ namespace Horn.Core.Spec.SourceControl
 
         protected override void Because()
         {
-            Horn.Core.SCM.SourceControl.ClearDownLoadedPackages();
+            SCM.SourceControl.ClearDownLoadedPackages();
 
             var packageTree = TreeHelper.GetTempPackageTree().RetrievePackage(PackageTreeHelper.PACKAGE_WITH_REVISION);
 

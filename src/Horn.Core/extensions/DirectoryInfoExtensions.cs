@@ -64,7 +64,6 @@ namespace Horn.Core.extensions
                 {                    
                 }
                 
-
                 if (directoryPaths == null || directoryPaths.Length <= 0) 
                     continue;
 
