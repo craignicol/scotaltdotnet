@@ -45,6 +45,8 @@ namespace Horn.Core.SCM
 
         protected override void Initialise(IPackageTree packageTree)
         {
+
+
             if (packageTree.WorkingDirectory.Exists)
                 packageTree.WorkingDirectory.Delete(true);
         }
