@@ -70,7 +70,7 @@ namespace Horn.Core.Integration.Builder
         }
 
         [Fact]
-        private void Then_The_Build_Copies_The_Dependency()
+        public void Then_The_Build_Copies_The_Dependency()
         {
             buildEngine.Build(new DiagnosticsProcessFactory(), packageTree);
 
