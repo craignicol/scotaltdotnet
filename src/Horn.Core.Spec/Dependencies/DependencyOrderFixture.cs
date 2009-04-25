@@ -1,13 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Horn.Core.BuildEngines;
 using Horn.Core.Dependencies;
 using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Spec.Doubles;
-using Horn.Core.Spec.helpers;
-using Horn.Core.Utils.Framework;
-using Rhino.Mocks;
 using Xunit;
 
 namespace Horn.Core.Spec.Dependencies
@@ -42,11 +38,6 @@ namespace Horn.Core.Spec.Dependencies
             var rootDependencies = new List<Dependency> {new Dependency("nhibernate", "nhibernate")};
 
             packageTree = new PackageTreeStub(GetPackageTreeParts(rootDependencies), "nhibernate.memcached", nhibernateTree);
-
-            //IPackageTree dependentTree = TreeHelper.CreatePackageTreeNode("nhibernate", new[] { "castle", "log4net" });
-
-
-
         }
 
         private IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies)
@@ -67,7 +58,7 @@ namespace Horn.Core.Spec.Dependencies
             Assert.Equal(4, dependencyTree.BuildList.Count);      
         }
 
-        //[Fact]
+        [Fact]
         public void Then_the_build_list_is_ordered_by_least_dependencies()
         {
             var buildList = new List<IPackageTree>(dependencyTree.BuildList);
