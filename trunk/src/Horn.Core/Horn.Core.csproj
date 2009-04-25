@@ -108,6 +108,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BuildEngines\Dependency.cs" />
+    <Compile Include="Dependencies\BuildTree.cs" />
     <Compile Include="Dependencies\DependencyCopier.cs" />
     <Compile Include="Dependencies\DependencyDispatcher.cs" />
     <Compile Include="Dependencies\DependentUpdaterExecutor.cs" />

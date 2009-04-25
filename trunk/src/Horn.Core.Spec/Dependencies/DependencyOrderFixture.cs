@@ -28,7 +28,7 @@ namespace Horn.Core.Spec.Dependencies
                                                  new Dependency("log4net", "log4net")
                                              };
 
-            var castleTree = new PackageTreeStub(GetPackageTreeParts(castleDependencies), "nhibernate", log4NetTree);
+            var castleTree = new PackageTreeStub(GetPackageTreeParts(castleDependencies), "castle", log4NetTree);
 
             var nhibernateDependencies = new List<Dependency>
                                              {
@@ -61,7 +61,7 @@ namespace Horn.Core.Spec.Dependencies
             dependencyTree = new DependencyTree(packageTree);
         }
 
-        //[Fact]
+        [Fact]
         public void Then_there_are_no_duplicates()
         {
             Assert.Equal(4, dependencyTree.BuildList.Count);      
