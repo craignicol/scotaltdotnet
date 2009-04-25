@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Horn.Core.Spec.helpers;
 
 namespace Horn.Core.Spec.Dependencies
@@ -44,9 +45,11 @@ namespace Horn.Core.Spec.Dependencies
         [Fact]
         public void Then_The_Dependency_Is_Built_Before_The_Root()
         {
+            var buildList = new List<IPackageTree>(dependencyTree.BuildList);
+
             Assert.Contains(packageTree, dependencyTree.BuildList);
             Assert.Contains(dependentTree, dependencyTree.BuildList);
-            Assert.InRange(dependencyTree.BuildList.IndexOf(dependentTree), 0, dependencyTree.BuildList.IndexOf(packageTree));
+            Assert.InRange(buildList.IndexOf(dependentTree), 0, buildList.IndexOf(packageTree));
         }
     }
 

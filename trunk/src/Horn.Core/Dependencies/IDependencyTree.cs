@@ -5,6 +5,6 @@ namespace Horn.Core.Dependencies
 
     public interface IDependencyTree : IEnumerable<IPackageTree>
     {
-        IList<IPackageTree> BuildList { get; }
+        HashSet<IPackageTree> BuildList { get; }
     }
 }

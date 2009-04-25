@@ -70,10 +70,12 @@ namespace Horn.Core.Spec.Dependencies
         //[Fact]
         public void Then_the_build_list_is_ordered_by_least_dependencies()
         {
-            Assert.Equal("log4net", dependencyTree.BuildList[0].Name);
-            Assert.Equal("castle", dependencyTree.BuildList[1].Name);
-            Assert.Equal("nhibernate", dependencyTree.BuildList[2].Name);
-            Assert.Equal("nhibernate.memcached", dependencyTree.BuildList[3].Name);   
+            var buildList = new List<IPackageTree>(dependencyTree.BuildList);
+
+            Assert.Equal("log4net", buildList[0].Name);
+            Assert.Equal("castle", buildList[1].Name);
+            Assert.Equal("nhibernate", buildList[2].Name);
+            Assert.Equal("nhibernate.memcached", buildList[3].Name);   
         }
     }
 }

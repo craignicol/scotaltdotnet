@@ -29,7 +29,7 @@ namespace Horn.Core.Dependencies
             return GetAncestors(new List<IPackageTree>());
         }
 
-        private IList<IPackageTree> GetBuildList(IList<IPackageTree> buildList)
+        private HashSet<IPackageTree> GetBuildList(HashSet<IPackageTree> buildList)
         {
             foreach (BuildTree buildTree in Children)
             {
@@ -39,9 +39,9 @@ namespace Horn.Core.Dependencies
             return buildList;
         }
 
-        public IList<IPackageTree> GetBuildList()
+        public HashSet<IPackageTree> GetBuildList()
         {
-            return GetBuildList(new List<IPackageTree>());
+            return GetBuildList(new HashSet<IPackageTree>());
         }
 
         public BuildTree(IPackageTree node)

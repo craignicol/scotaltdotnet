@@ -11,7 +11,7 @@ namespace Horn.Core.Dependencies
 
         private BuildTree buildTree;
 
-        public IList<IPackageTree> BuildList
+        public HashSet<IPackageTree> BuildList
         {
             get
             {
