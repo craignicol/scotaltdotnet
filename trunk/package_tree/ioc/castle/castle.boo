@@ -23,7 +23,7 @@ dependencies:
 	depend @boo		>> "Boo.Lang.Parser"
 	depend @boo		>> "Boo.Lang.Useful"
 	depend @boo		>> "Boo.NAnt.Tasks"  
-	depend @log4net >> "log4net"
+	#depend @log4net >> "log4net"
 	
 package.homepage = "http://www.castleproject.org/"
 package.forum    = "http://groups.google.co.uk/group/castle-project-users?hl=en"
