@@ -15,6 +15,15 @@ install castle:
 	
 dependencies:
 	depend @log4net >> "log4net"
+	depend @boo		>> "booc"
+	depend @boo		>> "Boo.Lang.CodeDom"
+	depend @boo		>> "Boo.Lang.Compiler"
+	depend @boo		>> "Boo.Lang"
+	depend @boo		>> "Boo.Lang.Extensions"
+	depend @boo		>> "Boo.Lang.Interpreter"
+	depend @boo		>> "Boo.Lang.Parser"
+	depend @boo		>> "Boo.Lang.Useful"
+	depend @boo		>> "Boo.NAnt.Tasks"
 	
 package.homepage = "http://www.castleproject.org/"
 package.forum    = "http://groups.google.co.uk/group/castle-project-users?hl=en"
