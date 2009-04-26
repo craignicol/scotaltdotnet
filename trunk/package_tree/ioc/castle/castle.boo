@@ -14,7 +14,6 @@ install castle:
 	output "build/net-3.5/debug"		
 	
 dependencies:
-	depend @log4net >> "log4net"
 	depend @boo		>> "booc"
 	depend @boo		>> "Boo.Lang.CodeDom"
 	depend @boo		>> "Boo.Lang.Compiler"
@@ -23,7 +22,8 @@ dependencies:
 	depend @boo		>> "Boo.Lang.Interpreter"
 	depend @boo		>> "Boo.Lang.Parser"
 	depend @boo		>> "Boo.Lang.Useful"
-	depend @boo		>> "Boo.NAnt.Tasks"
+	depend @boo		>> "Boo.NAnt.Tasks"  
+	depend @log4net >> "log4net"
 	
 package.homepage = "http://www.castleproject.org/"
 package.forum    = "http://groups.google.co.uk/group/castle-project-users?hl=en"
