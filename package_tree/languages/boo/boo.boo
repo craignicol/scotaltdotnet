@@ -7,7 +7,7 @@
 	with:
 		tasks rebuild
 		
-	output "bin/net/2.0/release"
+	output "build"
 	
 package.homepage = "http://boo.codehaus.org/"
 package.forum    = "http://groups.google.com/group/boolang"
