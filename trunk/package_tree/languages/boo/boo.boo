@@ -7,6 +7,9 @@
 	with:
 		tasks rebuild
 		
+	switches:
+		parameters "nosign=false"		
+		
 	output "build"
 	
 package.homepage = "http://boo.codehaus.org/"
