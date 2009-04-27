@@ -14,7 +14,7 @@ namespace Horn.Core.Dependencies
         private readonly DependencyCopier dependentCopier;
 
         private static string[] AllowedExtensions = new string[]
-                                                        {".exe", ".dll", ".pdb", ".config", ".resources", ".rsp"};
+                                                        {".exe", ".dll", ".pdb", ".exe.config", ".config", ".resources", ".rsp"};
 
         public DependencyDispatcher(IDependentUpdaterExecutor dependentUpdater)
         {
@@ -54,9 +54,6 @@ namespace Horn.Core.Dependencies
 
             files.ForEach(file =>
                               {
-                                  if(file.FullName.Contains("Boo.Lang.CodeDom.dll"))
-                                      Console.WriteLine("Testicles");
-
                                   var extension =
                                       Path.GetFileName(file.FullName).Substring(dependency.Library.Length);
 
