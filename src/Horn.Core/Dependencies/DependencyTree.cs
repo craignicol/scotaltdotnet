@@ -17,20 +17,9 @@ namespace Horn.Core.Dependencies
             {
                 var buildList = new List<IPackageTree>(buildTree.GetBuildList().OrderBy(x => x.GetBuildMetaData(x.Name).BuildEngine.Dependencies.Count));
 
-                IPackageTree parent = null;
+                var parent = buildList.Where(x => x.Name.ToLower().Equals(PackageTree.Name.ToLower())).First();
 
-                for (var i = buildList.Count - 1; i >= 0; i-- )
-                {
-                    var tree = buildList[i];
-
-                    if (tree.Name.ToLower().Equals(PackageTree.Name.ToLower()))
-                    {
-                        parent = tree;
-                        buildList.Remove(tree);
-                        break;
-                    }
-                        
-                }
+                buildList.Remove(parent);
 
                 buildList.Insert((buildList.Count), parent);
 
