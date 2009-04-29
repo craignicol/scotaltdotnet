@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>
+        TDD Talk Snippets
+      </Title>
+      <Description>TDD talk test 3</Description>
+      <Shortcut>tdd3</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[        [Test]
+        public void AddUnboundedRangesToEmptyFragmentedDateRange()
+        {
+            FragmentedDateRange fdr = new FragmentedDateRange();
+            fdr.Insert( new DateRange( null, null ) );
+            DateRange range = new DateRange( new DateTime( 2008, 1, 1 ), null );
+            fdr.Insert( range );
+
+            Assert.AreEqual( range.FromDate, fdr.From );
+            Assert.AreEqual( range.ToDate, fdr.To );
+        }
+
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
