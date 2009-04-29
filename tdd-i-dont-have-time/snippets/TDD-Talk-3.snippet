@@ -15,9 +15,9 @@
         public void AddUnboundedRangesToEmptyFragmentedDateRange()
         {
             FragmentedDateRange fdr = new FragmentedDateRange();
-            fdr.Insert( new DateRange( null, null ) );
             DateRange range = new DateRange( new DateTime( 2008, 1, 1 ), null );
             fdr.Insert( range );
+            fdr.Insert( new DateRange( null, null ) );
 
             Assert.AreEqual( range.FromDate, fdr.From );
             Assert.AreEqual( range.ToDate, fdr.To );

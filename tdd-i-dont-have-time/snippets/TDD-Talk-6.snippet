@@ -12,19 +12,18 @@
     <Snippet>
       <Code Language="CSharp">
         <![CDATA[        [Test]
-        public void RemoveDateRange()
+        public void RemoveDateRangeFromEmpty()
         {
             FragmentedDateRange fdr = new FragmentedDateRange();
-            fdr.Insert( new DateRange( new DateTime( 2008, 1, 1 ), new DateTime( 2008, 3, 3 ) ) );
-            fdr.Insert( new DateRange( new DateTime( 2008, 2, 2 ), new DateTime( 2008, 4, 4 ) ) );
-            fdr.Insert( new DateRange( new DateTime( 2008, 3, 1 ), new DateTime( 2008, 5, 3 ) ) );
-
             fdr.Remove( new DateRange( new DateTime( 2008, 2, 1 ), new DateTime( 2008, 5, 1 ) ) );
 
-            Assert.AreEqual( 2, fdr.Range.Count );
-            Assert.AreEqual( new DateTime( 2008, 1, 1 ), fdr.From );
-            Assert.AreEqual( new DateTime( 2008, 5, 3 ), fdr.To );
-        }]]>
+
+            Assert.AreEqual( 0, fdr.Count );
+            Assert.AreEqual( null, fdr.From );
+            Assert.AreEqual( null, fdr.To );
+
+        }
+]]>
       </Code>
     </Snippet>
   </CodeSnippet>

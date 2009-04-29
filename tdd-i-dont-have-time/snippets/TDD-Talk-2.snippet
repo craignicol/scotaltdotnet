@@ -18,8 +18,9 @@
             DateRange range = new DateRange(new DateTime(2008, 1, 1), new DateTime(2008, 6, 6));
             fdr.Insert( range );
 
-            Assert.AreEqual( range.FromDate, fdr.From );
-            Assert.AreEqual( range.ToDate, fdr.To );
+            Assert.AreEqual(1, fdr.Count);
+//            Assert.AreEqual( range.FromDate, fdr.From );
+//            Assert.AreEqual( range.ToDate, fdr.To );
         }
 ]]>
       </Code>
