@@ -12,18 +12,15 @@
     <Snippet>
       <Code Language="CSharp">
         <![CDATA[        [Test]
-        public void AddUnboundedRangesToEmptyFragmentedDateRange()
+        public void FragmentedDateRangeWithOneItemHasTheSameBoundsAsThatItem()
         {
             FragmentedDateRange fdr = new FragmentedDateRange();
-            DateRange range = new DateRange( new DateTime( 2008, 1, 1 ), null );
-            fdr.Insert( range );
-            fdr.Insert( new DateRange( null, null ) );
+            DateRange range = new DateRange(new DateTime(2008, 1, 1), new DateTime(2008, 6, 6));
+            fdr.Insert(range);
 
             Assert.AreEqual( range.FromDate, fdr.From );
-            Assert.AreEqual( range.ToDate, fdr.To );
-        }
-
-]]>
+            Assert.AreEqual( range.ToDate, fdr.To );            
+        }]]>
       </Code>
     </Snippet>
   </CodeSnippet>

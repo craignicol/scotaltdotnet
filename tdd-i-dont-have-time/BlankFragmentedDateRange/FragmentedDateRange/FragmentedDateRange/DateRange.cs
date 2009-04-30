@@ -85,7 +85,7 @@ namespace scotalt.BusinessObjects
             return (FromDate == null || testDate >= FromDate) && (ToDate == null || testDate <= ToDate);
         }
 
-        static private DateTime? DateMin(DateTime? x, DateTime? y)
+        static public DateTime? DateMin(DateTime? x, DateTime? y)
         {
             if ( x == null )
                 return y;
@@ -97,7 +97,7 @@ namespace scotalt.BusinessObjects
                 return y;
         }
 
-        static private DateTime? DateMax(DateTime? x, DateTime? y)
+        static public DateTime? DateMax(DateTime? x, DateTime? y)
         {
             if ( x == null )
                 return y;
