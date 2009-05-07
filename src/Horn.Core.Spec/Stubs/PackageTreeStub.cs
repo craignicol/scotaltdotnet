@@ -10,12 +10,18 @@ namespace Horn.Core.Spec.Doubles
     {
         private readonly IBuildMetaData buildMetaData;
         private readonly string name;
-        private readonly IPackageTree packageTree;
         private readonly string baseDirectory;
+        private readonly bool useInternalDictionary;
+        private readonly Dictionary<string, IPackageTree> dependencyTrees = new Dictionary<string, IPackageTree>();
 
         public void Add(IPackageTree item)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddDependencyPackageTree(string dependencyName, PackageTreeStub dependencyTree)
+        {
+            dependencyTrees.Add(dependencyName, dependencyTree);
         }
 
         public void Remove(IPackageTree item)
@@ -66,10 +72,10 @@ namespace Horn.Core.Spec.Doubles
 
         public IPackageTree RetrievePackage(string packageName)
         {
-            if (packageTree == null)
+            if (!useInternalDictionary)
                 return this;
 
-            return packageTree;
+            return dependencyTrees[packageName];
         }
 
         public IBuildMetaData BuildMetaData
@@ -123,11 +129,11 @@ namespace Horn.Core.Spec.Doubles
             throw new NotImplementedException();
         }
 
-        public PackageTreeStub(IBuildMetaData buildMetaData, string name, IPackageTree packageTree)
+        public PackageTreeStub(IBuildMetaData buildMetaData, string name, bool useInternalDictionary)
         {
             this.buildMetaData = buildMetaData;
             this.name = name;
-            this.packageTree = packageTree;
+            this.useInternalDictionary = useInternalDictionary;
         }
 
         public PackageTreeStub(string baseDirectory)
