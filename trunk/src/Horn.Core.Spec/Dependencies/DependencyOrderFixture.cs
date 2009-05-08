@@ -45,9 +45,7 @@ namespace Horn.Core.Spec.Dependencies
 
             var nhibernateDependencies = new List<Dependency>
                                              {
-                                                 new Dependency("log4net", "log4net"),
-                                                 new Dependency("castle", "Castle.Core"),
-                                                 new Dependency("castle", "Castle.Core")
+                                                 new Dependency("log4net", "log4net")
                                              };
 
             var nhibernateTree = new PackageTreeStub(GetPackageTreeParts(nhibernateDependencies), "nhibernate", true);
@@ -76,21 +74,20 @@ namespace Horn.Core.Spec.Dependencies
             dependencyTree = new DependencyTree(packageTree);
         }
 
-        //[Fact]
+        [Fact]
         public void Then_there_are_no_duplicates()
         {
-            Assert.Equal(5, dependencyTree.BuildList.Count);      
+            Assert.Equal(3, dependencyTree.BuildList.Count);      
         }
 
-        //[Fact]
+        [Fact]
         public void Then_the_build_list_is_ordered_by_least_dependencies()
         {
             var buildList = new List<IPackageTree>(dependencyTree.BuildList);
 
             Assert.Equal("log4net", buildList[0].Name);
-            Assert.Equal("castle", buildList[1].Name);
-            Assert.Equal("nhibernate", buildList[2].Name);
-            Assert.Equal("nhibernate.memcached", buildList[3].Name);   
+            Assert.Equal("nhibernate", buildList[1].Name);
+            Assert.Equal("nhibernate.memcached", buildList[2].Name);   
         }
     }
 }
