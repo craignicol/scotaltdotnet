@@ -14,7 +14,7 @@ install castle:
 	output "build/net-3.5/debug"		
 	
 dependencies:    
-	depend @log4net >> "log4net"
+	#depend @log4net >> "log4net"
 	depend @boo			>> "Boo.Lang.Extensions"
 	depend @boo			>> "Boo.Lang.Interpreter"
 	depend @boo			>> "Boo.Lang.Parser"
