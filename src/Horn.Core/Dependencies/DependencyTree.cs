@@ -15,7 +15,7 @@ namespace Horn.Core.Dependencies
         {
             get
             {
-                var buildList = new List<IPackageTree>(buildTree.GetBuildList().OrderBy(x => x.GetBuildMetaData(x.Name).BuildEngine.Dependencies.Count));
+                var buildList = buildTree.GetBuildList().OrderBy(x => x.GetBuildMetaData(x.Name).BuildEngine.Dependencies.Count).ToList();
 
                 var parent = buildList.Where(x => x.Name.ToLower().Equals(PackageTree.Name.ToLower())).First();
 
