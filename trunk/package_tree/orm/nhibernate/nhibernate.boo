@@ -9,8 +9,9 @@ install nhibernate:
 	shared_library "lib/net/2.0"
 	output "build/NHibernate-2.1.0.Alpha3-debug/bin/net-3.5"		
 	
-#dependencies:
-#	depend @log4net >> "log4net"
+dependencies:
+	depend "castle.tools" >> "Castle.Core"
+	depend "castle.tools" >> "Castle.DynamicProxy2"
 
 package.homepage = "http://www.hibernate.org/343.html"
 package.forum    = "http://groups.google.co.uk/group/nhusers?hl=en"
