@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Horn.Core.Dsl;
 
@@ -13,10 +14,13 @@ namespace Horn.Core.Spec.Doubles
 
         public SCM.SourceControl SourceControl { get; set; }
 
+        public List<string> PrebuildCommandList{get; set;}
+
         public BuildMetaDataStub(BuildEngines.BuildEngine buildEngine, SCM.SourceControl sourceControl)
         {
             BuildEngine = buildEngine;
             SourceControl = sourceControl;
+            PrebuildCommandList = new List<string>();
         }
     }
 }

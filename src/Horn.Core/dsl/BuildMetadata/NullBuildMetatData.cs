@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
@@ -28,6 +29,11 @@ namespace Horn.Core.Dsl
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
+        }
+
+        public List<string> PrebuildCommandList
+        {
+            get; set;
         }
 
         public string OutputDirectory

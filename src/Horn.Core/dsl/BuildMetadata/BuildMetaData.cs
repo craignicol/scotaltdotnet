@@ -15,6 +15,8 @@ namespace Horn.Core.Dsl
 
         public SourceControl SourceControl { get; set; }
 
+        public List<string> PrebuildCommandList { get; set; }
+
 
 
         public BuildMetaData()
@@ -30,6 +32,7 @@ namespace Horn.Core.Dsl
             BuildEngine.OutputDirectory = instance.BuildEngine.OutputDirectory;
             BuildEngine.SharedLibrary = instance.BuildEngine.SharedLibrary;
             ProjectInfo = instance.PackageMetaData.PackageInfo;
+            PrebuildCommandList = instance.PrebuildCommandList;
         }
 
 

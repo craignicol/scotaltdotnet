@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace Horn.Core.BuildEngines
 {
@@ -12,12 +13,35 @@ namespace Horn.Core.BuildEngines
                               UseShellExecute = false,
                               RedirectStandardOutput = true,
                               WorkingDirectory = workingDirectoryPath
-            };  
+            };
+
+            psi.Arguments = cmdLineArguments;
 
             return new DiagnosticsProcess(Process.Start(psi));
         }
 
+        public void ExcuteCommand(string command, string workingDirectory)
+        {
+            var processStartInfo = new ProcessStartInfo("cmd.exe")
+            {
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                WorkingDirectory = workingDirectory
+            };
 
+            var process = Process.Start(processStartInfo);
 
+            var streamWriter = process.StandardInput;
+
+            var streamReader = process.StandardOutput;
+
+            streamWriter.WriteLine(command);
+
+            streamWriter.Close();
+
+            process.WaitForExit();
+        }
     }
 }
