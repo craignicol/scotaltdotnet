@@ -62,7 +62,7 @@ namespace Horn.Core.Spec.Doubles
 
         public string BuildFile
         {
-            get { throw new NotImplementedException(); }
+            get { return "defaul.build"; }
         }
 
         public void CreateRequiredDirectories()

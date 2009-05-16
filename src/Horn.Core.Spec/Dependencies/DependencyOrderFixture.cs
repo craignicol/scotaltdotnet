@@ -4,6 +4,7 @@ using Horn.Core.Dependencies;
 using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Spec.Doubles;
+using Horn.Core.Spec.helpers;
 using Xunit;
 
 namespace Horn.Core.Spec.Dependencies
@@ -17,9 +18,9 @@ namespace Horn.Core.Spec.Dependencies
         {
             base.Before_each_spec();
 
-            var log4NetTree = new PackageTreeStub(GetPackageTreeParts(new List<Dependency>()), "log4net", true);
+            var log4NetTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>()), "log4net", true);
 
-            var booTree = new PackageTreeStub(GetPackageTreeParts(new List<Dependency>()), "boo", true);
+            var booTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>()), "boo", true);
 
             var castleDependencies = new List<Dependency>
                                              {
@@ -37,7 +38,7 @@ namespace Horn.Core.Spec.Dependencies
                                                  new Dependency("nhibernate", "iesi")
                                              };
 
-            var castleTree = new PackageTreeStub(GetPackageTreeParts(castleDependencies), "castle", true);
+            var castleTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(castleDependencies), "castle", true);
 
             castleTree.AddDependencyPackageTree("log4net", log4NetTree);
 
@@ -50,7 +51,7 @@ namespace Horn.Core.Spec.Dependencies
                                                  new Dependency("castle", "Castle.DynamicProxy2")
                                              };
 
-            var nhibernateTree = new PackageTreeStub(GetPackageTreeParts(nhibernateDependencies), "nhibernate", true);
+            var nhibernateTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(nhibernateDependencies), "nhibernate", true);
 
             nhibernateTree.AddDependencyPackageTree("castle", castleTree);
             nhibernateTree.AddDependencyPackageTree("log4net", log4NetTree);
@@ -59,17 +60,11 @@ namespace Horn.Core.Spec.Dependencies
 
             var rootDependencies = new List<Dependency> {new Dependency("nhibernate", "nhibernate")};
 
-            packageTree = new PackageTreeStub(GetPackageTreeParts(rootDependencies), "nhibernate.memcached", true);
+            packageTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(rootDependencies), "nhibernate.memcached", true);
 
             packageTree.AddDependencyPackageTree("nhibernate", nhibernateTree);
         }
 
-        private IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies)
-        {
-            var buildEngine = new BuildEngineStub(null, null, dependencies);
-            var sourceControl = new SourceControlDouble("http://someurl.com");
-            return new BuildMetaDataStub(buildEngine, sourceControl);
-        }
 
         protected override void Because()
         {

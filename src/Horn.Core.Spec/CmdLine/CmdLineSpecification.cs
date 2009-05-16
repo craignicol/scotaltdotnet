@@ -1,3 +1,4 @@
+using System;
 using Horn.Core.Utils.CmdLine;
 using Xunit;
 
@@ -152,6 +153,33 @@ namespace Horn.Core.Spec.Unit.CmdLine
         public void Then_Should_Output_Argument_Has_Already_Been_Given_The_Value_Error_Message()
         {
             AssertOutputContains(ExpectErrorMessage);
+        }
+    }
+
+    public class When_horn_receives_a_rebuild_only_switch : CmdLineErrorSpecificationBase
+    {
+        protected override string Args
+        {
+            get { return "-install:horn -rebuildonly"; }
+        }
+
+        protected override string ExpectErrorMessage
+        {
+            get { return ""; }
+        }
+
+        protected override void Because()
+        {
+            parser = new SwitchParser(Output, packageTree);
+
+            ParsedArgs = parser.Parse(Args.Split());
+            IsValid = parser.IsValid(ParsedArgs);
+        }
+
+        [Fact]
+        public void Then_Parsed_Arguments_Are_Valid()
+        {
+            Assert.True(IsValid);
         }
     }
 }

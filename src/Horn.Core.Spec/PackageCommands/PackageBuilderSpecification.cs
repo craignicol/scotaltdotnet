@@ -1,3 +1,9 @@
+using System;
+using Horn.Core.BuildEngines;
+using Horn.Core.SCM;
+using Horn.Core.Spec.Doubles;
+using Horn.Core.Spec.helpers;
+using Horn.Core.Spec.Unit.Get;
 using Horn.Framework.helpers;
 
 namespace Horn.Core.Spec.Unit.PackageCommands
@@ -95,6 +101,50 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             buildMetaData.BuildEngine = buildEngine;
 
             return buildMetaData;
+        }
+    }
+
+    public class When_the_package_builder_receives_a_rebuild_only_switch : GetSpecificationBase
+    {
+        private IDependencyTree dependencyTree;
+
+        private PackageBuilder packageBuilder;
+
+        private MockRepository mockRepository;
+
+        protected override void Before_each_spec()
+        {
+            mockRepository = new MockRepository();
+
+            packageTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>()), "log4net", false);
+
+            get = MockRepository.GenerateStub<IGet>();
+
+            get.Stub(x => x.From(new SVNSourceControl("url"))).Return(get);
+
+            get.Stub(x => x.ExportTo(packageTree)).Return(packageTree);
+
+            dependencyTree = new DependencyTree(packageTree);
+
+            packageBuilder = new PackageBuilder(get, MockRepository.GenerateStub<IProcessFactory>());
+        }
+
+        protected override void Because()
+        {
+            var args = new Dictionary<string, IList<string>>();
+
+            args.Add("install", new List<string>{"log4net"});
+            args.Add("rebuildonly", new List<string>{""});
+
+            mockRepository.Playback();
+            
+            packageBuilder.Execute(packageTree, args);
+        }
+
+        [Fact]
+        public void Then_source_control_get_is_not_called()
+        {
+            get.AssertWasNotCalled(x => x.From(Arg<SVNSourceControl>.Is.TypeOf));
         }
     }
 }

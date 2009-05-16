@@ -81,7 +81,7 @@ Options :
                     continue;
                 }
 
-                if (arg.Count == 0 || string.IsNullOrEmpty(arg[0]))
+                if ((paramRow.RequiresArgument) && (arg.Count == 0 || string.IsNullOrEmpty(arg[0])))
                     return OutputValidationMessage(string.Format("Missing argument value for key: {0}.", paramRow.Key));
 
                 if (arg.Count > 1 && !paramRow.Reoccurs)
@@ -138,6 +138,8 @@ Options :
             var parameters = new List<Parameter>();
 
             root.BuildNodes().ForEach(c => parameters.Add(new Parameter("install", true, new[] {c.Name}, false)));
+
+            parameters.Add(new Parameter("rebuildonly", false, new string[]{}, false));
 
             paramTable = parameters.ToArray();
         }

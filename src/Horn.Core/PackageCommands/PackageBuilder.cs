@@ -24,17 +24,19 @@ namespace Horn.Core.PackageCommands
             IPackageTree componentTree = packageTree.RetrievePackage(packageName);
             IDependencyTree dependencyTree = GetDependencyTree(componentTree);
 
-            BuildDependencyTree(dependencyTree);
+            BuildDependencyTree(dependencyTree, switches);
 
             log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), packageName);
         }
 
-        private void BuildDependencyTree(IDependencyTree dependencyTree)
+        private void BuildDependencyTree(IDependencyTree dependencyTree, IDictionary<string, IList<string>> switches)
         {
             foreach (var nextTree in dependencyTree)
             {
                 IBuildMetaData nextMetaData = GetBuildMetaData(nextTree);
-                ExecuteSourceControlGet(nextMetaData.SourceControl, nextTree);
+
+                if (!switches.Keys.Contains("rebuildonly"))
+                    ExecuteSourceControlGet(nextMetaData.SourceControl, nextTree);
                 BuildComponentTree(nextMetaData.BuildEngine, nextTree);
             }
         }
