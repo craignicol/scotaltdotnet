@@ -10,7 +10,6 @@ namespace Horn.Core.Spec.Doubles
     {
         private readonly IBuildMetaData buildMetaData;
         private readonly string name;
-        private readonly string baseDirectory;
         private readonly bool useInternalDictionary;
         private readonly Dictionary<string, IPackageTree> dependencyTrees = new Dictionary<string, IPackageTree>();
 
@@ -105,7 +104,7 @@ namespace Horn.Core.Spec.Doubles
 
         public DirectoryInfo WorkingDirectory
         {
-            get { return new DirectoryInfo(Path.Combine(baseDirectory, "working")); }
+            get { return new DirectoryInfo(Path.Combine(BaseDirectory, "working")).Parent; }
         }
 
         public bool IsBuildNode
@@ -115,8 +114,13 @@ namespace Horn.Core.Spec.Doubles
 
         public DirectoryInfo OutputDirectory
         {
-            get { return new DirectoryInfo(Path.Combine(baseDirectory, "output")); }
+            get { return new DirectoryInfo(Path.Combine(BaseDirectory, "output")); }
             set { throw new NotImplementedException(); }
+        }
+
+        public string BaseDirectory
+        {
+            get; private set;
         }
 
         public List<IPackageTree> BuildNodes()
@@ -134,11 +138,12 @@ namespace Horn.Core.Spec.Doubles
             this.buildMetaData = buildMetaData;
             this.name = name;
             this.useInternalDictionary = useInternalDictionary;
+            BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         }
 
         public PackageTreeStub(string baseDirectory)
         {
-            this.baseDirectory = baseDirectory;
+            BaseDirectory = baseDirectory;
         }
     }
 }

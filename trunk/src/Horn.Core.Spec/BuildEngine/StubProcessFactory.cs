@@ -9,5 +9,12 @@ namespace Horn.Core.Spec.BuildEngine
         {
             return new StubProcess();
         }
+
+        public void ExcuteCommand(string command, string workingDirectory)
+        {
+            Console.WriteLine(command);
+
+            Console.WriteLine(workingDirectory);
+        }
     }
 }

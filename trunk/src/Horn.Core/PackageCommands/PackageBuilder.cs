@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using Horn.Core.BuildEngines;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
@@ -37,7 +40,21 @@ namespace Horn.Core.PackageCommands
 
                 if (!switches.Keys.Contains("rebuildonly"))
                     ExecuteSourceControlGet(nextMetaData.SourceControl, nextTree);
+
+                ExecutePrebuild(nextMetaData, nextTree);
+
                 BuildComponentTree(nextMetaData.BuildEngine, nextTree);
+            }
+        }
+
+        private void ExecutePrebuild(IBuildMetaData metaData, IPackageTree packageTree)
+        {
+            if ((metaData.PrebuildCommandList == null) || (metaData.PrebuildCommandList.Count == 0))
+                return;
+
+            foreach (var command in metaData.PrebuildCommandList)
+            {
+                processFactory.ExcuteCommand(command, packageTree.WorkingDirectory.FullName);
             }
         }
 

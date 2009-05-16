@@ -2,7 +2,7 @@
 	description "A .NET build and dependency manager"
 	get_from svn("http://scotaltdotnet.googlecode.com/svn/trunk/")
 	
-	prebuild:
+	prebuild:  
 	  cmd "dir"
 	  cmd "@echo \"hello\""
 	

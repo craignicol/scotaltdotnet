@@ -13,5 +13,7 @@ namespace Horn.Core.Dsl
         BuildEngine BuildEngine { get; set; }
 
         SourceControl SourceControl { get; set; }
+
+        List<string> PrebuildCommandList { get; set; }
     }
 }

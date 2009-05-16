@@ -34,6 +34,17 @@ namespace Horn.Core.Spec.helpers
             return new BuildMetaDataStub(buildEngine, sourceControl);
         }
 
+        public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<string> cmds )
+        {
+            var buildEngine = new BuildEngineStub(null, null, dependencies);
+            var sourceControl = new SourceControlDouble("http://someurl.com");
+            var metaData = new BuildMetaDataStub(buildEngine, sourceControl);
+
+            metaData.PrebuildCommandList.AddRange(cmds);
+
+            return metaData;
+        }
+
         public static IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
         {
             var buildMetaData = MockRepository.GenerateStub<IBuildMetaData>();
