@@ -65,7 +65,7 @@ namespace Horn.Console
 
             metaDataSynchroniser.SynchronisePackageTree(root);
 
-            return new PackageTree(GetRootFolderPath(), null);
+            return root;
         }
 
         //TODO: to be replaced by user defined choice from the install perhaps?
