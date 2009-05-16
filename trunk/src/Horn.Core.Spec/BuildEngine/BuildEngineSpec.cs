@@ -35,6 +35,27 @@ namespace Horn.Core.Spec.BuildEngine
         }
     }
 
+    public class When_The_Build_Engine_Fails : Specification
+    {
+        private IPackageTree packageTree;
+        private IBuildTool buildToolStub;
+        private BuildEngine buildEngine;
+
+
+        protected override void Because()
+        {
+            packageTree = CreateStub<IPackageTree>();
+
+            packageTree.Stub(x => x.WorkingDirectory).Return(new DirectoryInfo(@"C:\"));
+
+            buildToolStub = CreateStub<IBuildTool>();
+
+            buildEngine = new BuildEngine(buildToolStub, "deeper/than/this/somebuild.file", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
+
+            buildEngine.Build(new StubProcessFactory(), packageTree);
+        }
+    }
+
     public class When_The_Build_Engine_Receives_An_Array_Of_Parameters : Specification
     {
         private readonly string[] switches = new[] { "sign=false", "testrunner=NUnit", "common.testrunner.enabled=true", "common.testrunner.failonerror=true", "build.msbuild=true" };

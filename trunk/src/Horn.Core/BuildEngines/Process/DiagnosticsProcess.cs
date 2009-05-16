@@ -16,6 +16,8 @@ namespace Horn.Core.BuildEngines
         public void WaitForExit()
         {
             process.WaitForExit();
+            if (process.ExitCode != 0)
+                throw new ProcessFailedException(process.ExitCode);
         }
 
 

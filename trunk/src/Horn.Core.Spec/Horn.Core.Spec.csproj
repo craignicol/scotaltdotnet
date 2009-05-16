@@ -128,6 +128,7 @@
     <Compile Include="Dependencies\VisualStudioDependentUpdaterSpecification.cs" />
     <Compile Include="Dependencies\visual_studio_dependent_updater_context.cs" />
     <Compile Include="DirectorySpecificationBase.cs" />
+    <Compile Include="dsl\PrebuildSpecification.cs" />
     <Compile Include="Stubs\BuildEngineStub.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
@@ -166,6 +167,7 @@
     <Content Include="BuildConfigs\Horn\hornnant.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="BuildConfigs\Horn\hornprebuild.boo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -194,6 +196,7 @@
     </PreBuildEvent>
     <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)"
 REM IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" "$(TargetDir)horn.boo"
-IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" "$(TargetDir)log4net.boo"</PostBuildEvent>
+IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" "$(TargetDir)log4net.boo"
+IF EXIST "$(ProjectDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)BuildConfigs\Horn"</PostBuildEvent>
   </PropertyGroup>
 </Project>

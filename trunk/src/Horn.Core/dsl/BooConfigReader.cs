@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
 using Horn.Core.BuildEngines;
@@ -67,6 +68,26 @@ namespace Horn.Core.Dsl
                 new ReferenceExpression("SetParameters"),
                 arrayExpression
             );
+        }
+
+        [Meta]
+        public static Expression prebuild(BlockExpression commands)
+        {
+            var cmdList = new ArrayLiteralExpression();
+            
+            foreach (Statement statement in commands.Body.Statements)
+            {
+                var expression = (MethodInvocationExpression)((ExpressionStatement) statement).Expression;
+
+                cmdList.Items.Add(new StringLiteralExpression(expression.Arguments[0].ToString().Trim(new char[]{'\''})));
+            }
+
+            return new MethodInvocationExpression(new ReferenceExpression("ParseCommands"), cmdList);
+        }
+
+        public void ParseCommands(string[] cmdList)
+        {
+            PrebuildCommandList = new List<string>(cmdList);
         }
 
         [Meta]
@@ -212,6 +233,8 @@ namespace Horn.Core.Dsl
         public virtual string Description { get; set; }
 
         public virtual string InstallName { get; set; }
+
+        public virtual List<string> PrebuildCommandList { get; set; }
 
         public virtual PackageMetaData PackageMetaData
         {
