@@ -117,6 +117,7 @@
     <Compile Include="Dependencies\IDependentUpdater.cs" />
     <Compile Include="Dependencies\IDependentUpdaterExecutor.cs" />
     <Compile Include="Dependencies\VisualStudioDependentUpdater.cs" />
+    <Compile Include="exceptions\ProcessFailedException.cs" />
     <Compile Include="Utils\WithLogging.cs" />
     <Compile Include="extensions\DirectoryInfoExtensions.cs" />
     <Compile Include="BuildEngines\Process\DiagnosticsProcess.cs" />
