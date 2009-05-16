@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Horn.Core.BuildEngines;
 using Horn.Core.Dependencies;
 using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.Spec.BuildEngine;
+using Horn.Core.Spec.Doubles;
 using Horn.Framework.helpers;
 using Rhino.Mocks;
 
@@ -23,6 +25,13 @@ namespace Horn.Core.Spec.helpers
             var treeDirectory =  PackageTreeHelper.CreateDirectoryStructureForTesting();
 
             return new PackageTree(treeDirectory, null);
+        }
+
+        public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies)
+        {
+            var buildEngine = new BuildEngineStub(null, null, dependencies);
+            var sourceControl = new SourceControlDouble("http://someurl.com");
+            return new BuildMetaDataStub(buildEngine, sourceControl);
         }
 
         public static IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
