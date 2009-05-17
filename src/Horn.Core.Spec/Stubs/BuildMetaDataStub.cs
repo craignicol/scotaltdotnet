@@ -7,6 +7,7 @@ namespace Horn.Core.Spec.Doubles
     public class BuildMetaDataStub : IBuildMetaData
     {
         public string Description { get; set; }
+        public List<SCM.SourceControl> ExportList { get; set; }
 
         public Dictionary<string, object> ProjectInfo { get; set; }
 
@@ -21,6 +22,8 @@ namespace Horn.Core.Spec.Doubles
             BuildEngine = buildEngine;
             SourceControl = sourceControl;
             PrebuildCommandList = new List<string>();
+
+            ExportList = new List<SCM.SourceControl>();
         }
     }
 }

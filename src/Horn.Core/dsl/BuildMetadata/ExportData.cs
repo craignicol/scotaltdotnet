@@ -5,7 +5,7 @@ namespace Horn.Core.Dsl
 {
     public enum SourceControlType
     {
-        Svn
+        svn
     }
 
     public class ExportData

@@ -147,16 +147,12 @@ namespace Horn.Core.Dsl
 
         public void ParseExportList(string[][] exports)
         {
+
             for(var i =0;i < exports[0].Length; i++)
             {
-                switch(exports[i][0])
-                {
-                    case "subversion":
-                        ExportList.Add(new ExportData(exports[i][1], SourceControlType.Svn));
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException("Unkown sourcecontroltype: {0}", exports[i][1]);
-                }
+                var sourceControlType = (SourceControlType) Enum.Parse(typeof (SourceControlType), exports[i][0]);
+
+                ExportList.Add(new ExportData(exports[i][1], sourceControlType));
             }
         }
 

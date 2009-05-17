@@ -2,8 +2,8 @@
 	description "A .NET build and dependency manager"
 	
 	export:
-	  subversion("http://scotaltdotnet.googlecode.com/svn/trunk/src/one")
-	  subversion("http://scotaltdotnet.googlecode.com/svn/trunk/src/two")
+	  svn("http://scotaltdotnet.googlecode.com/svn/trunk/src/one")
+	  svn("http://scotaltdotnet.googlecode.com/svn/trunk/src/two")
 	
 	prebuild:  
 	  cmd "dir"

@@ -45,6 +45,16 @@ namespace Horn.Core.Spec.helpers
             return metaData;
         }
 
+        public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<SCM.SourceControl> exportList)
+        {
+            var buildEngine = new BuildEngineStub(null, null, dependencies);
+            var metaData = new BuildMetaDataStub(buildEngine, null);
+
+            metaData.ExportList.AddRange(exportList);
+
+            return metaData;
+        }
+
         public static IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
         {
             var buildMetaData = MockRepository.GenerateStub<IBuildMetaData>();
