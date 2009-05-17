@@ -19,7 +19,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void Because()
         {
-            exportData = new ExportData(Url, ExportToPath, SourceControlType.svn);
+            exportData = new ExportData(Url, SourceControlType.svn, ExportToPath);
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace Horn.Core.Spec.Unit.dsl
         {
             Assert.Equal(Url, exportData.Url);
             Assert.Equal(SourceControlType.svn, exportData.SourceControlType);
-            Assert.Equal(ExportToPath, exportData.To.FullName);
+            Assert.Equal(ExportToPath, exportData.Path);
         }
     }
 
@@ -68,6 +68,8 @@ namespace Horn.Core.Spec.Unit.dsl
         {
             Assert.Equal("http://scotaltdotnet.googlecode.com/svn/trunk/src/one", configReader.ExportList[0].Url);
             Assert.Equal("http://scotaltdotnet.googlecode.com/svn/trunk/src/two", configReader.ExportList[1].Url);
+            Assert.Equal("one", configReader.ExportList[0].Path);
+            Assert.Null(configReader.ExportList[1].Path);
             Assert.Equal(SourceControlType.svn, configReader.ExportList[0].SourceControlType);
             Assert.Equal(SourceControlType.svn, configReader.ExportList[1].SourceControlType);
         }

@@ -2,7 +2,7 @@
 	description "A .NET build and dependency manager"
 	
 	export:
-	  svn("http://scotaltdotnet.googlecode.com/svn/trunk/src/one")
+	  svn("http://scotaltdotnet.googlecode.com/svn/trunk/src/one", to("one"))
 	  svn("http://scotaltdotnet.googlecode.com/svn/trunk/src/two")
 	
 	prebuild:  
