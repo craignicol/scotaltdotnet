@@ -10,5 +10,7 @@ namespace Horn.Core.GetOperations
         IGet From(SourceControl sourceControlToGetFrom);
         
         IPackageTree ExportTo(IPackageTree packageTree);
+
+        IPackageTree ExportTo(IPackageTree packageTree, string path, bool initialise);
     }
 }

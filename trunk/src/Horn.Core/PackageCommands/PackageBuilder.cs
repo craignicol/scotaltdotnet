@@ -83,10 +83,15 @@ namespace Horn.Core.PackageCommands
             //TODO: Remove get_from functionality and only retrieve from the exportlist ??
             if((buildMetaData.ExportList != null) && (buildMetaData.ExportList.Count > 0))
             {
+                var initialise = true;
+
                 foreach (var sourceControl in buildMetaData.ExportList)
                 {
                     log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), sourceControl.Url);
-                    get.From(sourceControl).ExportTo(componentTree);
+
+                    get.From(sourceControl).ExportTo(componentTree, sourceControl.ExportPath, initialise);
+
+                    initialise = false;
                 }
 
                 return;

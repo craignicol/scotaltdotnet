@@ -44,7 +44,7 @@ namespace Horn.Core.Dsl
                 switch (exportData.SourceControlType)
                 {
                     case SourceControlType.svn:
-                        ExportList.Add(new SVNSourceControl(exportData.Url));
+                        ExportList.Add(new SVNSourceControl(exportData.Url, exportData.Path));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(string.Format("Unkown SourceControlType {0}",

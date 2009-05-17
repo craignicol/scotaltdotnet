@@ -4,6 +4,12 @@ install castle.tools:
 	
 	prebuild:
 		cmd "xcopy /s /y \"../Patch\" ."
+		
+	/*export:
+		svn("http://svn.castleproject.org:8080/svn/castle/trunk/Core/Castle.Core", to("Core"))
+		svn("http://svn.castleproject.org:8080/svn/castle/trunk/Tools", to("Tools"))  		
+		svn("http://svn.castleproject.org:8080/svn/castle/trunk/common.xml")  		
+		svn("http://svn.castleproject.org:8080/svn/castle/trunk/common-project.xml")*/
 	
 	build_with nant, buildfile("Tools/Tools.build"), FrameworkVersion35
 		
