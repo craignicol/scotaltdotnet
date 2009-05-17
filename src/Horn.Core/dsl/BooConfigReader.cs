@@ -147,12 +147,18 @@ namespace Horn.Core.Dsl
 
         public void ParseExportList(string[][] exports)
         {
-
-            for(var i =0;i < exports[0].Length; i++)
+            for(var i =0;i < exports.Length; i++)
             {
                 var sourceControlType = (SourceControlType) Enum.Parse(typeof (SourceControlType), exports[i][0]);
 
-                ExportList.Add(new ExportData(exports[i][1], sourceControlType));
+                if(exports[i].Length == 2)
+                {
+                    ExportList.Add(new ExportData(exports[i][1], sourceControlType));    
+
+                    continue;
+                }
+
+                ExportList.Add(new ExportData(exports[i][1], sourceControlType, exports[i][2])); 
             }
         }
 
@@ -168,7 +174,18 @@ namespace Horn.Core.Dsl
                 var innerArray = new ArrayLiteralExpression();
 
                 innerArray.Items.Add(new StringLiteralExpression(expression.Target.ToString()));
-                innerArray.Items.Add(new StringLiteralExpression(expression.Arguments[0].ToString().Trim(new char[] { '\'' })));
+                innerArray.Items.Add(new StringLiteralExpression(expression.Arguments[0].ToString().Trim(new[] { '\'' })));
+
+                if(expression.Arguments.Count == 1)
+                {
+                    exportList.Items.Add(innerArray);
+
+                    continue;
+                }
+
+                var to = (MethodInvocationExpression) expression.Arguments[1];
+
+                innerArray.Items.Add(new StringLiteralExpression(to.Arguments[0].ToString().Trim(new[] { '\'' })));
 
                 exportList.Items.Add(innerArray);
             }

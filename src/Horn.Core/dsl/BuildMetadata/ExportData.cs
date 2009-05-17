@@ -10,7 +10,7 @@ namespace Horn.Core.Dsl
 
     public class ExportData
     {
-        public DirectoryInfo To { get; private set; }
+        public string Path { get; private set; }
 
         public string Url { get; private set; }
 
@@ -22,9 +22,9 @@ namespace Horn.Core.Dsl
             SourceControlType = sourceControlType;
         }
 
-        public ExportData(string url, string path, SourceControlType sourceControlType) : this(url, sourceControlType)
+        public ExportData(string url, SourceControlType sourceControlType, string path) : this(url, sourceControlType)
         {
-            To = new DirectoryInfo(path);
+            Path = path;
         }
     }
 }
