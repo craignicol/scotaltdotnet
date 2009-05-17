@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -9,6 +10,9 @@ namespace Horn.Core.SCM
     {
 
         private static Dictionary<string, string> downloadedPackages = new Dictionary<string, string>();
+
+        private static readonly object locker = new object();
+
         protected  IDownloadMonitor downloadMonitor;
 
 
@@ -16,6 +20,8 @@ namespace Horn.Core.SCM
         {
             get { return downloadMonitor; }
         }
+
+        public string ExportPath { get; private set; }
 
         public abstract string Revision { get; }
 
@@ -67,7 +73,27 @@ namespace Horn.Core.SCM
             downloadedPackages.Add(packageTree.Name, packageTree.Name);
         }
 
+        public virtual void Export(IPackageTree packageTree, string path, bool initialise)
+        {
+            lock (locker)
+            {
+                if (initialise)
+                    Initialise(packageTree);
 
+                var exportPath = new DirectoryInfo(Path.Combine(packageTree.WorkingDirectory.FullName, path));
+
+                if (!exportPath.Exists)
+                    exportPath.Create();
+
+                SetMonitor(packageTree.WorkingDirectory.FullName);
+
+                Download(exportPath);
+
+                Thread monitoringThread = StartMonitoring();
+
+                StopMonitoring(monitoringThread);
+            }
+        }
 
         protected virtual void RecordCurrentRevision(IPackageTree tree, string revision)
         {
@@ -99,6 +125,13 @@ namespace Horn.Core.SCM
         {
             Url = url;
         }
+
+        protected SourceControl(string url, string exportPath)
+        {
+            Url = url;
+            ExportPath = (string.IsNullOrEmpty(exportPath) ? "" : exportPath);
+        }
+
 
         protected SourceControl()
         {

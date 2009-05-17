@@ -60,7 +60,9 @@ namespace Horn.Core.SCM
             {
                 try
                 {
-                    client.Export(Url, destination.FullName, out result);
+                    var args = new SvnExportArgs {Overwrite = true};
+
+                    client.Export(Url, destination.FullName, args, out result);
                 }
                 catch (SvnRepositoryIOException sre)
                 {
@@ -102,7 +104,10 @@ namespace Horn.Core.SCM
         {
         }
 
-
+        public SVNSourceControl(string url, string exportPath)
+            : base(url, exportPath)
+        {
+        }
 
     }
 }
