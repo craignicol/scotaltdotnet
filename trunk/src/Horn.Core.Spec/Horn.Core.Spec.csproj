@@ -128,6 +128,7 @@
     <Compile Include="Dependencies\VisualStudioDependentUpdaterSpecification.cs" />
     <Compile Include="Dependencies\visual_studio_dependent_updater_context.cs" />
     <Compile Include="DirectorySpecificationBase.cs" />
+    <Compile Include="dsl\MultipleGetSpecification.cs" />
     <Compile Include="dsl\PrebuildSpecification.cs" />
     <Compile Include="Stubs\BuildEngineStub.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Utils\FrameworkLocatorSpec.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BuildConfigs\Horn\hornmultiget.boo" />
     <Content Include="BuildConfigs\Horn\horn.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

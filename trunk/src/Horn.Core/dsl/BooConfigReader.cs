@@ -12,21 +12,11 @@ namespace Horn.Core.Dsl
 
     public abstract class BooConfigReader
     {
-
-		#region Constructors (1) 
-
-        protected BooConfigReader()
-        {
-            Global.package.PackageInfo.Clear();
-        }
-
-		#endregion Constructors 
-
-		#region Properties (6) 
-
         public virtual BuildEngine BuildEngine { get; set; }
 
         public virtual string Description { get; set; }
+
+        public List<ExportData> ExportList { get; set; }
 
         public virtual string InstallName { get; set; }
 
@@ -42,12 +32,6 @@ namespace Horn.Core.Dsl
 
         public virtual SourceControl SourceControl { get; set; }
 
-		#endregion Properties 
-
-		#region Methods (27) 
-
-
-		// Public Methods (20) 
 
         public void AddDependencies(string[] dependencies)
         {
@@ -161,6 +145,41 @@ namespace Horn.Core.Dsl
             PrebuildCommandList = new List<string>(cmdList);
         }
 
+        public void ParseExportList(string[][] exports)
+        {
+            for(var i =0;i < exports[0].Length; i++)
+            {
+                switch(exports[i][0])
+                {
+                    case "subversion":
+                        ExportList.Add(new ExportData(exports[i][1], SourceControlType.Svn));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("Unkown sourcecontroltype: {0}", exports[i][1]);
+                }
+            }
+        }
+
+        [Meta]
+        public static Expression export(BlockExpression exportUrls)
+        {
+            var exportList = new ArrayLiteralExpression();
+
+            foreach (Statement statement in exportUrls.Body.Statements)
+            {
+                var expression = (MethodInvocationExpression)((ExpressionStatement)statement).Expression;
+
+                var innerArray = new ArrayLiteralExpression();
+
+                innerArray.Items.Add(new StringLiteralExpression(expression.Target.ToString()));
+                innerArray.Items.Add(new StringLiteralExpression(expression.Arguments[0].ToString().Trim(new char[] { '\'' })));
+
+                exportList.Items.Add(innerArray);
+            }
+
+            return new MethodInvocationExpression(new ReferenceExpression("ParseExportList"), exportList);
+        }
+
         [Meta]
         public static Expression prebuild(BlockExpression commands)
         {
@@ -215,10 +234,6 @@ namespace Horn.Core.Dsl
                 );
         }
 
-
-
-		// Protected Methods (6) 
-
         protected void msbuild(string buildFile, string frameWorkVersion)
         {
             var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
@@ -259,15 +274,18 @@ namespace Horn.Core.Dsl
 
 
 
-		// Private Methods (1) 
-
         private void SetBuildEngine(IBuildTool tool, string buildFile, FrameworkVersion version)
         {
             BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
         }
 
 
-		#endregion Methods 
+        protected BooConfigReader()
+        {
+            ExportList = new List<ExportData>();
+
+            Global.package.PackageInfo.Clear();
+        }
 
     }
 }
