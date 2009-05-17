@@ -22,7 +22,7 @@ namespace Horn.Core.Spec.Extensions
 
             foreach (var dir in source.GetDirectories())
             {
-                if(dir.FullName.Contains(".svn"))
+                if(dir.FullName.Contains(".Svn"))
                     continue;
 
                 var newDirectory = new DirectoryInfo(Path.Combine(destination.FullName, dir.Name));

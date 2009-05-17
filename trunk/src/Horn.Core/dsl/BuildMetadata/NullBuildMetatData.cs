@@ -13,6 +13,12 @@ namespace Horn.Core.Dsl
             set { throw new System.NotImplementedException(); }
         }
 
+        public List<SourceControl> ExportList
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         public Dictionary<string, object> ProjectInfo
         {
             get { throw new System.NotImplementedException(); }

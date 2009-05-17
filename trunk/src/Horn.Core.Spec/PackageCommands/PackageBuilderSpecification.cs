@@ -96,7 +96,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             var buildMetaData = CreateStub<IBuildMetaData>();
 
-            buildMetaData.SourceControl = new SourceControlDoubleWithFakeFileSystem("svn://some.url");
+            buildMetaData.SourceControl = new SourceControlDoubleWithFakeFileSystem("Svn://some.url");
 
             buildMetaData.BuildEngine = buildEngine;
 
@@ -201,6 +201,49 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             if (File.Exists(testFile))
                 File.Delete(testFile);
+        }
+    }
+
+    public class When_the_meta_data_has_an_export_list : GetSpecificationBase
+    {
+        private PackageBuilder packageBuilder;
+
+        private MockRepository mockRepository;
+
+        protected override void Before_each_spec()
+        {
+            mockRepository = new MockRepository();
+
+            var exportList = new List<SCM.SourceControl> {new SVNSourceControl("url1")};
+
+            packageTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>(), exportList), "log4net", false);
+
+            get = MockRepository.GenerateStub<IGet>();
+
+            get.Stub(x => x.From(new SVNSourceControl("url1"))).Return(get).IgnoreArguments().Repeat.Twice();
+
+            get.Stub(x => x.ExportTo(packageTree)).Return(packageTree);
+
+            packageBuilder = new PackageBuilder(get, new DiagnosticsProcessFactory());
+        }
+
+
+        protected override void Because()
+        {
+            var args = new Dictionary<string, IList<string>>
+                           {
+                               {"install", new List<string> {"log4net"}}
+                           };
+
+            mockRepository.Playback();
+
+            packageBuilder.Execute(packageTree, args);
+        }
+
+        [Fact]
+        public void Then_the_export_list_is_retrieved()
+        {
+            get.AssertWasCalled(x => x.From(Arg<SVNSourceControl>.Is.TypeOf));        
         }
     }
 }

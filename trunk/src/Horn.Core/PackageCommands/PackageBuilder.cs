@@ -39,7 +39,7 @@ namespace Horn.Core.PackageCommands
                 IBuildMetaData nextMetaData = GetBuildMetaData(nextTree);
 
                 if (!switches.Keys.Contains("rebuildonly"))
-                    ExecuteSourceControlGet(nextMetaData.SourceControl, nextTree);
+                    ExecuteSourceControlGet(nextMetaData, nextTree);
 
                 ExecutePrebuild(nextMetaData, nextTree);
 
@@ -78,10 +78,22 @@ namespace Horn.Core.PackageCommands
             return new DependencyTree(componentTree);
         }
 
-        private void ExecuteSourceControlGet(SourceControl sourceControl, IPackageTree componentTree)
+        private void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
         {
-            log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), sourceControl.Url);
-            get.From(sourceControl).ExportTo(componentTree);
+            //TODO: Remove get_from functionality and only retrieve from the exportlist ??
+            if((buildMetaData.ExportList != null) && (buildMetaData.ExportList.Count > 0))
+            {
+                foreach (var sourceControl in buildMetaData.ExportList)
+                {
+                    log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), sourceControl.Url);
+                    get.From(sourceControl).ExportTo(componentTree);
+                }
+
+                return;
+            }
+
+            log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), buildMetaData.SourceControl.Url);
+            get.From(buildMetaData.SourceControl).ExportTo(componentTree);
         }
 
         private void BuildComponentTree(BuildEngine buildEngine, IPackageTree componentTree)

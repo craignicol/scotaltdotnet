@@ -39,7 +39,7 @@ namespace Horn.Core.Utils.IoC
 
             innerContainer.Register(
                 Component.For<SVNSourceControl>()
-                            .Named("svn")
+                            .Named("Svn")
                             .LifeStyle.Transient
                 );
 

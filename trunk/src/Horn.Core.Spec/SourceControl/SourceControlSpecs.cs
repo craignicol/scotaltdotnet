@@ -78,7 +78,7 @@ namespace Horn.Core.Spec.SourceControl
 
         protected override void Before_each_spec()
         {
-            sourceControl = new SourceControlDouble("http://somesvnuri.com/svn");
+            sourceControl = new SourceControlDouble("http://somesvnuri.com/Svn");
 
             packageTree = TreeHelper.GetTempPackageTree().RetrievePackage(PackageTreeHelper.PACKAGE_WITHOUT_REVISION);
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Horn.Core.BuildEngines;
 using Horn.Core.SCM;
@@ -10,6 +11,8 @@ namespace Horn.Core.Dsl
         public BuildEngine BuildEngine { get; set; }
 
         public string Description { get; set; }
+
+        public List<SourceControl> ExportList{ get; set; }
 
         public Dictionary<string, object> ProjectInfo { get; set; }
 
@@ -33,6 +36,21 @@ namespace Horn.Core.Dsl
             BuildEngine.SharedLibrary = instance.BuildEngine.SharedLibrary;
             ProjectInfo = instance.PackageMetaData.PackageInfo;
             PrebuildCommandList = instance.PrebuildCommandList;
+
+            ExportList = new List<SourceControl>();
+
+            foreach (var exportData in instance.ExportList)
+            {
+                switch (exportData.SourceControlType)
+                {
+                    case SourceControlType.svn:
+                        ExportList.Add(new SVNSourceControl(exportData.Url));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(string.Format("Unkown SourceControlType {0}",
+                                                                            exportData.SourceControlType));
+                }
+            }
         }
 
 
