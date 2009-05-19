@@ -9,13 +9,10 @@ task :build  => [:clean, :init, :copy_package_tree, :copy_referenced_assemblies,
   
 end 
 
-task :build do
-	Rake::Task["build_horn_integration"].execute 
-end
-
 task :build_horn_core => [:generate_assembly_info] do
   compile_dll "Horn.Core/Horn.Core.csproj"
 end
+
 task :build_horn_console do
   compile_dll "Horn.Console/Horn.Console.csproj"
   if ENV["runtests"] == "true"
