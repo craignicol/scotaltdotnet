@@ -52,7 +52,7 @@ namespace Horn.Core.SCM
                 packageTree.WorkingDirectory.Delete(true);
         }
 
-        protected override string Download(DirectoryInfo destination)
+        protected override string Download(FileSystemInfo destination)
         {
             SvnUpdateResult result = null;
 
@@ -73,6 +73,12 @@ namespace Horn.Core.SCM
                 catch (SvnObstructedUpdateException sue)
                 {
                     HandleExceptions(sue);
+                }
+                catch(Exception ex)
+                {
+                    HandleExceptions(ex);
+
+                    throw;
                 }
             }
 
