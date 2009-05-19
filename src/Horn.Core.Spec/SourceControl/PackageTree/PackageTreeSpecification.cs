@@ -74,7 +74,7 @@ namespace Horn.Core.Spec.Unit.HornTree
 
             dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>("boo")).Return(buildConfigReader);
 
-            var svn = new SVNSourceControl("https://svnserver/trunk");
+            var svn = new SVNSourceControl("http://svnserver/trunk");
 
             dependencyResolver.Stub(x => x.Resolve<SVNSourceControl>()).Return(svn);
 

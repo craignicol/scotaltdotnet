@@ -6,7 +6,7 @@ namespace Horn.Core.Spec.Integration.Get
 {
     public class When_Horn_Is_In_The_BuildMetaData : SourceControlTestBase
     {
-        public const string HORN_URL = "https://scotaltdotnet.googlecode.com/Svn/trunk";
+        public const string HORN_URL = "http://scotaltdotnet.googlecode.com/svn/trunk";
 
         protected override void Because()
         {
