@@ -36,12 +36,12 @@ namespace Horn.Core.Spec
             }
         }
 
-        protected override string Download(DirectoryInfo destination)
+        protected override string Download(FileSystemInfo destination)
         {
             Console.WriteLine("In Download");
 
             if (!destination.Exists)
-                destination.Create();
+                ((DirectoryInfo)destination).Create();
 
             FileHelper.CreateFileWithRandomData(Path.Combine(destination.FullName, "horn.boo"));
 

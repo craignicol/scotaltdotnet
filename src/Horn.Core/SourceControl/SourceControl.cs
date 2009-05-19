@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Horn.Core.extensions;
 using Horn.Core.PackageStructure;
 
 namespace Horn.Core.SCM
@@ -35,7 +36,7 @@ namespace Horn.Core.SCM
 
         protected abstract void Initialise(IPackageTree packageTree);
 
-        protected abstract string Download(DirectoryInfo destination);
+        protected abstract string Download(FileSystemInfo destination);
 
 
 
@@ -80,19 +81,36 @@ namespace Horn.Core.SCM
                 if (initialise)
                     Initialise(packageTree);
 
-                var exportPath = new DirectoryInfo(Path.Combine(packageTree.WorkingDirectory.FullName, path));
+                downloadMonitor = new DefaultDownloadMonitor();
 
-                if (!exportPath.Exists)
-                    exportPath.Create();
+                var fullPath = Path.Combine(packageTree.WorkingDirectory.FullName, path);
 
-                SetMonitor(packageTree.WorkingDirectory.FullName);
-
-                Download(exportPath);
+                FileSystemInfo exportPath = GetExportPath(fullPath);
 
                 Thread monitoringThread = StartMonitoring();
 
+                Download(exportPath);
+
                 StopMonitoring(monitoringThread);
             }
+        }
+
+        protected virtual FileSystemInfo GetExportPath(string fullPath)
+        {
+            FileSystemInfo exportPath;
+
+            if (!fullPath.PathIsFile()) 
+            {
+                exportPath = new DirectoryInfo(fullPath);
+
+                if (!exportPath.Exists)
+                    ((DirectoryInfo)exportPath).Create();                    
+            }
+            else
+            {
+                exportPath = new FileInfo(fullPath);
+            }
+            return exportPath;
         }
 
         protected virtual void RecordCurrentRevision(IPackageTree tree, string revision)

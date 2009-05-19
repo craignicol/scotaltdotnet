@@ -32,7 +32,7 @@ namespace Horn.Core.PackageCommands
             log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), packageName);
         }
 
-        private void BuildDependencyTree(IDependencyTree dependencyTree, IDictionary<string, IList<string>> switches)
+        protected virtual void BuildDependencyTree(IDependencyTree dependencyTree, IDictionary<string, IList<string>> switches)
         {
             foreach (var nextTree in dependencyTree)
             {
@@ -47,7 +47,7 @@ namespace Horn.Core.PackageCommands
             }
         }
 
-        private void ExecutePrebuild(IBuildMetaData metaData, IPackageTree packageTree)
+        protected virtual void ExecutePrebuild(IBuildMetaData metaData, IPackageTree packageTree)
         {
             if ((metaData.PrebuildCommandList == null) || (metaData.PrebuildCommandList.Count == 0))
                 return;
@@ -58,13 +58,13 @@ namespace Horn.Core.PackageCommands
             }
         }
 
-        private IBuildMetaData GetBuildMetaData(IPackageTree nextTree)
+        protected virtual IBuildMetaData GetBuildMetaData(IPackageTree nextTree)
         {
             return nextTree.GetBuildMetaData(nextTree.BuildFile);
         }
 
 
-        private string GetPackageName(IDictionary<string, IList<string>> switches)
+        protected virtual string GetPackageName(IDictionary<string, IList<string>> switches)
         {
             string packageName = switches["install"][0];
 
@@ -73,12 +73,12 @@ namespace Horn.Core.PackageCommands
             return packageName;
         }
 
-        private IDependencyTree GetDependencyTree(IPackageTree componentTree)
+        protected virtual IDependencyTree GetDependencyTree(IPackageTree componentTree)
         {
             return new DependencyTree(componentTree);
         }
 
-        private void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
+        protected virtual void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
         {
             //TODO: Remove get_from functionality and only retrieve from the exportlist ??
             if((buildMetaData.ExportList != null) && (buildMetaData.ExportList.Count > 0))
@@ -101,7 +101,7 @@ namespace Horn.Core.PackageCommands
             get.From(buildMetaData.SourceControl).ExportTo(componentTree);
         }
 
-        private void BuildComponentTree(BuildEngine buildEngine, IPackageTree componentTree)
+        protected virtual void BuildComponentTree(BuildEngine buildEngine, IPackageTree componentTree)
         {
             log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), buildEngine.BuildFile);
             buildEngine.Build(processFactory, componentTree);
