@@ -210,19 +210,17 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
         private MockRepository mockRepository;
 
+        private readonly SourceControlDouble sourceControlDouble = new SourceControlDouble("url1");
+
         protected override void Before_each_spec()
         {
             mockRepository = new MockRepository();
 
-            var exportList = new List<SourceControl> {new SVNSourceControl("url1")};
+            var exportList = new List<SourceControl> {sourceControlDouble};
 
             packageTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>(), exportList), "log4net", false);
 
-            get = MockRepository.GenerateStub<IGet>();
-
-            get.Stub(x => x.From(new SVNSourceControl("url1"))).Return(get).IgnoreArguments().Repeat.Twice();
-
-            get.Stub(x => x.ExportTo(packageTree)).Return(packageTree);
+            get = new Get(MockRepository.GenerateStub<IFileSystemProvider>());
 
             packageBuilder = new PackageBuilder(get, new DiagnosticsProcessFactory());
         }
@@ -243,7 +241,12 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         [Fact]
         public void Then_the_export_list_is_retrieved()
         {
-            get.AssertWasCalled(x => x.From(Arg<SVNSourceControl>.Is.TypeOf));        
+            Assert.True(sourceControlDouble.FileWasDownloaded); 
+        }
+
+        protected override void After_each_spec()
+        {
+            sourceControlDouble.Dispose();
         }
     }
 }

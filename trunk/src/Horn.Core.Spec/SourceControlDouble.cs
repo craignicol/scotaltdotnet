@@ -9,7 +9,23 @@ namespace Horn.Core.Spec
 {
     public class SourceControlDouble : SVNSourceControl
     {
+        private FileInfo _tempFile;
+
         public bool ExportWasCalled;
+
+        public bool FileWasDownloaded
+        {
+            get
+            {
+                return (_tempFile != null) ? _tempFile.Exists : false;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_tempFile != null && _tempFile.Exists)
+                _tempFile.Delete();
+        }
 
         protected override Thread StartMonitoring()
         {
@@ -43,7 +59,9 @@ namespace Horn.Core.Spec
             if (!destination.Exists)
                 ((DirectoryInfo)destination).Create();
 
-            FileHelper.CreateFileWithRandomData(Path.Combine(destination.FullName, "horn.boo"));
+            _tempFile = new FileInfo(Path.Combine(destination.FullName, "horn.boo"));
+
+            FileHelper.CreateFileWithRandomData(_tempFile.FullName);
 
             ExportWasCalled = true;
 
@@ -53,6 +71,7 @@ namespace Horn.Core.Spec
         public SourceControlDouble(string url)
             : base(url)
         {
+            ExportPath = string.Empty;
         }
     }
 
