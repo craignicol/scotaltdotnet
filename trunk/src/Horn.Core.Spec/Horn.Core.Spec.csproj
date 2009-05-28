@@ -146,6 +146,7 @@
     <Compile Include="SpecificationHelper.cs" />
     <Compile Include="BuildEngine\BuildEngineSpec.cs" />
     <Compile Include="Stubs\BuildMetaDataStub.cs" />
+    <Compile Include="Stubs\GetStub.cs" />
     <Compile Include="Stubs\PackageTreeStub.cs" />
     <Compile Include="Utils\FileSystemProvider.cs" />
     <Compile Include="CmdLine\CmdLineSpecificationBase.cs" />

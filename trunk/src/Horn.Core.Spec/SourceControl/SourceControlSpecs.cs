@@ -1,10 +1,11 @@
 using System.IO;
 using Horn.Core.PackageStructure;
+using Horn.Core.SCM;
 using Horn.Core.Spec.helpers;
 using Horn.Framework.helpers;
 using Xunit;
 using scm = Horn.Core.SCM;
-namespace Horn.Core.Spec.SourceControl
+namespace Horn.Core.Spec.SCM
 {
     public class When_the_package_source_revision_does_not_exist : Specification
     {
@@ -12,7 +13,7 @@ namespace Horn.Core.Spec.SourceControl
 
         protected override void Because()
         {
-            SCM.SourceControl.ClearDownLoadedPackages();
+            SourceControl.ClearDownLoadedPackages();
 
             var packageTree = TreeHelper.GetTempEmptyPackageTree();
 
@@ -34,7 +35,7 @@ namespace Horn.Core.Spec.SourceControl
 
         protected override void Because()
         {
-            SCM.SourceControl.ClearDownLoadedPackages();
+            SourceControl.ClearDownLoadedPackages();
 
             var packageTree = TreeHelper.GetTempPackageTree().RetrievePackage(PackageTreeHelper.PACKAGE_WITH_REVISION);
 
@@ -72,7 +73,7 @@ namespace Horn.Core.Spec.SourceControl
 
     public class When_the_source_code_has_downloaded : DirectorySpecificationBase
     {
-        private scm.SourceControl sourceControl;
+        private SourceControl sourceControl;
 
         private IPackageTree packageTree;
 

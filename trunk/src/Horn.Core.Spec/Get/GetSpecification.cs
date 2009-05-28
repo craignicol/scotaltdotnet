@@ -1,4 +1,5 @@
 using System;
+using Horn.Core.SCM;
 using Xunit;
 namespace Horn.Core.Spec.Unit.Get
 {
@@ -10,7 +11,7 @@ namespace Horn.Core.Spec.Unit.Get
 
         protected override void Because()
         {
-            SCM.SourceControl.ClearDownLoadedPackages();
+            SourceControl.ClearDownLoadedPackages();
 
             get = new Get(fileSystemProvider);
 

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Horn.Core.PackageStructure;
+using Horn.Core.SCM;
 using Horn.Core.Spec.helpers;
 using Horn.Framework.helpers;
 using Horn.Core.Spec.Unit.Get;
@@ -16,7 +17,7 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
 
         protected override void Because()
         {
-            SCM.SourceControl.ClearDownLoadedPackages();
+            SourceControl.ClearDownLoadedPackages();
 
             packageTree = TreeHelper.GetTempEmptyPackageTree();
 
