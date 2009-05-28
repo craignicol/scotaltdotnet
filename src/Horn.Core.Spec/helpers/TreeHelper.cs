@@ -4,6 +4,7 @@ using Horn.Core.BuildEngines;
 using Horn.Core.Dependencies;
 using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
+using Horn.Core.SCM;
 using Horn.Core.Spec.BuildEngine;
 using Horn.Core.Spec.Doubles;
 using Horn.Framework.helpers;
@@ -45,7 +46,7 @@ namespace Horn.Core.Spec.helpers
             return metaData;
         }
 
-        public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<SCM.SourceControl> exportList)
+        public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<SourceControl> exportList)
         {
             var buildEngine = new BuildEngineStub(null, null, dependencies);
             var metaData = new BuildMetaDataStub(buildEngine, null);

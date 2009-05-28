@@ -214,7 +214,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             mockRepository = new MockRepository();
 
-            var exportList = new List<SCM.SourceControl> {new SVNSourceControl("url1")};
+            var exportList = new List<SourceControl> {new SVNSourceControl("url1")};
 
             packageTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>(), exportList), "log4net", false);
 
