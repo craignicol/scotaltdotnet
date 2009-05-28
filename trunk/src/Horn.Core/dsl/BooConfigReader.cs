@@ -18,6 +18,8 @@ namespace Horn.Core.Dsl
 
         public List<ExportData> ExportList { get; set; }
 
+        public List<RepositoryInclude> IncludeList { get; set; }
+
         public virtual string InstallName { get; set; }
 
         public virtual PackageMetaData PackageMetaData
@@ -31,7 +33,6 @@ namespace Horn.Core.Dsl
         public virtual List<string> PrebuildCommandList { get; set; }
 
         public virtual SourceControl SourceControl { get; set; }
-
 
         public void AddDependencies(string[] dependencies)
         {
@@ -171,6 +172,7 @@ namespace Horn.Core.Dsl
             {
                 var expression = (MethodInvocationExpression)((ExpressionStatement)statement).Expression;
 
+                //HACK: Determine how to work with something better than arrays
                 var innerArray = new ArrayLiteralExpression();
 
                 innerArray.Items.Add(new StringLiteralExpression(expression.Target.ToString()));
@@ -191,6 +193,16 @@ namespace Horn.Core.Dsl
             }
 
             return new MethodInvocationExpression(new ReferenceExpression("ParseExportList"), exportList);
+        }
+
+        [Meta]
+        public static Expression include(BlockExpression includes)
+        {
+            ListLiteralExpression includelist = new ListLiteralExpression();
+
+            
+
+            return includes;
         }
 
         [Meta]

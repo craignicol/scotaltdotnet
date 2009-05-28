@@ -128,6 +128,7 @@
     <Compile Include="Dependencies\VisualStudioDependentUpdaterSpecification.cs" />
     <Compile Include="Dependencies\visual_studio_dependent_updater_context.cs" />
     <Compile Include="DirectorySpecificationBase.cs" />
+    <Compile Include="dsl\ExportFromRepositorySpecication.cs" />
     <Compile Include="dsl\MultipleGetSpecification.cs" />
     <Compile Include="dsl\PrebuildSpecification.cs" />
     <Compile Include="Stubs\BuildEngineStub.cs" />
@@ -170,6 +171,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="BuildConfigs\Horn\hornprebuild.boo" />
+    <Content Include="BuildConfigs\Horn\repository.boo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
