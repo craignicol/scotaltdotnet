@@ -52,7 +52,7 @@ abstract class BooConfigReader:
 		BuildEngine = BuildEngines.BuildEngine(Horn.Domain.MSBuildBuildTool(), buildFile, version)
 		
 	def svn(url as string):		
-			
+		sourceControl = SCM.SVNSourceControl(url)			
 
 	[property(BuildEngine)]
 	public buildEngine as BuildEngines.BuildEngine
@@ -94,36 +94,8 @@ macro shared_library:
 			block:
 				 BuildEngine.SharedLibrary = $value
 	|].Block
-	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
 class MyDslAsAnonymousBaseClassStep(AbstractTransformerCompilerStep):
 	# This is the method that the compiler pipeline will execute
 	def Run():
@@ -146,3 +118,4 @@ class MyDslAsAnonymousBaseClassStep(AbstractTransformerCompilerStep):
 		# created class to the node’s members.
 		node.Globals = Block()
 		node.Members.Add(baseClass)
+*/
