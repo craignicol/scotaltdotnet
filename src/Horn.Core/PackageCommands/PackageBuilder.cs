@@ -25,6 +25,7 @@ namespace Horn.Core.PackageCommands
             string packageName = GetPackageName(switches);
 
             IPackageTree componentTree = packageTree.RetrievePackage(packageName);
+
             IDependencyTree dependencyTree = GetDependencyTree(componentTree);
 
             BuildDependencyTree(dependencyTree, switches);
@@ -98,6 +99,7 @@ namespace Horn.Core.PackageCommands
             }
 
             log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), buildMetaData.SourceControl.Url);
+
             get.From(buildMetaData.SourceControl).ExportTo(componentTree);
         }
 

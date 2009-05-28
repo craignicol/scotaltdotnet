@@ -10,9 +10,6 @@ namespace Horn.Core.SCM
     public class SVNSourceControl : SourceControl
     {
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(SVNSourceControl));
-
-
         public override string Revision
         {
             get
@@ -89,16 +86,6 @@ namespace Horn.Core.SCM
         {
             downloadMonitor = new DownloadMonitor(destination);
         }
-
-
-
-        private void HandleExceptions(Exception ex)
-        {
-            downloadMonitor.StopMonitoring = true;
-
-            log.Error(ex);
-        }
-
 
 
         public SVNSourceControl()

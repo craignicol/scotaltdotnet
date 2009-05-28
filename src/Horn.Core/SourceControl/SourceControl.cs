@@ -4,11 +4,13 @@ using System.IO;
 using System.Threading;
 using Horn.Core.extensions;
 using Horn.Core.PackageStructure;
+using log4net;
 
 namespace Horn.Core.SCM
 {
     public abstract class SourceControl
     {
+        protected static readonly ILog log = LogManager.GetLogger(typeof(SVNSourceControl));
 
         private static Dictionary<string, string> downloadedPackages = new Dictionary<string, string>();
 
@@ -22,7 +24,7 @@ namespace Horn.Core.SCM
             get { return downloadMonitor; }
         }
 
-        public string ExportPath { get; private set; }
+        public virtual string ExportPath { get; protected set; }
 
         public abstract string Revision { get; }
 
@@ -113,6 +115,13 @@ namespace Horn.Core.SCM
             return exportPath;
         }
 
+        protected void HandleExceptions(Exception ex)
+        {
+            downloadMonitor.StopMonitoring = true;
+
+            log.Error(ex);
+        }
+
         protected virtual void RecordCurrentRevision(IPackageTree tree, string revision)
         {
             tree.GetRevisionData().RecordRevision(tree, revision);
@@ -154,8 +163,5 @@ namespace Horn.Core.SCM
         protected SourceControl()
         {
         }
-
-
-
     }
 }
