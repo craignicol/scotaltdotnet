@@ -21,7 +21,7 @@ http://groups.google.com/group/scotaltnet
 
 Usage : horn -install:<component>
 Options :
-    <none>";
+    -rebuildonly         Do not check for the latest source code.";
 
         #endregion
 

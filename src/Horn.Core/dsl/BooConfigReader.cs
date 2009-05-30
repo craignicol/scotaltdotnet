@@ -198,11 +198,30 @@ namespace Horn.Core.Dsl
         [Meta]
         public static Expression include(BlockExpression includes)
         {
-            ListLiteralExpression includelist = new ListLiteralExpression();
+            var includeList = new ArrayLiteralExpression();
 
-            
+            foreach(var statement in includes.Body.Statements)
+            {
+                var expression = (MethodInvocationExpression)((ExpressionStatement)statement).Expression;
 
-            return includes;
+                var repositoryName = ((ReferenceExpression)expression.Arguments[0]).Name;
+                var includePath = ((StringLiteralExpression)((MethodInvocationExpression)expression.Arguments[1]).Arguments[0]).Value;
+                var exportPath = ((StringLiteralExpression)((MethodInvocationExpression)expression.Arguments[2]).Arguments[0]).Value; ;
+
+                var repositoryInclude = new MethodInvocationExpression(new ReferenceExpression("RepositoryInclude"),
+                                                                       new StringLiteralExpression(repositoryName),
+                                                                       new StringLiteralExpression(includePath),
+                                                                       new StringLiteralExpression(exportPath));
+
+                includeList.Items.Add(repositoryInclude);
+            }
+
+            return new MethodInvocationExpression(new ReferenceExpression("ParseIncludes"), includeList);
+        }
+
+        public virtual void ParseIncludes(RepositoryInclude[] includes)
+        {
+            IncludeList.AddRange(includes);
         }
 
         [Meta]
@@ -308,6 +327,7 @@ namespace Horn.Core.Dsl
         protected BooConfigReader()
         {
             ExportList = new List<ExportData>();
+            IncludeList = new List<RepositoryInclude>();
 
             Global.package.PackageInfo.Clear();
         }

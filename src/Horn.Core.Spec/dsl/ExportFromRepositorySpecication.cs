@@ -46,6 +46,9 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.Equal("castle", configReader.IncludeList[0].RepositoryName);
             Assert.Equal("here", configReader.IncludeList[0].IncludePath);
             Assert.Equal("there", configReader.IncludeList[0].ExportPath);
+            Assert.Equal("castle", configReader.IncludeList[1].RepositoryName);
+            Assert.Equal("over", configReader.IncludeList[1].IncludePath);
+            Assert.Equal("out", configReader.IncludeList[1].ExportPath);
         }
     }
 
