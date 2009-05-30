@@ -2,7 +2,8 @@
 	description "A .NET build and dependency manager"
 	
 	include: 
-		  repository(castle, part("here"), to("there")) 
+		  repository(castle, part("here"), to("there"))
+		  repository(castle, part("over"), to("out")) 
 	
 	prebuild:  
 	  cmd "dir"

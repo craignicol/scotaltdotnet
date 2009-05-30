@@ -61,15 +61,15 @@ namespace Horn.Console
             IPackageTree root = new PackageTree(GetRootFolderPath(), null);
 
             //HACK: Remember to remove
-            //return root;
+            return root;
 
             //TODO: Hard coded dependency.  Should be injected in or retrieved from the container
-            IMetaDataSynchroniser metaDataSynchroniser =
-                new MetaDataSynchroniser(new SVNSourceControl(MetaDataSynchroniser.PACKAGE_TREE_URI));
+            //IMetaDataSynchroniser metaDataSynchroniser =
+            //    new MetaDataSynchroniser(new SVNSourceControl(MetaDataSynchroniser.PACKAGE_TREE_URI));
 
-            metaDataSynchroniser.SynchronisePackageTree(root);
+            //metaDataSynchroniser.SynchronisePackageTree(root);
 
-            return root;
+            //return root;
         }
 
         private static DirectoryInfo GetRootFolderPath()
