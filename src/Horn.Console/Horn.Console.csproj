@@ -120,7 +120,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\horn.boo" "$(TargetDir)horn.boo"
-IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" "$(TargetDir)log4net.boo"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

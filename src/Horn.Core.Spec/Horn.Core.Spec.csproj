@@ -171,6 +171,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="BuildConfigs\Horn\hornprebuild.boo" />
+    <Content Include="BuildConfigs\Horn\log4net.boo" />
     <Content Include="BuildConfigs\Horn\repository.boo" />
   </ItemGroup>
   <ItemGroup>
@@ -198,8 +199,6 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)"
-IF EXIST "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" copy /y "$(SolutionDir)Horn.Core\BuildConfigs\log4net.boo" "$(TargetDir)log4net.boo"
-IF EXIST "$(ProjectDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)BuildConfigs\Horn"</PostBuildEvent>
+    <PostBuildEvent>IF EXIST "$(ProjectDir)BuildConfigs\Horn" xcopy /s /y "$(ProjectDir)BuildConfigs\Horn" "$(TargetDir)BuildConfigs\Horn"</PostBuildEvent>
   </PropertyGroup>
 </Project>
