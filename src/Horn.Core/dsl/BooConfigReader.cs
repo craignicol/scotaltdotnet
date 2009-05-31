@@ -27,8 +27,6 @@ namespace Horn.Core.Dsl
             }
         }
 
-        public virtual List<string> PrebuildCommandList { get; set; }
-
         public void AddDependencies(string[] dependencies)
         {
             Array.ForEach(dependencies, item =>
@@ -138,7 +136,7 @@ namespace Horn.Core.Dsl
 
         public void ParseCommands(string[] cmdList)
         {
-            PrebuildCommandList = new List<string>(cmdList);
+            _buildMetaData.PrebuildCommandList.AddRange(cmdList);
         }
 
         public void ParseExportList(ExportData[] exports)
