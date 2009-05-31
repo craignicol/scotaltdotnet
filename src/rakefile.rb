@@ -17,7 +17,7 @@ task :build  => [:clean, :init, :copy_referenced_assemblies, :build_horn_core, :
   
   if ENV["runtests"] == "true"
     Rake::Task["build_horn_spec"].execute         
-    Rake::Task["build_horn_integration"].execute 
+    #Rake::Task["build_horn_integration"].execute 
   end  
   
 end 
