@@ -1,47 +1,57 @@
+$:.unshift File.join(File.dirname(__FILE__),'.','rake')
+ROOT_DIR = File.expand_path(File.dirname(__FILE__) )
+
 require 'rake'
 require 'build_tools'
+require 'asm_info_builder'
+require 'xunit_runner'
   
 require 'ftools'
 
+BuildTools = Horn::BuildTools
+Runners = Horn::TestRunners
+
 task :default => :build 
 
-task :build  => [:clean, :init, :copy_package_tree, :copy_referenced_assemblies, :build_horn_core, :build_horn_console] do
+task :build  => [:clean, :init, :copy_referenced_assemblies, :build_horn_core, :build_horn_console] do
+  
+  if ENV["runtests"] == "true"
+    Rake::Task["build_horn_spec"].execute         
+    Rake::Task["build_horn_integration"].execute 
+  end  
   
 end 
 
 task :build_horn_core => [:generate_assembly_info] do
-  compile_dll "Horn.Core/Horn.Core.csproj"
+  BuildTools::MSbuild::compile_dll "Horn.Core/Horn.Core.csproj"
 end
 
-task :build_horn_console do
-  compile_dll "Horn.Console/Horn.Console.csproj"
-  if ENV["runtests"] == "true"
-    Rake::Task["build_horn_spec"].execute     
-    
-    Rake::Task["build_horn_integration"].execute 
-  end
+task :build_horn_console do  
+  BuildTools::MSbuild::compile_dll "Horn.Console/Horn.Console.csproj"
 end
 
 task :_framework do
- compile_dll "Horn.Spec.Framework/Horn.Spec.Framework.csproj"
+ BuildTools::MSbuild::compile_dll "Horn.Spec.Framework/Horn.Spec.Framework.csproj"
 end
 
 task :copy_package_tree do
-	cp_r Dir.glob(File.join("#{ROOT_DIR}/Horn.Core/BuildConfigs/**", "*.boo")), "#{BUILD_DIR}"
+  Dir.make_chain "#{BUILD_DIR}/BuildConfigs/Horn"
+  Dir.copy_filetypes("#{ROOT_DIR}/Horn.Core.Spec/BuildConfigs/Horn", "#{BUILD_DIR}/BuildConfigs/Horn", "boo")
 end
 
-task :build_horn_spec => [:build_horn_spec_framework] do
-  compile_dll "Horn.Core.Spec/Horn.Core.Spec.csproj"
- 
-   XUnitRunner.new("#{BUILD_DIR}/Horn.Core.Spec").run_tests    
+task :build_horn_spec => [:copy_package_tree, :build_horn_spec_framework] do
+  
+  BuildTools::MSbuild::compile_dll "Horn.Core.Spec/Horn.Core.Spec.csproj"
+  
+  cp_r Dir.glob(File.join("#{ROOT_DIR}/Horn.Core.Spec/BuildConfigs/**", "*.boo")), "#{BUILD_DIR}"
+  
+  Runners::XUnitRunner.new("#{BUILD_DIR}/Horn.Core.Spec").run_tests    
  end
  
 task :build_horn_integration do
-  compile_dll "Horn.Core.Integration/Horn.Core.Integration.csproj"
-  
-  cp_r Dir.glob(File.join("#{ROOT_DIR}/Horn.Core.Integration/BuildConfigs/**", "*.boo")), "#{BUILD_DIR}"
-  
-  XUnitRunner.new("#{BUILD_DIR}/Horn.Core.Integration").run_tests 
+  BuildTools::MSbuild::compile_dll "Horn.Core.Integration/Horn.Core.Integration.csproj"  
+  cp_r Dir.glob(File.join("#{ROOT_DIR}/Horn.Core.Integration/BuildConfigs/**", "*.boo")), "#{BUILD_DIR}"  
+  Runners::XUnitRunner.new("#{BUILD_DIR}/Horn.Core.Integration").run_tests 
 end
 
 task :generate_assembly_info do
@@ -67,8 +77,5 @@ task :init do
 end
 
 task :copy_referenced_assemblies do
-  files = Dir.glob(File.join("#{BUILD_LIB_DIR}/**", "*.dll")) + Dir.glob(File.join("#{BUILD_LIB_DIR}/**", "*.pdb")) + Dir.glob(File.join("#{BUILD_LIB_DIR}/**", "*.config")) + Dir.glob(File.join("#{BUILD_LIB_DIR}/**", "*.xml")) + Dir.glob(File.join("#{BUILD_LIB_DIR}/**", "*.exe"))
-  files.each do |item|
-    cp_r item, "#{BUILD_DIR}"
-  end
+  Dir.copy_assemblies(BUILD_LIB_DIR, BUILD_DIR, "*")
 end

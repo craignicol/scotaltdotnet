@@ -144,7 +144,6 @@ namespace Horn.Core.PackageStructure
 
         private int RootDirectoryContainsBuildFiles()
         {
-            //HACK: Basic check for now.  Could be expanded for a core set of required build.boo files
             return (WorkingDirectory.GetFiles("horn.*", SearchOption.AllDirectories).Length);
         }
 

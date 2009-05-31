@@ -26,8 +26,8 @@ namespace Horn.Framework.helpers
             string builders = CreateDirectory(rootDirectory, "builders");
             string horn = CreateDirectory(builders, "horn");
 
-            string hornFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "horn.boo");
-            string buildFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "horn.boo");
+            string hornFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), @"BuildConfigs\Horn\horn.boo");
+            string buildFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), @"BuildConfigs\Horn\horn.boo");
 
             string fileToCopy = File.Exists(hornFile) ? hornFile : buildFile;
 
@@ -36,7 +36,7 @@ namespace Horn.Framework.helpers
             string loggers = CreateDirectory(rootDirectory, "loggers");
             string log4net = CreateDirectory(loggers, "log4net");
 
-            var log4NetBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.boo");
+            var log4NetBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"BuildConfigs\Horn\log4net.boo");
 
             CreateBuildFiles(log4NetBuildFile, log4net, true);
 
