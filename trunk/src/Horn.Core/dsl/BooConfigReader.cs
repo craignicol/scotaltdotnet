@@ -12,15 +12,12 @@ namespace Horn.Core.Dsl
 
     public abstract class BooConfigReader
     {
-        public virtual BuildEngine BuildEngine { get; set; }
+        private readonly IBuildMetaData _buildMetaData;
 
-        public virtual string Description { get; set; }
-
-        public List<ExportData> ExportList { get; set; }
-
-        public List<RepositoryInclude> IncludeList { get; set; }
-
-        public virtual string InstallName { get; set; }
+        public IBuildMetaData BuildMetaData
+        {
+            get { return _buildMetaData; }        
+        }
 
         public virtual PackageMetaData PackageMetaData
         {
@@ -32,15 +29,13 @@ namespace Horn.Core.Dsl
 
         public virtual List<string> PrebuildCommandList { get; set; }
 
-        public virtual SourceControl SourceControl { get; set; }
-
         public void AddDependencies(string[] dependencies)
         {
             Array.ForEach(dependencies, item =>
                                      {
                                          var dependency = Dependency.Parse(item);
 
-                                         BuildEngine.Dependencies.Add(dependency); 
+                                         _buildMetaData.BuildEngine.Dependencies.Add(dependency);
                                      });
         }
 
@@ -88,12 +83,12 @@ namespace Horn.Core.Dsl
 
         public void description(string text)
         {
-            Description = text;
+            _buildMetaData.Description = text;
         }
 
         public virtual void generate_strong_key()
         {
-            BuildEngine.GenerateStrongKey = true;
+            _buildMetaData.BuildEngine.GenerateStrongKey = true;
         }
 
         [Meta]
@@ -104,7 +99,7 @@ namespace Horn.Core.Dsl
 
         public void GetInstallerMeta(string installName, Action installDelegate)
         {
-            InstallName = installName;
+            _buildMetaData.InstallName = installName;
 
             installDelegate();
         }
@@ -124,7 +119,7 @@ namespace Horn.Core.Dsl
 
         public void output(string path)
         {
-            BuildEngine.OutputDirectory = path;   
+            _buildMetaData.BuildEngine.OutputDirectory = path;   
         }
 
         [Meta]
@@ -146,21 +141,10 @@ namespace Horn.Core.Dsl
             PrebuildCommandList = new List<string>(cmdList);
         }
 
-        public void ParseExportList(string[][] exports)
+        public void ParseExportList(ExportData[] exports)
         {
-            for(var i =0;i < exports.Length; i++)
-            {
-                var sourceControlType = (SourceControlType) Enum.Parse(typeof (SourceControlType), exports[i][0]);
-
-                if(exports[i].Length == 2)
-                {
-                    ExportList.Add(new ExportData(exports[i][1], sourceControlType));    
-
-                    continue;
-                }
-
-                ExportList.Add(new ExportData(exports[i][1], sourceControlType, exports[i][2])); 
-            }
+            foreach (var exportData in exports)
+                _buildMetaData.ExportList.Add(exportData.SourceControl);                
         }
 
         [Meta]
@@ -168,28 +152,34 @@ namespace Horn.Core.Dsl
         {
             var exportList = new ArrayLiteralExpression();
 
-            foreach (Statement statement in exportUrls.Body.Statements)
+            foreach (var statement in exportUrls.Body.Statements)
             {
                 var expression = (MethodInvocationExpression)((ExpressionStatement)statement).Expression;
 
-                //HACK: Determine how to work with something better than arrays
-                var innerArray = new ArrayLiteralExpression();
+                var sourceType = expression.Target.ToString();
+                var remoteUrl = ((StringLiteralExpression)expression.Arguments[0]).Value;
 
-                innerArray.Items.Add(new StringLiteralExpression(expression.Target.ToString()));
-                innerArray.Items.Add(new StringLiteralExpression(expression.Arguments[0].ToString().Trim(new[] { '\'' })));
+                MethodInvocationExpression export;
 
                 if(expression.Arguments.Count == 1)
-                {
-                    exportList.Items.Add(innerArray);
+                {                     
+                    export = new MethodInvocationExpression(new ReferenceExpression("ExportData"),
+                                                                new StringLiteralExpression(remoteUrl),
+                                                                new StringLiteralExpression(sourceType));
+
+                    exportList.Items.Add(export);
 
                     continue;
                 }
 
-                var to = (MethodInvocationExpression) expression.Arguments[1];
+                var to = ((StringLiteralExpression)((MethodInvocationExpression)expression.Arguments[1]).Arguments[0]).Value;
 
-                innerArray.Items.Add(new StringLiteralExpression(to.Arguments[0].ToString().Trim(new[] { '\'' })));
+                export = new MethodInvocationExpression(new ReferenceExpression("ExportData"),
+                                                                new StringLiteralExpression(remoteUrl),
+                                                                new StringLiteralExpression(sourceType),
+                                                                new StringLiteralExpression(to));
 
-                exportList.Items.Add(innerArray);
+                exportList.Items.Add(export);
             }
 
             return new MethodInvocationExpression(new ReferenceExpression("ParseExportList"), exportList);
@@ -221,7 +211,7 @@ namespace Horn.Core.Dsl
 
         public virtual void ParseIncludes(RepositoryInclude[] includes)
         {
-            IncludeList.AddRange(includes);
+            _buildMetaData.IncludeList.AddRange(includes);
         }
 
         [Meta]
@@ -243,7 +233,7 @@ namespace Horn.Core.Dsl
 
         public void shared_library(string sharedLib)
         {
-            BuildEngine.SharedLibrary = sharedLib;
+            _buildMetaData.BuildEngine.SharedLibrary = sharedLib;
         }
 
         [Meta]
@@ -303,31 +293,28 @@ namespace Horn.Core.Dsl
 
         protected void SetBuildTargets(string[] taskActions)
         {
-            BuildEngine.AssignTasks(taskActions);
+            _buildMetaData.BuildEngine.AssignTasks(taskActions);
         }
 
         protected void SetParameters(string[] parameters)
         {
-            BuildEngine.AssignParameters(parameters);
+            _buildMetaData.BuildEngine.AssignParameters(parameters);
         }
 
         protected void svn(string url)
         {
-            SourceControl = SourceControl.Create<SVNSourceControl>(url);
+            _buildMetaData.SourceControl = SourceControl.Create<SVNSourceControl>(url);
         }
-
-
 
         private void SetBuildEngine(IBuildTool tool, string buildFile, FrameworkVersion version)
         {
-            BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
+            _buildMetaData.BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
         }
 
 
         protected BooConfigReader()
         {
-            ExportList = new List<ExportData>();
-            IncludeList = new List<RepositoryInclude>();
+            _buildMetaData = new BuildMetaData();
 
             Global.package.PackageInfo.Clear();
         }

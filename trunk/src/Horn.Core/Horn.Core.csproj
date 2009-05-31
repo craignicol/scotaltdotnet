@@ -182,10 +182,6 @@
     <Compile Include="Utils\IoC\WindsorDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuildConfigs\horn.boo" />
-    <Content Include="BuildConfigs\log4net.boo" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Horn.Core.build" />
     <None Include="Model\BuildEngine.cd" />
     <None Include="Model\SemanticModel.cd" />

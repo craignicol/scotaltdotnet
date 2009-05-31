@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Horn.Core.Dsl;
 using Horn.Core.SCM;
 using Horn.Framework.helpers;
@@ -44,12 +42,12 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_the_model_contains_multiple_exports()
         {
-            Assert.Equal("http://scotaltdotnet.googlecode.com/svn/trunk/src/one", configReader.ExportList[0].Url);
-            Assert.Equal("http://scotaltdotnet.googlecode.com/svn/trunk/src/two", configReader.ExportList[1].Url);
-            Assert.Equal("one", configReader.ExportList[0].Path);
-            Assert.Null(configReader.ExportList[1].Path);
-            Assert.Equal(SourceControlType.svn, configReader.ExportList[0].SourceControlType);
-            Assert.Equal(SourceControlType.svn, configReader.ExportList[1].SourceControlType);
+            Assert.Equal("http://scotaltdotnet.googlecode.com/svn/trunk/src/one", configReader.BuildMetaData.ExportList[0].Url);
+            Assert.Equal("http://scotaltdotnet.googlecode.com/svn/trunk/src/two", configReader.BuildMetaData.ExportList[1].Url);
+            Assert.Equal("one", configReader.BuildMetaData.ExportList[0].ExportPath);
+            Assert.Equal(configReader.BuildMetaData.ExportList[1].ExportPath, string.Empty);
+            Assert.IsAssignableFrom(typeof(SVNSourceControl), configReader.BuildMetaData.ExportList[0]);
+            Assert.IsAssignableFrom(typeof(SVNSourceControl), configReader.BuildMetaData.ExportList[1]);
         }
     }
 
@@ -63,15 +61,15 @@ namespace Horn.Core.Spec.Unit.dsl
 
         protected override void Because()
         {
-            exportData = new ExportData(Url, SourceControlType.svn, ExportToPath);
+            exportData = new ExportData(Url, "svn", ExportToPath);
         }
 
         [Fact]
         public void Then_the_model_can_express_this()
         {
-            Assert.Equal(Url, exportData.Url);
-            Assert.Equal(SourceControlType.svn, exportData.SourceControlType);
-            Assert.Equal(ExportToPath, exportData.Path);
+            Assert.Equal(Url, exportData.SourceControl.Url);
+            Assert.Equal(ExportToPath, exportData.SourceControl.ExportPath);
+            Assert.IsAssignableFrom(typeof (SVNSourceControl), exportData.SourceControl);
         }
     }
 }

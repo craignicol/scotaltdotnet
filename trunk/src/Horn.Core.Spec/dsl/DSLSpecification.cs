@@ -57,27 +57,27 @@ namespace Horn.Core.Spec.Unit.dsl
         {
             Assert.NotNull(reader);
 
-            Assert.Equal("horn", reader.InstallName);
+            Assert.Equal("horn", reader.BuildMetaData.InstallName);
 
-            Assert.Equal(DESCRIPTION, reader.Description);
+            Assert.Equal(Description, reader.BuildMetaData.Description);
 
-            Assert.IsAssignableFrom<SVNSourceControl>(reader.SourceControl);
+            Assert.IsAssignableFrom<SVNSourceControl>(reader.BuildMetaData.SourceControl);
 
-            Assert.Equal(SVN_URL, reader.SourceControl.Url);
+            Assert.Equal(SvnUrl, reader.BuildMetaData.SourceControl.Url);
 
-            Assert.IsAssignableFrom<MSBuildBuildTool>(reader.BuildEngine.BuildTool);
+            Assert.IsAssignableFrom<MSBuildBuildTool>(reader.BuildMetaData.BuildEngine.BuildTool);
 
-            Assert.Equal(BUILD_FILE, reader.BuildEngine.BuildFile);
+            Assert.Equal(BuildFile, reader.BuildMetaData.BuildEngine.BuildFile);
 
-            Assert.Equal(".", reader.BuildEngine.SharedLibrary);
+            Assert.Equal(".", reader.BuildMetaData.BuildEngine.SharedLibrary);
 
-            Assert.Equal("Output", reader.BuildEngine.OutputDirectory);
+            Assert.Equal("Output", reader.BuildMetaData.BuildEngine.OutputDirectory);
 
-            Assert.Equal(5, reader.BuildEngine.Dependencies.Count);
+            Assert.Equal(5, reader.BuildMetaData.BuildEngine.Dependencies.Count);
 
-            Assert.Equal("log4net", reader.BuildEngine.Dependencies[0].PackageName);
+            Assert.Equal("log4net", reader.BuildMetaData.BuildEngine.Dependencies[0].PackageName);
 
-            Assert.Equal("lib", reader.BuildEngine.Dependencies[0].Library);
+            Assert.Equal("lib", reader.BuildMetaData.BuildEngine.Dependencies[0].Library);
 
             Assert.Equal(3, reader.PackageMetaData.PackageInfo.Count);
         }

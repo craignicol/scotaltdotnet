@@ -19,9 +19,9 @@ namespace Horn.Core.Spec.BuildEngine
         [Fact]
         public void Then_The_Nant_Build_Tool_Generates_The_Correct_Command_Line_Parameters()
         {
-            IBuildTool nant = configReader.BuildEngine.BuildTool;
+            IBuildTool nant = configReader.BuildMetaData.BuildEngine.BuildTool;
 
-            var cmdLineArgs = nant.CommandLineArguments("Horn.build", configReader.BuildEngine, packageTree,
+            var cmdLineArgs = nant.CommandLineArguments("Horn.build", configReader.BuildMetaData.BuildEngine, packageTree,
                                                         FrameworkVersion.FrameworkVersion35).Trim();
 
             Assert.Equal(EXPECTED, cmdLineArgs);

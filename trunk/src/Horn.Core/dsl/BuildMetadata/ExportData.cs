@@ -1,30 +1,36 @@
 using System;
-using System.IO;
+using Horn.Core.SCM;
 
 namespace Horn.Core.Dsl
 {
-    public enum SourceControlType
-    {
-        svn
-    }
-
     public class ExportData
     {
-        public string Path { get; private set; }
+        public SourceControl SourceControl { get; private set; }
 
-        public string Url { get; private set; }
-
-        public SourceControlType SourceControlType { get; private set; }
-
-        public ExportData(string url, SourceControlType sourceControlType)
+        public ExportData(string url, string sourceControlType)
         {
-            Url = url;
-            SourceControlType = sourceControlType;
+            switch (sourceControlType.ToLower())
+            {
+                case "svn":
+                    SourceControl= new SVNSourceControl(url, null);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(string.Format("Unkown SourceControlType {0}",
+                                                                        sourceControlType));
+            }
         }
 
-        public ExportData(string url, SourceControlType sourceControlType, string path) : this(url, sourceControlType)
+        public ExportData(string url, string sourceControlType, string path)
         {
-            Path = path;
+            switch (sourceControlType.ToLower())
+            {
+                case "svn":
+                    SourceControl = new SVNSourceControl(url, path);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(string.Format("Unkown SourceControlType {0}",
+                                                                        sourceControlType));
+            }
         }
     }
 }

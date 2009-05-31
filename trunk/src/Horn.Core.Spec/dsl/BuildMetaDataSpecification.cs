@@ -5,18 +5,16 @@ namespace Horn.Core.Spec.Unit.dsl
 {
     public class When_Horn_Parses_A_Successful_Configuration : BaseDSLSpecification
     {
-        private BooConfigReader configReader;
+        private IBuildMetaData buildMetaData;
 
         protected override void Because()
         {
-            configReader = GetConfigReaderInstance();
+            buildMetaData = GetBuildMetaDataInstance();
         }
 
         [Fact]
         public void Then_A_Build_Meta_Data_Object_Is_Created()
         {
-            var buildMetaData = new BuildMetaData(configReader);
-
             AssertBuildMetaDataValues(buildMetaData);
 
         }
