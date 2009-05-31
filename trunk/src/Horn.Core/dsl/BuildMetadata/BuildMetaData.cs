@@ -32,35 +32,8 @@ namespace Horn.Core.Dsl
             ExportList = new List<SourceControl>();
 
             IncludeList = new List<RepositoryInclude>();
+
+            PrebuildCommandList = new List<string>();
         }
-
-        //public BuildMetaData(BooConfigReader instance) : this()
-        //{
-            //BuildEngine = instance.BuildEngine;
-
-            //SourceControl = instance.SourceControl;
-            //BuildEngine.OutputDirectory = instance.BuildEngine.OutputDirectory;
-            //BuildEngine.SharedLibrary = instance.BuildEngine.SharedLibrary;
-            //ProjectInfo = instance.PackageMetaData.PackageInfo;
-            //PrebuildCommandList = instance.PrebuildCommandList;
-
-            //ExportList = new List<SourceControl>();
-
-            //foreach (var exportData in instance.ExportList)
-            //{
-            //    switch (exportData.SourceControlType)
-            //    {
-            //        case SourceControlType.svn:
-            //            ExportList.Add(new SVNSourceControl(exportData.Url, exportData.Path));
-            //            break;
-            //        default:
-            //            throw new ArgumentOutOfRangeException(string.Format("Unkown SourceControlType {0}",
-            //                                                                exportData.SourceControlType));
-            //    }
-            //}
-        //}
-
-
-
     }
 }

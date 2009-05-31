@@ -42,9 +42,9 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_the_cmd_is_executed()
         {
-            Assert.Equal("dir", configReader.PrebuildCommandList[0]);
-            Assert.Equal("@echo \"hello\"", configReader.PrebuildCommandList[1]);
-            Assert.Equal(2, configReader.PrebuildCommandList.Count);
+            Assert.Equal("dir", configReader.BuildMetaData.PrebuildCommandList[0]);
+            Assert.Equal("@echo \"hello\"", configReader.BuildMetaData.PrebuildCommandList[1]);
+            Assert.Equal(2, configReader.BuildMetaData.PrebuildCommandList.Count);
         }
     }
 }

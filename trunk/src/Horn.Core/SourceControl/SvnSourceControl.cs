@@ -45,8 +45,17 @@ namespace Horn.Core.SCM
             if(!packageTree.Root.Name.StartsWith(PackageTree.RootPackageTreeName))
                 throw new InvalidOperationException("The root of the package tree is not named .horn");
 
-            if (packageTree.WorkingDirectory.Exists)
+            if (!packageTree.WorkingDirectory.Exists)
+                return;
+
+            try
+            {
                 packageTree.WorkingDirectory.Delete(true);
+            }
+            catch (IOException)
+            {
+                throw new IOException(string.Format("The horn process is trying to delete a working directory.  Please ensure you have no applications open in the {0} directory.", packageTree.Root.CurrentDirectory.FullName));
+            }
         }
 
         protected override string Download(FileSystemInfo destination)
