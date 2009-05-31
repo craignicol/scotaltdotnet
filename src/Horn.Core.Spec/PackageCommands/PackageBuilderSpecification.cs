@@ -62,7 +62,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             var baseConfigReader = CreateStub<BooConfigReader>();
 
-            baseConfigReader.InstallName = "horn";
+            baseConfigReader.BuildMetaData.InstallName = "horn";
 
             var componentTree = CreateStub<IPackageTree>();
 
@@ -92,7 +92,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
 
-            baseConfigReader.BuildEngine = buildEngine;
+            baseConfigReader.BuildMetaData.BuildEngine = buildEngine;
 
             var buildMetaData = CreateStub<IBuildMetaData>();
 

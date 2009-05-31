@@ -7,16 +7,21 @@ namespace Horn.Core.Spec.Doubles
 {
     public class BuildMetaDataStub : IBuildMetaData
     {
-        public string Description { get; set; }
-        public List<SourceControl> ExportList { get; set; }
-
-        public Dictionary<string, object> ProjectInfo { get; set; }
-
         public BuildEngines.BuildEngine BuildEngine { get; set; }
 
-        public SourceControl SourceControl { get; set; }
+        public string Description { get; set; }
 
-        public List<string> PrebuildCommandList{get; set;}
+        public List<SourceControl> ExportList { get; set; }
+
+        public List<RepositoryInclude> IncludeList { get; set; }
+
+        public string InstallName { get; set; }
+
+        public List<string> PrebuildCommandList { get; set; }
+
+        public Dictionary<string, object> ProjectInfo { get; set; }       
+
+        public SourceControl SourceControl { get; set; }
 
         public BuildMetaDataStub(BuildEngines.BuildEngine buildEngine, SourceControl sourceControl)
         {

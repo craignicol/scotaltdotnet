@@ -19,6 +19,18 @@ namespace Horn.Core.Dsl
             set { throw new NotImplementedException(); }
         }
 
+        public List<RepositoryInclude> IncludeList
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public string InstallName
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         public Dictionary<string, object> ProjectInfo
         {
             get { throw new System.NotImplementedException(); }

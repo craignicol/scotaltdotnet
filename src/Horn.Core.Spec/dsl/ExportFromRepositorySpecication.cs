@@ -43,12 +43,12 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_the_model_contains_the_repository_details()
         {
-            Assert.Equal("castle", configReader.IncludeList[0].RepositoryName);
-            Assert.Equal("here", configReader.IncludeList[0].IncludePath);
-            Assert.Equal("there", configReader.IncludeList[0].ExportPath);
-            Assert.Equal("castle", configReader.IncludeList[1].RepositoryName);
-            Assert.Equal("over", configReader.IncludeList[1].IncludePath);
-            Assert.Equal("out", configReader.IncludeList[1].ExportPath);
+            Assert.Equal("castle", configReader.BuildMetaData.IncludeList[0].RepositoryName);
+            Assert.Equal("here", configReader.BuildMetaData.IncludeList[0].IncludePath);
+            Assert.Equal("there", configReader.BuildMetaData.IncludeList[0].ExportPath);
+            Assert.Equal("castle", configReader.BuildMetaData.IncludeList[1].RepositoryName);
+            Assert.Equal("over", configReader.BuildMetaData.IncludeList[1].IncludePath);
+            Assert.Equal("out", configReader.BuildMetaData.IncludeList[1].ExportPath);
         }
     }
 

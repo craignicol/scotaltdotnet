@@ -15,13 +15,13 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_The_Dsl_Compiles()
         {
-            Assert.IsAssignableFrom<NAntBuildTool>(configReader.BuildEngine.BuildTool);
+            Assert.IsAssignableFrom<NAntBuildTool>(configReader.BuildMetaData.BuildEngine.BuildTool);
 
-            Assert.Equal(4, configReader.BuildEngine.Tasks.Count);
+            Assert.Equal(4, configReader.BuildMetaData.BuildEngine.Tasks.Count);
 
-            Assert.Equal(5, configReader.BuildEngine.Parameters.Count);
+            Assert.Equal(5, configReader.BuildMetaData.BuildEngine.Parameters.Count);
 
-            Assert.True(configReader.BuildEngine.GenerateStrongKey);
+            Assert.True(configReader.BuildMetaData.BuildEngine.GenerateStrongKey);
         }
     }
 
@@ -34,15 +34,15 @@ namespace Horn.Core.Spec.Unit.dsl
         protected override void Because()
         {
             configReader = factory.Create<BooConfigReader>(@"BuildConfigs/Horn/hornnant.boo");
-            configReader.Prepare(); 
+            configReader.Prepare();
 
-            buildTool = configReader.BuildEngine.BuildTool;
+            buildTool = configReader.BuildMetaData.BuildEngine.BuildTool;
         }
 
         [Fact]
         public void Then_The_Build_Tool_Renders_The_Expected_Arguments()
         {
-            var actual = buildTool.CommandLineArguments("Horn.build", configReader.BuildEngine, packageTree,
+            var actual = buildTool.CommandLineArguments("Horn.build", configReader.BuildMetaData.BuildEngine, packageTree,
                                                         FrameworkVersion.FrameworkVersion35);
 
             Assert.Equal(EXPECTED_CMD_LINE_ARGUMENTS, actual);
