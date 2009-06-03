@@ -12,7 +12,9 @@ namespace Horn.Core.Dsl
 
     public abstract class BooConfigReader
     {
+
         private readonly IBuildMetaData _buildMetaData;
+
 
         public IBuildMetaData BuildMetaData
         {
@@ -27,25 +29,11 @@ namespace Horn.Core.Dsl
             }
         }
 
-        public void AddDependencies(string[] dependencies)
-        {
-            Array.ForEach(dependencies, item =>
-                                     {
-                                         var dependency = Dependency.Parse(item);
 
-                                         _buildMetaData.BuildEngine.Dependencies.Add(dependency);
-                                     });
-        }
 
-        public void AddSwitches(Action parametersDelegate)
-        {
-            parametersDelegate();
-        }
+        public abstract void Prepare();
 
-        public void AssignTasks(Action tasksDelegate)
-        {
-            tasksDelegate();
-        }
+
 
         [Meta]
         public static Expression build_with(ReferenceExpression builder, MethodInvocationExpression build, ReferenceExpression frameWorkVersion)
@@ -79,27 +67,10 @@ namespace Horn.Core.Dsl
             return addDependencyMethod;
         }
 
-        public void description(string text)
-        {
-            _buildMetaData.Description = text;
-        }
-
-        public virtual void generate_strong_key()
-        {
-            _buildMetaData.BuildEngine.GenerateStrongKey = true;
-        }
-
         [Meta]
         public static Expression get_from(MethodInvocationExpression get)
         {
             return get;
-        }
-
-        public void GetInstallerMeta(string installName, Action installDelegate)
-        {
-            _buildMetaData.InstallName = installName;
-
-            installDelegate();
         }
 
         [Meta]
@@ -115,11 +86,6 @@ namespace Horn.Core.Dsl
                 );
         }
 
-        public void output(string path)
-        {
-            _buildMetaData.BuildEngine.OutputDirectory = path;   
-        }
-
         [Meta]
         public static Expression parameters(params StringLiteralExpression[] expressions)
         {
@@ -132,17 +98,6 @@ namespace Horn.Core.Dsl
                 new ReferenceExpression("SetParameters"),
                 arrayExpression
             );
-        }
-
-        public void ParseCommands(string[] cmdList)
-        {
-            _buildMetaData.PrebuildCommandList.AddRange(cmdList);
-        }
-
-        public void ParseExportList(ExportData[] exports)
-        {
-            foreach (var exportData in exports)
-                _buildMetaData.ExportList.Add(exportData.SourceControl);                
         }
 
         [Meta]
@@ -207,11 +162,6 @@ namespace Horn.Core.Dsl
             return new MethodInvocationExpression(new ReferenceExpression("ParseIncludes"), includeList);
         }
 
-        public virtual void ParseIncludes(RepositoryInclude[] includes)
-        {
-            _buildMetaData.IncludeList.AddRange(includes);
-        }
-
         [Meta]
         public static Expression prebuild(BlockExpression commands)
         {
@@ -225,13 +175,6 @@ namespace Horn.Core.Dsl
             }
 
             return new MethodInvocationExpression(new ReferenceExpression("ParseCommands"), cmdList);
-        }
-
-        public abstract void Prepare();
-
-        public void shared_library(string sharedLib)
-        {
-            _buildMetaData.BuildEngine.SharedLibrary = sharedLib;
         }
 
         [Meta]
@@ -265,6 +208,63 @@ namespace Horn.Core.Dsl
                     action
                 );
         }
+
+
+
+        public void AddDependencies(string[] dependencies)
+        {
+            Array.ForEach(dependencies, item =>
+                                     {
+                                         var dependency = Dependency.Parse(item);
+
+                                         _buildMetaData.BuildEngine.Dependencies.Add(dependency);
+                                     });
+        }
+
+        public void AddSwitches(Action parametersDelegate)
+        {
+            parametersDelegate();
+        }
+
+        public void AssignTasks(Action tasksDelegate)
+        {
+            tasksDelegate();
+        }
+
+        public void description(string text)
+        {
+            _buildMetaData.Description = text;
+        }
+
+        public void GetInstallerMeta(string installName, Action installDelegate)
+        {
+            _buildMetaData.InstallName = installName;
+
+            installDelegate();
+        }
+
+        public void output(string path)
+        {
+            _buildMetaData.BuildEngine.OutputDirectory = path;   
+        }
+
+        public void ParseCommands(string[] cmdList)
+        {
+            _buildMetaData.PrebuildCommandList.AddRange(cmdList);
+        }
+
+        public void ParseExportList(ExportData[] exports)
+        {
+            foreach (var exportData in exports)
+                _buildMetaData.ExportList.Add(exportData.SourceControl);                
+        }
+
+        public virtual void ParseIncludes(RepositoryInclude[] includes)
+        {
+            _buildMetaData.IncludeList.AddRange(includes);
+        }
+
+
 
         protected void msbuild(string buildFile, string frameWorkVersion)
         {
@@ -304,17 +304,28 @@ namespace Horn.Core.Dsl
             _buildMetaData.SourceControl = SourceControl.Create<SVNSourceControl>(url);
         }
 
+        protected BooConfigReader()
+        {
+            _buildMetaData = new BuildMetaData();
+
+            Global.package.PackageInfo.Clear();
+        }
+
+
+
         private void SetBuildEngine(IBuildTool tool, string buildFile, FrameworkVersion version)
         {
             _buildMetaData.BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
         }
 
 
-        protected BooConfigReader()
+        public virtual void generate_strong_key()
         {
-            _buildMetaData = new BuildMetaData();
-
-            Global.package.PackageInfo.Clear();
+            _buildMetaData.BuildEngine.GenerateStrongKey = true;
+        }
+        public void shared_library(string sharedLib)
+        {
+            _buildMetaData.BuildEngine.SharedLibrary = sharedLib;
         }
 
     }
