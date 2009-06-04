@@ -4,7 +4,9 @@ namespace Horn.Core.Utils
 
     public class WithLogging
     {
+
         private ILog log;
+
 
         protected WithLogging()
         {
@@ -20,5 +22,8 @@ namespace Horn.Core.Utils
         {
             log.Info(message);
         }
+
+
+
     }
 }

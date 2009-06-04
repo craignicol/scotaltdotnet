@@ -10,6 +10,8 @@ namespace Horn.Core.Dsl
 
         public Dictionary<string, object> PackageInfo { get; set; }
 
+
+
         public object QuackGet(string name, object[] parameters)
         {
             throw new NotImplementedException();
@@ -27,10 +29,14 @@ namespace Horn.Core.Dsl
             return value;
         }
 
+
+
         public PackageMetaData()
         {
             PackageInfo = new Dictionary<string, object>();
         }
+
+
 
     }
 }

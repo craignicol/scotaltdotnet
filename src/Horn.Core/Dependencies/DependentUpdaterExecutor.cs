@@ -9,12 +9,9 @@ namespace Horn.Core.Dependencies
 
     public class DependentUpdaterExecutor :  WithLogging, IDependentUpdaterExecutor
     {
+
         private readonly HashSet<IDependentUpdater> updaters;
 
-        public DependentUpdaterExecutor(IEnumerable<IDependentUpdater> updaters)
-        {
-            this.updaters = new HashSet<IDependentUpdater>(updaters);
-        }
 
         public void Execute(IPackageTree packageTree, IEnumerable<string> dependencyPaths, Dependency dependency)
         {
@@ -27,9 +24,21 @@ namespace Horn.Core.Dependencies
             updaters.ForEach(updater => updater.Update(dependentUpdaterContext));
         }
 
+
+
         private bool HasADependencyToUpdate(IEnumerable<string> dependencyPaths)
         {
             return dependencyPaths != null && dependencyPaths.Count() > 0;
         }
+
+
+
+        public DependentUpdaterExecutor(IEnumerable<IDependentUpdater> updaters)
+        {
+            this.updaters = new HashSet<IDependentUpdater>(updaters);
+        }
+
+
+
     }
 }

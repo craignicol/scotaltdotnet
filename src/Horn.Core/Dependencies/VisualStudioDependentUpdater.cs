@@ -15,19 +15,17 @@ namespace Horn.Core.Dependencies
     /// </summary>
     public class VisualStudioDependentUpdater : WithLogging, IDependentUpdater
     {
+
         private static readonly Regex regex = new Regex("Project\\(\".*\"\\).*\"(?<ProjectName>.*)\".*\"(?<ProjectPath>.*\\..*proj)\"",
                                               RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
         private const string NamespaceName = "http://schemas.microsoft.com/developer/msbuild/2003";
 
-        public HashSet<string> SolutionFiles { get; private set; }
 
         public IDictionary<string, FileInfo> ProjectFiles { get; private set; }
 
-        public VisualStudioDependentUpdater()
-        {
-            ProjectFiles = new Dictionary<string, FileInfo>();
-            SolutionFiles = new HashSet<string>();
-        }
+        public HashSet<string> SolutionFiles { get; private set; }
+
+
 
         public void Update(DependentUpdaterContext dependentUpdaterContext)
         {
@@ -40,6 +38,18 @@ namespace Horn.Core.Dependencies
             LoadProjectFiles();
             UpdateProjectDependencies(firstAssemblyPath, dependentUpdaterContext.Dependency.Library);
         }
+
+
+
+        protected virtual string GetVersionInfoFromAssembly(string filePath, string dependencyName)
+        {
+            const string template = "{0}, , processorArchitecture=MSIL";
+            Assembly assembly = Assembly.LoadFrom(filePath);
+            string info = assembly.GetType().AssemblyQualifiedName;
+            return string.Format(template, info);
+        }
+
+
 
         private void UpdateProjectDependencies(string dependencyAssemblyPath, string dependencyName)
         {
@@ -64,14 +74,6 @@ namespace Horn.Core.Dependencies
         private string GetFirstAssembly(IEnumerable<string> dependencyPaths)
         {
             return dependencyPaths.FirstOrDefault(x => x.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        protected virtual string GetVersionInfoFromAssembly(string filePath, string dependencyName)
-        {
-            const string template = "{0}, , processorArchitecture=MSIL";
-            Assembly assembly = Assembly.LoadFrom(filePath);
-            string info = assembly.GetType().AssemblyQualifiedName;
-            return string.Format(template, info);
         }
 
         private XElement LoadProject(KeyValuePair<string, FileInfo> file)
@@ -192,5 +194,16 @@ namespace Horn.Core.Dependencies
 
             InfoFormat("Dependency: Found {0} solution file(s)", SolutionFiles.Count());
         }
+
+
+
+        public VisualStudioDependentUpdater()
+        {
+            ProjectFiles = new Dictionary<string, FileInfo>();
+            SolutionFiles = new HashSet<string>();
+        }
+
+
+
     }
 }
