@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>
+        TDD Talk Snippets
+      </Title>
+      <Description>TDD talk test 2</Description>
+      <Shortcut>tdd2</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[        [Test]
+        public void AddToEmptyFragmentedDateRange()
+        {
+            FragmentedDateRange fdr = new FragmentedDateRange();
+            DateRange range = new DateRange(new DateTime(2008, 1, 1), new DateTime(2008, 6, 6));
+            fdr.Insert( range );
+
+            Assert.AreEqual(1, fdr.Count);
+//            Assert.AreEqual( range.FromDate, fdr.From );
+//            Assert.AreEqual( range.ToDate, fdr.To );
+        }
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

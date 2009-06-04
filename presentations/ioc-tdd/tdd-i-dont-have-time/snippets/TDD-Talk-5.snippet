@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>
+        TDD Talk Snippets
+      </Title>
+      <Description>TDD talk test 5</Description>
+      <Shortcut>tdd5</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[        [Test]
+        public void AddManyOverlappingRanges()
+        {
+            FragmentedDateRange fdr = new FragmentedDateRange();
+            fdr.Insert( new DateRange( new DateTime( 2008, 1, 1 ), new DateTime( 2008, 3, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 2, 2 ), new DateTime( 2008, 4, 4 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 3, 1 ), new DateTime( 2008, 5, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 4, 1 ), new DateTime( 2008, 6, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 5, 1 ), new DateTime( 2008, 7, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 6, 1 ), new DateTime( 2008, 8, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 7, 1 ), new DateTime( 2008, 9, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 8, 1 ), new DateTime( 2008, 10, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 9, 1 ), new DateTime( 2008, 11, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 10, 1 ), new DateTime( 2008, 12, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 11, 1 ), new DateTime( 2009, 1, 3 ) ) );
+            fdr.Insert( new DateRange( new DateTime( 2008, 12, 1 ), new DateTime( 2009, 2, 3 ) ) );
+
+            Assert.AreEqual( 1, fdr.Count );
+            Assert.AreEqual( new DateTime( 2008, 1, 1 ), fdr.From );
+            Assert.AreEqual( new DateTime( 2009, 2, 3 ), fdr.To );
+        }
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

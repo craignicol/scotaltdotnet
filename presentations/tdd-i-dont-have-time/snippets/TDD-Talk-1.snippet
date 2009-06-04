@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>
+        TDD Talk Snippets
+      </Title>
+      <Description>TDD talk test 1</Description>
+      <Shortcut>tdd1</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[        [Test]
+        public void EmptyFragmentedDateRange()
+        {
+            FragmentedDateRange fdr = new FragmentedDateRange();
+            Assert.AreEqual( 0, fdr.Count );
+        }
+
+]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
