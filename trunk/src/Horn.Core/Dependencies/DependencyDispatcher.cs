@@ -10,17 +10,12 @@ namespace Horn.Core.Dependencies
 {
     public class DependencyDispatcher : IDependencyDispatcher
     {
+
         private readonly IDependentUpdaterExecutor dependentUpdater;
         private readonly DependencyCopier dependentCopier;
-
         private static string[] AllowedExtensions = new string[]
                                                         {".exe", ".dll", ".pdb", ".exe.config", ".config", ".resources", ".rsp"};
 
-        public DependencyDispatcher(IDependentUpdaterExecutor dependentUpdater)
-        {
-            this.dependentUpdater = dependentUpdater;
-            dependentCopier = new DependencyCopier();
-        }
 
         public void Dispatch(IPackageTree packageTree, IEnumerable<Dependency> dependencies, string dependenciesRoot)
         {
@@ -38,6 +33,8 @@ namespace Horn.Core.Dependencies
                 }
             }
         }
+
+
 
         private DirectoryInfo GetDependencyDirectory(IPackageTree packageTree, string targetPath)
         {
@@ -69,6 +66,15 @@ namespace Horn.Core.Dependencies
             return packageTree.RetrievePackage(dependency.PackageName);
         }
 
-        
+
+
+        public DependencyDispatcher(IDependentUpdaterExecutor dependentUpdater)
+        {
+            this.dependentUpdater = dependentUpdater;
+            dependentCopier = new DependencyCopier();
+        }
+
+
+
     }
 }

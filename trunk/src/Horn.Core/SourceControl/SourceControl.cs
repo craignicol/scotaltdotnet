@@ -10,12 +10,10 @@ namespace Horn.Core.SCM
 {
     public abstract class SourceControl
     {
+
         protected static readonly ILog log = LogManager.GetLogger(typeof(SVNSourceControl));
-
         private static Dictionary<string, string> downloadedPackages = new Dictionary<string, string>();
-
         private static readonly object locker = new object();
-
         protected  IDownloadMonitor downloadMonitor;
 
 
@@ -30,10 +28,6 @@ namespace Horn.Core.SCM
 
         public string Url {get; private set;}
 
-        public static void ClearDownLoadedPackages()
-        {
-            downloadedPackages.Clear();
-        }
 
 
         protected abstract void Initialise(IPackageTree packageTree);
@@ -41,6 +35,11 @@ namespace Horn.Core.SCM
         protected abstract string Download(FileSystemInfo destination);
 
 
+
+        public static void ClearDownLoadedPackages()
+        {
+            downloadedPackages.Clear();
+        }
 
         public static T Create<T>(string url) where T : SourceControl
         {
@@ -96,6 +95,8 @@ namespace Horn.Core.SCM
                 StopMonitoring(monitoringThread);
             }
         }
+
+
 
         protected virtual FileSystemInfo GetExportPath(string fullPath)
         {
@@ -159,9 +160,11 @@ namespace Horn.Core.SCM
             ExportPath = (string.IsNullOrEmpty(exportPath) ? "" : exportPath);
         }
 
-
         protected SourceControl()
         {
         }
+
+
+
     }
 }

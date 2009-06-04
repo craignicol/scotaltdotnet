@@ -7,6 +7,7 @@ namespace Horn.Core.extensions
 
     internal static class DirectoryInfoExtensions
     {
+
         public static DirectoryInfo GetDirectoryFromParts(this DirectoryInfo sourceDirectory, string parts)
         {
             if (string.IsNullOrEmpty(parts))
@@ -73,5 +74,8 @@ namespace Horn.Core.extensions
                 }
             }
         }
+
+
+
     }
 }

@@ -20,6 +20,7 @@ namespace Horn.Core.PackageCommands
         private readonly IProcessFactory processFactory;
         private static readonly ILog log = LogManager.GetLogger(typeof (PackageBuilder));
 
+
         public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
         {
             string packageName = GetPackageName(switches);
@@ -32,6 +33,8 @@ namespace Horn.Core.PackageCommands
 
             log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), packageName);
         }
+
+
 
         protected virtual void BuildDependencyTree(IDependencyTree dependencyTree, IDictionary<string, IList<string>> switches)
         {
@@ -63,7 +66,6 @@ namespace Horn.Core.PackageCommands
         {
             return nextTree.GetBuildMetaData(nextTree.BuildFile);
         }
-
 
         protected virtual string GetPackageName(IDictionary<string, IList<string>> switches)
         {
@@ -109,10 +111,15 @@ namespace Horn.Core.PackageCommands
             buildEngine.Build(processFactory, componentTree);
         }
 
+
+
         public PackageBuilder(IGet get, IProcessFactory processFactory)
         {
             this.get = get;
             this.processFactory = processFactory;
         }
+
+
+
     }
 }

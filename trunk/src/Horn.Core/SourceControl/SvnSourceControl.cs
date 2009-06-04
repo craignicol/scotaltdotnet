@@ -97,6 +97,7 @@ namespace Horn.Core.SCM
         }
 
 
+
         public SVNSourceControl()
         {
         }
@@ -110,6 +111,8 @@ namespace Horn.Core.SCM
             : base(url, exportPath)
         {
         }
+
+
 
     }
 }

@@ -9,7 +9,6 @@ namespace Horn.Core.PackageStructure
     {
 
         public const string RootPackageTreeName = ".horn";
-
         private readonly IList<IPackageTree> children;
         private DirectoryInfo workingDirectory;
         private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
@@ -64,6 +63,24 @@ namespace Horn.Core.PackageStructure
         public DirectoryInfo OutputDirectory { get; private set; }
 
         public IPackageTree Parent { get; set; }
+
+        public IPackageTree Root
+        {
+            get
+            {
+                if (IsRoot)
+                    return this;
+
+                IPackageTree parent = Parent;
+
+                while (!parent.IsRoot)
+                {
+                    parent = parent.Parent;
+                }
+
+                return parent;
+            }
+        }
 
         public FileInfo Sn
         {
@@ -209,23 +226,6 @@ namespace Horn.Core.PackageStructure
         }
 
 
-        public IPackageTree Root
-        {
-            get
-            {
-                if (IsRoot)
-                    return this;
-
-                IPackageTree parent = Parent;
-
-                while (!parent.IsRoot)
-                {
-                    parent = parent.Parent;
-                }
-
-                return parent;
-            }
-        }
 
     }
 }

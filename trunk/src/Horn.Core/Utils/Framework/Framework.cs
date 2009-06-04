@@ -14,21 +14,19 @@ namespace Horn.Core.Utils.Framework
 
     public class Framework
     {
-        private static readonly IDictionary<FrameworkVersion, string> assemblyPaths = new Dictionary<FrameworkVersion, string>();
 
+        private static readonly IDictionary<FrameworkVersion, string> assemblyPaths = new Dictionary<FrameworkVersion, string>();
         private static readonly ILog log = LogManager.GetLogger(typeof (Framework));
 
-        public FrameworkVersion Version { get; private set; }
 
         public MSBuild MSBuild
         {
             get { return new MSBuild(assemblyPaths[Version]); }
         }
 
-        public Framework(FrameworkVersion version)
-        {
-            Version = version;
-        }
+        public FrameworkVersion Version { get; private set; }
+
+
 
         static Framework()
         {
@@ -47,5 +45,15 @@ namespace Horn.Core.Utils.Framework
             assemblyPaths.Add(FrameworkVersion.FrameworkVersion2, Path.Combine(root, "v2.0.50727"));
             assemblyPaths.Add(FrameworkVersion.FrameworkVersion35, Path.Combine(root, "v3.5"));
         }
+
+
+
+        public Framework(FrameworkVersion version)
+        {
+            Version = version;
+        }
+
+
+
     }
 }

@@ -7,21 +7,9 @@ namespace Horn.Core.Utils.IoC
 
     public class EnumerableResolver : ISubDependencyResolver
     {
+
         private readonly IKernel kernel;
 
-        public EnumerableResolver(IKernel kernel)
-        {
-            this.kernel = kernel;
-
-        }
-
-        public object Resolve(CreationContext context, ISubDependencyResolver parentResolver,
-                              ComponentModel model,
-                              DependencyModel dependency)
-        {
-            Type t = dependency.TargetType.GetGenericArguments()[0];
-            return kernel.ResolveAll(t, null);
-        }
 
         public bool CanResolve(CreationContext context, ISubDependencyResolver parentResolver,
                                ComponentModel model,
@@ -34,5 +22,24 @@ namespace Horn.Core.Utils.IoC
                               .IsAssignableFrom(dependency.TargetType);
             return result;
         }
+
+        public object Resolve(CreationContext context, ISubDependencyResolver parentResolver,
+                              ComponentModel model,
+                              DependencyModel dependency)
+        {
+            Type t = dependency.TargetType.GetGenericArguments()[0];
+            return kernel.ResolveAll(t, null);
+        }
+
+
+
+        public EnumerableResolver(IKernel kernel)
+        {
+            this.kernel = kernel;
+
+        }
+
+
+
     }
 }
