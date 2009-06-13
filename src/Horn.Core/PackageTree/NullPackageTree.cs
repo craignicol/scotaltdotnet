@@ -26,6 +26,11 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
+        {
+            throw new NotImplementedException();
+        }
+
         public DirectoryInfo CurrentDirectory
         {
             get { throw new System.NotImplementedException(); }

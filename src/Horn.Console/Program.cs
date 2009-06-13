@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
-using Horn.Core.SCM;
-using Horn.Core.Tree.MetaDataSynchroniser;
 using Horn.Core.Utils.CmdLine;
 using Horn.Core.Utils.IoC;
 using log4net;
@@ -35,8 +32,7 @@ namespace Horn.Console
 
             InitialiseIoC();
 
-            //TODO: Move to PackageTree, PackageTree should know how to retrieve itself.
-            var packageTree = GetPackageTree();
+            var packageTree = IoC.Resolve<IPackageTree>().GetRootPackageTree(GetRootFolderPath());
 
             IoC.Resolve<IPackageCommand>(parser.ParsedArgs.First().Key).Execute(packageTree, parser.ParsedArgs);
         }
@@ -48,23 +44,6 @@ namespace Horn.Console
             IoC.InitializeWith(resolver);
 
             log.Debug("IOC initialised.....");
-        }
-
-        //TODO: Move to PackageTree
-        private static IPackageTree GetPackageTree()
-        {
-            IPackageTree root = new PackageTree(GetRootFolderPath(), null);
-
-            //HACK: Remember to remove
-            //return root;
-
-            //TODO: Hard coded dependency.  Should be injected in or retrieved from the container
-            IMetaDataSynchroniser metaDataSynchroniser =
-                new MetaDataSynchroniser(new SVNSourceControl(MetaDataSynchroniser.PACKAGE_TREE_URI));
-
-            metaDataSynchroniser.SynchronisePackageTree(root);
-
-            return root;
         }
 
         private static DirectoryInfo GetRootFolderPath()

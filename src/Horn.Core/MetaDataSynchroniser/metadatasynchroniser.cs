@@ -23,8 +23,6 @@ namespace Horn.Core.Tree.MetaDataSynchroniser
             this.sourceControl = sourceControl;
         }
 
-
-
     }
 
 }

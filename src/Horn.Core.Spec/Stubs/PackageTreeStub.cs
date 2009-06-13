@@ -87,6 +87,11 @@ namespace Horn.Core.Spec.Doubles
             return buildMetaData;
         }
 
+        public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
+        {
+            throw new NotImplementedException();
+        }
+
         public DirectoryInfo CurrentDirectory
         {
             get { throw new NotImplementedException(); }

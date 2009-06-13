@@ -4,7 +4,9 @@ using Horn.Core.BuildEngines;
 using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
+using Horn.Core.Tree.MetaDataSynchroniser;
 
 namespace Horn.Core.Utils.IoC
 {
@@ -70,6 +72,25 @@ namespace Horn.Core.Utils.IoC
                             .ImplementedBy<DiagnosticsProcessFactory>()
                             .LifeStyle.Transient
 
+                );
+
+            innerContainer.Register(
+                Component.For<SourceControl>()
+                            .ImplementedBy<SVNSourceControl>()
+                            .Parameters(Parameter.ForKey("url").Eq(MetaDataSynchroniser.PACKAGE_TREE_URI))
+                            .LifeStyle.Transient
+                );
+
+            innerContainer.Register(
+                Component.For<IMetaDataSynchroniser>()
+                            .ImplementedBy<MetaDataSynchroniser>()
+                            .LifeStyle.Transient
+                );
+
+            innerContainer.Register(
+                Component.For<IPackageTree>()
+                            .ImplementedBy<PackageTree>()
+                            .LifeStyle.Transient
                 );
 
             innerContainer.Register(

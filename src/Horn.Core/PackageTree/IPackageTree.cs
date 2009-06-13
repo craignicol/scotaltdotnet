@@ -24,6 +24,8 @@ namespace Horn.Core.PackageStructure
 
         IBuildMetaData GetBuildMetaData(string packageName);
 
+        IPackageTree GetRootPackageTree(DirectoryInfo rootFolder);
+
         DirectoryInfo CurrentDirectory { get; }
 
         FileInfo Nant { get; }
