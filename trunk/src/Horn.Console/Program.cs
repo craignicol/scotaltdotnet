@@ -35,7 +35,7 @@ namespace Horn.Console
 
             InitialiseIoC();
 
-            //TODO: Move to PackageTree
+            //TODO: Move to PackageTree, PackageTree should know how to retrieve itself.
             var packageTree = GetPackageTree();
 
             IoC.Resolve<IPackageCommand>(parser.ParsedArgs.First().Key).Execute(packageTree, parser.ParsedArgs);

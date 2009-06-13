@@ -1,18 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+using System.Linq;
 using Horn.Core.BuildEngines;
+using Horn.Core.Dependencies;
+using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using log4net;
 
 namespace Horn.Core.PackageCommands
 {
-    using Dependencies;
-    using Dsl;
-    using SCM;
-
     public class PackageBuilder : IPackageCommand
     {
 
@@ -24,6 +20,9 @@ namespace Horn.Core.PackageCommands
         public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
         {
             string packageName = GetPackageName(switches);
+
+            if(!packageTree.BuildNodes().Select(x => x.Name).ToList().Contains(packageName))
+                throw new UnkownInstallPackageException(string.Format("No package definition exists for {0}.", packageName));
 
             IPackageTree componentTree = packageTree.RetrievePackage(packageName);
 
