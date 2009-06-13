@@ -19,9 +19,7 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
         {
             SourceControl.ClearDownLoadedPackages();
 
-            packageTree = TreeHelper.GetTempEmptyPackageTree();
-
-            metaDataSynchroniser.SynchronisePackageTree(packageTree);
+            packageTree = packageTreeBase.GetRootPackageTree(TreeHelper.GetTempEmptyPackageTree().Root.CurrentDirectory);
         }
 
         [Fact]

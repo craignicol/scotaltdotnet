@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Horn.Core.Dsl;
+using Horn.Core.Tree.MetaDataSynchroniser;
 
 namespace Horn.Core.PackageStructure
 {
     public class PackageTree : IPackageTree
     {
+        private readonly IMetaDataSynchroniser metaDataSynchroniser;
 
         public const string RootPackageTreeName = ".horn";
         private readonly IList<IPackageTree> children;
@@ -134,6 +136,18 @@ namespace Horn.Core.PackageStructure
             return GetBuildMetaData(packageTree);
         }
 
+        public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
+        {
+            IPackageTree root = new PackageTree(rootFolder, null);
+
+            //HACK: Remember to remove
+            //return root;
+
+            metaDataSynchroniser.SynchronisePackageTree(root);
+
+            return root;            
+        }
+
         public IRevisionData GetRevisionData()
         {
             return new RevisionData(this);
@@ -225,7 +239,9 @@ namespace Horn.Core.PackageStructure
             }
         }
 
-
-
+        public PackageTree(IMetaDataSynchroniser metaDataSynchroniser)
+        {
+            this.metaDataSynchroniser = metaDataSynchroniser;
+        }
     }
 }
