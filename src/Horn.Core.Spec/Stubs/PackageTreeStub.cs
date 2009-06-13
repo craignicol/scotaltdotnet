@@ -125,7 +125,7 @@ namespace Horn.Core.Spec.Doubles
 
         public List<IPackageTree> BuildNodes()
         {
-            throw new NotImplementedException();
+            return new List<IPackageTree>{this};
         }
 
         public IRevisionData GetRevisionData()

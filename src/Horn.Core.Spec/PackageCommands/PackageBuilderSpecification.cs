@@ -41,6 +41,8 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             wholeTree.Stub(x => x.Name).Return("horn");
 
+            wholeTree.Stub(x => x.BuildNodes()).Return(new List<IPackageTree> {wholeTree});
+
             wholeTree.Stub(x => x.RetrievePackage("horn")).Return(componentTree);
 
             wholeTree.Stub(x => x.GetBuildMetaData("horn")).Return(buildMetaData).IgnoreArguments().Repeat.Any();
@@ -101,6 +103,28 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             buildMetaData.BuildEngine = buildEngine;
 
             return buildMetaData;
+        }
+    }
+
+    public class When_the_package_builder_receives_an_install_command_for_an_unknown_package : GetSpecificationBase
+    {
+        private PackageBuilder packageBuilder;
+
+        private Dictionary<string, IList<string>> args = new Dictionary<string, IList<string>>();
+
+        protected override void Because()
+        {
+            packageBuilder = new PackageBuilder(get, MockRepository.GenerateStub<IProcessFactory>());
+
+            packageTree = TreeHelper.GetTempPackageTree();
+
+            args.Add("install", new List<string> { "unknownpackage" });
+        }
+
+        [Fact]
+        public void Then_an_unknown_package_exception_is_thrown()
+        {
+            Assert.Throws<UnkownInstallPackageException>(() => packageBuilder.Execute(packageTree, args));
         }
     }
 
