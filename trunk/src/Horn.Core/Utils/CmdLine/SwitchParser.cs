@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using Horn.Core.PackageStructure;
 using log4net;
 
 namespace Horn.Core.Utils.CmdLine
@@ -36,18 +34,6 @@ Options :
         public Dictionary<string, IList<string>> ParsedArgs
         {
             get { return parsedArgs; }
-        }
-
-        public virtual bool InitiallyIsValid()
-        {
-            var ret = true;
-
-            foreach (var paramRow in ParamTable)
-            {
-                var arg = ParsedArgs.ContainsKey(paramRow.Key) ? ParsedArgs[paramRow.Key] : null;
-            }
-
-            return ret;
         }
 
         public virtual bool IsAValidRequest()
