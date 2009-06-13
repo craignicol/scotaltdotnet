@@ -13,12 +13,9 @@ using log4net.Config;
 
 namespace Horn.Console
 {
-    class 
-        Program
+    class Program
     {
-
         private static readonly ILog log = LogManager.GetLogger(typeof(Program));
-
 
         static void Main(string[] args)
         {
@@ -26,25 +23,22 @@ namespace Horn.Console
 
             XmlConfigurator.Configure();
 
-            InitialiseIoC();
-
             var output = new StringWriter();
 
-            var packageTree = GetPackageTree();
+            var parser = new SwitchParser(output, args);
 
-            var parser = new SwitchParser(output, packageTree);
-
-            var parsedArgs = parser.Parse(args);
-
-            if (!IsAValidRequest(parser, parsedArgs))
+            if(!parser.IsAValidRequest())
             {
                 log.Error(output.ToString());
                 return;
             }
 
-            LogArguments(parsedArgs);
+            InitialiseIoC();
 
-            IoC.Resolve<IPackageCommand>(parsedArgs.First().Key).Execute(packageTree, parsedArgs);
+            //TODO: Move to PackageTree
+            var packageTree = GetPackageTree();
+
+            IoC.Resolve<IPackageCommand>(parser.ParsedArgs.First().Key).Execute(packageTree, parser.ParsedArgs);
         }
 
         private static void InitialiseIoC()
@@ -56,6 +50,7 @@ namespace Horn.Console
             log.Debug("IOC initialised.....");
         }
 
+        //TODO: Move to PackageTree
         private static IPackageTree GetPackageTree()
         {
             IPackageTree root = new PackageTree(GetRootFolderPath(), null);
@@ -86,32 +81,5 @@ namespace Horn.Console
 
             return ret;
         }
-
-        private static bool IsAValidRequest(SwitchParser parser, IDictionary<string, IList<string>> parsedArgs)
-        {
-            if (IsHelpTextSwitch(parsedArgs))
-                return false;
-
-            return parser.IsValid(parsedArgs);
-        }
-
-        private static bool IsHelpTextSwitch(IDictionary<string, IList<string>> parsedArgs)
-        {
-            return parsedArgs != null && parsedArgs is HelpReturnValue;
-        }
-
-        private static void LogArguments(Dictionary<string, IList<string>> args)
-        {
-            foreach (var arg in args)
-            {
-                log.InfoFormat("Command {0} was issued with values:", arg.Key);
-
-                foreach (var value in arg.Value)
-                    log.InfoFormat("{0}\n", value);
-            }
-        }
-
-
-
     }
 }

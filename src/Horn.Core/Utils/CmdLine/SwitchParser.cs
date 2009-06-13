@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Horn.Core.PackageStructure;
+using log4net;
 
 namespace Horn.Core.Utils.CmdLine
 {
@@ -10,25 +11,65 @@ namespace Horn.Core.Utils.CmdLine
 
     public class SwitchParser
     {
+        #region console help text
 
-        private readonly TextWriter output;
-        private readonly Parameter[] paramTable;
-
-        public const string HELP_TEXT =
+        public const string HelpText =
 @"HORN - SCOTALT.NET
+                                          
 http://code.google.com/p/scotaltdotnet/
+
 http://groups.google.com/group/scotaltnet
+
 Usage : horn -install:<component>
 Options :
     -rebuildonly         Do not check for the latest source code.";
 
-        public bool IsValid(IDictionary<string, IList<string>> commandLineArgs)
+        #endregion
+
+        private readonly TextWriter Output;
+        private readonly Parameter[] ParamTable;
+
+        private readonly Dictionary<string, IList<string>> parsedArgs;
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(SwitchParser));
+
+        public Dictionary<string, IList<string>> ParsedArgs
+        {
+            get { return parsedArgs; }
+        }
+
+        public virtual bool InitiallyIsValid()
         {
             var ret = true;
 
-            foreach (var paramRow in paramTable)
+            foreach (var paramRow in ParamTable)
             {
-                var arg = commandLineArgs.ContainsKey(paramRow.Key) ? commandLineArgs[paramRow.Key] : null;
+                var arg = ParsedArgs.ContainsKey(paramRow.Key) ? ParsedArgs[paramRow.Key] : null;
+            }
+
+            return ret;
+        }
+
+        public virtual bool IsAValidRequest()
+        {
+            if (IsHelpTextSwitch())
+                return false;
+
+            return IsValid();            
+        }
+
+        public virtual bool IsHelpTextSwitch()
+        {
+            return ParsedArgs != null && ParsedArgs is HelpReturnValue;
+        }
+
+        public virtual bool IsValid()
+        {
+            var ret = true;
+
+            foreach (var paramRow in ParamTable)
+            {
+                var arg = ParsedArgs.ContainsKey(paramRow.Key) ? ParsedArgs[paramRow.Key] : null;
 
                 if (arg == null)
                 {
@@ -43,19 +84,11 @@ Options :
 
                 if (arg.Count > 1 && !paramRow.Reoccurs)
                     ret = OutputValidationMessage(string.Format("Argument key cannot reoccur: {0}.", paramRow.Key));
-
-                foreach (var value in arg)
-                {
-                    if (paramRow.Values != null &&
-                        paramRow.Values.Length != 0 &&
-                        !SwitchValueIsValid(arg))
-                        ret = OutputValidationMessage(string.Format("Argument value for key {0} is invalid: {1}.", paramRow.Key, value));
-                }
             }
 
-            foreach (var keyValuePair in commandLineArgs)
+            foreach (var keyValuePair in ParsedArgs)
             {
-                var paramRow = Array.Find(paramTable, match => match.Key == keyValuePair.Key);
+                var paramRow = Array.Find(ParamTable, match => match.Key == keyValuePair.Key);
 
                 if (paramRow == null)
                     ret= OutputValidationMessage(string.Format("Argument key unknown: {0}.", keyValuePair.Key));
@@ -64,7 +97,27 @@ Options :
             return ret;
         }
 
-        public Dictionary<string, IList<string>> Parse(string[] args)
+        public virtual void OutputHelpText()
+        {
+            Output.WriteLine(HelpText);
+        }
+
+        public virtual bool OutputValidationMessage(string message)
+        {
+            Output.WriteLine(message);
+
+            string usage = "USAGE:" + Environment.NewLine;
+
+            foreach (var paramRow in ParamTable)
+                usage += string.Format("{0}-{1}:{{{2}}}{3}{4}" + Environment.NewLine, paramRow.Required ? string.Empty : "[", paramRow.Key, "", paramRow.Reoccurs ? "*" : "", paramRow.Required ? "" : "]");
+
+            Output.WriteLine();
+            Output.WriteLine(usage);
+
+            return false;
+        }
+
+        private Dictionary<string, IList<string>> Parse(string[] args)
         {
             const string ARGS_REGEX = @"-([a-zA-Z_][a-zA-Z_0-9]{0,}):?((?<=:).{0,})?";
             string name;
@@ -74,7 +127,7 @@ Options :
 
             if ((args == null) || (args.Length == 0) || ((args[0].ToLower().Equals("-help"))))
             {
-                output.WriteLine(HELP_TEXT);
+                OutputHelpText();
 
                 return new HelpReturnValue();
             }
@@ -98,50 +151,35 @@ Options :
                     parsedArgs[name].Add(value);
             }
 
+            LogArguments(parsedArgs);
+
             return parsedArgs;
         }
 
-
-
-        private bool SwitchValueIsValid(IList<string> arg)
+        private static void LogArguments(Dictionary<string, IList<string>> args)
         {
-            return paramTable
-                       .Where(param => param.Values
-                                           .Where(value => arg.Contains(value)
-                                           ).Count() > 0)
-                       .Count() > 0;
+            foreach (var arg in args)
+            {
+                log.InfoFormat("Command {0} was issued with values:", arg.Key);
+
+                foreach (var value in arg.Value)
+                    log.InfoFormat("{0}\n", value);
+            }
         }
 
-        private bool OutputValidationMessage(string message)
+        public SwitchParser(TextWriter output, string[] args)
         {
-            output.WriteLine(message);
-
-            string usage = "USAGE:" + Environment.NewLine;
-
-            foreach (var paramRow in paramTable)
-                usage += string.Format("{0}-{1}:{{{2}}}{3}{4}" + Environment.NewLine, paramRow.Required ? string.Empty : "[", paramRow.Key, paramRow.Values != null ? string.Join(" | ", new List<string>(paramRow.Values).ToArray()) : "?", paramRow.Reoccurs ? "*" : "", paramRow.Required ? "" : "]");
-
-            output.WriteLine();
-            output.WriteLine(usage);
-
-            return false;
-        }
-
-
-
-        public SwitchParser(TextWriter output, IPackageTree root)
-        {
-            this.output = output;
+            Output = output;
 
             var parameters = new List<Parameter>();
 
-            root.BuildNodes().ForEach(c => parameters.Add(new Parameter("install", true, new[] {c.Name}, false)));
+            parameters.Add(new Parameter("install", true, true, false));
 
-            parameters.Add(new Parameter("rebuildonly", false, new string[]{}, false));
+            parameters.Add(new Parameter("rebuildonly", false, false, false));
 
-            paramTable = parameters.ToArray();
+            ParamTable = parameters.ToArray();
+
+            parsedArgs = Parse(args);
         }
-
-
     }
 }

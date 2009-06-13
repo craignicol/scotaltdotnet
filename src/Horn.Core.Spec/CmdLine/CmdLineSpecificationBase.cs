@@ -12,9 +12,6 @@ namespace Horn.Core.Spec.Unit.CmdLine
     {
         private TextWriter textWriter;
         protected SwitchParser parser;
-        protected IPackageTree packageTree;
-
-        protected IDictionary<string, IList<string>> ParsedArgs { get; set; }
 
         protected TextWriter Output { get { return textWriter; } }
 
@@ -25,8 +22,6 @@ namespace Horn.Core.Spec.Unit.CmdLine
             base.Before_each_spec();
 
             textWriter = new StringWriter();
-
-            packageTree = TreeHelper.GetTempPackageTree();
         }
 
         protected void AssertOutputContains(string outoutShouldContain)
@@ -38,14 +33,13 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
     public abstract class CmdLineErrorSpecificationBase : CmdLineSpecificationBase
     {
-        protected abstract string Args { get; }
+        protected abstract string[] Args { get; }
         protected abstract string ExpectErrorMessage { get; }
 
         protected override void Because()
         {
-            parser = new SwitchParser(Output, packageTree);
-            ParsedArgs = parser.Parse(new[] { Args });
-            IsValid = parser.IsValid(ParsedArgs);
+            parser = new SwitchParser(Output, Args);
+            IsValid = parser.IsValid();
         }
     }
 }
