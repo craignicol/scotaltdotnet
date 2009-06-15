@@ -1,7 +1,7 @@
+using System;
+
 namespace Horn.Core.Dependencies
 {
-    using System;
-
     public class CircularDependencyException : Exception
     {
         public CircularDependencyException(string cause)

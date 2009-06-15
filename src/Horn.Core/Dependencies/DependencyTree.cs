@@ -1,11 +1,10 @@
-using Horn.Core.BuildEngines;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using Horn.Core.PackageStructure;
+
 namespace Horn.Core.Dependencies
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using PackageStructure;
-
     public class DependencyTree : IDependencyTree
     {
 

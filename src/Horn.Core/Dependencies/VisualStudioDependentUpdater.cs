@@ -1,15 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Linq;
+using System.Xml.Linq;
+using Horn.Core.extensions;
+using Horn.Core.Utils;
+
 namespace Horn.Core.Dependencies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text.RegularExpressions;
-    using System.Xml.Linq;
-    using extensions;
-    using Utils;
-
     /// <summary>
     /// Updates project Reference element to the correct assembly info
     /// </summary>

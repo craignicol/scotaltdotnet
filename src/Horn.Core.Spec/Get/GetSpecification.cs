@@ -1,7 +1,7 @@
 using System;
 using Horn.Core.SCM;
 using Xunit;
-namespace Horn.Core.Spec.Unit.Get
+namespace Horn.Core.Spec.Unit.GetSpecs
 {
     using GetOperations;
 

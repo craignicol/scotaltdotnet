@@ -1,14 +1,13 @@
 using System.IO;
+using Horn.Core.BuildEngines;
+using Horn.Core.Dependencies;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
 using Rhino.Mocks;
 using Xunit;
 
-namespace Horn.Core.Spec.BuildEngine
+namespace Horn.Core.Spec.BuildEngineSpecs
 {
-    using BuildEngines;
-    using Core.Dependencies;
-
     public class When_The_Build_Engine_Is_Ran : Specification
     {
         private IPackageTree packageTree;

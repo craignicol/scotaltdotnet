@@ -51,7 +51,7 @@ namespace Horn.Core.Spec.Unit.dsl
         }
     }
 
-    public class When_need_an_export_list : Specification
+    public class When_we_need_an_export_list : Specification
     {
         private const string Url = "http://scotaltdotnet.googlecode.com/svn/trunk/src/one";
 

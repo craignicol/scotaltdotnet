@@ -5,7 +5,7 @@ using Horn.Core.Dependencies;
 using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
-using Horn.Core.Spec.BuildEngine;
+using Horn.Core.Spec.BuildEngineSpecs;
 using Horn.Core.Spec.Doubles;
 using Horn.Framework.helpers;
 using Rhino.Mocks;

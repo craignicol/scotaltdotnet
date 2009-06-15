@@ -1,26 +1,24 @@
-using System;
+using System.Collections.Generic;
+using System.IO;
 using Horn.Core.BuildEngines;
+using Horn.Core.Dependencies;
+using Horn.Core.Dsl;
+using Horn.Core.GetOperations;
+using Horn.Core.PackageCommands;
+using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
+using Horn.Core.Spec.BuildEngineSpecs;
 using Horn.Core.Spec.Doubles;
 using Horn.Core.Spec.helpers;
-using Horn.Core.Spec.Unit.Get;
+using Horn.Core.Spec.Unit.GetSpecs;
+using Horn.Core.Utils;
+using Horn.Core.Utils.Framework;
 using Horn.Framework.helpers;
+using Rhino.Mocks;
+using Xunit;
 
 namespace Horn.Core.Spec.Unit.PackageCommands
 {
-    using System.Collections.Generic;
-    using Core.Dependencies;
-    using Core.Dsl;
-    using GetOperations;
-    using Core.PackageCommands;
-    using PackageStructure;
-    using BuildEngine;
-    using Utils;
-    using Utils.Framework;
-    using Rhino.Mocks;
-    using Xunit;
-    using System.IO;
-
     public class When_The_Builder_Receives_An_Install_Switch : Specification
     {
         protected IDictionary<string, IList<string>> switches = new Dictionary<string, IList<string>>();
@@ -92,7 +90,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             var buildTool = new BuildToolStub();
 
-            var buildEngine = new BuildEngines.BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
+            var buildEngine = new BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
 
             baseConfigReader.BuildMetaData.BuildEngine = buildEngine;
 
@@ -165,112 +163,6 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         public void Then_source_control_get_is_not_called()
         {
             get.AssertWasNotCalled(x => x.From(Arg<SVNSourceControl>.Is.TypeOf));
-        }
-    }
-
-    public class When_the_meta_data_has_a_prebuild_list : GetSpecificationBase
-    {
-        private string testFile;
-
-        private PackageBuilder packageBuilder;
-
-        private MockRepository mockRepository;
-
-        protected override void Before_each_spec()
-        {
-            mockRepository = new MockRepository();
-
-            testFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.txt");
-
-            DeleteTestFile();
-
-            var cmds = new List<string> {string.Format("@echo \"hello\" > {0}", Path.GetFileName(testFile))};
-
-            packageTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>(), cmds), "log4net", false);
-
-            get = MockRepository.GenerateStub<IGet>();
-
-            get.Stub(x => x.From(new SVNSourceControl("url"))).Return(get);
-
-            get.Stub(x => x.ExportTo(packageTree)).Return(packageTree);
-
-            packageBuilder = new PackageBuilder(get, new DiagnosticsProcessFactory());
-        }
-
-        protected override void After_each_spec()
-        {
-            DeleteTestFile();
-        }
-
-        protected override void Because()
-        {
-            var args = new Dictionary<string, IList<string>>
-                           {
-                               {"install", new List<string> {"log4net"}},
-                               {"rebuildonly", new List<string> {""}}
-                           };
-
-            mockRepository.Playback();
-
-            packageBuilder.Execute(packageTree, args);
-        }
-
-        [Fact]
-        public void Then_the_prebuild_commands_are_executed()
-        {
-            Assert.True(File.Exists(testFile));
-        }
-
-        private void DeleteTestFile()
-        {
-            if (File.Exists(testFile))
-                File.Delete(testFile);
-        }
-    }
-
-    public class When_the_meta_data_has_an_export_list : GetSpecificationBase
-    {
-        private PackageBuilder packageBuilder;
-
-        private MockRepository mockRepository;
-
-        private readonly SourceControlDouble sourceControlDouble = new SourceControlDouble("url1");
-
-        protected override void Before_each_spec()
-        {
-            mockRepository = new MockRepository();
-
-            var exportList = new List<SourceControl> {sourceControlDouble};
-
-            packageTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>(), exportList), "log4net", false);
-
-            get = new Get(MockRepository.GenerateStub<IFileSystemProvider>());
-
-            packageBuilder = new PackageBuilder(get, new DiagnosticsProcessFactory());
-        }
-
-
-        protected override void Because()
-        {
-            var args = new Dictionary<string, IList<string>>
-                           {
-                               {"install", new List<string> {"log4net"}}
-                           };
-
-            mockRepository.Playback();
-
-            packageBuilder.Execute(packageTree, args);
-        }
-
-        [Fact]
-        public void Then_the_export_list_is_retrieved()
-        {
-            Assert.True(sourceControlDouble.FileWasDownloaded); 
-        }
-
-        protected override void After_each_spec()
-        {
-            sourceControlDouble.Dispose();
         }
     }
 }

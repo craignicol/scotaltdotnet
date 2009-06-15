@@ -1,10 +1,9 @@
+using System;
+using System.Collections.Generic;
+using Castle.Core;
+using Castle.MicroKernel;
 namespace Horn.Core.Utils.IoC
 {
-    using System;
-    using System.Collections.Generic;
-    using Castle.Core;
-    using Castle.MicroKernel;
-
     public class EnumerableResolver : ISubDependencyResolver
     {
 

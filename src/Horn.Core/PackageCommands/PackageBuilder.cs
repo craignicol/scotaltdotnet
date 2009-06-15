@@ -82,7 +82,6 @@ namespace Horn.Core.PackageCommands
 
         protected virtual void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
         {
-            //TODO: Remove get_from functionality and only retrieve from the exportlist ??
             if((buildMetaData.ExportList != null) && (buildMetaData.ExportList.Count > 0))
             {
                 var initialise = true;

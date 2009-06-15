@@ -1,13 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Horn.Core.BuildEngines;
+using Horn.Core.Dependencies;
 using Horn.Core.Spec.Doubles;
 
 namespace Horn.Core.Spec.Dependencies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using BuildEngines;
-    using Core.Dependencies;
-
     public abstract class visual_studio_dependent_updater_context : Specification
     {
         protected VisualStudioDependentUpdater dependentUpdater;

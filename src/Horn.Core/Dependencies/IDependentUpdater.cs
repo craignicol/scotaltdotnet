@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.IO;
+using Horn.Core.BuildEngines;
+using Horn.Core.PackageStructure;
+
 namespace Horn.Core.Dependencies
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using BuildEngines;
-    using PackageStructure;
-
     public interface IDependentUpdater
     {
         void Update(DependentUpdaterContext dependentUpdaterContext);

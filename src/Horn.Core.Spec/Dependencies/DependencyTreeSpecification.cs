@@ -1,17 +1,16 @@
+using System;
 using System.Collections.Generic;
+using Horn.Core.BuildEngines;
+using Horn.Core.Dependencies;
+using Horn.Core.Dsl;
+using Horn.Core.PackageStructure;
+using Horn.Core.Spec.BuildEngineSpecs;
 using Horn.Core.Spec.helpers;
+using Rhino.Mocks;
+using Xunit;
 
 namespace Horn.Core.Spec.Dependencies
 {
-    using System;
-    using BuildEngine;
-    using BuildEngines;
-    using Core.Dependencies;
-    using Dsl;
-    using PackageStructure;
-    using Rhino.Mocks;
-    using Xunit;
-
     public class When_We_Have_A_Single_Dependency : DirectorySpecificationBase
     {
         protected IBuildMetaData dependencyBuildMetaData;

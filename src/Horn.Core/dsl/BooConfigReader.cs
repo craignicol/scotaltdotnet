@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
 using Horn.Core.BuildEngines;
+using Horn.Core.Dependencies;
 using Horn.Core.SCM;
 using Horn.Core.Utils.Framework;
 
 namespace Horn.Core.Dsl
 {
-    using Dependencies;
-
     public abstract class BooConfigReader
     {
 

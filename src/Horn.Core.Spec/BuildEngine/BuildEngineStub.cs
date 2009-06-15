@@ -1,12 +1,10 @@
 using System;
+using Horn.Core.BuildEngines;
+using Horn.Core.PackageStructure;
+using Horn.Core.Utils.Framework;
 
-namespace Horn.Core.Spec.BuildEngine
+namespace Horn.Core.Spec.BuildEngineSpecs
 {
-    using System.Collections.Generic;
-    using PackageStructure;
-    using Utils.Framework;
-    using BuildEngines;
-
     public class BuildToolStub : IBuildTool
     {
         public string PathToBuildFile { get; private set; }

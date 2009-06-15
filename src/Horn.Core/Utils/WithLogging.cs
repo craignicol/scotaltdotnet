@@ -1,7 +1,6 @@
+using log4net;
 namespace Horn.Core.Utils
 {
-    using log4net;
-
     public class WithLogging
     {
 

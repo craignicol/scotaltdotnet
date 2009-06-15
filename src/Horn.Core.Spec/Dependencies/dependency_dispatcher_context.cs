@@ -1,15 +1,12 @@
+using System;
+using System.IO;
+using Horn.Core.BuildEngines;
+using Horn.Core.Dependencies;
+using Horn.Core.PackageStructure;
 using Horn.Core.Spec.Doubles;
 
 namespace Horn.Core.Spec.Dependencies
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using BuildEngines;
-    using Core.Dependencies;
-    using Dsl;
-    using PackageStructure;
-
     public abstract class dependency_dispatcher_context : Specification
     {
         protected DependencyDispatcher dispatcher;

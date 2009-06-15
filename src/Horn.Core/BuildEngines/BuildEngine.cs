@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Horn.Core.Dependencies;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.Framework;
 using log4net;
@@ -8,8 +9,6 @@ using Horn.Core.extensions;
 
 namespace Horn.Core.BuildEngines
 {
-    using Dependencies;
-
     public class BuildEngine
     {
 

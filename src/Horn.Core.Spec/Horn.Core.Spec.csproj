@@ -127,6 +127,8 @@
     <Compile Include="dsl\ExportFromRepositorySpecication.cs" />
     <Compile Include="dsl\MultipleGetSpecification.cs" />
     <Compile Include="dsl\PrebuildSpecification.cs" />
+    <Compile Include="PackageCommands\BuilderWithExportListSpecs.cs" />
+    <Compile Include="PackageCommands\BuilderWithPreBuildSpecs.cs" />
     <Compile Include="Stubs\BuildEngineStub.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
