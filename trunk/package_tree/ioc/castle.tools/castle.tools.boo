@@ -4,7 +4,7 @@ install castle.tools:
 	prebuild:
 		cmd "xcopy /s /y \"../Patch\" ."
 		
-	export:
+	include:
 		repository(castle, part("Tools"), to("Tools"))
 		repository(castle, part("Core"), to("Core"))
 		repository(castle, part("common.xml"), to("common.xml"))
