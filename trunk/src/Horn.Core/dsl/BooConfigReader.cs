@@ -149,7 +149,7 @@ namespace Horn.Core.Dsl
                 var includePath = ((StringLiteralExpression)((MethodInvocationExpression)expression.Arguments[1]).Arguments[0]).Value;
                 var exportPath = ((StringLiteralExpression)((MethodInvocationExpression)expression.Arguments[2]).Arguments[0]).Value; ;
 
-                var repositoryInclude = new MethodInvocationExpression(new ReferenceExpression("RepositoryInclude"),
+                var repositoryInclude = new MethodInvocationExpression(new ReferenceExpression("RepositoryElement"),
                                                                        new StringLiteralExpression(repositoryName),
                                                                        new StringLiteralExpression(includePath),
                                                                        new StringLiteralExpression(exportPath));
@@ -257,9 +257,9 @@ namespace Horn.Core.Dsl
                 _buildMetaData.ExportList.Add(exportData.SourceControl);                
         }
 
-        public virtual void ParseIncludes(RepositoryInclude[] includes)
+        public virtual void ParseIncludes(RepositoryElement[] elements)
         {
-            _buildMetaData.IncludeList.AddRange(includes);
+            _buildMetaData.RepositoryElementList.AddRange(elements);
         }
 
 

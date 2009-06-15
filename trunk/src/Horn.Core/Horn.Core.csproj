@@ -118,7 +118,7 @@
     <Compile Include="Dependencies\IDependentUpdaterExecutor.cs" />
     <Compile Include="Dependencies\VisualStudioDependentUpdater.cs" />
     <Compile Include="dsl\BuildMetadata\ExportData.cs" />
-    <Compile Include="dsl\BuildMetadata\RepositoryInclude.cs" />
+    <Compile Include="dsl\BuildMetadata\RepositoryElement.cs" />
     <Compile Include="exceptions\ProcessFailedException.cs" />
     <Compile Include="exceptions\UnkownInstallPackageException.cs" />
     <Compile Include="Utils\WithLogging.cs" />

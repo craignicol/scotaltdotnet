@@ -28,14 +28,14 @@ namespace Horn.Core.PackageCommands
 
             IDependencyTree dependencyTree = GetDependencyTree(componentTree);
 
-            BuildDependencyTree(dependencyTree, switches);
+            BuildDependencyTree(packageTree, dependencyTree, switches);
 
             log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), packageName);
         }
 
 
 
-        protected virtual void BuildDependencyTree(IDependencyTree dependencyTree, IDictionary<string, IList<string>> switches)
+        protected virtual void BuildDependencyTree(IPackageTree packageTree, IDependencyTree dependencyTree, IDictionary<string, IList<string>> switches)
         {
             foreach (var nextTree in dependencyTree)
             {
@@ -82,6 +82,15 @@ namespace Horn.Core.PackageCommands
 
         protected virtual void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
         {
+            //TODO: Uncomment when ready for commit.
+            //if((buildMetaData.RepositoryElementList != null) && (buildMetaData.RepositoryElementList.Count > 0))
+            //{
+            //    foreach (var repositoryElement in buildMetaData.RepositoryElementList)
+            //    {
+            //        repositoryElement.PrepareRepository(componentTree, get).Export();
+            //    }
+            //}
+            
             if((buildMetaData.ExportList != null) && (buildMetaData.ExportList.Count > 0))
             {
                 var initialise = true;
@@ -97,7 +106,7 @@ namespace Horn.Core.PackageCommands
 
                 return;
             }
-
+            
             log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), buildMetaData.SourceControl.Url);
 
             get.From(buildMetaData.SourceControl).ExportTo(componentTree);

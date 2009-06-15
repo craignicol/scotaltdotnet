@@ -113,6 +113,7 @@ namespace Horn.Core.SCM
             {
                 exportPath = new FileInfo(fullPath);
             }
+
             return exportPath;
         }
 

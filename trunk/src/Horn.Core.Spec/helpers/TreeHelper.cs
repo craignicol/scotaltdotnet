@@ -39,27 +39,37 @@ namespace Horn.Core.Spec.helpers
         {
             var buildEngine = new BuildEngineStub(null, null, dependencies);
             var sourceControl = new SourceControlDouble("http://someurl.com");
-            var metaData = new BuildMetaDataStub(buildEngine, sourceControl);
+            var buildMetaData = new BuildMetaDataStub(buildEngine, sourceControl);
 
-            metaData.PrebuildCommandList.AddRange(cmds);
+            buildMetaData.PrebuildCommandList.AddRange(cmds);
 
-            return metaData;
+            return buildMetaData;
         }
 
         public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<SourceControl> exportList)
         {
             var buildEngine = new BuildEngineStub(null, null, dependencies);
-            var metaData = new BuildMetaDataStub(buildEngine, null);
+            var buildMetaData = new BuildMetaDataStub(buildEngine, null);
 
-            metaData.ExportList.AddRange(exportList);
+            buildMetaData.ExportList.AddRange(exportList);
 
-            return metaData;
+            return buildMetaData;
+        }
+
+        public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<RepositoryElement> repositoryElements)
+        {
+            var buildEngine = new BuildEngineStub(null, null, dependencies);
+            var buildMetaData = new BuildMetaDataStub(buildEngine, null);
+
+            buildMetaData.RepositoryElementList.AddRange(repositoryElements);
+
+            return buildMetaData;
         }
 
         public static IPackageTree CreatePackageTreeNode(string packageName, string[] dependencyNames)
         {
             var buildMetaData = MockRepository.GenerateStub<IBuildMetaData>();
-            buildMetaData.BuildEngine = new BuildEngines.BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Utils.Framework.FrameworkVersion.FrameworkVersion35, MockRepository.GenerateStub<IDependencyDispatcher>());
+            buildMetaData.BuildEngine = new BuildEngine(new BuildToolStub(), String.Format("{0}.boo", packageName), Utils.Framework.FrameworkVersion.FrameworkVersion35, MockRepository.GenerateStub<IDependencyDispatcher>());
             foreach (string dependencyName in dependencyNames)
             {
                 buildMetaData.BuildEngine.Dependencies.Add(new Dependency(dependencyName, String.Format("{0}", dependencyName)));
@@ -71,7 +81,7 @@ namespace Horn.Core.Spec.helpers
             packageTree.Stub(x => x.GetBuildMetaData("complexDependency")).Return(buildMetaData);
             packageTree.Stub(x => x.GetBuildMetaData("sharedDependency")).Return(buildMetaData);
 
-            return packageTree;
+            return packageTree; 
 
         }
     }

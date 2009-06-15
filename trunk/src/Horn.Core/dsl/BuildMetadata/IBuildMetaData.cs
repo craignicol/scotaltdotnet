@@ -12,7 +12,7 @@ namespace Horn.Core.Dsl
 
         List<SourceControl> ExportList { get; set; }
 
-        List<RepositoryInclude> IncludeList { get; set; }
+        List<RepositoryElement> RepositoryElementList { get; set; }
 
         string InstallName { get; set; }
 

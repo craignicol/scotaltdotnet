@@ -43,12 +43,12 @@ namespace Horn.Core.Spec.Unit.dsl
         [Fact]
         public void Then_the_model_contains_the_repository_details()
         {
-            Assert.Equal("castle", configReader.BuildMetaData.IncludeList[0].RepositoryName);
-            Assert.Equal("here", configReader.BuildMetaData.IncludeList[0].IncludePath);
-            Assert.Equal("there", configReader.BuildMetaData.IncludeList[0].ExportPath);
-            Assert.Equal("castle", configReader.BuildMetaData.IncludeList[1].RepositoryName);
-            Assert.Equal("over", configReader.BuildMetaData.IncludeList[1].IncludePath);
-            Assert.Equal("out", configReader.BuildMetaData.IncludeList[1].ExportPath);
+            Assert.Equal("castle", configReader.BuildMetaData.RepositoryElementList[0].RepositoryName);
+            Assert.Equal("here", configReader.BuildMetaData.RepositoryElementList[0].IncludePath);
+            Assert.Equal("there", configReader.BuildMetaData.RepositoryElementList[0].ExportPath);
+            Assert.Equal("castle", configReader.BuildMetaData.RepositoryElementList[1].RepositoryName);
+            Assert.Equal("over", configReader.BuildMetaData.RepositoryElementList[1].IncludePath);
+            Assert.Equal("out", configReader.BuildMetaData.RepositoryElementList[1].ExportPath);
         }
     }
 
@@ -60,19 +60,19 @@ namespace Horn.Core.Spec.Unit.dsl
 
         private const string ExportPath = "there";
 
-        private RepositoryInclude repositoryInclude;
+        private RepositoryElement _repositoryElement;
 
         protected override void Because()
         {
-            repositoryInclude = new RepositoryInclude(RepositoryName, IncludePath, ExportPath);
+            _repositoryElement = new RepositoryElement(RepositoryName, IncludePath, ExportPath);
         }
 
         [Fact]
         public void Then_the_model_can_express_this()
         {
-            Assert.Equal(RepositoryName, repositoryInclude.RepositoryName);
-            Assert.Equal(IncludePath, repositoryInclude.IncludePath);
-            Assert.Equal(ExportPath, repositoryInclude.ExportPath);
+            Assert.Equal(RepositoryName, _repositoryElement.RepositoryName);
+            Assert.Equal(IncludePath, _repositoryElement.IncludePath);
+            Assert.Equal(ExportPath, _repositoryElement.ExportPath);
         }
     }
 }

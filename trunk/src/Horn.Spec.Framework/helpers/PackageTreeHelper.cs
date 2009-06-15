@@ -40,6 +40,13 @@ namespace Horn.Framework.helpers
 
             CreateBuildFiles(log4NetBuildFile, log4net, true);
 
+            string ioc = CreateDirectory(rootDirectory, "ioc");
+            string castle = CreateDirectory(ioc, "castle");
+
+            var castleBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"BuildConfigs\Horn\castle.boo");
+
+            CreateBuildFiles(castleBuildFile, castle, true);
+
             string tests = CreateDirectory(rootDirectory, "tests");
             string norevisionpackage = CreateDirectory(tests, PACKAGE_WITHOUT_REVISION);
 
