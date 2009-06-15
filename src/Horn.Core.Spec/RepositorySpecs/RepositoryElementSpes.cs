@@ -30,7 +30,7 @@ namespace Horn.Core.Spec.RepositorySpecs
 
         //TODO: Current bookmark
         //[Fact]
-        public void Then_the_parts_are_exported_to_their_destination()
+        public void Then_the_parts_should_be_exported_to_their_destination()
         {
             
         }
