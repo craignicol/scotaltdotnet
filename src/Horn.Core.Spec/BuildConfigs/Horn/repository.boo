@@ -2,12 +2,12 @@
 	description "A .NET build and dependency manager"
 	
 	include: 
-		  repository(castle, part("here"), to("there"))
-		  repository(castle, part("over"), to("out")) 
+		repository(castle, part("here"), to("there"))
+		repository(castle, part("over"), to("out")) 
 	
 	prebuild:  
-	  cmd "dir"
-	  cmd "@echo \"hello\""
+		cmd "dir"
+		cmd "@echo \"hello\""
 	
 	build_with msbuild, buildfile("src/horn.sln"), FrameworkVersion35
 	output "Output"

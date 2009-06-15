@@ -35,7 +35,7 @@ namespace Horn.Core.GetOperations
 
         public virtual IGet Package(Package packageToGet)
         {
-            package = packageToGet;
+            package = packageToGet; 
             return this;
         }
 

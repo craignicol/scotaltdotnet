@@ -13,7 +13,7 @@ namespace Horn.Core.Spec.Doubles
 
         public List<SourceControl> ExportList { get; set; }
 
-        public List<RepositoryInclude> IncludeList { get; set; }
+        public List<RepositoryElement> RepositoryElementList { get; set; }
 
         public string InstallName { get; set; }
 
@@ -28,7 +28,7 @@ namespace Horn.Core.Spec.Doubles
             BuildEngine = buildEngine;
             SourceControl = sourceControl;
             PrebuildCommandList = new List<string>();
-
+            RepositoryElementList = new List<RepositoryElement>();
             ExportList = new List<SourceControl>();
         }
     }

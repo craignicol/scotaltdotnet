@@ -129,6 +129,9 @@
     <Compile Include="dsl\PrebuildSpecification.cs" />
     <Compile Include="PackageCommands\BuilderWithExportListSpecs.cs" />
     <Compile Include="PackageCommands\BuilderWithPreBuildSpecs.cs" />
+    <Compile Include="PackageCommands\BuilderWithRepositorySpecs.cs" />
+    <Compile Include="RepositorySpecs\RepositoryElementSpecBase.cs" />
+    <Compile Include="RepositorySpecs\RepositoryElementSpes.cs" />
     <Compile Include="Stubs\BuildEngineStub.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
@@ -161,6 +164,7 @@
     <Compile Include="Utils\FrameworkLocatorSpec.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BuildConfigs\Horn\castle.boo" />
     <Content Include="BuildConfigs\Horn\hornmultiget.boo" />
     <Content Include="BuildConfigs\Horn\horn.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
