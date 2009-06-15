@@ -24,8 +24,6 @@ dependencies:
 	depend @boo			>> "Boo.Lang.Compiler"	
 	depend @boo			>> "booc"
 	depend @boo			>> "Boo.Lang"
-	depend @nhibernate  >> "NHibernate"
-	depend @nhibernate  >> "Iesi.Collections"
 	
 package.homepage = "http://www.castleproject.org/"
 package.forum    = "http://groups.google.co.uk/group/castle-project-users?hl=en"
