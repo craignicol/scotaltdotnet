@@ -2,7 +2,7 @@ using System;
 using Horn.Core.BuildEngines;
 using log4net;
 
-namespace Horn.Core.Spec.BuildEngine
+namespace Horn.Core.Spec.BuildEngineSpecs
 {
     public class StubProcess : IProcess
     {

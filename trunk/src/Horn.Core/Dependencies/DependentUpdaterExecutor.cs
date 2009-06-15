@@ -1,12 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using Horn.Core.BuildEngines;
+using Horn.Core.extensions;
+using Horn.Core.PackageStructure;
+using Horn.Core.Utils;
+
 namespace Horn.Core.Dependencies
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using BuildEngines;
-    using extensions;
-    using PackageStructure;
-    using Utils;
-
     public class DependentUpdaterExecutor :  WithLogging, IDependentUpdaterExecutor
     {
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Horn.Core.Dependencies;
 using Horn.Core.Dsl;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
@@ -10,9 +11,6 @@ using Xunit;
 
 namespace Horn.Core.Spec.Unit.dsl
 {
-    using Core.Dependencies;
-    using extensions;
-
     public abstract class BaseDSLSpecification : Specification
     {
         protected const string Description = "A .NET build and dependency manager";

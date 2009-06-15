@@ -1,11 +1,7 @@
-using System;
 using System.IO;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 using Horn.Core.Spec.helpers;
-using Horn.Framework.helpers;
-using Horn.Core.Spec.Unit.Get;
-using Horn.Core.Tree.MetaDataSynchroniser;
 using Xunit;
 
 namespace Horn.Core.Spec.MetaSynchroniserfixture

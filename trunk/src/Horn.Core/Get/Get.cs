@@ -1,11 +1,9 @@
-using System;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
+using Horn.Core.Utils;
 
 namespace Horn.Core.GetOperations
 {
-    using Utils;
-
     public class Get : IGet
     {
 

@@ -1,11 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Horn.Core.Dsl;
 
 namespace Horn.Core.PackageStructure
 {
-    using System;
-
     public class NullPackageTree : IPackageTree
     {
 

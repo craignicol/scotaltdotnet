@@ -1,10 +1,8 @@
-using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Horn.Core.extensions
 {
-    using System.Collections.Generic;
-    using System.IO;
-
     internal static class DirectoryInfoExtensions
     {
 

@@ -3,7 +3,7 @@ using Horn.Core.Spec.Unit.dsl;
 using Horn.Core.Utils.Framework;
 using Xunit;
 
-namespace Horn.Core.Spec.BuildEngine
+namespace Horn.Core.Spec.BuildEngineSpecs
 {
     public class When_The_Build_MetaData_Specifies_Nant : BuildWithNantSpecificationBase
     {

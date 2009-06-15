@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.IO;
+using Horn.Core.extensions;
+using Horn.Core.Utils;
+
 namespace Horn.Core.Dependencies
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using extensions;
-    using Utils;
-
     public class DependencyCopier : WithLogging
     {
         public IEnumerable<string> CopyDependency(FileInfo file, DirectoryInfo destination)

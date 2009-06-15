@@ -7,12 +7,11 @@ using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
 using Horn.Core.Tree.MetaDataSynchroniser;
+using System.Reflection;
+using Horn.Core.Dependencies;
 
 namespace Horn.Core.Utils.IoC
 {
-    using System.Reflection;
-    using Dependencies;
-
     public class WindsorDependencyResolver : IDependencyResolver
     {
         private readonly WindsorContainer innerContainer;

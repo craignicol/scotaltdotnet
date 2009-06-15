@@ -1,7 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace Horn.Core.extensions
 {
-    using System;
-    using System.Collections.Generic;
 
     public static class EnumerableExtensions
     {

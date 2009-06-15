@@ -1,12 +1,12 @@
+using System.Collections.Generic;
+using System.IO;
+using Horn.Core.BuildEngines;
+using Horn.Core.PackageStructure;
+using Rhino.Mocks;
+using Xunit;
+
 namespace Horn.Core.Spec.Dependencies
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using BuildEngines;
-    using PackageStructure;
-    using Rhino.Mocks;
-    using Xunit;
-
     public class when_dispatching_dependencies : dependency_dispatcher_context
     {
         protected override void Because()
