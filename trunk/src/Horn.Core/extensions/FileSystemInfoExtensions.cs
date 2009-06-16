@@ -14,7 +14,9 @@ namespace Horn.Core.extensions
 
             foreach (var file in source.GetFiles())
             {
-                file.CopyTo(Path.Combine(Path.GetDirectoryName(destination.FullName), Path.GetFileName(file.FullName)), true);
+                var destinationFile = Path.Combine(destination.FullName, Path.GetFileName(file.FullName));
+
+                file.CopyTo(destinationFile, true);
             }
 
             foreach (var dir in source.GetDirectories())

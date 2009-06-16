@@ -58,7 +58,12 @@ namespace Horn.Core.SCM
                 return;
 
             if (!packageTree.GetRevisionData().ShouldUpdate(new RevisionData(Revision)))
+            {
+                downloadedPackages.Add(packageTree.Name, packageTree.Name);
+
                 return;
+            }
+                
 
             Initialise(packageTree);
 
@@ -71,8 +76,6 @@ namespace Horn.Core.SCM
             StopMonitoring(monitoringThread);
 
             RecordCurrentRevision(packageTree, revision);
-
-            downloadedPackages.Add(packageTree.Name, packageTree.Name);
         }
 
         public virtual void Export(IPackageTree packageTree, string path, bool initialise)
