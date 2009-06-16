@@ -10,9 +10,6 @@
 	output "build"
 	shared_library "lib"
 	
-dependencies:    
-	depend @linfu >> "LinFu.DynamicProxy"	
-	
 package.homepage = "http://www.codeplex.com/AutoMapper/"
 package.forum    = "http://groups.google.com/group/automapper-users"
 

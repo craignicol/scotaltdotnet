@@ -5,11 +5,9 @@
 	build_with nant, buildfile("LinFu.build"), FrameworkVersion35
 	
 	with:
-		tasks clean, compile-release, dist			
+		tasks clean, compile, dist
 		
 	output "build/release"
 	
 package.homepage = "http://code.google.com/p/linfu/"
 package.forum    = "http://groups.google.com/group/linfuframework"
-
-	
