@@ -5,7 +5,7 @@
 	build_with nant, buildfile("LinFu.build"), FrameworkVersion35
 	
 	with:
-		tasks clean compile-release dist			
+		tasks clean, compile-release, dist			
 		
 	output "build/release"
 	
