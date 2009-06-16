@@ -69,6 +69,11 @@ namespace Horn.Core.Spec.Doubles
             throw new NotImplementedException();
         }
 
+        public void DeleteWorkingDirectory()
+        {
+            Console.WriteLine("Deleting working directory.");
+        }
+
         public IPackageTree RetrievePackage(string packageName)
         {
             if (!useInternalDictionary)
