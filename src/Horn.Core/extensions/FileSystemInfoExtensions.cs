@@ -3,15 +3,56 @@ using System.IO;
 
 namespace Horn.Core.extensions
 {
-    internal static class DirectoryInfoExtensions
+    public static class FileSystemInfoExtensions
     {
+        public static void CopyToDirectory(this DirectoryInfo source, DirectoryInfo destination)
+        {
+            if (destination.Exists)
+                destination.Delete(true);
 
-        public static DirectoryInfo GetDirectoryFromParts(this DirectoryInfo sourceDirectory, string parts)
+            destination.Create();
+
+            foreach (var file in source.GetFiles())
+            {
+                file.CopyTo(Path.Combine(Path.GetDirectoryName(destination.FullName), Path.GetFileName(file.FullName)), true);
+            }
+
+            foreach (var dir in source.GetDirectories())
+            {
+                if (dir.FullName.Contains(".Svn"))
+                    continue;
+
+                var newDirectory = new DirectoryInfo(Path.Combine(destination.FullName, dir.Name));
+
+                dir.CopyToDirectory(newDirectory);
+            }
+        }
+
+        public static FileSystemInfo GetExportPath(string fullPath)
+        {
+            FileSystemInfo exportPath;
+
+            if (!fullPath.PathIsFile())
+            {
+                exportPath = new DirectoryInfo(fullPath);
+
+                if (!exportPath.Exists)
+                    ((DirectoryInfo)exportPath).Create();
+            }
+            else
+            {
+                exportPath = new FileInfo(fullPath);
+            }
+
+            return exportPath;
+        }
+
+        public static FileSystemInfo GetFileSystemObjectFromParts(this DirectoryInfo sourceDirectory, string parts)
         {
             if (string.IsNullOrEmpty(parts))
                 return sourceDirectory;
 
-            string outputPath = sourceDirectory.FullName;
+            var outputPath = sourceDirectory.FullName;
 
             if (parts.Trim() == ".")
                 return sourceDirectory;
@@ -21,7 +62,7 @@ namespace Horn.Core.extensions
                 outputPath = Path.Combine(outputPath, part);
             }
 
-            return new DirectoryInfo(outputPath);
+            return outputPath.PathIsFile() ? (FileSystemInfo)new FileInfo(outputPath) : new DirectoryInfo(outputPath);
         }
 
         public static IEnumerable<string> Search(this DirectoryInfo root, string searchPattern)

@@ -19,7 +19,7 @@ namespace Horn.Core.Dsl
             set { throw new NotImplementedException(); }
         }
 
-        public List<RepositoryElement> RepositoryElementList
+        public List<IRepositoryElement> RepositoryElementList
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }

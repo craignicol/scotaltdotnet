@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Horn.Core.extensions;
 using Horn.Framework.helpers;
@@ -6,32 +5,6 @@ using Xunit;
 
 namespace Horn.Core.Spec.Extensions
 {
-    public static class DirectoryInfoExtensions
-    {
-        public static void CopyToDirectory(this DirectoryInfo source, DirectoryInfo destination)
-        {
-            if(destination.Exists)
-                destination.Delete(true);    
-
-            destination.Create();
-
-            foreach (var file in source.GetFiles())
-            {
-                file.CopyTo(Path.Combine(Path.GetDirectoryName(destination.FullName), Path.GetFileName(file.FullName)), true);
-            }
-
-            foreach (var dir in source.GetDirectories())
-            {
-                if(dir.FullName.Contains(".Svn"))
-                    continue;
-
-                var newDirectory = new DirectoryInfo(Path.Combine(destination.FullName, dir.Name));
-
-                dir.CopyToDirectory(newDirectory);
-            }
-        }
-    }
-
     public class When_Copying_From_A_Folder : Specification
     {
         private DirectoryInfo source;

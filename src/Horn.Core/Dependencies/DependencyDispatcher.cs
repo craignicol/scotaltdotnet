@@ -38,7 +38,7 @@ namespace Horn.Core.Dependencies
 
         private DirectoryInfo GetDependencyDirectory(IPackageTree packageTree, string targetPath)
         {
-            return packageTree.WorkingDirectory.GetDirectoryFromParts(targetPath);
+            return (DirectoryInfo)packageTree.WorkingDirectory.GetFileSystemObjectFromParts(targetPath);
         }
 
         private FileInfo[] GetDependencyFiles(Dependency dependency, IPackageTree packageForCurrentDependency)

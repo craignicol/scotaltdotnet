@@ -131,7 +131,7 @@
     <Compile Include="PackageCommands\BuilderWithPreBuildSpecs.cs" />
     <Compile Include="PackageCommands\BuilderWithRepositorySpecs.cs" />
     <Compile Include="RepositorySpecs\RepositoryElementSpecBase.cs" />
-    <Compile Include="RepositorySpecs\RepositoryElementSpes.cs" />
+    <Compile Include="RepositorySpecs\RepositoryElementSpecs.cs" />
     <Compile Include="Stubs\BuildEngineStub.cs" />
     <Compile Include="dsl\BuildWithNantSpecificationBase.cs" />
     <Compile Include="dsl\DslWithNantSpecification.cs" />
@@ -149,6 +149,7 @@
     <Compile Include="BuildEngine\BuildEngineSpec.cs" />
     <Compile Include="Stubs\BuildMetaDataStub.cs" />
     <Compile Include="Stubs\PackageTreeStub.cs" />
+    <Compile Include="Stubs\RepositoryElementStub.cs" />
     <Compile Include="Utils\FileSystemProvider.cs" />
     <Compile Include="CmdLine\CmdLineSpecificationBase.cs" />
     <Compile Include="CmdLine\CmdLineSpecification.cs" />

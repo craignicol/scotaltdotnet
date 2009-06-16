@@ -100,21 +100,7 @@ namespace Horn.Core.SCM
 
         protected virtual FileSystemInfo GetExportPath(string fullPath)
         {
-            FileSystemInfo exportPath;
-
-            if (!fullPath.PathIsFile()) 
-            {
-                exportPath = new DirectoryInfo(fullPath);
-
-                if (!exportPath.Exists)
-                    ((DirectoryInfo)exportPath).Create();                    
-            }
-            else
-            {
-                exportPath = new FileInfo(fullPath);
-            }
-
-            return exportPath;
+            return FileSystemInfoExtensions.GetExportPath(fullPath);
         }
 
         protected void HandleExceptions(Exception ex)

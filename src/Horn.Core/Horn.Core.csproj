@@ -118,11 +118,12 @@
     <Compile Include="Dependencies\IDependentUpdaterExecutor.cs" />
     <Compile Include="Dependencies\VisualStudioDependentUpdater.cs" />
     <Compile Include="dsl\BuildMetadata\ExportData.cs" />
+    <Compile Include="dsl\BuildMetadata\IRepositoryElement.cs" />
     <Compile Include="dsl\BuildMetadata\RepositoryElement.cs" />
     <Compile Include="exceptions\ProcessFailedException.cs" />
     <Compile Include="exceptions\UnkownInstallPackageException.cs" />
     <Compile Include="Utils\WithLogging.cs" />
-    <Compile Include="extensions\DirectoryInfoExtensions.cs" />
+    <Compile Include="extensions\FileSystemInfoExtensions.cs" />
     <Compile Include="BuildEngines\Process\DiagnosticsProcess.cs" />
     <Compile Include="BuildEngines\BuildTools\IBuildTool.cs" />
     <Compile Include="BuildEngines\Process\iprocess.cs" />

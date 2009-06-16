@@ -14,7 +14,7 @@ namespace Horn.Core.Dsl
 
         public List<SourceControl> ExportList{ get; set; }
 
-        public List<RepositoryElement> RepositoryElementList { get; set; }
+        public List<IRepositoryElement> RepositoryElementList { get; set; }
 
         public string InstallName { get; set; }
 
@@ -32,7 +32,7 @@ namespace Horn.Core.Dsl
 
             ExportList = new List<SourceControl>();
 
-            RepositoryElementList = new List<RepositoryElement>();
+            RepositoryElementList = new List<IRepositoryElement>();
 
             PrebuildCommandList = new List<string>();
         }

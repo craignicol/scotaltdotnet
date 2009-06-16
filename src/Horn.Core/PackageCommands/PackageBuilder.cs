@@ -82,14 +82,15 @@ namespace Horn.Core.PackageCommands
 
         protected virtual void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
         {
-            //TODO: Uncomment when ready for commit.
-            //if((buildMetaData.RepositoryElementList != null) && (buildMetaData.RepositoryElementList.Count > 0))
-            //{
-            //    foreach (var repositoryElement in buildMetaData.RepositoryElementList)
-            //    {
-            //        repositoryElement.PrepareRepository(componentTree, get).Export();
-            //    }
-            //}
+            if ((buildMetaData.RepositoryElementList != null) && (buildMetaData.RepositoryElementList.Count > 0))
+            {
+                foreach (var repositoryElement in buildMetaData.RepositoryElementList)
+                {
+                    repositoryElement.PrepareRepository(componentTree, get).Export();
+                }
+
+                return;
+            }
             
             if((buildMetaData.ExportList != null) && (buildMetaData.ExportList.Count > 0))
             {
