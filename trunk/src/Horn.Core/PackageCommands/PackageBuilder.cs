@@ -84,8 +84,7 @@ namespace Horn.Core.PackageCommands
         {
             if ((buildMetaData.RepositoryElementList != null) && (buildMetaData.RepositoryElementList.Count > 0))
             {
-                if(componentTree.WorkingDirectory.Exists)
-                    componentTree.WorkingDirectory.Delete(true);
+                componentTree.DeleteWorkingDirectory();
 
                 foreach (var repositoryElement in buildMetaData.RepositoryElementList)
                 {

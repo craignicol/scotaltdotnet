@@ -108,6 +108,11 @@ namespace Horn.Core.PackageStructure
             throw new System.NotImplementedException();
         }
 
+        public void DeleteWorkingDirectory()
+        {
+            throw new NotImplementedException();
+        }
+
         public IBuildMetaData GetBuildMetaData(string packageName)
         {
             return new NullBuildMetatData();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -127,6 +128,17 @@ namespace Horn.Core.PackageStructure
 
             OutputDirectory = new DirectoryInfo(Path.Combine(CurrentDirectory.FullName, "Output"));
             OutputDirectory.Create();
+        }
+
+        public virtual void DeleteWorkingDirectory()
+        {
+            if (!Root.Name.StartsWith(RootPackageTreeName))
+                return;
+
+            if(!WorkingDirectory.Exists)
+                return;
+
+            WorkingDirectory.Delete(true);
         }
 
         public IBuildMetaData GetBuildMetaData(string packageName)

@@ -18,6 +18,8 @@ namespace Horn.Core.PackageStructure
 
         void CreateRequiredDirectories();
 
+        void DeleteWorkingDirectory();
+
         IPackageTree RetrievePackage(string packageName);
 
         IBuildMetaData BuildMetaData { get; }
