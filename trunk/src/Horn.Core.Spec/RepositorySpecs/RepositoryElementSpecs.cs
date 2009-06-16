@@ -28,8 +28,7 @@ namespace Horn.Core.Spec.RepositorySpecs
             repositoryElement.PrepareRepository(packageTree, get).Export();            
         }
 
-        //TODO: Current bookmark
-        //[Fact]
+        [Fact]
         public void Then_the_parts_should_be_exported_to_their_destination()
         {
             

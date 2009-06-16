@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Horn.Core.BuildEngines;
 using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
-using Horn.Core.SCM;
 using Horn.Core.Spec.Doubles;
 using Horn.Core.Spec.helpers;
 using Horn.Core.Spec.Unit.GetSpecs;
@@ -21,15 +19,17 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         private MockRepository mockRepository;
 
         private readonly SourceControlDouble sourceControlDouble = new SourceControlDouble("url1");
+        private IRepositoryElement castleElementOne;
 
         protected override void Before_each_spec()
         {
             mockRepository = new MockRepository();
 
-            var castleElementOne = new RepositoryElement("castle", "Tools", "Tools");
-            var caslteElementTwo = new RepositoryElement("castle", "Windsor", "Windsor");
+            castleElementOne = MockRepository.GenerateStub<IRepositoryElement>();
 
-            var repositoryIncludes = new List<RepositoryElement> {castleElementOne, caslteElementTwo};
+            castleElementOne.Stub(x => x.PrepareRepository(null, null)).Return(castleElementOne).IgnoreArguments();
+
+            var repositoryIncludes = new List<IRepositoryElement> {castleElementOne};
 
             packageTree = new PackageTreeStub(TreeHelper.GetPackageTreeParts(new List<Dependency>(), repositoryIncludes), "castle", false);
 
@@ -45,13 +45,15 @@ namespace Horn.Core.Spec.Unit.PackageCommands
                                {"install",  new List<string>{"castle"}}
                            };
 
+            mockRepository.Playback();
+
             packageBuilder.Execute(packageTree, args);
         }
 
         [Fact]
         public void Then_the_parts_are_retrieved_from_the_repository()
         {
-            
+            castleElementOne.AssertWasCalled(x => x.Export());
         }
 
         protected override void After_each_spec()

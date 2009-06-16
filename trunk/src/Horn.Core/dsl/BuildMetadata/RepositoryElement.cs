@@ -1,16 +1,19 @@
 using System;
 using System.IO;
+using Horn.Core.extensions;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
-using Horn.Core.SCM;
 
 namespace Horn.Core.Dsl
 {
-    public class RepositoryElement
+    public class RepositoryElement : IRepositoryElement
     {
         private IPackageTree repositoryTree;
 
-        private IPackageTree packageToExportTo;
+        private IPackageTree packageTreeToExportTo;
+
+        private const string PackageTreeNullErrorMessage =
+            "You must call PrepareRepository before export in the RepositoryElement class.  The {0} member is null.";
 
         public string ExportPath { get; private set; }
 
@@ -19,28 +22,39 @@ namespace Horn.Core.Dsl
         public string RepositoryName { get; private set; }
 
         public virtual void Export()
-        {   
-            if(repositoryTree == null)
-                throw new AccessViolationException("You must call PrepareRepository before export in the RepositoryElement class.");
+        {
+            if (repositoryTree == null)
+                throw new AccessViolationException(string.Format(PackageTreeNullErrorMessage, "repositoryTree"));
 
+            if(packageTreeToExportTo == null)
+                throw new AccessViolationException(string.Format(PackageTreeNullErrorMessage, "packageTreeToExportTo"));
 
+            var source = repositoryTree.WorkingDirectory.GetFileSystemObjectFromParts(IncludePath);
 
+            var destination = packageTreeToExportTo.WorkingDirectory.GetFileSystemObjectFromParts(ExportPath);
 
+            CopyElement(source, destination);
         }
 
-        public virtual RepositoryElement PrepareRepository(IPackageTree packageToExportTo, IGet get)
+        public virtual IRepositoryElement PrepareRepository(IPackageTree packageToExportTo, IGet get)
         {
-            this.packageToExportTo = packageToExportTo;
+            this.packageTreeToExportTo = packageToExportTo;
 
             var buildMetaData = packageToExportTo.Root.GetBuildMetaData(RepositoryName);
 
-            var repositoryTree = packageToExportTo.Root.RetrievePackage(RepositoryName);
+            repositoryTree = packageToExportTo.Root.RetrievePackage(RepositoryName);
 
             get.From(buildMetaData.SourceControl).ExportTo(repositoryTree);
 
-            this.repositoryTree = repositoryTree;
-
             return this;
+        }
+
+        protected virtual void CopyElement(FileSystemInfo source, FileSystemInfo destination)
+        {
+            if (source.FullName.PathIsFile())
+                File.Copy(source.FullName, destination.FullName);
+            else
+                ((DirectoryInfo)source).CopyToDirectory((DirectoryInfo)destination);
         }
 
         public RepositoryElement(string repositoryName, string includePath, string exportPath)

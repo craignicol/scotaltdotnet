@@ -56,7 +56,7 @@ namespace Horn.Core.Spec.helpers
             return buildMetaData;
         }
 
-        public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<RepositoryElement> repositoryElements)
+        public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<IRepositoryElement> repositoryElements)
         {
             var buildEngine = new BuildEngineStub(null, null, dependencies);
             var buildMetaData = new BuildMetaDataStub(buildEngine, null);

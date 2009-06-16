@@ -11,10 +11,11 @@ namespace Horn.Core.BuildEngines
 {
     public class BuildEngine
     {
+        private static readonly Dictionary<string, string> builtPackages = new Dictionary<string, string>();
+
+        private IDependencyDispatcher dependencyDispatcher;
 
         private static readonly ILog log = LogManager.GetLogger(typeof(MSBuildBuildTool));
-        private static readonly Dictionary<string, string> builtPackages = new Dictionary<string, string>();
-        private IDependencyDispatcher dependencyDispatcher;
 
         public virtual string BuildFile { get; private set; }
 
@@ -163,20 +164,7 @@ namespace Horn.Core.BuildEngines
 
         protected virtual DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
         {
-            if (string.IsNullOrEmpty(parts))
-                return sourceDirectory;
-
-            var outputPath = sourceDirectory.FullName;
-
-            if (parts.Trim() == ".")
-                return sourceDirectory;
-
-            foreach (var part in parts.Split('/'))
-            {
-                outputPath = Path.Combine(outputPath, part);
-            }
-
-            return new DirectoryInfo(outputPath);
+            return (DirectoryInfo)sourceDirectory.GetFileSystemObjectFromParts(parts);
         }
 
         protected virtual string GetBuildFilePath(IPackageTree tree)

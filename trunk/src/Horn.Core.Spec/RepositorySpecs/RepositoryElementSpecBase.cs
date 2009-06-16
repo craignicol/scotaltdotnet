@@ -2,6 +2,7 @@ using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
+using Horn.Core.Spec.Doubles;
 using Horn.Core.Spec.helpers;
 using Rhino.Mocks;
 
@@ -9,7 +10,7 @@ namespace Horn.Core.Spec.RepositorySpecs
 {
     public abstract class RepositoryElementSpecBase : Specification
     {
-        protected RepositoryElement repositoryElement;
+        protected RepositoryElementStub repositoryElement;
         protected IPackageTree packageTree;
         protected IGet get;
         protected IDependencyResolver dependencyResolver;
@@ -22,7 +23,7 @@ namespace Horn.Core.Spec.RepositorySpecs
 
             get = MockRepository.GenerateStub<IGet>();
 
-            repositoryElement = new RepositoryElement("castle", "Tools", "Tools");
+            repositoryElement = new RepositoryElementStub("castle", "Tools", "Tools");
 
             dependencyResolver = CreateStub<IDependencyResolver>();
 
