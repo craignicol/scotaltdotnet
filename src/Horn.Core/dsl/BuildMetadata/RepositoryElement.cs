@@ -38,7 +38,7 @@ namespace Horn.Core.Dsl
 
         public virtual IRepositoryElement PrepareRepository(IPackageTree packageToExportTo, IGet get)
         {
-            this.packageTreeToExportTo = packageToExportTo;
+            packageTreeToExportTo = packageToExportTo;
 
             var buildMetaData = packageToExportTo.Root.GetBuildMetaData(RepositoryName);
 
@@ -52,7 +52,7 @@ namespace Horn.Core.Dsl
         protected virtual void CopyElement(FileSystemInfo source, FileSystemInfo destination)
         {
             if (source.FullName.PathIsFile())
-                File.Copy(source.FullName, destination.FullName);
+                File.Copy(source.FullName, destination.FullName, true);
             else
                 ((DirectoryInfo)source).CopyToDirectory((DirectoryInfo)destination);
         }
