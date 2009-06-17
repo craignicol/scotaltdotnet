@@ -50,7 +50,8 @@ namespace Horn.Core.SCM
 
             try
             {
-                packageTree.WorkingDirectory.Delete(true);
+                if (packageTree.Name != PackageTree.RootPackageTreeName)
+                    packageTree.WorkingDirectory.Delete(true);
             }
             catch (IOException)
             {
