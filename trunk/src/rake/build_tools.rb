@@ -18,7 +18,7 @@ module Horn
       class << self
         def compile_dll(project_file)
           puts "#{BUILD_DIR}"
-          sh "#{DOT_NET_PATH}MSBuild.exe \"#{project_file}\" -p:OutputPath=#{BUILD_DIR} -p:TreatWarningsAsErrors=true -p:SignAssembly=false -p:Configuration=#{PROJECT_CONFIGURATION};TargetFrameworkVersion=v3.5"
+          sh "#{DOT_NET_PATH}MSBuild.exe \"#{project_file}\" -p:OutputPath=\"#{BUILD_DIR}\" -p:TreatWarningsAsErrors=true -p:SignAssembly=false -p:Configuration=#{PROJECT_CONFIGURATION};TargetFrameworkVersion=v3.5"
         end
       end
     end
