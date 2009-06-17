@@ -226,7 +226,7 @@
 
   <target name="common.run-tests"
 		description="Run NUnit tests">
-    <property name="app.config" value="${build.dir}/${project::get-name()}.dll.config" />
+    <property name="app.config" value="&quot;${build.dir}/${project::get-name()}.dll.config&quot;" />
 
     <if test="${common.testrunner.enabled}">
 
@@ -234,11 +234,10 @@
 
       <property name="xunit-console" value="${root.dir}../../lib/xunit.console.exe" overwrite="true" />
 
-      <echo message="builddir = "/>
       <exec
 				program="${xunit-console}"
 				workingdir="${build.dir}"
-				commandline="${project::get-name()}.dll ${build.dir}/${project::get-name()}.dll.config /nunit ${testresults.dir}/${project::get-name()}.dll-results.xml"
+				commandline="${project::get-name()}.dll ${app.config} /nunit ${testresults.dir}/${project::get-name()}.dll-results.xml"
 				failonerror="${common.testrunner.failonerror}"
 			/>
 
