@@ -12,10 +12,9 @@ namespace Horn.Core.BuildEngines
                           {
                               UseShellExecute = false,
                               RedirectStandardOutput = true,
-                              WorkingDirectory = workingDirectoryPath
-            };
-
-            psi.Arguments = cmdLineArguments;
+                              WorkingDirectory = workingDirectoryPath,
+                              Arguments = cmdLineArguments
+                          };
 
             return new DiagnosticsProcess(Process.Start(psi));
         }
