@@ -7,7 +7,7 @@
 	with:
 		tasks clean, compile, dist
 		
-	output "build/release"
+	output "build/debug"
 	
 package.homepage = "http://code.google.com/p/linfu/"
 package.forum    = "http://groups.google.com/group/linfuframework"
