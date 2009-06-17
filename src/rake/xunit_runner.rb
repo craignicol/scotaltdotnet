@@ -5,9 +5,9 @@ module Horn
       def initialize(assemblyToTest)
         assemblyName = assemblyToTest.split('/').last
         @assemby = "#{assemblyToTest}.dll"
-        @configruation = "#{assemblyToTest}.dll.config"
-        @test_results = "#{TEST_RESULTS_DIR}#{assemblyName}-results.xml"
-        @output_file = "#{BUILD_DIR}#{@assemby}-xunit-output.txt"
+        @configruation = "\"#{assemblyToTest}.dll.config\""
+        @test_results = "\"#{TEST_RESULTS_DIR}#{assemblyName}-results.xml\""
+        @output_file = "\"#{BUILD_DIR}#{@assemby}-xunit-output.txt\""
       end
       
       def run_tests
