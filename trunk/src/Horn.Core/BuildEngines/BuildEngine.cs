@@ -60,7 +60,7 @@ namespace Horn.Core.BuildEngines
             if (builtPackages.ContainsKey(packageTree.Name))
                 return this;
 
-            string pathToBuildFile = GetBuildFilePath(packageTree);
+            string pathToBuildFile = string.Format("\"{0}\"", GetBuildFilePath(packageTree));
 
             if (GenerateStrongKey)
                 GenerateKeyFile(packageTree);
@@ -171,7 +171,7 @@ namespace Horn.Core.BuildEngines
         {
             var relativePath = BuildFile.Replace('/', '\\');
 
-            return string.Format("\"{0}\"", Path.Combine(tree.WorkingDirectory.FullName, relativePath));
+            return Path.Combine(tree.WorkingDirectory.FullName, relativePath);
         }
 
 

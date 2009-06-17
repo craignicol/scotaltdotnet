@@ -11,7 +11,7 @@ namespace Horn.Core.Dependencies
         private IPackageTree Node;
 
 
-                public BuildTree AddChild(IPackageTree node) 
+        public BuildTree AddChild(IPackageTree node) 
         {
             Children.Add(new BuildTree(node, this));
             return this;
