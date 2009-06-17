@@ -78,9 +78,9 @@
 			<property name="msbuild.defines" value="${string::replace(current.build.defines, ',', ';')}" />
 
 			<exec program="${framework::get-framework-directory(framework::get-target-framework())}/MSBuild.exe" workingdir="${build.dir}">
-				<arg file="${src.dir}/${project.vsproj}" />
+				<arg file="&quot;${src.dir}/${project.vsproj}&quot;" />
 				<arg value="/p:Configuration=${project.config}" />
-				<arg value="/p:OutputPath=${build.dir}" />
+				<arg value="/p:OutputPath=&quot;${build.dir}&quot;" />
 				<arg value="/p:TreatWarningsAsErrors=${build.warnaserrors}" unless="${istestsproject}" />
 				<arg value='/p:DefineConstants="${msbuild.defines}"' />
 				<arg value='/t:Rebuild' if="${build.rebuild}" />
