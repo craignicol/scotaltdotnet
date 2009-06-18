@@ -157,7 +157,7 @@ namespace Horn.Core.PackageStructure
 
             metaDataSynchroniser.SynchronisePackageTree(root);
 
-            return root;            
+            return new PackageTree(rootFolder, null);            
         }
 
         public IRevisionData GetRevisionData()
