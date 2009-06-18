@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Horn.Core;
 using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
 using Horn.Core.Utils.CmdLine;
@@ -34,7 +35,15 @@ namespace Horn.Console
 
             var packageTree = IoC.Resolve<IPackageTree>().GetRootPackageTree(GetRootFolderPath());
 
-            IoC.Resolve<IPackageCommand>(parser.ParsedArgs.First().Key).Execute(packageTree, parser.ParsedArgs);
+            try
+            {
+                IoC.Resolve<IPackageCommand>(parser.ParsedArgs.First().Key).Execute(packageTree, parser.ParsedArgs);
+            }
+            catch (UnkownInstallPackageException unk)
+            {
+                log.Info(unk.Message);
+            }
+
         }
 
         private static void InitialiseIoC()
