@@ -5,47 +5,52 @@ namespace Horn.Core.Dsl
 {
     public class RightShiftToMethodCompilerStep : AbstractTransformerCompilerStep
     {
-
         public override void OnBlockExpression(BlockExpression node)
         {
             var dependencies = new ArrayLiteralExpression();
 
             foreach (Statement statement in node.Body.Statements)
             {
-                var expression = (MethodInvocationExpression)((ExpressionStatement) statement).Expression;
+                var expressionStatement = (ExpressionStatement)statement;
+                var expression = (MethodInvocationExpression)expressionStatement.Expression;
 
-                foreach(var arg in expression.Arguments)
-                {
-                    if ((!(arg is BinaryExpression)) || ((BinaryExpression)arg).Operator != BinaryOperatorType.ShiftRight) 
-                        continue;
-
-                    var binaryExpression = (BinaryExpression) arg;
-
-                    //HACK: Need a better Expression type for pass a list of strings into a method
-                    dependencies.Items.Add(
-                            new StringLiteralExpression(string.Format("{0}|{1}", 
-                                                            binaryExpression.Left.ToString().Trim('\''), 
-                                                            binaryExpression.Right.ToString().Trim('\'')))
-                         );
-                }
+                OnMethodInvocationExpression(dependencies, expression);
             }
 
             if (dependencies.Items.Count == 0)
                 return;
 
-            var replacementMethod = new MethodInvocationExpression(new ReferenceExpression("AddDependencies"),
-                                                dependencies
-                                        );
+            var referenceExpression = new ReferenceExpression("AddDependencies");
+            var replacementMethod = new MethodInvocationExpression(referenceExpression, dependencies);
 
             ReplaceCurrentNode(replacementMethod);
+        }
+
+        protected virtual void OnMethodInvocationExpression(ArrayLiteralExpression dependencies, MethodInvocationExpression expression)
+        {
+            foreach (var arg in expression.Arguments)
+            {
+                var binaryExpression = arg as BinaryExpression;
+                if (binaryExpression == null || binaryExpression.Operator != BinaryOperatorType.ShiftRight)
+                    continue;
+
+                AddDependency(dependencies, binaryExpression);
+            }
+        }
+
+        protected virtual void AddDependency(ArrayLiteralExpression dependencies, BinaryExpression binaryExpression)
+        {
+            //HACK: Need a better Expression type for pass a list of strings into a method
+            var stringExpression = new StringLiteralExpression(string.Format("{0}|{1}",
+                                                    binaryExpression.Left.ToString().Trim('\''),
+                                                    binaryExpression.Right.ToString().Trim('\'')));
+
+            dependencies.Items.Add(stringExpression);
         }
 
         public override void Run()
         {
             Visit(CompileUnit);
         }
-
-
-
     }
 }

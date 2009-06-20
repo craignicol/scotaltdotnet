@@ -131,7 +131,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         [Fact]
         public void Then_A_Null_Build_Meta_Data_Object_Is_Returned()
         {
-            Assert.IsType<NullBuildMetatData>(hornTree.RetrievePackage("unkonwnpackage").GetBuildMetaData("unkonwnpackage"));
+            Assert.IsType<NullBuildMetaData>(hornTree.RetrievePackage("unkonwnpackage").GetBuildMetaData("unkonwnpackage"));
         }
     }
 
