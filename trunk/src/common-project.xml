@@ -16,15 +16,6 @@
     <property name="istestsproject" value="true" />
     <call target="common.compile-dll" />
 
-    <property name="windsor.boo.file.src" value="${root.dir}/${project::get-name()}/Windsor.boo"/>
-    <if test="${file::exists(windsor.boo.file.src)}">
-      <copy
-				file="${windsor.boo.file.src}"
-				tofile="${build.dir}/Windsor.boo"
-				overwrite="true"
-				failonerror="true"
-			/>
-    </if>
 
     <!-- Check if there is a framework specific config file and use that -->
     <property name="app.config.src" value="${src.dir}/App-${framework::get-target-framework()}.config" />
@@ -47,12 +38,6 @@
 			/>
 
       <call target="common.configure-tests" />
-    </if>
-    <property name="connectionstring" value="${ar.connection.connection_string.2}"/>
-    <echo message="${connectionstring}"/>
-    <property name="booFile" value="${build.dir}/Windsor.boo" overwrite="true" readonly="false"/>
-    <if test="${file::exists(booFile)}">
-      <call target="fixBoo"/>
     </if>
   </target>
 
@@ -116,28 +101,6 @@
         <arg line="${csc.args}" />
       </csc>
     </if>
-  </target>
-
-  <target name="common.compile-website">
-    <property name="bin.dir" value="${src.dir}/bin" />
-    <mkdir dir="${bin.dir}" />
-    <delete file="${bin.dir}/${project::get-name()}.pdb" failonerror="false" />
-    <!-- To prevent 1.1 compiler from crashing when switching from a 2.0 build -->
-    <property name="build.dir" value="${bin.dir}" />
-
-    <call target="common.compile-dll" />
-    <call target="common.copy-references" />
-  </target>
-
-  <target name="common.copy-references">
-    <foreach item="File" property="reference">
-      <in>
-        <items refid="project.references" />
-      </in>
-      <do>
-        <copy file="${reference}" todir="${bin.dir}" overwrite="${build.rebuild}" />
-      </do>
-    </foreach>
   </target>
 
   <target name="common.compile-exe"
@@ -246,88 +209,6 @@
       <echo message="Tests are disabled for '${project::get-name()}'" />
     </if>
 
-  </target>
-
-  <target name="common.run-database-tests"
-		depends="common.put-connection-settings-into-app-config common.run-tests common.remove-connection-settings-from-app-config" />
-
-  <target name="common.put-connection-settings-into-app-config">
-
-    <property name="app.config" value="${build.dir}/${project::get-name()}.dll.config" />
-
-    <!-- make sure the config file is writable -->
-    <attrib file="${app.config}" readonly="false" />
-
-    <!-- 
-			Tell nhibernate how to connect to the test database.
-		-->
-    <xmlpoke
-			file="${app.config}"
-			xpath="/configuration/nhibernate/add[@key='hibernate.dialect']/@value"
-			value="${nhibernate.dialect}"
-		/>
-    <xmlpoke
-			file="${app.config}"
-			xpath="/configuration/nhibernate/add[@key='hibernate.connection.driver_class']/@value"
-			value="${nhibernate.connection.driver_class}"
-		/>
-    <xmlpoke
-			file="${app.config}"
-			xpath="/configuration/nhibernate/add[@key='hibernate.connection.connection_string']/@value"
-			value="${nhibernate.connection.connection_string}"
-		/>
-  </target>
-
-  <target name="common.remove-connection-settings-from-app-config">
-    <property name="app.config" value="${build.dir}/${project::get-name()}.dll.config" />
-
-    <xmlpoke
-			file="${app.config}"
-			xpath="/configuration/nhibernate/add[@key='hibernate.connection.connection_string']/@value"
-			value="conn string here"
-		/>
-  </target>
-
-  <target name="fixBoo">
-    <echo message="fixing bool file.........." />
-    <echo message="${booFile}"/>
-    <property name="find1" value="Server=[\w\-]*;Database=ncontinuity2;UID=[\w]*;pwd=[\w]*;"/>
-    <property name="replace1" value="${connectionstring}"/>
-    <property name="find2" value="Host = '[\w]*'"/>
-    <property name="replace2" value="Host = '${emailServer.1}'"/>
-    <script language="C#">
-      <imports>
-        <import namespace="System.Text.RegularExpressions"/>
-        <import namespace="System.IO"/>
-      </imports>
-      <code>
-        <![CDATA[
-				public static void ScriptMain(Project project) {
-					StreamReader reader = File.OpenText(project.Properties["booFile"]);
-					string file = String.Empty;
-					try {
-						Regex expression1 = new Regex(project.Properties["find1"]);
-						file = reader.ReadToEnd();
-						file = expression1.Replace(file, project.Properties["replace1"]);
-						Regex expression2 = new Regex(project.Properties["find2"]);
-						file = expression2.Replace(file, project.Properties["replace2"]);
-					} finally {
-						// must remember to close the file or the compile may not work
-						reader.Close();
-					}
-					// create a writer and open the file
-					TextWriter tw = new StreamWriter(project.Properties["booFile"]);//${filename});
-					try {
-						// write a line of text to the file
-						tw.WriteLine(file);
-					} finally {
-						// close the stream
-						tw.Close();
-					}
-				}
-					]]>
-      </code>
-    </script>
   </target>
 
 </project>
