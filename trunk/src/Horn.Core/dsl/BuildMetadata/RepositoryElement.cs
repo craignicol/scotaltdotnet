@@ -9,16 +9,20 @@ namespace Horn.Core.Dsl
     public class RepositoryElement : IRepositoryElement
     {
         private IPackageTree repositoryTree;
-
         private IPackageTree packageTreeToExportTo;
 
         private const string PackageTreeNullErrorMessage =
             "You must call PrepareRepository before export in the RepositoryElement class.  The {0} member is null.";
 
+        public RepositoryElement(string repositoryName, string includePath, string exportPath)
+        {
+            RepositoryName = repositoryName;
+            IncludePath = includePath;
+            ExportPath = exportPath;
+        }
+
         public string ExportPath { get; private set; }
-
         public string IncludePath { get; private set; }
-
         public string RepositoryName { get; private set; }
 
         public virtual void Export()
@@ -26,7 +30,7 @@ namespace Horn.Core.Dsl
             if (repositoryTree == null)
                 throw new AccessViolationException(string.Format(PackageTreeNullErrorMessage, "repositoryTree"));
 
-            if(packageTreeToExportTo == null)
+            if (packageTreeToExportTo == null)
                 throw new AccessViolationException(string.Format(PackageTreeNullErrorMessage, "packageTreeToExportTo"));
 
             var source = repositoryTree.WorkingDirectory.GetFileSystemObjectFromParts(IncludePath);
@@ -40,9 +44,10 @@ namespace Horn.Core.Dsl
         {
             packageTreeToExportTo = packageToExportTo;
 
-            var buildMetaData = packageToExportTo.Root.GetBuildMetaData(RepositoryName);
+            var root = packageToExportTo.Root;
+            var buildMetaData = root.GetBuildMetaData(RepositoryName);
 
-            repositoryTree = packageToExportTo.Root.RetrievePackage(RepositoryName);
+            repositoryTree = root.RetrievePackage(RepositoryName);
 
             get.From(buildMetaData.SourceControl).ExportTo(repositoryTree);
 
@@ -52,16 +57,14 @@ namespace Horn.Core.Dsl
         protected virtual void CopyElement(FileSystemInfo source, FileSystemInfo destination)
         {
             if (source.FullName.PathIsFile())
+            {
                 File.Copy(source.FullName, destination.FullName, true);
-            else
-                ((DirectoryInfo)source).CopyToDirectory((DirectoryInfo)destination);
-        }
+                return;
+            }
 
-        public RepositoryElement(string repositoryName, string includePath, string exportPath)
-        {
-            RepositoryName = repositoryName;
-            IncludePath = includePath;
-            ExportPath = exportPath;
+            var directoryInfo = (DirectoryInfo)source;
+            var destinationDirectory = (DirectoryInfo)destination;
+            directoryInfo.CopyToDirectory(destinationDirectory);
         }
     }
 }

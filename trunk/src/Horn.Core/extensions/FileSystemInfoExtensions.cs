@@ -12,13 +12,13 @@ namespace Horn.Core.extensions
 
             destination.Create();
 
-            foreach (var file in source.GetFiles())
-            {
-                var destinationFile = Path.Combine(destination.FullName, Path.GetFileName(file.FullName));
+            CopyFiles(source, destination);
 
-                file.CopyTo(destinationFile, true);
-            }
+            CopyDirectories(source, destination);
+        }
 
+        private static void CopyDirectories(DirectoryInfo source, DirectoryInfo destination)
+        {
             foreach (var dir in source.GetDirectories())
             {
                 if (dir.FullName.Contains(".Svn"))
@@ -30,20 +30,31 @@ namespace Horn.Core.extensions
             }
         }
 
+        private static void CopyFiles(DirectoryInfo source, DirectoryInfo destination)
+        {
+            foreach (var file in source.GetFiles())
+            {
+                var destinationFile = Path.Combine(destination.FullName, Path.GetFileName(file.FullName));
+
+                file.CopyTo(destinationFile, true);
+            }
+        }
+
         public static FileSystemInfo GetExportPath(string fullPath)
         {
             FileSystemInfo exportPath;
 
-            if (!fullPath.PathIsFile())
+            if (fullPath.PathIsFile())
             {
-                exportPath = new DirectoryInfo(fullPath);
-
-                if (!exportPath.Exists)
-                    ((DirectoryInfo)exportPath).Create();
+                return new FileInfo(fullPath);
             }
-            else
+
+            exportPath = new DirectoryInfo(fullPath);
+
+            if (!exportPath.Exists)
             {
-                exportPath = new FileInfo(fullPath);
+                var directoryInfo = (DirectoryInfo)exportPath;
+                directoryInfo.Create();
             }
 
             return exportPath;
@@ -72,51 +83,63 @@ namespace Horn.Core.extensions
             var dirs = new Queue<string>();
             dirs.Enqueue(root.FullName);
 
+            var results = new List<string>();
             while (dirs.Count > 0)
             {
-                string dir = dirs.Dequeue();
+                SearchDirectories(searchPattern, dirs, results);
+            }
 
-                string[] filePaths = null;
+            return results;
+        }
 
-                //I do not like swallowing exceptions but there is a good reason
-                // http://msdn.microsoft.com/en-us/library/bb513869.aspx
-                try
-                {
-                    filePaths = Directory.GetFiles(dir, searchPattern);
-                }
-                catch
-                {                    
-                }
+        private static void SearchDirectories(string searchPattern, Queue<string> directories, List<string> results)
+        {
+            string dir = directories.Dequeue();
 
-                if (filePaths != null && filePaths.Length > 0)
-                {
-                    foreach (string file in filePaths)
-                    {
-                        yield return file;
-                    }
-                }
+            string[] filePaths = null;
 
-                string[] directoryPaths = null;
+            filePaths = AddFiles(dir, searchPattern, filePaths, results);
 
-                try
-                {
-                    directoryPaths = Directory.GetDirectories(dir);
-                }
-                catch
-                {                    
-                }
-                
-                if (directoryPaths == null || directoryPaths.Length <= 0) 
-                    continue;
+            string[] directoryPaths = null;
 
+            try
+            {
+                directoryPaths = Directory.GetDirectories(dir);
+            }
+            catch
+            {
+            }
+
+            if (directoryPaths != null && directoryPaths.Length > 0)
+            {
                 foreach (string subDir in directoryPaths)
                 {
-                    dirs.Enqueue(subDir);
+                    directories.Enqueue(subDir);
                 }
             }
         }
 
+        private static string[] AddFiles(string dir, string searchPattern, string[] filePaths, List<string> results)
+        {
+            // I do not like swallowing exceptions but there is a good reason
+            // http://msdn.microsoft.com/en-us/library/bb513869.aspx
+            try
+            {
+                filePaths = Directory.GetFiles(dir, searchPattern);
+            }
+            catch
+            {
+            }
 
+            if (filePaths != null && filePaths.Length > 0)
+            {
+                foreach (string file in filePaths)
+                {
+                    results.Add(file);
+                }
+            }
 
+            return filePaths;
+        }
     }
 }

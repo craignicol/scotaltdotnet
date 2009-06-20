@@ -5,7 +5,7 @@ using Horn.Core.SCM;
 
 namespace Horn.Core.Dsl
 {
-    public class NullBuildMetatData : IBuildMetaData
+    public class NullBuildMetaData : IBuildMetaData
     {
         public string Description
         {

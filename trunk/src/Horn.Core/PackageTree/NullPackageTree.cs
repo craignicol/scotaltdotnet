@@ -115,7 +115,7 @@ namespace Horn.Core.PackageStructure
 
         public IBuildMetaData GetBuildMetaData(string packageName)
         {
-            return new NullBuildMetatData();
+            return new NullBuildMetaData();
         }
 
         public IBuildMetaData GetBuildMetaData(string packageName, string buildFile)

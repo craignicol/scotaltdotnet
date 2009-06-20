@@ -9,28 +9,22 @@ namespace Horn.Core.Dsl
 
         public ExportData(string url, string sourceControlType)
         {
-            switch (sourceControlType.ToLower())
-            {
-                case "svn":
-                    SourceControl= new SVNSourceControl(url, null);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(string.Format("Unkown SourceControlType {0}",
-                                                                        sourceControlType));
-            }
+            SetSourceControl(url, sourceControlType, null);
         }
 
         public ExportData(string url, string sourceControlType, string path)
         {
-            switch (sourceControlType.ToLower())
-            {
-                case "svn":
-                    SourceControl = new SVNSourceControl(url, path);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(string.Format("Unkown SourceControlType {0}",
+            SetSourceControl(url, sourceControlType, path);
+        }
+
+        private void SetSourceControl(string url, string sourceControlType, string path)
+        {
+            var scmType = sourceControlType.ToLower();
+
+            if (scmType != "svn")
+                throw new ArgumentOutOfRangeException(string.Format("Unkown SourceControlType {0}",
                                                                         sourceControlType));
-            }
+            SourceControl = new SVNSourceControl(url, path);
         }
     }
 }

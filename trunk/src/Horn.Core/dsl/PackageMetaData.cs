@@ -7,10 +7,7 @@ namespace Horn.Core.Dsl
 {
     public class PackageMetaData : IQuackFu
     {
-
         public Dictionary<string, object> PackageInfo { get; set; }
-
-
 
         public object QuackGet(string name, object[] parameters)
         {
@@ -29,14 +26,9 @@ namespace Horn.Core.Dsl
             return value;
         }
 
-
-
         public PackageMetaData()
         {
             PackageInfo = new Dictionary<string, object>();
         }
-
-
-
     }
 }
