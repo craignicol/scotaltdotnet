@@ -200,7 +200,7 @@
       <exec
 				program="${xunit-console}"
 				workingdir="${build.dir}"
-				commandline="${project::get-name()}.dll ${app.config} /nunit ${testresults.dir}/${project::get-name()}.dll-results.xml"
+				commandline="${project::get-name()}.dll ${app.config} /nunit &quot;${testresults.dir}/${project::get-name()}.dll-results.xml&quot;"
 				failonerror="${common.testrunner.failonerror}"
 			/>
 
