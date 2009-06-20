@@ -7,6 +7,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
 {
     public abstract class CmdLineSpecificationBase : Specification
     {
+
         private TextWriter textWriter;
         protected SwitchParser parser;
 
