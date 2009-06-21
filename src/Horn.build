@@ -18,13 +18,9 @@
     <include name="Horn.Core.Spec/Horn.Core.Spec.build"/>
   </fileset>
 
-  <fileset id="buildfiles.deploy">
-    <include name="Horn.Console/Horn.Console.build"/>
-  </fileset>
-
   <target name="build"
 			depends="clean init copy-referenced-assemblies copy-package-tree"
-			description="Builds Horn to the current configuration." >
+			description="Builds Horn to the current configuration." >   
     <nant target="build">
       <buildfiles refid="buildfiles.all"/>
     </nant>
@@ -36,21 +32,9 @@
   </target>
 
 
-  <target name="deploy" depends="build" description="Deploys the website to the deployment directory">
-    <nant target="deploy">
-      <buildfiles refid="buildfiles.deploy"/>
-    </nant>
-    <copy todir="${build.dir}/ncontinuity2.web/bin">
-      <fileset basedir="${build.dir}">
-        <include name="*.dll"/>
-        <include name="*.xml"/>
-      </fileset>
-    </copy>
-  </target>
-
   <target name="rebuild"
 		depends="init recreate-build-directory build"
-		description="Rebuilds ncontinuity2 in the current configuration" />
+		description="Rebuilds Horn in the current configuration" />
 
   <target name="init" depends="common.init">
     <mkdir dir="${build.dir}" />
@@ -95,11 +79,6 @@
     </foreach>
   </target>
 
-  <target name="cleanall" description="Deletes all build artifacts" depends="common.init">
-    <echo message="Deleting all builds from all configurations" />
-    <delete dir="${build.base.dir}" failonerror="false" />
-    <call target="clean-vs" />
-  </target>
 
   <target name="recreate-build-directory">
     <echo message="Current Directory is ${project::get-base-directory()}" />
@@ -110,23 +89,54 @@
     <mkdir dir="${build.dir}" />
     <mkdir dir="${testresults.dir}" />
     <call target="copy-referenced-assemblies" />
-	<call target="copy-package-tree" />	
+	  <call target="copy-package-tree" />	
     <property name="build.rebuild" value="true" />
   </target>
 
   <target name="copy-package-tree">
-    <!-- Copy framework-neutral libraries -->
-    <copy todir="${build.dir}" >
-      <fileset basedir="${package.dir}">
-        <include name="*.boo" />
+    <mkdir dir="${build.dir}/BuildConfigs/Horn"/>
+    <copy todir="${build.dir}/BuildConfigs/Horn">
+      <fileset basedir="${root.dir}/Horn.Core.Spec/BuildConfigs/Horn">
+        <includes name="*.boo" />
       </fileset>
     </copy>
+
   </target>
 	
   <target name="copy-referenced-assemblies">
     <!-- Copy framework-neutral libraries -->
     <copy todir="${build.dir}" >
-      <fileset basedir="${lib.dir}">
+      <fileset basedir="../lib">
+        <include name="*.dll" />
+        <include name="*.exe" />
+        <include name="*.xml" />
+        <include name="*.config"/>
+        <include name="*.license.txt" />
+      </fileset>
+    </copy>
+
+    <copy todir="${build.dir}" >
+      <fileset basedir="../lib/SharpSvn-x86">
+        <include name="*.dll" />
+        <include name="*.exe" />
+        <include name="*.xml" />
+        <include name="*.config"/>
+        <include name="*.license.txt" />
+      </fileset>
+    </copy>
+
+    <copy todir="${build.dir}" >
+      <fileset basedir="../lib/Nant">
+        <include name="*.dll" />
+        <include name="*.exe" />
+        <include name="*.xml" />
+        <include name="*.config"/>
+        <include name="*.license.txt" />
+      </fileset>
+    </copy>
+
+    <copy todir="${build.dir}" >
+      <fileset basedir="../lib/SharpSvn-x86">
         <include name="*.dll" />
         <include name="*.exe" />
         <include name="*.xml" />
