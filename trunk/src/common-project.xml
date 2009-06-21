@@ -88,6 +88,7 @@
 				doc="${build.dir}/${project::get-name()}.xml"
 				rebuild="${build.rebuild}"
 				unless="${build.msbuild}"
+        platform="x86"
 			>
         <nowarn>
           <warning number="1591" unless="${build.warnmissingdocs}" />
