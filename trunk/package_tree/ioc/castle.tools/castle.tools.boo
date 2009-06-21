@@ -14,7 +14,7 @@ install castle.tools:
 	build_with nant, buildfile("Tools/Tools.build"), FrameworkVersion35
 		
 	switches:
-		parameters "sign=true","common.testrunner.enabled=false"
+		parameters "sign=true","common.testrunner.enabled=false", "common.silverlight=false"
 		
 	shared_library "SharedLibs/net/2.0"
 	output "build/net-3.5/debug"		
