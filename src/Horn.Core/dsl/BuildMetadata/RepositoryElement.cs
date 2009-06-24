@@ -14,13 +14,6 @@ namespace Horn.Core.Dsl
         private const string PackageTreeNullErrorMessage =
             "You must call PrepareRepository before export in the RepositoryElement class.  The {0} member is null.";
 
-        public RepositoryElement(string repositoryName, string includePath, string exportPath)
-        {
-            RepositoryName = repositoryName;
-            IncludePath = includePath;
-            ExportPath = exportPath;
-        }
-
         public string ExportPath { get; private set; }
         public string IncludePath { get; private set; }
         public string RepositoryName { get; private set; }
@@ -35,7 +28,7 @@ namespace Horn.Core.Dsl
 
             var source = repositoryTree.WorkingDirectory.GetFileSystemObjectFromParts(IncludePath);
 
-            var destination = packageTreeToExportTo.WorkingDirectory.GetFileSystemObjectFromParts(ExportPath);
+            var destination = packageTreeToExportTo.WorkingDirectory.GetFileSystemObjectFromParts(ExportPath, source.IsFile());
 
             CopyElement(source, destination);
         }
@@ -65,6 +58,13 @@ namespace Horn.Core.Dsl
             var directoryInfo = (DirectoryInfo)source;
             var destinationDirectory = (DirectoryInfo)destination;
             directoryInfo.CopyToDirectory(destinationDirectory);
+        }
+
+        public RepositoryElement(string repositoryName, string includePath, string exportPath)
+        {
+            RepositoryName = repositoryName;
+            IncludePath = includePath;
+            ExportPath = exportPath;
         }
     }
 }

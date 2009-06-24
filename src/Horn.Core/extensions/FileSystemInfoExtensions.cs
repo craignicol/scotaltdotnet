@@ -60,22 +60,28 @@ namespace Horn.Core.extensions
             return exportPath;
         }
 
-        public static FileSystemInfo GetFileSystemObjectFromParts(this DirectoryInfo sourceDirectory, string parts)
+        public static DirectoryInfo GetDirectoryFromParts(this FileSystemInfo source, string parts)
         {
-            if (string.IsNullOrEmpty(parts))
-                return sourceDirectory;
+            return (DirectoryInfo) GetFileSystemObjectFromParts(source, parts, false);
+        }
 
-            var outputPath = sourceDirectory.FullName;
+        public static DirectoryInfo GetFileFromParts(this FileSystemInfo source, string parts)
+        {
+            return (DirectoryInfo)GetFileSystemObjectFromParts(source, parts, true);
+        }
 
-            if (parts.Trim() == ".")
-                return sourceDirectory;
-
-            foreach (var part in parts.Split('/'))
-            {
-                outputPath = Path.Combine(outputPath, part);
-            }
+        public static FileSystemInfo GetFileSystemObjectFromParts(this FileSystemInfo source, string parts)
+        {
+            var outputPath = CorrectFilePath(parts, source);
 
             return outputPath.PathIsFile() ? (FileSystemInfo)new FileInfo(outputPath) : new DirectoryInfo(outputPath);
+        }
+
+        public static FileSystemInfo GetFileSystemObjectFromParts(this FileSystemInfo source, string parts, bool isFile)
+        {            
+            var outputPath = CorrectFilePath(parts, source);
+
+            return (isFile) ? (FileSystemInfo)new FileInfo(outputPath) : new DirectoryInfo(outputPath);
         }
 
         public static IEnumerable<string> Search(this DirectoryInfo root, string searchPattern)
@@ -90,6 +96,64 @@ namespace Horn.Core.extensions
             }
 
             return results;
+        }
+
+        public static bool IsFile(this FileSystemInfo fileSystemInfo)
+        {
+            return (fileSystemInfo.FullName.PathIsFile());
+        }
+
+        public static bool PathIsDirectory(this string fullPath)
+        {
+            bool isDir = (File.GetAttributes(fullPath) & FileAttributes.Directory) == FileAttributes.Directory;
+
+            return (isDir);
+        }
+
+        public static bool PathIsFile(this string fullPath)
+        {
+            return (!fullPath.PathIsDirectory());
+        }
+
+        private static string[] AddFiles(string dir, string searchPattern, string[] filePaths, List<string> results)
+        {
+            // I do not like swallowing exceptions but there is a good reason
+            // http://msdn.microsoft.com/en-us/library/bb513869.aspx
+            try
+            {
+                filePaths = Directory.GetFiles(dir, searchPattern);
+            }
+            catch
+            {
+            }
+
+            if (filePaths != null && filePaths.Length > 0)
+            {
+                foreach (string file in filePaths)
+                {
+                    results.Add(file);
+                }
+            }
+
+            return filePaths;
+        }
+
+        private static string CorrectFilePath(string parts, FileSystemInfo source)
+        {
+            if (string.IsNullOrEmpty(parts))
+                return source.FullName;
+
+            if (parts.Trim() == ".")
+                return source.FullName;
+
+            var outputPath = source.FullName;
+
+            foreach (var part in parts.Split('/'))
+            {
+                outputPath = Path.Combine(outputPath, part);
+            }
+
+            return outputPath;
         }
 
         private static void SearchDirectories(string searchPattern, Queue<string> directories, List<string> results)
@@ -117,29 +181,6 @@ namespace Horn.Core.extensions
                     directories.Enqueue(subDir);
                 }
             }
-        }
-
-        private static string[] AddFiles(string dir, string searchPattern, string[] filePaths, List<string> results)
-        {
-            // I do not like swallowing exceptions but there is a good reason
-            // http://msdn.microsoft.com/en-us/library/bb513869.aspx
-            try
-            {
-                filePaths = Directory.GetFiles(dir, searchPattern);
-            }
-            catch
-            {
-            }
-
-            if (filePaths != null && filePaths.Length > 0)
-            {
-                foreach (string file in filePaths)
-                {
-                    results.Add(file);
-                }
-            }
-
-            return filePaths;
         }
     }
 }
