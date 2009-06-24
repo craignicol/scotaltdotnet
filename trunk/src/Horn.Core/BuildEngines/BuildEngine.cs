@@ -164,7 +164,7 @@ namespace Horn.Core.BuildEngines
 
         protected virtual DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
         {
-            return (DirectoryInfo)sourceDirectory.GetFileSystemObjectFromParts(parts);
+            return sourceDirectory.GetDirectoryFromParts(parts);
         }
 
         protected virtual string GetBuildFilePath(IPackageTree tree)

@@ -42,6 +42,8 @@ namespace Horn.Framework.helpers
 
             string ioc = CreateDirectory(rootDirectory, "ioc");
             string castle = CreateDirectory(ioc, "castle");
+            string working = CreateDirectory(castle, "working");
+            CreateDirectory(working, "Tools");
 
             var castleBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"BuildConfigs\Horn\castle.boo");
 
@@ -101,9 +103,12 @@ namespace Horn.Framework.helpers
 
         private static string CreateDirectory(string directoryPath)
         {
-            Directory.CreateDirectory(directoryPath);
+            var directory = new DirectoryInfo(directoryPath);
 
-            return directoryPath;
+            if(!directory.Exists)
+                directory.Create();
+
+            return directory.FullName;
         }        
     }
 }

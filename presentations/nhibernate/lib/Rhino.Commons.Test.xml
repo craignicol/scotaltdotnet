@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rhino.Commons.Test</name>
+    </assembly>
+    <members>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.Get(System.Object)">
+            <summary>
+            Get the entity from the persistance store, or return null
+            if it doesn't exist.
+            </summary>
+            <param name="id">The entity's id</param>
+            <returns>Either the entity that matches the id, or a null</returns>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.Load(System.Object)">
+            <summary>
+            Load the entity from the persistance store
+            Will throw an exception if there isn't an entity that matches
+            the id.
+            </summary>
+            <param name="id">The entity's id</param>
+            <returns>The entity that matches the id</returns>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.Delete(`0)">
+            <summary>
+            Register the entity for deletion when the unit of work
+            is completed. 
+            </summary>
+            <param name="entity">The entity to delete</param>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.DeleteAll">
+            <summary>
+            Registers all entities for deletion when the unit of work
+            is completed.
+            </summary>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.DeleteAll(NHibernate.Criterion.DetachedCriteria)">
+            <summary>
+            Registers all entities for deletion that match the supplied
+            HQL condition when the unit of work is completed.
+            </summary>
+            <param name="where">HQL condition to select the rows to be deleted</param>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.Save(`0)">
+            <summary>
+            Register te entity for save in the database when the unit of work
+            is completed.
+            </summary>
+            <param name="entity">the entity to save</param>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.SaveOrUpdate(`0)">
+            <summary>
+            Saves or update the entity, based on its usaved-value
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.SaveOrUpdateCopy(`0)">
+            <summary>
+            Saves or update a copy of the entity, based on its usaved-value
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.Update(`0)">
+            <summary>
+            Updates the specified entity.
+            </summary>
+            <param name="entity">The entity.</param>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.FindAll(System.String,Rhino.Commons.Parameter[])">
+            <summary>
+            Execute the named query and return all the results
+            </summary>
+            <param name="namedQuery">The named query to execute</param>
+            <param name="parameters">Parameters for the query</param>
+            <returns>The results of the query</returns>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.FindAll(System.Int32,System.Int32,System.String,Rhino.Commons.Parameter[])">
+            <summary>
+            Execute the named query and return paged results
+            </summary>
+            <param name="parameters">Parameters for the query</param>
+            <param name="namedQuery">the query to execute</param>
+            <param name="firstResult">The first result to return</param>
+            <param name="numberOfResults">number of records to return</param>
+            <returns>Paged results of the query</returns>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.FindOne(System.String,Rhino.Commons.Parameter[])">
+            <summary>
+            Find a single entity based on a named query.
+            Thorws is there is more than one result.
+            </summary>
+            <param name="parameters">parameters for the query</param>
+            <param name="namedQuery">the query to executre</param>
+            <returns>The entity or null</returns>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.FindFirst(NHibernate.Criterion.Order[])">
+            <summary>
+            Find the first entity of type
+            </summary>
+            <param name="orders">Optional orderring</param>
+            <returns>The entity or null</returns>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.Exists">
+            <summary>
+            Check if any instance of the type exists
+            </summary>
+            <returns><c>true</c> if an instance is found; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Rhino.Commons.Test.Binsor.FakeRepository`1.Count">
+            <summary>
+            Counts the overall number of instances.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

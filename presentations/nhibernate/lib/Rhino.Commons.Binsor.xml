@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rhino.Commons.Binsor</name>
+    </assembly>
+    <members>
+        <member name="M:Rhino.Commons.Binsor.BinsorGlobalMethods.AllTypesBased``1(System.String[])">
+            <summary>
+            Get all the types that inherit from <typeparamref name="T"/> in
+            all the assemblies that were passed.
+            </summary>
+            <typeparam name="T">The base type to look for</typeparam>
+            <param name="assemblyNames">The assembly names.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Commons.Binsor.BinsorGlobalMethods.AllTypes(System.String[])">
+            <summary>
+            Get all the types in all the assemblies that were passed.
+            </summary>
+            <param name="assemblyNames">The assembly names.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Commons.Binsor.BinsorGlobalMethods.AllAssemblies(System.String[])">
+            <summary>
+            Loads all the assemblies from the list, preferring to use the
+            Load context, but loading using the LoadFrom context if needed
+            </summary>
+            <param name="assemblyNames">The assembly names.</param>
+        </member>
+        <member name="M:Rhino.Commons.Binsor.BooReader.TryAddAssembliesReferences(Boo.Lang.Compiler.CompilerParameters,System.String[])">
+            <summary>
+            Tries the add the speicifed assemblies to the compiler's references
+            In a late bound way
+            </summary>
+            <param name="cp">The compiler parameters.</param>
+            <param name="assembliesToAdd">The assemblies to add.</param>
+        </member>
+        <member name="T:Rhino.Commons.Binsor.TypeEnumerable">
+            <summary>
+            Allow to filter on the result of the AllTypes call
+            </summary>
+        </member>
+        <member name="M:Rhino.Commons.Binsor.TypeEnumerable.#ctor(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Create new instanse
+            </summary>
+            <param name="inner"></param>
+        </member>
+        <member name="M:Rhino.Commons.Binsor.TypeEnumerable.Where(System.Predicate{System.Type})">
+            <summary>
+            Pass a predicate for selection of matching types
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Commons.Binsor.TypeEnumerable.WhereNamespaceEq(System.String[])">
+            <summary>
+            Limit returned types to those in a particular namespace
+            </summary>
+            <param name="namespaces"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

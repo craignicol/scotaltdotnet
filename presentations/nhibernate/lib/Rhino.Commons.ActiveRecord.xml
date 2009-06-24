@@ -1,0 +1,267 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rhino.Commons.ActiveRecord</name>
+    </assembly>
+    <members>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordEmbeddedDBTestFixtureBase.FixtureInitialize(System.String,System.Reflection.Assembly[])">
+            <summary>
+            Initialize Active Record, and initialize the container.
+            If <paramref name="rhinoContainerConfig"/> is <see langword="null"/> or <see cref="F:System.String.Empty">string.Empty</see>
+            a <see cref="T:Rhino.Commons.RhinoContainer">RhinoContainer</see> will not be initialized.
+            </summary>
+            <param name="rhinoContainerConfig">The configuration file to initialize a <see cref="T:Rhino.Commons.RhinoContainer">RhinoContainer</see> 
+            or <see langword="null"/>.</param>
+            <param name="assemblies">The assemblies to load for NHibernate mapping files.</param>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordEmbeddedDBTestFixtureBase.FixtureInitialize(System.String,Castle.ActiveRecord.Framework.Config.InPlaceConfigurationSource,System.Reflection.Assembly[])">
+            <summary>
+            Initialize Active Record, and initialize the container.
+            If <paramref name="rhinoContainerConfig"/> is <see langword="null"/> or <see cref="F:System.String.Empty">string.Empty</see>
+            a <see cref="T:Rhino.Commons.RhinoContainer">RhinoContainer</see> will not be initialized.
+            </summary>
+            <param name="rhinoContainerConfig">The configuration file to initialize a <see cref="T:Rhino.Commons.RhinoContainer">RhinoContainer</see> 
+            or <see langword="null"/>.</param>
+            <param name="cfg">The configuration to supply to AR</param>
+            <param name="assemblies">The assemblies to load for NHibernate mapping files.</param>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordEmbeddedDBTestFixtureBase.FixtureInitialize(System.Reflection.Assembly[])">
+            <summary>
+            Initialize NHibernate and builds a session factory
+            Note, this is a costly call so it will be executed only one.
+            </summary>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordEmbeddedDBTestFixtureBase.SetupDB">
+            <summary>
+            Creates the in memory db schema using the scope
+            </summary>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordEmbeddedDBTestFixtureBase.CreateUnitOfWork">
+            <summary>
+            Starts a <see cref="T:Rhino.Commons.UnitOfWork"/> and creates the in memory db schema.
+            </summary>
+            <example>Using <see cref="T:Rhino.Commons.RhinoContainer"/>, <see cref="T:Rhino.Commons.IoC"/>, and <see cref="T:Rhino.Commons.UnitOfWork"/> in your tests.
+            <code lang="c#" escaped="true">
+            using NUnit.Framework;
+            using Rhino.Commons;
+            using Rhino.Commons.ForTesting;
+            
+            [TestFixture]
+            public class FooTest : ActiveRecordEmbeddedDBTestFixtureBase
+            {
+            	[TestFixtureSetup]
+            	public void TestFixtureSetup()
+            	{
+            		OneTimeInitialize("RhinoContainer.boo", typeof(Foo).Assembly);
+            	}
+            
+            	[Setup]
+            	public void TestSetup()
+            	{
+            		/// Creates a top level UnitOfWork, remember to clean me up
+            		CreateUnitOfWork();
+            	}
+            
+            	[TearDown]
+            	public void TestTearDown()
+            	{
+            		/// Cleanup the top level UnitOfWork
+            		UnitOfWork.Current.Dispose();
+            	}
+            
+            	[Test]
+            	public void CanSaveFoo()
+            	{
+            		Foo f = new Foo();
+            		Foo res = null;
+            		f.Name = "Bar";
+            
+            		Assert.AreEqual(Guid.Empty, f.Id);
+            
+            		With.Transaction(delegate
+            		{
+            			IoC.Resolve&lt;IRepository&lt;Foo&gt;&gt;.Save(f);
+            		});
+            		
+            		Assert.AreNotEqual(Guid.Empty, f.Id);
+            
+            		using(UnitOfWork.Start())
+            			res = IoC.Resolve&lt;IRepository&lt;Foo&gt;&gt;.Load(f.Id);
+            
+            		Assert.IsNotNull(res);
+            		Assert.AreEqual("Bar", res.Name);
+            	}
+            }
+            </code>
+            </example>
+            <seealso cref="T:Rhino.Commons.RhinoContainer"/>
+            <seealso cref="T:Rhino.Commons.IoC"/>
+            <seealso cref="T:Rhino.Commons.UnitOfWork"/>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordInMemoryTestFixtureBase.OneTimeInitalize(System.String,System.Reflection.Assembly[])">
+            <summary>
+            Initialize Active Record, and initialize the container.
+            If <paramref name="rhinoContainerConfig"/> is <see langword="null"/> or <see cref="F:System.String.Empty">string.Empty</see>
+            a <see cref="T:Rhino.Commons.RhinoContainer">RhinoContainer</see> will not be initialized.
+            </summary>
+            <param name="rhinoContainerConfig">The configuration file to initialize a <see cref="T:Rhino.Commons.RhinoContainer">RhinoContainer</see> 
+            or <see langword="null"/>.</param>
+            <param name="assemblies">The assemblies to load for NHibernate mapping files.</param>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordInMemoryTestFixtureBase.OneTimeInitalize(System.String,Castle.ActiveRecord.Framework.Config.InPlaceConfigurationSource,System.Reflection.Assembly[])">
+            <summary>
+            Initialize Active Record, and initialize the container.
+            If <paramref name="rhinoContainerConfig"/> is <see langword="null"/> or <see cref="F:System.String.Empty">string.Empty</see>
+            a <see cref="T:Rhino.Commons.RhinoContainer">RhinoContainer</see> will not be initialized.
+            </summary>
+            <param name="rhinoContainerConfig">The configuration file to initialize a <see cref="T:Rhino.Commons.RhinoContainer">RhinoContainer</see> 
+            or <see langword="null"/>.</param>
+            <param name="cfg">The configuration to supply to AR</param>
+            <param name="assemblies">The assemblies to load for NHibernate mapping files.</param>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordInMemoryTestFixtureBase.OneTimeInitalize(System.Reflection.Assembly[])">
+            <summary>
+            Initialize NHibernate and builds a session factory
+            Note, this is a costly call so it will be executed only one.
+            </summary>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordInMemoryTestFixtureBase.SetupDB">
+            <summary>
+            Creates the in memory db schema using the scope
+            </summary>
+        </member>
+        <member name="M:Rhino.Commons.ForTesting.ActiveRecordInMemoryTestFixtureBase.CreateUnitOfWork">
+            <summary>
+            Starts a <see cref="T:Rhino.Commons.UnitOfWork"/> and creates the in memory db schema.
+            </summary>
+            <example>Using <see cref="T:Rhino.Commons.RhinoContainer"/>, <see cref="T:Rhino.Commons.IoC"/>, and <see cref="T:Rhino.Commons.UnitOfWork"/> in your tests.
+            <code lang="c#" escaped="true">
+            using NUnit.Framework;
+            using Rhino.Commons;
+            using Rhino.Commons.ForTesting;
+            
+            [TestFixture]
+            public class FooTest : NHibernateInMemoryTest
+            {
+            	[TestFixtureSetup]
+            	public void TestFixtureSetup()
+            	{
+            		OneTimeInitialize("RhinoContainer.boo", typeof(Foo).Assembly);
+            	}
+            
+            	[Setup]
+            	public void TestSetup()
+            	{
+            		/// Creates a top level UnitOfWork, remember to clean me up
+            		CreateUnitOfWork();
+            	}
+            
+            	[TearDown]
+            	public void TestTearDown()
+            	{
+            		/// Cleanup the top level UnitOfWork
+            		UnitOfWork.Current.Dispose();
+            	}
+            
+            	[Test]
+            	public void CanSaveFoo()
+            	{
+            		Foo f = new Foo();
+            		Foo res = null;
+            		f.Name = "Bar";
+            
+            		Assert.AreEqual(Guid.Empty, f.Id);
+            
+            		With.Transaction(delegate
+            		{
+            			IoC.Resolve&lt;IRepository&lt;Foo&gt;&gt;.Save(f);
+            		});
+            		
+            		Assert.AreNotEqual(Guid.Empty, f.Id);
+            
+            		using(UnitOfWork.Start())
+            			res = IoC.Resolve&lt;IRepository&lt;Foo&gt;&gt;.Load(f.Id);
+            
+            		Assert.IsNotNull(res);
+            		Assert.AreEqual("Bar", res.Name);
+            	}
+            }
+            </code>
+            </example>
+            <seealso cref="T:Rhino.Commons.RhinoContainer"/>
+            <seealso cref="T:Rhino.Commons.IoC"/>
+            <seealso cref="T:Rhino.Commons.UnitOfWork"/>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.Get(System.Object)">
+            <summary>
+            Get the entity from the persistance store, or return null
+            if it doesn't exist.
+            </summary>
+            <param name="id">The entity's id</param>
+            <returns>Either the entity that matches the id, or a null</returns>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.Load(System.Object)">
+            <summary>
+            Load the entity from the persistance store
+            Will throw an exception if there isn't an entity that matches
+            the id.
+            </summary>
+            <param name="id">The entity's id</param>
+            <returns>The entity that matches the id</returns>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.Delete(`0)">
+            <summary>
+            Register the entity for deletion when the unit of work
+            is completed. 
+            </summary>
+            <param name="entity">The entity to delete</param>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.DeleteAll">
+            <summary>
+            Registers all entities for deletion when the unit of work
+            is completed.
+            </summary>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.DeleteAll(NHibernate.Criterion.DetachedCriteria)">
+            <summary>
+            Registers all entities for deletion that match the supplied
+            criteria condition when the unit of work is completed.
+            </summary>
+            <param name="where">criteria condition to select the rows to be deleted</param>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.Save(`0)">
+            <summary>
+            Register te entity for save in the database when the unit of work
+            is completed.
+            </summary>
+            <param name="entity">the entity to save</param>
+            <returns>The saved entity</returns>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.SaveOrUpdate(`0)">
+            <summary>
+            Saves or update the entity, based on its usaved-value
+            </summary>
+            <param name="entity"></param>
+            <returns>The saved or updated entity</returns>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.SaveOrUpdateCopy(`0)">
+            <summary>
+            Saves or update a copy of the entity, based on its usaved-value
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Rhino.Commons.ARRepository`1.Update(`0)">
+            <summary>
+            Register the entity for update in the database when the unit of work
+            is completed. (UPDATE)
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Rhino.Commons.ActiveRecordUnitOfWorkAdapter.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <filterpriority>2</filterpriority>
+        </member>
+    </members>
+</doc>

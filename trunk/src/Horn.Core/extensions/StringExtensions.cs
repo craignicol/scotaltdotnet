@@ -17,12 +17,5 @@ namespace Horn.Core.extensions
         {
             return Regex.IsMatch(text, @"^\d+$");
         }
-
-        public static bool PathIsFile(this string fullPath)
-        {
-            var extension = Path.GetExtension(fullPath);
-
-            return ((extension.Length) > 0 && (!extension.Substring(1).IsNumeric()));
-        }
     }
 }
