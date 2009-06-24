@@ -9,6 +9,10 @@ namespace core.tests.cfg
         public void Then_the_configuration_is_initialised()
         {
             var cfg = ConfigurationHelper.GetDefaultConfiguration();
+
+            var sessionFactoroy = cfg.BuildSessionFactory();
+
+            var session = sessionFactoroy.OpenSession();
         }
     }
 }
