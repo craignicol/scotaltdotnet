@@ -130,6 +130,7 @@
     <Compile Include="PackageCommands\BuilderWithExportListSpecs.cs" />
     <Compile Include="PackageCommands\BuilderWithPreBuildSpecs.cs" />
     <Compile Include="PackageCommands\BuilderWithRepositorySpecs.cs" />
+    <Compile Include="PackageTreeSpecs\PackageTreeFixtures.cs" />
     <Compile Include="RepositorySpecs\RepositoryElementSpecBase.cs" />
     <Compile Include="RepositorySpecs\RepositoryElementSpecs.cs" />
     <Compile Include="Stubs\BuildEngineStub.cs" />

@@ -67,6 +67,19 @@ namespace Horn.Core.PackageStructure
 
         public IPackageTree Parent { get; set; }
 
+        public DirectoryInfo Result
+        {
+            get
+            {
+                var resultDirectory = new DirectoryInfo(Path.Combine(Root.CurrentDirectory.FullName, "Result"));
+
+                if(!resultDirectory.Exists)
+                    resultDirectory.Create();
+
+                return resultDirectory;
+            }
+        }
+
         public IPackageTree Root
         {
             get

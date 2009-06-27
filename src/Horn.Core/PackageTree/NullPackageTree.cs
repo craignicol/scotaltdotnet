@@ -70,6 +70,11 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
+        public DirectoryInfo Result
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public IPackageTree Parent
         {
             get { throw new System.NotImplementedException(); }

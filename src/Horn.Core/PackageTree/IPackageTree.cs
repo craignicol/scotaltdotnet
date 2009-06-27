@@ -6,42 +6,44 @@ namespace Horn.Core.PackageStructure
 {
     public interface IPackageTree : IComposite<IPackageTree>
     {
-        IPackageTree Root { get; }
+        string BuildFile { get; }
 
-        string Name { get; }
+        IBuildMetaData BuildMetaData { get; }
 
-        bool IsRoot { get; }
+        DirectoryInfo CurrentDirectory { get; }
 
         bool Exists { get; }
 
-        string BuildFile { get; }
+        bool IsBuildNode { get; }
+
+        bool IsRoot { get; }
+
+        string Name { get; }
+
+        FileInfo Nant { get; }
+
+        DirectoryInfo OutputDirectory { get; }
+
+        DirectoryInfo Result { get; }
+
+        IPackageTree Root { get; }
+
+        FileInfo Sn { get; }
+
+        DirectoryInfo WorkingDirectory { get; }
 
         void CreateRequiredDirectories();
 
         void DeleteWorkingDirectory();
 
-        IPackageTree RetrievePackage(string packageName);
-
-        IBuildMetaData BuildMetaData { get; }
+        List<IPackageTree> BuildNodes();
 
         IBuildMetaData GetBuildMetaData(string packageName);
 
+        IRevisionData GetRevisionData();
+
         IPackageTree GetRootPackageTree(DirectoryInfo rootFolder);
 
-        DirectoryInfo CurrentDirectory { get; }
-
-        FileInfo Nant { get; }
-
-        FileInfo Sn { get;}
-
-        DirectoryInfo WorkingDirectory { get; }
-
-        bool IsBuildNode { get; }
-        
-        DirectoryInfo OutputDirectory { get; }
-
-        List<IPackageTree> BuildNodes();
-
-        IRevisionData GetRevisionData();
+        IPackageTree RetrievePackage(string packageName);
     }
 }

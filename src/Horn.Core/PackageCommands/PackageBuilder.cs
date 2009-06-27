@@ -46,7 +46,9 @@ namespace Horn.Core.PackageCommands
 
                 ExecutePrebuild(nextMetaData, nextTree);
 
-                BuildComponentTree(nextMetaData.BuildEngine, nextTree);
+                log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine);
+
+                nextMetaData.BuildEngine.Build(processFactory, nextTree);
             }
         }
 
@@ -114,13 +116,6 @@ namespace Horn.Core.PackageCommands
 
             get.From(buildMetaData.SourceControl).ExportTo(componentTree);
         }
-
-        protected virtual void BuildComponentTree(BuildEngine buildEngine, IPackageTree componentTree)
-        {
-            log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), buildEngine.BuildFile);
-            buildEngine.Build(processFactory, componentTree);
-        }
-
 
 
         public PackageBuilder(IGet get, IProcessFactory processFactory)
