@@ -42,8 +42,7 @@ namespace Horn.Console
             catch (UnkownInstallPackageException unpe)
             {
                 log.Info(unpe.Message);
-            }
-
+            }            
         }
 
         private static void InitialiseIoC()

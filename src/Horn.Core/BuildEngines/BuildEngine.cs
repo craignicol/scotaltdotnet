@@ -124,25 +124,9 @@ namespace Horn.Core.BuildEngines
         {
             DirectoryInfo buildDir = GetDirectoryFromParts(packageTree.WorkingDirectory, OutputDirectory);
 
-            if(packageTree.OutputDirectory.Exists)
-                packageTree.OutputDirectory.Delete(true);
-
-            packageTree.OutputDirectory.Create();
-
-            foreach (var directory in buildDir.GetDirectories())
-            {
-                var artifact = Path.Combine(packageTree.OutputDirectory.FullName,
-                                            directory.Name);
-
-                if(Directory.Exists(artifact))
-                    Directory.Delete(artifact, true);
-
-                Directory.Move(directory.FullName, artifact);
-            }
-
             foreach (var file in buildDir.GetFiles())
             {
-                var outputFile = Path.Combine(packageTree.OutputDirectory.FullName, Path.GetFileName(file.FullName));
+                var outputFile = Path.Combine(packageTree.Result.FullName, Path.GetFileName(file.FullName));
 
                 if(File.Exists(outputFile))
                     File.Delete(outputFile);
