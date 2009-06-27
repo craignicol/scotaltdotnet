@@ -4,9 +4,7 @@ namespace Horn.Core.BuildEngines
 {
     public class DiagnosticsProcess : IProcess
     {
-
         private readonly Process process;
-
 
         public string GetLineOrOutput()
         {
@@ -20,14 +18,9 @@ namespace Horn.Core.BuildEngines
                 throw new ProcessFailedException(process.ExitCode);
         }
 
-
-
         public DiagnosticsProcess(Process process)
         {
             this.process = process;
         }
-
-
-
     }
 }

@@ -9,11 +9,9 @@ namespace Horn.Core.Spec.Unit.dsl
 {
     public class When_the_build_file_contains_a_prebuild_step : BaseDSLSpecification
     {
-
         private BooConfigReader configReader;
         protected DslFactory factory;
         private IDependencyResolver dependencyResolver;
-
 
         protected override void Before_each_spec()
         {
@@ -40,14 +38,12 @@ namespace Horn.Core.Spec.Unit.dsl
             configReader.Prepare();
         }
 
-
-                [Fact]
+        [Fact]
         public void Then_the_cmd_is_executed()
         {
             Assert.Equal("dir", configReader.BuildMetaData.PrebuildCommandList[0]);
             Assert.Equal("@echo \"hello\"", configReader.BuildMetaData.PrebuildCommandList[1]);
             Assert.Equal(2, configReader.BuildMetaData.PrebuildCommandList.Count);
         }
-
     }
 }

@@ -8,20 +8,16 @@ namespace Horn.Core.Dsl
 {
     public class RepositoryElement : IRepositoryElement
     {
-
         private IPackageTree repositoryTree;
         private IPackageTree packageTreeToExportTo;
         private const string PackageTreeNullErrorMessage =
             "You must call PrepareRepository before export in the RepositoryElement class.  The {0} member is null.";
-
 
         public string ExportPath { get; private set; }
 
         public string IncludePath { get; private set; }
 
         public string RepositoryName { get; private set; }
-
-
 
         public virtual void Export()
         {
@@ -52,8 +48,6 @@ namespace Horn.Core.Dsl
             return this;
         }
 
-
-
         protected virtual void CopyElement(FileSystemInfo source, FileSystemInfo destination)
         {
             if (source.FullName.PathIsFile())
@@ -67,16 +61,11 @@ namespace Horn.Core.Dsl
             directoryInfo.CopyToDirectory(destinationDirectory);
         }
 
-
-
         public RepositoryElement(string repositoryName, string includePath, string exportPath)
         {
             RepositoryName = repositoryName;
             IncludePath = includePath;
             ExportPath = exportPath;
         }
-
-
-
     }
 }

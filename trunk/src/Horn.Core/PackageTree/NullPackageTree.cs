@@ -7,7 +7,6 @@ namespace Horn.Core.PackageStructure
 {
     public class NullPackageTree : IPackageTree
     {
-
         public string BuildFile
         {
             get { throw new System.NotImplementedException(); }
@@ -91,8 +90,6 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
-
-
         public void Add(IPackageTree item)
         {
             throw new System.NotImplementedException();
@@ -142,8 +139,5 @@ namespace Horn.Core.PackageStructure
         {
             throw new System.NotImplementedException();
         }
-
-
-
     }
 }

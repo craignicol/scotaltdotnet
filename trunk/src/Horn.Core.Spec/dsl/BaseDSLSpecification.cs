@@ -13,7 +13,6 @@ namespace Horn.Core.Spec.Unit.dsl
 {
     public abstract class BaseDSLSpecification : Specification
     {
-
         protected const string Description = "A .NET build and dependency manager";
         protected const string SvnUrl = "http://scotaltdotnet.googlecode.com/svn/trunk/";
         protected const string FileName = "horn";
@@ -24,7 +23,6 @@ namespace Horn.Core.Spec.Unit.dsl
         protected DirectoryInfo rootDirectory;
         protected IPackageTree packageTree;
         protected IBuildConfigReader reader;
-
 
         public static IBuildMetaData GetBuildMetaDataInstance()
         {
@@ -64,8 +62,6 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.Equal(".", metaData.BuildEngine.SharedLibrary);
         }
 
-
-
         protected DirectoryInfo GetTestBuildConfigsFolder()
         {
             var pathToConfigs = Path.Combine(DirectoryHelper.GetBaseDirectory().ToLower().ResolvePath(),
@@ -73,8 +69,5 @@ namespace Horn.Core.Spec.Unit.dsl
 
             return new DirectoryInfo(pathToConfigs);
         }
-
-
-
     }
 }

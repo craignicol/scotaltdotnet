@@ -7,24 +7,21 @@ namespace Horn.Core.Dsl
 {
     public class BuildMetaData : IBuildMetaData
     {
-
         public BuildEngine BuildEngine { get; set; }
 
         public string Description { get; set; }
 
-                public List<SourceControl> ExportList{ get; set; }
+        public List<SourceControl> ExportList{ get; set; }
 
         public string InstallName { get; set; }
 
-                public List<string> PrebuildCommandList { get; set; }
+        public List<string> PrebuildCommandList { get; set; }
 
         public Dictionary<string, object> ProjectInfo { get; set; }
 
         public List<IRepositoryElement> RepositoryElementList { get; set; }
 
         public SourceControl SourceControl { get; set; }
-
-
 
         public BuildMetaData()
         {
@@ -33,8 +30,5 @@ namespace Horn.Core.Dsl
             RepositoryElementList = new List<IRepositoryElement>();
             PrebuildCommandList = new List<string>();
         }
-
-
-
     }
 }

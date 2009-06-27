@@ -13,13 +13,11 @@ namespace Horn.Core.Spec.Dependencies
 {
     public class When_We_Have_A_Single_Dependency : DirectorySpecificationBase
     {
-
         protected IBuildMetaData dependencyBuildMetaData;
         protected IBuildMetaData rootBuildMetaData;
         protected IDependencyTree dependencyTree;
         protected IPackageTree packageTree;
         protected IPackageTree dependentTree;
-
 
         protected override void Because()
         {
@@ -43,7 +41,6 @@ namespace Horn.Core.Spec.Dependencies
             dependencyTree = new DependencyTree(packageTree);
         }
 
-
         [Fact]
         public void Then_The_Dependency_Is_Built_Before_The_Root()
         {
@@ -58,13 +55,11 @@ namespace Horn.Core.Spec.Dependencies
 
     public class When_We_Have_A_Circular_Dependency : DirectorySpecificationBase
     {
-
         protected IBuildMetaData dependencyBuildMetaData;
         protected IBuildMetaData rootBuildMetaData;
         protected IDependencyTree dependencyTree;
         protected IPackageTree packageTree;
         protected IPackageTree dependentTree;
-
 
         protected override void Because()
         {
@@ -90,22 +85,18 @@ namespace Horn.Core.Spec.Dependencies
             dependentTree.Stub(x => x.RetrievePackage("root")).Return(packageTree);
         }
 
-
         [Fact]
         public void Then_An_Exception_Is_Raised()
         {
             Exception ex = Assert.Throws<CircularDependencyException>(() => new DependencyTree(packageTree));
             Assert.Equal("root is a dependent of itself", ex.Message);
         }
-
     }
 
     public class When_We_Have_A_Complex_Dependency : DirectorySpecificationBase
     {
-
         protected IDependencyTree dependencyTree;
         protected IPackageTree packageTree;
-
 
         protected override void Because()
         {
@@ -124,13 +115,11 @@ namespace Horn.Core.Spec.Dependencies
             }
         }
 
-
         [Fact]
         public void Then_No_Exception_Is_Raised()
         {
             dependencyTree = new DependencyTree(packageTree);
             Assert.NotNull(dependencyTree);
         }
-
     }
 }

@@ -8,11 +8,9 @@ using Horn.Core.Utils.Framework;
 
 namespace Horn.Core.Dsl
 {
-    public abstract partial class BooConfigReader
+    public abstract class BooConfigReader
     {
-
         private readonly IBuildMetaData _buildMetaData;
-
 
         public IBuildMetaData BuildMetaData
         {
@@ -27,11 +25,7 @@ namespace Horn.Core.Dsl
             }
         }
 
-
-
         public abstract void Prepare();
-
-
 
         [Meta]
         public static Expression build_with(ReferenceExpression builder, MethodInvocationExpression build, ReferenceExpression frameWorkVersion)
@@ -207,8 +201,6 @@ namespace Horn.Core.Dsl
                 );
         }
 
-
-
         public void AddDependencies(string[] dependencies)
         {
             Array.ForEach(dependencies, item =>
@@ -309,13 +301,10 @@ namespace Horn.Core.Dsl
             Global.package.PackageInfo.Clear();
         }
 
-
-
         private void SetBuildEngine(IBuildTool tool, string buildFile, FrameworkVersion version)
         {
             _buildMetaData.BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
         }
-
 
         public virtual void generate_strong_key()
         {
@@ -325,6 +314,5 @@ namespace Horn.Core.Dsl
         {
             _buildMetaData.BuildEngine.SharedLibrary = sharedLib;
         }
-
     }
 }

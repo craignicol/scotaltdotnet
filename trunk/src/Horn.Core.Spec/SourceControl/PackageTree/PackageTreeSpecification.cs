@@ -12,32 +12,30 @@ namespace Horn.Core.Spec.Unit.HornTree
 {
     public class When_Given_The_Package_Root_Directory : DirectorySpecificationBase
     {
-
         private IPackageTree rootTree;
-
 
         protected override void Because()
         {
             rootTree = new PackageTree(rootDirectory, null);
         }
 
-
         [Fact]
         public void Then_the_tree_root_is_the_root()
         {
             Assert.True(rootTree.IsRoot);
         }
+
         [Fact]
         public void Then_the_root_will_have_more_than_Children()
         {
             Assert.True(rootTree.Children.Length > 1);
         }
+
         [Fact]
         public void Then_The_CurrentDirectory_is_the_Root_Directory()
         {
             Assert.Equal(rootDirectory.FullName, rootTree.CurrentDirectory.FullName);
         }
-
     }
 
     public class When_A_PackageTree_Node_Contains_A_Build_File : DirectorySpecificationBase

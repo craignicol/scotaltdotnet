@@ -5,7 +5,6 @@ namespace Horn.Core.extensions
 {
     public static class FileSystemInfoExtensions
     {
-
         public static void CopyToDirectory(this DirectoryInfo source, DirectoryInfo destination)
         {
             if (destination.Exists)
@@ -185,8 +184,6 @@ namespace Horn.Core.extensions
                 }
             }
         }
-
-
 
     }
 }

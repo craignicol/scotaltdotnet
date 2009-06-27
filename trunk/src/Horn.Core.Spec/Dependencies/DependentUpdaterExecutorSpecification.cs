@@ -9,7 +9,6 @@ namespace Horn.Core.Spec.Dependencies
 
     public class when_executing_the_dependent_updaters_and_there_are_dependencies_to_update : dependent_updater_executor_context
     {
-
         protected override void Before_each_spec()
         {
             packageTree = CreateStub<IPackageTree>();
@@ -30,12 +29,10 @@ namespace Horn.Core.Spec.Dependencies
         {
             updater.AssertWasCalled(u => u.Update(Arg<DependentUpdaterContext>.Is.Anything));
         }
-
     }
 
     public class when_executing_the_dependent_updaters_and_there_are_no_dependencies_to_update : dependent_updater_executor_context
     {
-
         protected override void Before_each_spec()
         {
             packageTree = CreateStub<IPackageTree>();
@@ -50,12 +47,10 @@ namespace Horn.Core.Spec.Dependencies
             executor.Execute(packageTree, dependencyPaths, dependency);
         }
 
-
         [Fact]
         public void should_not_execute_the_updater()
         {
             updater.AssertWasNotCalled(u => u.Update(Arg<DependentUpdaterContext>.Is.Anything));
         }
-
     }
 }

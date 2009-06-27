@@ -7,7 +7,6 @@ namespace Horn.Core
 {
     public class RakeBuildTool : IBuildTool
     {
-
         public void Build(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
             throw new System.NotImplementedException();
@@ -27,8 +26,5 @@ namespace Horn.Core
         {
             throw new System.NotImplementedException();
         }
-
-
-
     }
 }

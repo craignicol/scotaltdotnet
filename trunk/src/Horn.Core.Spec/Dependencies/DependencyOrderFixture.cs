@@ -11,10 +11,8 @@ namespace Horn.Core.Spec.Dependencies
 {
     public class When_resolving_a_dependency_tree_with_a_circular_reference : DirectorySpecificationBase
     {
-
         protected IDependencyTree dependencyTree;
         protected PackageTreeStub packageTree;
-
 
         protected override void Before_each_spec()
         {
@@ -89,6 +87,5 @@ namespace Horn.Core.Spec.Dependencies
             Assert.Equal("castle", buildList[3].Name);
             Assert.Equal("nhibernate.memcached", buildList[4].Name);   
         }
-
     }
 }

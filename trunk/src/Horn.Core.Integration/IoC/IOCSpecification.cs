@@ -17,7 +17,6 @@ namespace Horn.Core.Spec.Integration
         {
             Assert.IsAssignableFrom<IBuildConfigReader>(IoC.Resolve<IBuildConfigReader>());
         }
-
     }
 
     public class When_A_SourceControl_Is_Requested_From_The_Container : IoCSpecificationBase
@@ -27,7 +26,6 @@ namespace Horn.Core.Spec.Integration
         {
             Assert.IsAssignableFrom<SVNSourceControl>(IoC.Resolve<SVNSourceControl>());
         }
-
     }
 
     public class When_An_Install_Key_Is_Requested_From_The_Container : IoCSpecificationBase
@@ -37,7 +35,6 @@ namespace Horn.Core.Spec.Integration
         {
             Assert.IsAssignableFrom<PackageBuilder>(IoC.Resolve<IPackageCommand>("install"));
         }
-
     }
 
     public class When_An_IProcessFactory_Is_Requested_From_The_Contaier : IoCSpecificationBase
@@ -47,7 +44,6 @@ namespace Horn.Core.Spec.Integration
         {
             Assert.IsAssignableFrom<DiagnosticsProcessFactory>(IoC.Resolve<IProcessFactory>());
         }
-
     }
 
     public class When_An_IDependencyDispatcher_Is_Requested_From_The_Contaier : IoCSpecificationBase
@@ -57,7 +53,6 @@ namespace Horn.Core.Spec.Integration
         {
             Assert.IsAssignableFrom<DependencyDispatcher>(IoC.Resolve<IDependencyDispatcher>());
         }
-
     }
 
     public class When_The_Package_Tree_Root_Is_Requested_From_The_Contaier : IoCSpecificationBase
@@ -67,6 +62,5 @@ namespace Horn.Core.Spec.Integration
         {
             Assert.IsAssignableFrom<IPackageTree>(IoC.Resolve<IPackageTree>());
         }
-
     }
 }

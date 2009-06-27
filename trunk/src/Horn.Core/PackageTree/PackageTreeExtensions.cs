@@ -4,7 +4,6 @@ namespace Horn.Core.PackageStructure
 {
     public static class PackageTreeExtensions
     {
-
         public static IEnumerable<IPackageTree> GetAllPackages(this IPackageTree parent)
         {
             foreach (var child in parent.Children)
@@ -17,8 +16,6 @@ namespace Horn.Core.PackageStructure
                 }
             }
         }
-
-
 
     }
 }

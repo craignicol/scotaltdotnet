@@ -15,17 +15,13 @@ namespace Horn.Core.Dependencies
     /// </summary>
     public class VisualStudioDependentUpdater : WithLogging, IDependentUpdater
     {
-
         private static readonly Regex regex = new Regex("Project\\(\".*\"\\).*\"(?<ProjectName>.*)\".*\"(?<ProjectPath>.*\\..*proj)\"",
                                               RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
         private const string NamespaceName = "http://schemas.microsoft.com/developer/msbuild/2003";
 
-
         public IDictionary<string, FileInfo> ProjectFiles { get; private set; }
 
         public HashSet<string> SolutionFiles { get; private set; }
-
-
 
         public void Update(DependentUpdaterContext dependentUpdaterContext)
         {
@@ -39,8 +35,6 @@ namespace Horn.Core.Dependencies
             UpdateProjectDependencies(firstAssemblyPath, dependentUpdaterContext.Dependency.Library);
         }
 
-
-
         protected virtual string GetVersionInfoFromAssembly(string filePath, string dependencyName)
         {
             const string template = "{0}, , processorArchitecture=MSIL";
@@ -48,8 +42,6 @@ namespace Horn.Core.Dependencies
             string info = assembly.GetType().AssemblyQualifiedName;
             return string.Format(template, info);
         }
-
-
 
         private void UpdateProjectDependencies(string dependencyAssemblyPath, string dependencyName)
         {
@@ -195,15 +187,10 @@ namespace Horn.Core.Dependencies
             InfoFormat("Dependency: Found {0} solution file(s)", SolutionFiles.Count());
         }
 
-
-
         public VisualStudioDependentUpdater()
         {
             ProjectFiles = new Dictionary<string, FileInfo>();
             SolutionFiles = new HashSet<string>();
         }
-
-
-
     }
 }

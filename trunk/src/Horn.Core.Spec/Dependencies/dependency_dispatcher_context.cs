@@ -9,7 +9,6 @@ namespace Horn.Core.Spec.Dependencies
 {
     public abstract class dependency_dispatcher_context : Specification
     {
-
         protected DependencyDispatcher dispatcher;
         protected IPackageTree packageTree;
         protected string targetDirectory;
@@ -44,8 +43,6 @@ namespace Horn.Core.Spec.Dependencies
             //    Directory.Delete(targetDirectory, true);
         }
 
-
-
         private void CreateFiles()
         {
             foreach (var dependency in dependencies)
@@ -62,8 +59,5 @@ namespace Horn.Core.Spec.Dependencies
             Directory.CreateDirectory(workingPath);
             Directory.CreateDirectory(dependencyPath);
         }
-
-
-
     }
 }

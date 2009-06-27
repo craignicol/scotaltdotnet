@@ -9,7 +9,6 @@ namespace Horn.Core.SCM
 {
     public class SVNSourceControl : SourceControl
     {
-
         public override string Revision
         {
             get
@@ -37,8 +36,6 @@ namespace Horn.Core.SCM
                 return info.Revision.ToString();
             }
         }
-
-
 
         protected override void Initialise(IPackageTree packageTree)
         {
@@ -97,8 +94,6 @@ namespace Horn.Core.SCM
             downloadMonitor = new DownloadMonitor(destination);
         }
 
-
-
         public SVNSourceControl()
         {
         }
@@ -112,8 +107,5 @@ namespace Horn.Core.SCM
             : base(url, exportPath)
         {
         }
-
-
-
     }
 }
