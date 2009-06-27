@@ -5,10 +5,7 @@ namespace Horn.Core.Dsl
 {
     public class ExportData
     {
-
         public SourceControl SourceControl { get; private set; }
-
-
 
         private void SetSourceControl(string url, string sourceControlType, string path)
         {
@@ -20,8 +17,6 @@ namespace Horn.Core.Dsl
             SourceControl = new SVNSourceControl(url, path);
         }
 
-
-
         public ExportData(string url, string sourceControlType)
         {
             SetSourceControl(url, sourceControlType, null);
@@ -31,8 +26,5 @@ namespace Horn.Core.Dsl
         {
             SetSourceControl(url, sourceControlType, path);
         }
-
-
-
     }
 }

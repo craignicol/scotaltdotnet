@@ -11,12 +11,10 @@ namespace Horn.Core.Integration.Builder
 {
     public abstract class BuildSpecificationBase : Specification
     {
-
         protected string workingPath;
         protected string outputPath;
         protected BuildEngine buildEngine;
         protected IPackageTree packageTree;
-
 
         public static bool IsRunningFromCIBuild
         {
@@ -25,8 +23,6 @@ namespace Horn.Core.Integration.Builder
                 return (DirectoryHelper.GetBaseDirectory().IndexOf("net-3.5") > -1);   
             }
         }
-
-
 
         public static string ResolveRootPath(string executionBase)
         {
@@ -38,8 +34,6 @@ namespace Horn.Core.Integration.Builder
 
             return new DirectoryInfo(executionBase).Parent.Parent.FullName;
         }
-
-
 
         protected string GetRootPath()
         {
@@ -67,8 +61,5 @@ namespace Horn.Core.Integration.Builder
 
             return path;
         }
-
-
-
     }
 }

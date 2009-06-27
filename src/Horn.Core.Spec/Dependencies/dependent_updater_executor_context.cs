@@ -7,13 +7,10 @@ namespace Horn.Core.Spec.Dependencies
 
     public abstract class dependent_updater_executor_context : Specification
     {
-
         protected DependentUpdaterExecutor executor;
         protected IDependentUpdater updater;
         protected Dependency dependency;
         protected IEnumerable<string> dependencyPaths;
         protected IPackageTree packageTree;
-
-
     }
 }

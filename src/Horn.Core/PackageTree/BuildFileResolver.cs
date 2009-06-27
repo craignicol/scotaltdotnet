@@ -6,11 +6,9 @@ namespace Horn.Core.PackageStructure
 {
     public class BuildFileResolver : IBuildFileResolver
     {
-
         private readonly string[] allowedFileExtensions = new[]{"boo", "rb"};
-//JFHCI
-        private string buildFile;
 
+        private string buildFile;
 
         public string BuildFile
         {
@@ -27,8 +25,6 @@ namespace Horn.Core.PackageStructure
                 return Path.GetExtension(buildFile).Substring(1);
             }
         }
-
-
 
         public BuildFileResolver Resolve(DirectoryInfo buildFolder, string fileName)
         {
@@ -52,8 +48,5 @@ namespace Horn.Core.PackageStructure
 
             return this;
         }
-
-
-
     }
 }

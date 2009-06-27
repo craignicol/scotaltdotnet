@@ -13,9 +13,7 @@ namespace Horn.Console
 {
     class Program
     {
-
         private static readonly ILog log = LogManager.GetLogger(typeof(Program));
-
 
         static void Main(string[] args)
         {
@@ -71,8 +69,5 @@ namespace Horn.Console
 
             return ret;
         }
-
-
-
     }
 }

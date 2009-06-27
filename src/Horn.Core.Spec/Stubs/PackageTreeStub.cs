@@ -8,12 +8,10 @@ namespace Horn.Core.Spec.Doubles
 {
     public class PackageTreeStub : IPackageTree
     {
-
         private readonly IBuildMetaData buildMetaData;
         private readonly string name;
         private readonly bool useInternalDictionary;
         private readonly Dictionary<string, IPackageTree> dependencyTrees = new Dictionary<string, IPackageTree>();
-
 
         public string BaseDirectory
         {
@@ -97,8 +95,6 @@ namespace Horn.Core.Spec.Doubles
             get { return new DirectoryInfo(Path.Combine(BaseDirectory, "working")).Parent; }
         }
 
-
-
         public void Add(IPackageTree item)
         {
             throw new NotImplementedException();
@@ -152,8 +148,6 @@ namespace Horn.Core.Spec.Doubles
             return dependencyTrees[packageName];
         }
 
-
-
         public PackageTreeStub(string baseDirectory)
         {
             BaseDirectory = baseDirectory;
@@ -166,8 +160,5 @@ namespace Horn.Core.Spec.Doubles
             this.useInternalDictionary = useInternalDictionary;
             BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         }
-
-
-
     }
 }

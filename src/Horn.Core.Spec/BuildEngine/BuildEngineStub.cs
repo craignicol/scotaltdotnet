@@ -7,10 +7,7 @@ namespace Horn.Core.Spec.BuildEngineSpecs
 {
     public class BuildToolStub : IBuildTool
     {
-
         public string PathToBuildFile { get; private set; }
-
-
 
         public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
@@ -35,9 +32,5 @@ namespace Horn.Core.Spec.BuildEngineSpecs
 
             return string.Empty;
         }
-
-
-
     }
-
 }

@@ -8,11 +8,9 @@ namespace Horn.Core.Integration.MetaDataSynchroniserFixtures
 {
     public class When_the_package_tree_does_not_exist_on_the_users_machine : TestBase
     {
-
         private IMetaDataSynchroniser metaDataSynchroniser;
         private readonly string rootPath = DirectoryHelper.GetTempDirectoryName();
         private IPackageTree packageTree;
-
 
         protected override void Before_each_spec()
         {
@@ -34,12 +32,10 @@ namespace Horn.Core.Integration.MetaDataSynchroniserFixtures
             metaDataSynchroniser.SynchronisePackageTree(packageTree);
         }
 
-
         [Fact]
         public void Then_the_package_tree_should_be_downloaded_to_the_remote_repository()
         {
             Assert.True(packageTree.Exists);
         }
-
     }
 }

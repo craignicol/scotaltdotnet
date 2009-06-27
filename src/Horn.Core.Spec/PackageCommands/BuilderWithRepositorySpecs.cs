@@ -14,12 +14,10 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 {
     public class When_the_metadata_has_a_repository_get : GetSpecificationBase
     {
-
         private PackageBuilder packageBuilder;
         private MockRepository mockRepository;
         private readonly SourceControlDouble sourceControlDouble = new SourceControlDouble("url1");
         private IRepositoryElement castleElementOne;
-
 
         protected override void Before_each_spec()
         {
@@ -54,7 +52,6 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             sourceControlDouble.Dispose();
         }
-
 
         [Fact]
         public void Then_the_parts_are_retrieved_from_the_repository()

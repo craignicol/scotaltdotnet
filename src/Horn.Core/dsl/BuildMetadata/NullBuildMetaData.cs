@@ -7,7 +7,6 @@ namespace Horn.Core.Dsl
 {
     public class NullBuildMetaData : IBuildMetaData
     {
-
         public BuildEngine BuildEngine
         {
             get { throw new System.NotImplementedException(); }
@@ -60,8 +59,5 @@ namespace Horn.Core.Dsl
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
         }
-
-
-
     }
 }

@@ -7,9 +7,7 @@ namespace Horn.Core.Dependencies
 {
     public class DependencyTree : IDependencyTree
     {
-
         private BuildTree buildTree;
-
 
         public IList<IPackageTree> BuildList
         {
@@ -27,14 +25,10 @@ namespace Horn.Core.Dependencies
             }
         }
 
-
-
         public IEnumerator<IPackageTree> GetEnumerator()
         {
             return BuildList.GetEnumerator();
         }
-
-
 
         private void CalculateDependencies(IPackageTree packageTree)
         {
@@ -89,8 +83,6 @@ namespace Horn.Core.Dependencies
             return GetEnumerator();
         }
 
-
-
         public DependencyTree(IPackageTree packageTree)
         {
             PackageTree = packageTree;
@@ -98,8 +90,6 @@ namespace Horn.Core.Dependencies
             CalculateDependencies(PackageTree);
         }
 
-
         private IPackageTree PackageTree { get; set; }
-
     }
 }

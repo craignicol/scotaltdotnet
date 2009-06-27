@@ -5,7 +5,6 @@ namespace Horn.Core.Spec.BuildEngineSpecs
 {
     public class StubProcessFactory : IProcessFactory 
     {
-
         public void ExcuteCommand(string command, string workingDirectory)
         {
             Console.WriteLine(command);
@@ -17,8 +16,5 @@ namespace Horn.Core.Spec.BuildEngineSpecs
         {
             return new StubProcess();
         }
-
-
-
     }
 }

@@ -12,9 +12,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
     public class When_The_Build_Config_Reader_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
-
         private IDependencyResolver dependencyResolver;
-
 
         protected override void Before_each_spec()
         {
@@ -36,7 +34,6 @@ namespace Horn.Core.Spec.Unit.dsl
             reader = new BooBuildConfigReader();
         }
 
-
         [Fact]
         public void Then_The_Config_Reader_Returns_The_Correct_MetaData()
         {
@@ -49,12 +46,10 @@ namespace Horn.Core.Spec.Unit.dsl
 
     public class When_SetDslFactory_Is_Not_Set : BaseDSLSpecification
     {
-
         protected override void Because()
         {
             reader = new BooBuildConfigReader();
         }
-
 
         [Fact]
         public void Then_An_Argument_Null_Exception_Is_Thrown()
@@ -66,7 +61,6 @@ namespace Horn.Core.Spec.Unit.dsl
 
     public class When_The_Build_File_Does_Not_Exist : BaseDSLSpecification
     {
-
         protected override void Because()
         {
             var directoryWithNoBooFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "nonexistent");
@@ -81,12 +75,10 @@ namespace Horn.Core.Spec.Unit.dsl
             reader = new BooBuildConfigReader();
         }
 
-
         [Fact]
         public void Then_The_Config_Reader_Throws_A_Custom_Exception()
         {
             Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(packageTree).GetBuildMetaData("horn"));
         }
-
     }
 }

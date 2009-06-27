@@ -7,7 +7,6 @@ namespace Horn.Core
 {
     public class MSBuildBuildTool : IBuildTool
     {
-
         public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, 
                         FrameworkVersion version)
         {
@@ -33,8 +32,5 @@ namespace Horn.Core
         {
             return FrameworkLocator.Instance[version].MSBuild.AssemblyPath;
         }
-
-
-
     }
 }

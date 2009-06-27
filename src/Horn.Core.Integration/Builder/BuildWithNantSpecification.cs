@@ -11,9 +11,7 @@ namespace Horn.Core.Integration.Builder
 
     public class When_The_Build_MetaData_Specifies_Nant : BuildSpecificationBase
     {
-
         protected string rootPath;
-
 
         protected override void Because()
         {
@@ -40,7 +38,6 @@ namespace Horn.Core.Integration.Builder
             buildEngine.AssignTasks(new[]{ "build "});
         }
 
-
         //TODO: Simply make this pass
         //[Fact]
         public void Then_Nant_Builds_The_Source()
@@ -50,6 +47,5 @@ namespace Horn.Core.Integration.Builder
             //TEST DOES NOT PASS
             Assert.True(File.Exists(Path.Combine(outputPath, "Horn.Core.dll")));
         }
-
     }
 }

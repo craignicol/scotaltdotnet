@@ -7,7 +7,6 @@ namespace Horn.Core.Spec.Doubles
 {
     public class BuildMetaDataStub : IBuildMetaData
     {
-
         public BuildEngines.BuildEngine BuildEngine { get; set; }
 
         public string Description { get; set; }
@@ -22,9 +21,7 @@ namespace Horn.Core.Spec.Doubles
 
         public List<IRepositoryElement> RepositoryElementList { get; set; }
 
-               public SourceControl SourceControl { get; set; }
-
-
+        public SourceControl SourceControl { get; set; }
 
         public BuildMetaDataStub(BuildEngines.BuildEngine buildEngine, SourceControl sourceControl)
         {
@@ -34,8 +31,5 @@ namespace Horn.Core.Spec.Doubles
             RepositoryElementList = new List<IRepositoryElement>();
             ExportList = new List<SourceControl>();
         }
-
-
-
     }
 }

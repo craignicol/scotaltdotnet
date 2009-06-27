@@ -5,7 +5,6 @@ namespace Horn.Core.extensions
 {
     public static class EnumerableExtensions
     {
-
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> items, Action<T> action)
         {
             foreach (var item in items)
@@ -13,8 +12,5 @@ namespace Horn.Core.extensions
 
             return items;
         }
-
-
-
     }
 }

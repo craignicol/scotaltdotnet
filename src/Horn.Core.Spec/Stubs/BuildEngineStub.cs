@@ -5,15 +5,12 @@ using Horn.Core.Utils.Framework;
 
 namespace Horn.Core.Spec.Doubles
 {
-    public class BuildEngineStub : BuildEngines.BuildEngine
+    public class BuildEngineStub : BuildEngine
     {
-
-        public override Horn.Core.BuildEngines.BuildEngine Build(IProcessFactory processFactory, Horn.Core.PackageStructure.IPackageTree packageTree)
+        public override BuildEngine Build(IProcessFactory processFactory, PackageStructure.IPackageTree packageTree)
         {
             return this;
         }
-
-
 
         public BuildEngineStub(IBuildTool buildTool, IDependencyDispatcher dependencyDispatcher, List<Dependency> dependencies)
             : base(buildTool, "somefile.build", FrameworkVersion.FrameworkVersion35, dependencyDispatcher)
@@ -25,8 +22,5 @@ namespace Horn.Core.Spec.Doubles
             : base(buildTool, buildFile, version, dependencyDispatcher)
         {
         }
-
-
-
     }
 }
