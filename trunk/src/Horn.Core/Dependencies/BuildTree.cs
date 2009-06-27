@@ -40,7 +40,9 @@ namespace Horn.Core.Dependencies
             {
                 buildTree.GetBuildList(buildList);
             }
+
             buildList.Add(Node);
+            
             return buildList;
         }
 

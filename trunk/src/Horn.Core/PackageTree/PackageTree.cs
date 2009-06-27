@@ -9,7 +9,6 @@ namespace Horn.Core.PackageStructure
 {
     public class PackageTree : IPackageTree
     {
-
         private readonly IMetaDataSynchroniser metaDataSynchroniser;
         private DirectoryInfo result;
         public const string RootPackageTreeName = ".horn";
@@ -17,7 +16,6 @@ namespace Horn.Core.PackageStructure
         private DirectoryInfo workingDirectory;
         private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
         private static readonly string[] libraryNodes = new[] {"lib", "debug", "buildengines"};
-
 
         public string BuildFile{ get; set; }
 
