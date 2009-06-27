@@ -5,11 +5,15 @@ namespace Horn.Core.Spec
 {
     public static class SpecificationHelper
     {
+
         public static IBuildMetaData GetBuildMetaData()
         {
             var buildMetaData = BaseDSLSpecification.GetBuildMetaDataInstance();
 
             return buildMetaData;
         }
+
+
+
     }
 }

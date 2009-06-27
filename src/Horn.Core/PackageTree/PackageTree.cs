@@ -9,8 +9,8 @@ namespace Horn.Core.PackageStructure
 {
     public class PackageTree : IPackageTree
     {
-        private readonly IMetaDataSynchroniser metaDataSynchroniser;
 
+        private readonly IMetaDataSynchroniser metaDataSynchroniser;
         public const string RootPackageTreeName = ".horn";
         private readonly IList<IPackageTree> children;
         private DirectoryInfo workingDirectory;
@@ -161,6 +161,11 @@ namespace Horn.Core.PackageStructure
             return GetBuildMetaData(packageTree);
         }
 
+        public IRevisionData GetRevisionData()
+        {
+            return new RevisionData(this);
+        }
+
         public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
         {
             IPackageTree root = new PackageTree(rootFolder, null);
@@ -171,11 +176,6 @@ namespace Horn.Core.PackageStructure
             metaDataSynchroniser.SynchronisePackageTree(root);
 
             return new PackageTree(rootFolder, null);            
-        }
-
-        public IRevisionData GetRevisionData()
-        {
-            return new RevisionData(this);
         }
 
         public void Remove(IPackageTree item)
@@ -238,6 +238,11 @@ namespace Horn.Core.PackageStructure
 
 
 
+        public PackageTree(IMetaDataSynchroniser metaDataSynchroniser)
+        {
+            this.metaDataSynchroniser = metaDataSynchroniser;
+        }
+
         public PackageTree(DirectoryInfo directory, IPackageTree parent)
         {
             Parent = parent;
@@ -264,9 +269,7 @@ namespace Horn.Core.PackageStructure
             }
         }
 
-        public PackageTree(IMetaDataSynchroniser metaDataSynchroniser)
-        {
-            this.metaDataSynchroniser = metaDataSynchroniser;
-        }
+
+
     }
 }

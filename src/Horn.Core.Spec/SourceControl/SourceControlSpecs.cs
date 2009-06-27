@@ -9,7 +9,9 @@ namespace Horn.Core.Spec.SCM
 {
     public class When_the_package_source_revision_does_not_exist : Specification
     {
+
         private SourceControlDouble sourceControl;
+
 
         protected override void Because()
         {
@@ -22,16 +24,20 @@ namespace Horn.Core.Spec.SCM
             sourceControl.Export(packageTree);
         }
 
+
         [Fact]
         public void Then_the_a_source_control_export_is_performed()
         {
             Assert.True(sourceControl.ExportWasCalled);
         }
+
     }
 
     public class When_the_scm_revision_is_greater_than_the_package_revision : Specification
     {
+
         private SourceControlDouble sourceControl;
+
 
         protected override void Because()
         {
@@ -44,16 +50,20 @@ namespace Horn.Core.Spec.SCM
             sourceControl.Export(packageTree);
         }
 
+
         [Fact]
         public void Then_the_a_source_control_export_is_performed()
         {
             Assert.True(sourceControl.ExportWasCalled);
         }
+
     }
 
     public class When_the_scm_revision_is_less_than_the_package_revision : Specification
     {
+
         private SourceControlDouble sourceControl;
+
 
         protected override void Because()
         {
@@ -64,18 +74,21 @@ namespace Horn.Core.Spec.SCM
             sourceControl.Export(packageTree);
         }
 
+
         [Fact]
         public void Then_the_a_source_control_export_is_not_performed()
         {
             Assert.False(sourceControl.ExportWasCalled);
         }
+
     }
 
     public class When_the_source_code_has_downloaded : DirectorySpecificationBase
     {
-        private SourceControl sourceControl;
 
+        private SourceControl sourceControl;
         private IPackageTree packageTree;
+
 
         protected override void Before_each_spec()
         {
@@ -89,6 +102,7 @@ namespace Horn.Core.Spec.SCM
             sourceControl.Export(packageTree);
         }
 
+
         [Fact]
         public void Then_the_svn_revision_is_recorded()
         {
@@ -96,5 +110,6 @@ namespace Horn.Core.Spec.SCM
 
             Assert.True(File.Exists(revisionFile));
         }
+
     }
 }

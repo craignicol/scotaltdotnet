@@ -21,11 +21,13 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 {
     public class When_The_Builder_Receives_An_Install_Switch : Specification
     {
+
         protected IDictionary<string, IList<string>> switches = new Dictionary<string, IList<string>>();
         protected IGet get;
         protected IBuildConfigReader buildConfigReader;
         protected IPackageTree wholeTree;
         protected IFileSystemProvider fileSystemProvider;
+
 
         protected override void Because()
         {
@@ -48,15 +50,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             wholeTree.Stub(x => x.OutputDirectory).Return(new DirectoryInfo(@"C:\somewhere\output"));
         }
 
-        [Fact]
-        public void Then_The_Builder_Coordinates_The_Build()
-        {
-            switches.Add("install", new List<string> { "horn" });
 
-            IPackageCommand command = new PackageBuilder(get, new StubProcessFactory());
-
-            command.Execute(wholeTree, switches);
-        }
 
         private IPackageTree GetComponentTree(out IBuildMetaData buildMetaData)
         {
@@ -102,13 +96,26 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             return buildMetaData;
         }
+
+
+        [Fact]
+        public void Then_The_Builder_Coordinates_The_Build()
+        {
+            switches.Add("install", new List<string> { "horn" });
+
+            IPackageCommand command = new PackageBuilder(get, new StubProcessFactory());
+
+            command.Execute(wholeTree, switches);
+        }
+
     }
 
     public class When_the_package_builder_receives_an_install_command_for_an_unknown_package : GetSpecificationBase
     {
-        private PackageBuilder packageBuilder;
 
+        private PackageBuilder packageBuilder;
         private Dictionary<string, IList<string>> args = new Dictionary<string, IList<string>>();
+
 
         protected override void Because()
         {
@@ -119,18 +126,21 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             args.Add("install", new List<string> { "unknownpackage" });
         }
 
+
         [Fact]
         public void Then_an_unknown_package_exception_is_thrown()
         {
             Assert.Throws<UnkownInstallPackageException>(() => packageBuilder.Execute(packageTree, args));
         }
+
     }
 
     public class When_the_package_builder_receives_a_rebuild_only_switch : GetSpecificationBase
     {
-        private PackageBuilder packageBuilder;
 
+        private PackageBuilder packageBuilder;
         private MockRepository mockRepository;
+
 
         protected override void Before_each_spec()
         {
@@ -159,10 +169,12 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             packageBuilder.Execute(packageTree, args);
         }
 
+
         [Fact]
         public void Then_source_control_get_is_not_called()
         {
             get.AssertWasNotCalled(x => x.From(Arg<SVNSourceControl>.Is.TypeOf));
         }
+
     }
 }

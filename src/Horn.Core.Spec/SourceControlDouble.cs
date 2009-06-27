@@ -9,9 +9,10 @@ namespace Horn.Core.Spec
 {
     public class SourceControlDouble : SVNSourceControl
     {
-        private FileInfo _tempFile;
 
+        private FileInfo _tempFile;
         public bool ExportWasCalled;
+
 
         public bool FileWasDownloaded
         {
@@ -21,11 +22,23 @@ namespace Horn.Core.Spec
             }
         }
 
+        public override string Revision
+        {
+            get
+            {
+                return long.MaxValue.ToString();
+            }
+        }
+
+
+
         public void Dispose()
         {
             if (_tempFile != null && _tempFile.Exists)
                 _tempFile.Delete();
         }
+
+
 
         protected override Thread StartMonitoring()
         {
@@ -44,14 +57,6 @@ namespace Horn.Core.Spec
             Console.WriteLine("In initialise");
         }
 
-        public override string Revision
-        {
-            get
-            {
-                return long.MaxValue.ToString();
-            }
-        }
-
         protected override string Download(FileSystemInfo destination)
         {
             Console.WriteLine("In Download");
@@ -68,28 +73,40 @@ namespace Horn.Core.Spec
             return long.MaxValue.ToString();
         }
 
+
+
         public SourceControlDouble(string url)
             : base(url)
         {
             ExportPath = string.Empty;
         }
+
+
+
     }
 
     public class SourceControlDoubleWithFakeFileSystem : SourceControlDouble
     {
+
         protected override void RecordCurrentRevision(IPackageTree tree, string revision)
         {
             Console.WriteLine(revision);
         }
 
+
+
         public SourceControlDoubleWithFakeFileSystem(string url)
             : base(url)
         {
         }
+
+
+
     }
 
     public class SourceControlDoubleWitholdRevision : SourceControlDouble
     {
+
         public override string Revision
         {
             get
@@ -98,9 +115,14 @@ namespace Horn.Core.Spec
             }
         }
 
+
+
         public SourceControlDoubleWitholdRevision(string url)
             : base(url)
         {
         }
+
+
+
     }
 }

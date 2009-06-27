@@ -7,8 +7,8 @@ namespace Horn.Core.PackageStructure
     public class BuildFileResolver : IBuildFileResolver
     {
 
-        private readonly string[] allowedFileExtensions = new[]{"boo", "rb"};//JFHCI
-
+        private readonly string[] allowedFileExtensions = new[]{"boo", "rb"};
+//JFHCI
         private string buildFile;
 
 

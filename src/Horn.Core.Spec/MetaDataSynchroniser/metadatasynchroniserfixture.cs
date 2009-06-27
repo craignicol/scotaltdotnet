@@ -9,7 +9,9 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
 
     public class When_the_package_tree_structure_does_not_exist : MetaSynchroniserFixtureBase
     {
+
         private IPackageTree packageTree;
+
 
         protected override void Because()
         {
@@ -18,12 +20,12 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
             packageTree = packageTreeBase.GetRootPackageTree(TreeHelper.GetTempEmptyPackageTree().Root.CurrentDirectory);
         }
 
+
         [Fact]
         public void Then_horn_creates_the_root_folder()
         {
             Assert.True(packageTree.CurrentDirectory.Exists);
         }
-
         [Fact]
         public void Then_the_package_tree_contains_more_than_one_build_file()
         {
@@ -31,5 +33,6 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
 
             Assert.True(files.Length > 0);
         }
+
     }
 }

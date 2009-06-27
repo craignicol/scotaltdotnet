@@ -5,8 +5,10 @@ namespace Horn.Framework.helpers
 {
     public static class PackageTreeHelper
     {
+
         public const string PACKAGE_WITHOUT_REVISION = "norevisionpackage";
         public  const string PACKAGE_WITH_REVISION = "log4net";
+
 
         public static DirectoryInfo CreateEmptyDirectoryStructureForTesting()
         {
@@ -81,6 +83,15 @@ namespace Horn.Framework.helpers
             }
         }
 
+        public static string CreateDirectory(string directoryPath, string newDirectoryName)
+        {
+            var combination = Path.Combine(directoryPath, newDirectoryName);
+
+            return CreateDirectory(combination);
+        }
+
+
+
         private static void CreateBuildEnginesStructure(string root)
         {
             var path = Path.Combine(root, "buildengines");
@@ -94,13 +105,6 @@ namespace Horn.Framework.helpers
             File.Copy(existingExecutablePath, path, true);
         }
 
-        public static string CreateDirectory(string directoryPath, string newDirectoryName)
-        {
-            var combination = Path.Combine(directoryPath, newDirectoryName);
-
-            return CreateDirectory(combination);
-        }
-
         private static string CreateDirectory(string directoryPath)
         {
             var directory = new DirectoryInfo(directoryPath);
@@ -109,6 +113,9 @@ namespace Horn.Framework.helpers
                 directory.Create();
 
             return directory.FullName;
-        }        
+        }
+
+
+        
     }
 }

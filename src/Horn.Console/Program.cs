@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using Horn.Core;
@@ -13,7 +13,9 @@ namespace Horn.Console
 {
     class Program
     {
+
         private static readonly ILog log = LogManager.GetLogger(typeof(Program));
+
 
         static void Main(string[] args)
         {
@@ -69,5 +71,8 @@ namespace Horn.Console
 
             return ret;
         }
+
+
+
     }
 }

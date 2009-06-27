@@ -1,24 +1,10 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 
 namespace Horn.Core.BuildEngines
 {
     public class DiagnosticsProcessFactory : IProcessFactory
     {
-
-        public IProcess GetProcess(string pathToBuildTool, string cmdLineArguments, string workingDirectoryPath)
-        {
-            var psi = new ProcessStartInfo(pathToBuildTool, cmdLineArguments)
-                          {
-                              UseShellExecute = false,
-                              RedirectStandardOutput = true,
-                              WorkingDirectory = workingDirectoryPath,
-                              Arguments = cmdLineArguments
-                          };
-
-            return new DiagnosticsProcess(Process.Start(psi));
-        }
-
         public void ExcuteCommand(string command, string workingDirectory)
         {
             var processStartInfo = new ProcessStartInfo("cmd.exe")
@@ -41,6 +27,19 @@ namespace Horn.Core.BuildEngines
             streamWriter.Close();
 
             process.WaitForExit();
+        }
+
+        public IProcess GetProcess(string pathToBuildTool, string cmdLineArguments, string workingDirectoryPath)
+        {
+            var psi = new ProcessStartInfo(pathToBuildTool, cmdLineArguments)
+                          {
+                              UseShellExecute = false,
+                              RedirectStandardOutput = true,
+                              WorkingDirectory = workingDirectoryPath,
+                              Arguments = cmdLineArguments
+                          };
+
+            return new DiagnosticsProcess(Process.Start(psi));
         }
     }
 }

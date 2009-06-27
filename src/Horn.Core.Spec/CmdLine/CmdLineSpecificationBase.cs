@@ -11,9 +11,6 @@ namespace Horn.Core.Spec.Unit.CmdLine
         private TextWriter textWriter;
         protected SwitchParser parser;
 
-        protected TextWriter Output { get { return textWriter; } }
-
-        protected bool IsValid { get; set; }
 
         protected override void Before_each_spec()
         {
@@ -26,18 +23,26 @@ namespace Horn.Core.Spec.Unit.CmdLine
         {
             Assert.True(Output.ToString().Contains(outoutShouldContain));
         }
+
+
+        protected TextWriter Output { get { return textWriter; } }
+        protected bool IsValid { get; set; }
+
     }
 
 
     public abstract class CmdLineErrorSpecificationBase : CmdLineSpecificationBase
     {
-        protected abstract string[] Args { get; }
-        protected abstract string ExpectErrorMessage { get; }
 
         protected override void Because()
         {
             parser = new SwitchParser(Output, Args);
             IsValid = parser.IsValid();
         }
+
+
+        protected abstract string[] Args { get; }
+        protected abstract string ExpectErrorMessage { get; }
+
     }
 }

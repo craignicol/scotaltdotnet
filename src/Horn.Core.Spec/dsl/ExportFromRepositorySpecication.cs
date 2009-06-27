@@ -10,10 +10,11 @@ namespace Horn.Core.Spec.Unit.dsl
 {
     public class When_retrieving_from_a_repository : Specification
     {
-        private BooConfigReader configReader;
 
+        private BooConfigReader configReader;
         protected DslFactory factory;
         private IDependencyResolver dependencyResolver;
+
 
         protected override void Before_each_spec()
         {
@@ -40,6 +41,7 @@ namespace Horn.Core.Spec.Unit.dsl
             configReader.Prepare();
         }
 
+
         [Fact]
         public void Then_the_model_contains_the_repository_details()
         {
@@ -50,22 +52,23 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.Equal("over", configReader.BuildMetaData.RepositoryElementList[1].IncludePath);
             Assert.Equal("out", configReader.BuildMetaData.RepositoryElementList[1].ExportPath);
         }
+
     }
 
     public class When_we_need_an_include_list : Specification
     {
+
         private const string RepositoryName = "repository";
-
         private const string IncludePath = "here";
-
         private const string ExportPath = "there";
-
         private RepositoryElement _repositoryElement;
+
 
         protected override void Because()
         {
             _repositoryElement = new RepositoryElement(RepositoryName, IncludePath, ExportPath);
         }
+
 
         [Fact]
         public void Then_the_model_can_express_this()
@@ -74,5 +77,6 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.Equal(IncludePath, _repositoryElement.IncludePath);
             Assert.Equal(ExportPath, _repositoryElement.ExportPath);
         }
+
     }
 }

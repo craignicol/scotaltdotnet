@@ -7,8 +7,10 @@ namespace Horn.Framework.helpers
 {
     public static class DirectoryHelper
     {
+
         public const string GuidExpression =
     @"^(\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\}{0,1})$";
+
 
         public static string GetTempDirectoryName()
         {
@@ -21,19 +23,6 @@ namespace Horn.Framework.helpers
             packageRoot.Create();
 
             return packageRoot.FullName;
-        }
-
-        private static void InitialiseTempTreeFolder(DirectoryInfo tempTreeRootFolder)
-        {
-            if (!tempTreeRootFolder.Exists)
-                tempTreeRootFolder.Create();
-
-            DeleteGuidDirectories(tempTreeRootFolder.Parent);
-
-            var revisionDataFile = new FileInfo(Path.Combine(tempTreeRootFolder.FullName, "revision.horn"));
-
-            if (revisionDataFile.Exists)
-                revisionDataFile.Delete();
         }
 
         public static void DeleteGuidDirectories(DirectoryInfo root)
@@ -58,5 +47,23 @@ namespace Horn.Framework.helpers
         {
             return AppDomain.CurrentDomain.BaseDirectory;
         }
+
+
+
+        private static void InitialiseTempTreeFolder(DirectoryInfo tempTreeRootFolder)
+        {
+            if (!tempTreeRootFolder.Exists)
+                tempTreeRootFolder.Create();
+
+            DeleteGuidDirectories(tempTreeRootFolder.Parent);
+
+            var revisionDataFile = new FileInfo(Path.Combine(tempTreeRootFolder.FullName, "revision.horn"));
+
+            if (revisionDataFile.Exists)
+                revisionDataFile.Delete();
+        }
+
+
+
     }
 }

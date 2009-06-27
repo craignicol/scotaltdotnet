@@ -9,6 +9,7 @@ namespace Horn.Core.Spec.Dependencies
 {
     public abstract class visual_studio_dependent_updater_context : Specification
     {
+
         protected VisualStudioDependentUpdater dependentUpdater;
         protected IEnumerable<string> dependencyFilePaths;
         protected string workingPath;
@@ -36,7 +37,62 @@ namespace Horn.Core.Spec.Dependencies
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;
+        protected PackageTreeStub _packageTreeStub;
+
+
+        protected override void Before_each_spec()
+        {
+            workingPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Guid.NewGuid().ToString());
+            dependencyFilePaths = new[] {Path.Combine(workingPath, dependencyFilename) };
+
+            _packageTreeStub = CreateStub<PackageTreeStub>(new[] {workingPath});
+
+            CreateDirectories();
+            CreateDummySolutionFile();
+            CreateDummyProjectFile();
+
+            dependentUpdater = new VisualStudioDependentUpdaterDouble();
+
+            updaterContext = new DependentUpdaterContext(_packageTreeStub, dependencyFilePaths, new Dependency("", Path.GetFileNameWithoutExtension(dependencyFilename)));
+        }
+
+        protected override void Because() { }
+
+        protected override void After_each_spec()
+        {
+            if (Directory.Exists(workingPath))
+                Directory.Delete(workingPath, true);
+        }
+
+
+
+        private void CreateDummyProjectFile()
+        {
+            string projectDirectory = Path.Combine(_packageTreeStub.WorkingDirectory.FullName, "Fake.Project");
+            projectPath = Path.Combine(projectDirectory, "Fake.Project.csproj");
+            var info = new DirectoryInfo(projectDirectory);
+
+            if ( !info.Exists)
+                info.Create();
+
+            File.WriteAllText(projectPath, projectContents);
+        }
+
+        private void CreateDirectories()
+        {
+            Directory.CreateDirectory(workingPath);
+            _packageTreeStub.WorkingDirectory.Create();
+        }
+
+        private void CreateDummySolutionFile()
+        {
+            string solutionPath = Path.Combine(_packageTreeStub.WorkingDirectory.FullName, "dummy.sln");
+            File.WriteAllText(solutionPath, solutionContents);
+        }
+
+
+TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
@@ -89,7 +145,7 @@ namespace Horn.Core.Spec.Dependencies
     <None Include=""Model\SourceControl.cd"" />
   </ItemGroup>
   <Import Project=""$(MSBuildToolsPath)\Microsoft.CSharp.targets"" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name=""BeforeBuild"">
   </Target>
@@ -97,54 +153,6 @@ namespace Horn.Core.Spec.Dependencies
   </Target>
   -->
 </Project>";
-        protected PackageTreeStub _packageTreeStub;
 
-        protected override void Before_each_spec()
-        {
-            workingPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Guid.NewGuid().ToString());
-            dependencyFilePaths = new[] {Path.Combine(workingPath, dependencyFilename) };
-
-            _packageTreeStub = CreateStub<PackageTreeStub>(new[] {workingPath});
-
-            CreateDirectories();
-            CreateDummySolutionFile();
-            CreateDummyProjectFile();
-
-            dependentUpdater = new VisualStudioDependentUpdaterDouble();
-
-            updaterContext = new DependentUpdaterContext(_packageTreeStub, dependencyFilePaths, new Dependency("", Path.GetFileNameWithoutExtension(dependencyFilename)));
-        }
-
-        protected override void Because() { }
-
-        private void CreateDummyProjectFile()
-        {
-            string projectDirectory = Path.Combine(_packageTreeStub.WorkingDirectory.FullName, "Fake.Project");
-            projectPath = Path.Combine(projectDirectory, "Fake.Project.csproj");
-            var info = new DirectoryInfo(projectDirectory);
-
-            if ( !info.Exists)
-                info.Create();
-
-            File.WriteAllText(projectPath, projectContents);
-        }
-
-        private void CreateDirectories()
-        {
-            Directory.CreateDirectory(workingPath);
-            _packageTreeStub.WorkingDirectory.Create();
-        }
-
-        protected override void After_each_spec()
-        {
-            if (Directory.Exists(workingPath))
-                Directory.Delete(workingPath, true);
-        }
-
-        private void CreateDummySolutionFile()
-        {
-            string solutionPath = Path.Combine(_packageTreeStub.WorkingDirectory.FullName, "dummy.sln");
-            File.WriteAllText(solutionPath, solutionContents);
-        }
     }
 }

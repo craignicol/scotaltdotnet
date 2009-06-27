@@ -25,11 +25,6 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
-        public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
-        {
-            throw new NotImplementedException();
-        }
-
         public DirectoryInfo CurrentDirectory
         {
             get { throw new System.NotImplementedException(); }
@@ -70,15 +65,15 @@ namespace Horn.Core.PackageStructure
             get { throw new System.NotImplementedException(); }
         }
 
-        public DirectoryInfo Result
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         public IPackageTree Parent
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
+        }
+
+        public DirectoryInfo Result
+        {
+            get { throw new NotImplementedException(); }
         }
 
         public IPackageTree Root
@@ -131,6 +126,11 @@ namespace Horn.Core.PackageStructure
         public IRevisionData GetRevisionData()
         {
             throw new System.NotImplementedException();
+        }
+
+        public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
+        {
+            throw new NotImplementedException();
         }
 
         public void Remove(IPackageTree item)

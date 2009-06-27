@@ -5,11 +5,9 @@ namespace Horn.Core.Dependencies
 {
     public class BuildTree
     {
-
         private IList<BuildTree> Children;
         private BuildTree Parent;
         private IPackageTree Node;
-
 
         public BuildTree AddChild(IPackageTree node) 
         {
@@ -26,8 +24,6 @@ namespace Horn.Core.Dependencies
         {
             return GetBuildList(new HashSet<IPackageTree>());
         }
-
-
 
         private IList<IPackageTree> GetAncestors(IList<IPackageTree> ancestorList)
         {
@@ -48,8 +44,6 @@ namespace Horn.Core.Dependencies
             return buildList;
         }
 
-
-
         public BuildTree(IPackageTree node)
             : this(node, new List<BuildTree>(), null)
         {
@@ -66,8 +60,5 @@ namespace Horn.Core.Dependencies
             Children = children;
             Node = node;
         }
-
-
-
     }
 }

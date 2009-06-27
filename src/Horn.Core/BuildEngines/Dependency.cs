@@ -6,12 +6,6 @@ namespace Horn.Core.BuildEngines
 
         public string PackageName { get; private set; }
 
-        public Dependency(string package, string library)
-        {
-            PackageName = package;
-            Library = library;
-        }
-
         public static Dependency Parse(string item)
         {
             return new Dependency(item.Split('|')[0], item.Split('|')[1]);
@@ -20,6 +14,12 @@ namespace Horn.Core.BuildEngines
         public override string ToString()
         {
             return string.Format("{0}|{1}", Library, PackageName);
+        }
+
+        public Dependency(string package, string library)
+        {
+            PackageName = package;
+            Library = library;
         }
     }
 }

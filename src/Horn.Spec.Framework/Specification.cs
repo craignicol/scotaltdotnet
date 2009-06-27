@@ -2,6 +2,7 @@ using Rhino.Mocks;
 
 public abstract class Specification : TestBase
 {
+
     protected static T CreateStub<T>() where T : class
     {
         return MockRepository.GenerateStub<T>();
@@ -11,4 +12,7 @@ public abstract class Specification : TestBase
     {
         return MockRepository.GenerateStub<T>(param);
     }
+
+
+
 }

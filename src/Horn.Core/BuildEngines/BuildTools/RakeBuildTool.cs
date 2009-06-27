@@ -7,12 +7,13 @@ namespace Horn.Core
 {
     public class RakeBuildTool : IBuildTool
     {
-        public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
+
+        public void Build(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
             throw new System.NotImplementedException();
         }
 
-        public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)
+        public string CommandLineArguments(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
         {
             throw new System.NotImplementedException();
         }
@@ -22,9 +23,12 @@ namespace Horn.Core
             throw new System.NotImplementedException();
         }
 
-        public void Build(string pathToBuildFile, BuildEngine buildEngine, IPackageTree packageTree, FrameworkVersion version)
+        public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)
         {
             throw new System.NotImplementedException();
         }
+
+
+
     }
 }

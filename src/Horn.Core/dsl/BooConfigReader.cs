@@ -10,7 +10,9 @@ namespace Horn.Core.Dsl
 {
     public abstract partial class BooConfigReader
     {
+
         private readonly IBuildMetaData _buildMetaData;
+
 
         public IBuildMetaData BuildMetaData
         {
@@ -25,7 +27,11 @@ namespace Horn.Core.Dsl
             }
         }
 
+
+
         public abstract void Prepare();
+
+
 
         [Meta]
         public static Expression build_with(ReferenceExpression builder, MethodInvocationExpression build, ReferenceExpression frameWorkVersion)
@@ -201,6 +207,8 @@ namespace Horn.Core.Dsl
                 );
         }
 
+
+
         public void AddDependencies(string[] dependencies)
         {
             Array.ForEach(dependencies, item =>
@@ -254,6 +262,8 @@ namespace Horn.Core.Dsl
             _buildMetaData.RepositoryElementList.AddRange(elements);
         }
 
+
+
         protected void msbuild(string buildFile, string frameWorkVersion)
         {
             var version = (FrameworkVersion)Enum.Parse(typeof(FrameworkVersion), frameWorkVersion);
@@ -299,19 +309,22 @@ namespace Horn.Core.Dsl
             Global.package.PackageInfo.Clear();
         }
 
+
+
         private void SetBuildEngine(IBuildTool tool, string buildFile, FrameworkVersion version)
         {
             _buildMetaData.BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
         }
 
+
         public virtual void generate_strong_key()
         {
             _buildMetaData.BuildEngine.GenerateStrongKey = true;
         }
-
         public void shared_library(string sharedLib)
         {
             _buildMetaData.BuildEngine.SharedLibrary = sharedLib;
         }
+
     }
 }

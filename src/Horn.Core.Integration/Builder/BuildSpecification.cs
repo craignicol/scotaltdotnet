@@ -12,6 +12,7 @@ namespace Horn.Core.Integration.Builder
 
     public class When_The_Build_Meta_Data_Specifies_MSBuild : BuildSpecificationBase
     {
+
         protected override void Because()
         {
             string rootPath = GetRootPath();
@@ -25,6 +26,7 @@ namespace Horn.Core.Integration.Builder
             buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>()){OutputDirectory = "."};
         }
 
+
         [Fact]
         public void Then_MSBuild_Compiles_The_Source()
         {
@@ -32,15 +34,16 @@ namespace Horn.Core.Integration.Builder
 
             Assert.True(File.Exists(Path.Combine(outputPath, "Horn.Core.dll")));
         }
+
     }
 
     public class When_The_Build_Meta_Data_Specifies_A_Dependency : BuildSpecificationBase
     {
+
         private string dependentFilename;
-
         private IDependentUpdaterExecutor updaterExecutor;
-
         private MockRepository mockRepository;
+
 
         protected override void Because()
         {
@@ -79,6 +82,7 @@ namespace Horn.Core.Integration.Builder
             packageTree.Stub(x => x.RetrievePackage("dependency")).Return(dependentTree);
         }
 
+
         [Fact]
         public void Then_The_Build_Copies_The_Dependency()
         {
@@ -88,5 +92,6 @@ namespace Horn.Core.Integration.Builder
 
             updaterExecutor.AssertWasCalled(x => x.Execute(Arg<IPackageTree>.Is.TypeOf, Arg<IEnumerable<string>>.Is.TypeOf, Arg<Dependency>.Is.TypeOf));
         }
+
     }
 }

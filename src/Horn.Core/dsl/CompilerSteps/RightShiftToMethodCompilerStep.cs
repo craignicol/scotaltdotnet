@@ -5,6 +5,7 @@ namespace Horn.Core.Dsl
 {
     public class RightShiftToMethodCompilerStep : AbstractTransformerCompilerStep
     {
+
         public override void OnBlockExpression(BlockExpression node)
         {
             var dependencies = new ArrayLiteralExpression();
@@ -25,6 +26,13 @@ namespace Horn.Core.Dsl
 
             ReplaceCurrentNode(replacementMethod);
         }
+
+        public override void Run()
+        {
+            Visit(CompileUnit);
+        }
+
+
 
         protected virtual void OnMethodInvocationExpression(ArrayLiteralExpression dependencies, MethodInvocationExpression expression)
         {
@@ -48,9 +56,7 @@ namespace Horn.Core.Dsl
             dependencies.Items.Add(stringExpression);
         }
 
-        public override void Run()
-        {
-            Visit(CompileUnit);
-        }
+
+
     }
 }

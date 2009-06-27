@@ -9,6 +9,7 @@ namespace Horn.Core.Spec.Dependencies
 {
     public abstract class dependency_dispatcher_context : Specification
     {
+
         protected DependencyDispatcher dispatcher;
         protected IPackageTree packageTree;
         protected string targetDirectory;
@@ -17,6 +18,7 @@ namespace Horn.Core.Spec.Dependencies
         protected string dependencyPath;
         protected Dependency[] dependencies;
         protected IDependentUpdaterExecutor dependentUpdater;
+
 
         protected override void Before_each_spec()
         { 
@@ -36,6 +38,14 @@ namespace Horn.Core.Spec.Dependencies
             dispatcher = new DependencyDispatcher(dependentUpdater);
         }
 
+        protected override void After_each_spec()
+        {
+            //if (Directory.Exists(targetDirectory))
+            //    Directory.Delete(targetDirectory, true);
+        }
+
+
+
         private void CreateFiles()
         {
             foreach (var dependency in dependencies)
@@ -53,10 +63,7 @@ namespace Horn.Core.Spec.Dependencies
             Directory.CreateDirectory(dependencyPath);
         }
 
-        protected override void After_each_spec()
-        {
-            //if (Directory.Exists(targetDirectory))
-            //    Directory.Delete(targetDirectory, true);
-        }
+
+
     }
 }

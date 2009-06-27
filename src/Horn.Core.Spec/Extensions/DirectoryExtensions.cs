@@ -7,8 +7,10 @@ namespace Horn.Core.Spec.Extensions
 {
     public class When_Copying_From_A_Folder : Specification
     {
+
         private DirectoryInfo source;
         private DirectoryInfo destination;
+
 
         protected override void Because()
         {
@@ -19,6 +21,7 @@ namespace Horn.Core.Spec.Extensions
             source.CopyToDirectory(destination);
         }
 
+
         //[Fact], too slow to be useful
         public void Then_SubFolders_And_Files_Are_Copied()
         {
@@ -26,5 +29,6 @@ namespace Horn.Core.Spec.Extensions
 
             Assert.True(destination.GetFiles().Length > 0);            
         }
+
     }
 }

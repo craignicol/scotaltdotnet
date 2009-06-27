@@ -4,6 +4,7 @@ namespace Horn.Core.Spec.Integration
 {
     public class IoCSpecificationBase : Specification
     {
+
         protected override void Before_each_spec()
         {
             var resolver = new WindsorDependencyResolver();
@@ -13,6 +14,9 @@ namespace Horn.Core.Spec.Integration
 
         protected override void Because()
         {
-        }        
+        }
+
+
+        
     }
 }

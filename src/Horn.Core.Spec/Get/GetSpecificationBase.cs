@@ -8,12 +8,14 @@ namespace Horn.Core.Spec.Unit.GetSpecs
 
     public abstract class GetSpecificationBase : DirectorySpecificationBase
     {
+
         protected IGet get;
         protected IFileSystemProvider fileSystemProvider;
         protected SourceControlDouble sourceControl;
         protected Package package;
         protected IBuildMetaData buildMetaData;
         protected IPackageTree packageTree;
+
 
         protected override void Before_each_spec()
         {   
@@ -27,5 +29,8 @@ namespace Horn.Core.Spec.Unit.GetSpecs
 
             fileSystemProvider = CreateStub<IFileSystemProvider>();
         }
+
+
+
     }
 }
