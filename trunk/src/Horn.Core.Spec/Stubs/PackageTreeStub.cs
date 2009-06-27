@@ -39,6 +39,11 @@ namespace Horn.Core.Spec.Doubles
             get { throw new NotImplementedException(); }
         }
 
+        public DirectoryInfo Result
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public IPackageTree Root
         {
             get { throw new NotImplementedException(); }
