@@ -31,5 +31,16 @@ namespace core.tests
 
             return ret;
         }
+
+        protected void SaveOrUpdateEntity(object entity)
+        {
+            using(var session = _sessionFactory.OpenSession())
+            using(var tx = session.BeginTransaction())
+            {
+                session.SaveOrUpdate(entity);
+
+                tx.Commit();
+            }
+        }
     }
 }

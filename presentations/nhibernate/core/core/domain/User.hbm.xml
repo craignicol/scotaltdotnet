@@ -4,8 +4,14 @@
     <id name="Uid" type="System.Guid">
       <generator class="guid.comb"/>
     </id>
+    <many-to-one name="Role" column="roleid" class="core.domain.Role, core" not-found="exception" lazy="proxy" not-null="true"/>
     <property name="FirstName" type="String" length="100" not-null="true"/>
     <property name="Surname" type="String" length="100" not-null="true"/>
     <property name="Email" type="String" length="200" not-null="true"/>
+    <map name="Permissions" table="UserPermissions" lazy="true" cascade="none">
+      <key column="userid"/>
+      <index column="Name" type="String"/>
+      <many-to-many class="core.domain.Permission,core" column="permissionid"/>
+    </map>
   </class>
 </hibernate-mapping>

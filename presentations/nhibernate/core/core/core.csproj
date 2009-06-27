@@ -134,12 +134,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Blank.cs" />
+    <Compile Include="domain\Permission.cs" />
+    <Compile Include="domain\Role.cs" />
     <Compile Include="domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="blank.hbm.xml" />
+    <EmbeddedResource Include="blank.hbm.xml" />
+    <EmbeddedResource Include="domain\Role.hbm.xml" />
     <EmbeddedResource Include="domain\User.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="domain\Permission.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

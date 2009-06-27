@@ -9,19 +9,6 @@ namespace core.tests.SchemaGen
     [TestFixture]
     public class A_SchemaGen_Fixture
     {
-        [Ignore]
-        public void GenerateSchema()
-        {
-            var cfg = new Configuration()
-                        .AddAssembly(typeof(Blank).Assembly);
-
-            var export = new SchemaExport(cfg);
-
-            export.Drop(true, true);
-
-            export.Create(true, true);
-        }
-
         [Test]
         public virtual void GenerateUpdate()
         {
