@@ -6,6 +6,7 @@ namespace Horn.Core.extensions
 {
     public static class StringExtensions
     {
+
         public static string RemoveDebugFolderParts(this string part)
         {            
             var ret = part.Replace("bin\\x86\\Debug\\", string.Empty).Replace("bin\\Debug", string.Empty);
@@ -17,5 +18,8 @@ namespace Horn.Core.extensions
         {
             return Regex.IsMatch(text, @"^\d+$");
         }
+
+
+
     }
 }

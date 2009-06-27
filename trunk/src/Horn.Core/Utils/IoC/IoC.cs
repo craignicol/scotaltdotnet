@@ -1,7 +1,9 @@
 
 public static class IoC
 {
+
     private static IDependencyResolver dependencyResolver;
+
 
     public static void InitializeWith(IDependencyResolver resolver)
     {
@@ -17,6 +19,9 @@ public static class IoC
     {
         return dependencyResolver.Resolve<T>(key);
     }
+
+
+
 }
 
 public interface IDependencyResolver

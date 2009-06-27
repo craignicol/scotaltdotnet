@@ -14,7 +14,9 @@ namespace Horn.Core.Utils.IoC
 {
     public class WindsorDependencyResolver : IDependencyResolver
     {
+
         private readonly WindsorContainer innerContainer;
+
 
         public T Resolve<T>()
         {
@@ -25,6 +27,8 @@ namespace Horn.Core.Utils.IoC
         {
             return innerContainer.Resolve<T>(key);
         }
+
+
 
         public WindsorDependencyResolver()
         {
@@ -105,5 +109,8 @@ namespace Horn.Core.Utils.IoC
                     .WithService.FirstInterface().Configure(config => config.LifeStyle.Transient)
                 );
         }
+
+
+
     }
 }

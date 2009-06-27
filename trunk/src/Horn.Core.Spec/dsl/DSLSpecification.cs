@@ -11,10 +11,11 @@ namespace Horn.Core.Spec.Unit.dsl
 
     public class When_Horn_Receives_A_Request_For_A_Component : BaseDSLSpecification
     {
-        private BooConfigReader configReader;
 
+        private BooConfigReader configReader;
         protected DslFactory factory;
         private IDependencyResolver dependencyResolver;
+
 
         protected override void Before_each_spec()
         {
@@ -41,17 +42,7 @@ namespace Horn.Core.Spec.Unit.dsl
             configReader.Prepare();
         }
 
-        [Fact]
-        public void Then_Horn_Returns_The_Component_DSL()
-        {
-            AssertHornMetaData(configReader);
-        }
 
-        [Fact]
-        public void Should_Resolve_The_Appropriate_SourceControl()
-        {
-            dependencyResolver.AssertWasCalled(r => r.Resolve<SVNSourceControl>());
-        }
 
         private void AssertHornMetaData(BooConfigReader reader)
         {
@@ -81,5 +72,18 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(3, reader.PackageMetaData.PackageInfo.Count);
         }
+
+
+        [Fact]
+        public void Then_Horn_Returns_The_Component_DSL()
+        {
+            AssertHornMetaData(configReader);
+        }
+        [Fact]
+        public void Should_Resolve_The_Appropriate_SourceControl()
+        {
+            dependencyResolver.AssertWasCalled(r => r.Resolve<SVNSourceControl>());
+        }
+
     }
 }

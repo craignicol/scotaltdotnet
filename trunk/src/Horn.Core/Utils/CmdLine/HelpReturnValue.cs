@@ -7,5 +7,5 @@ namespace Horn.Core.Utils.CmdLine
     /// </summary>
     public class HelpReturnValue : Dictionary<string, IList<string>>
     {
-    }
+}
 }

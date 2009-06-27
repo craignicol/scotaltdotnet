@@ -15,11 +15,11 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 {
     public class When_the_meta_data_has_a_prebuild_list : GetSpecificationBase
     {
+
         private string testFile;
-
         private PackageBuilder packageBuilder;
-
         private MockRepository mockRepository;
+
 
         protected override void Before_each_spec()
         {
@@ -60,16 +60,20 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             packageBuilder.Execute(packageTree, args);
         }
 
-        [Fact]
-        public void Then_the_prebuild_commands_are_executed()
-        {
-            Assert.True(File.Exists(testFile));
-        }
+
 
         private void DeleteTestFile()
         {
             if (File.Exists(testFile))
                 File.Delete(testFile);
         }
+
+
+        [Fact]
+        public void Then_the_prebuild_commands_are_executed()
+        {
+            Assert.True(File.Exists(testFile));
+        }
+
     }
 }

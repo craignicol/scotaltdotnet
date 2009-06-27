@@ -14,6 +14,7 @@ namespace Horn.Core.Spec.helpers
 {
     public static class TreeHelper
     {
+
         public static IPackageTree GetTempEmptyPackageTree()
         {
             var treeDirectory = PackageTreeHelper.CreateEmptyDirectoryStructureForTesting();
@@ -84,5 +85,8 @@ namespace Horn.Core.Spec.helpers
             return packageTree; 
 
         }
+
+
+
     }
 }

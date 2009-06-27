@@ -10,12 +10,13 @@ namespace Horn.Core.Spec.RepositorySpecs
 {
     public abstract class RepositoryElementSpecBase : Specification
     {
+
         protected RepositoryElementStub repositoryElement;
         protected IPackageTree packageTree;
         protected IGet get;
         protected IDependencyResolver dependencyResolver;
-
         protected MockRepository mockRepository = new MockRepository();
+
 
         protected override void Before_each_spec()
         {
@@ -37,5 +38,8 @@ namespace Horn.Core.Spec.RepositorySpecs
 
             IoC.InitializeWith(dependencyResolver);
         }
+
+
+
     }
 }

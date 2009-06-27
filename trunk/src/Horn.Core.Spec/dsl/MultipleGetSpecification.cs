@@ -9,10 +9,11 @@ namespace Horn.Core.Spec.Unit.dsl
 {
     public class When_the_build_file_contains_mulitple_export_steps : BaseDSLSpecification
     {
-        private BooConfigReader configReader;
 
+        private BooConfigReader configReader;
         protected DslFactory factory;
         private IDependencyResolver dependencyResolver;
+
 
         protected override void Before_each_spec()
         {
@@ -39,6 +40,7 @@ namespace Horn.Core.Spec.Unit.dsl
             configReader.Prepare();
         }
 
+
         [Fact]
         public void Then_the_model_contains_multiple_exports()
         {
@@ -49,20 +51,22 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.IsAssignableFrom(typeof(SVNSourceControl), configReader.BuildMetaData.ExportList[0]);
             Assert.IsAssignableFrom(typeof(SVNSourceControl), configReader.BuildMetaData.ExportList[1]);
         }
+
     }
 
     public class When_we_need_an_export_list : Specification
     {
+
         private const string Url = "http://scotaltdotnet.googlecode.com/svn/trunk/src/one";
-
         private const string ExportToPath = @"C:\exportto";
-
         private ExportData exportData;
+
 
         protected override void Because()
         {
             exportData = new ExportData(Url, "svn", ExportToPath);
         }
+
 
         [Fact]
         public void Then_the_model_can_express_this()
@@ -71,5 +75,6 @@ namespace Horn.Core.Spec.Unit.dsl
             Assert.Equal(ExportToPath, exportData.SourceControl.ExportPath);
             Assert.IsAssignableFrom(typeof (SVNSourceControl), exportData.SourceControl);
         }
+
     }
 }

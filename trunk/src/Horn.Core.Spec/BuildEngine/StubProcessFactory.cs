@@ -5,10 +5,6 @@ namespace Horn.Core.Spec.BuildEngineSpecs
 {
     public class StubProcessFactory : IProcessFactory 
     {
-        public IProcess GetProcess(string pathToBuildTool, string cmdLineArguments, string workingDirectoryPath)
-        {
-            return new StubProcess();
-        }
 
         public void ExcuteCommand(string command, string workingDirectory)
         {
@@ -16,5 +12,13 @@ namespace Horn.Core.Spec.BuildEngineSpecs
 
             Console.WriteLine(workingDirectory);
         }
+
+        public IProcess GetProcess(string pathToBuildTool, string cmdLineArguments, string workingDirectoryPath)
+        {
+            return new StubProcess();
+        }
+
+
+
     }
 }

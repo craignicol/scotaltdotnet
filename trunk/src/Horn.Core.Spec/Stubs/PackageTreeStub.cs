@@ -8,30 +8,26 @@ namespace Horn.Core.Spec.Doubles
 {
     public class PackageTreeStub : IPackageTree
     {
+
         private readonly IBuildMetaData buildMetaData;
         private readonly string name;
         private readonly bool useInternalDictionary;
         private readonly Dictionary<string, IPackageTree> dependencyTrees = new Dictionary<string, IPackageTree>();
 
-        public void Add(IPackageTree item)
+
+        public string BaseDirectory
         {
-            throw new NotImplementedException();
+            get; private set;
         }
 
-        public void AddDependencyPackageTree(string dependencyName, PackageTreeStub dependencyTree)
+        public string BuildFile
         {
-            dependencyTrees.Add(dependencyName, dependencyTree);
+            get { return "defaul.build"; }
         }
 
-        public void Remove(IPackageTree item)
+        public IBuildMetaData BuildMetaData
         {
-            throw new NotImplementedException();
-        }
-
-        public IPackageTree Parent
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return buildMetaData; }
         }
 
         public IPackageTree[] Children
@@ -39,22 +35,7 @@ namespace Horn.Core.Spec.Doubles
             get { throw new NotImplementedException(); }
         }
 
-        public DirectoryInfo Result
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public IPackageTree Root
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public string Name
-        {
-            get { return name; }
-        }
-
-        public bool IsRoot
+        public DirectoryInfo CurrentDirectory
         {
             get { throw new NotImplementedException(); }
         }
@@ -64,50 +45,44 @@ namespace Horn.Core.Spec.Doubles
             get { throw new NotImplementedException(); }
         }
 
-        public string BuildFile
-        {
-            get { return "defaul.build"; }
-        }
-
-        public void CreateRequiredDirectories()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteWorkingDirectory()
-        {
-            Console.WriteLine("Deleting working directory.");
-        }
-
-        public IPackageTree RetrievePackage(string packageName)
-        {
-            if (!useInternalDictionary)
-                return this;
-
-            return dependencyTrees[packageName];
-        }
-
-        public IBuildMetaData BuildMetaData
-        {
-            get { return buildMetaData; }
-        }
-
-        public IBuildMetaData GetBuildMetaData(string packageName)
-        {
-            return buildMetaData;
-        }
-
-        public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DirectoryInfo CurrentDirectory
+        public bool IsBuildNode
         {
             get { throw new NotImplementedException(); }
         }
 
+        public bool IsRoot
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string Name
+        {
+            get { return name; }
+        }
+
         public FileInfo Nant
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public DirectoryInfo OutputDirectory
+        {
+            get { return new DirectoryInfo(Path.Combine(BaseDirectory, "output")); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public IPackageTree Parent
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public DirectoryInfo Result
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IPackageTree Root
         {
             get { throw new NotImplementedException(); }
         }
@@ -122,20 +97,16 @@ namespace Horn.Core.Spec.Doubles
             get { return new DirectoryInfo(Path.Combine(BaseDirectory, "working")).Parent; }
         }
 
-        public bool IsBuildNode
+
+
+        public void Add(IPackageTree item)
         {
-            get { throw new NotImplementedException(); }
+            throw new NotImplementedException();
         }
 
-        public DirectoryInfo OutputDirectory
+        public void AddDependencyPackageTree(string dependencyName, PackageTreeStub dependencyTree)
         {
-            get { return new DirectoryInfo(Path.Combine(BaseDirectory, "output")); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public string BaseDirectory
-        {
-            get; private set;
+            dependencyTrees.Add(dependencyName, dependencyTree);
         }
 
         public List<IPackageTree> BuildNodes()
@@ -143,9 +114,49 @@ namespace Horn.Core.Spec.Doubles
             return new List<IPackageTree>{this};
         }
 
+        public void CreateRequiredDirectories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteWorkingDirectory()
+        {
+            Console.WriteLine("Deleting working directory.");
+        }
+
+        public IBuildMetaData GetBuildMetaData(string packageName)
+        {
+            return buildMetaData;
+        }
+
         public IRevisionData GetRevisionData()
         {
             throw new NotImplementedException();
+        }
+
+        public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(IPackageTree item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPackageTree RetrievePackage(string packageName)
+        {
+            if (!useInternalDictionary)
+                return this;
+
+            return dependencyTrees[packageName];
+        }
+
+
+
+        public PackageTreeStub(string baseDirectory)
+        {
+            BaseDirectory = baseDirectory;
         }
 
         public PackageTreeStub(IBuildMetaData buildMetaData, string name, bool useInternalDictionary)
@@ -156,9 +167,7 @@ namespace Horn.Core.Spec.Doubles
             BaseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         }
 
-        public PackageTreeStub(string baseDirectory)
-        {
-            BaseDirectory = baseDirectory;
-        }
+
+
     }
 }

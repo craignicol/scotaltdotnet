@@ -12,9 +12,7 @@ namespace Horn.Core.BuildEngines
     public class BuildEngine
     {
         private static readonly Dictionary<string, string> builtPackages = new Dictionary<string, string>();
-
         private IDependencyDispatcher dependencyDispatcher;
-
         private static readonly ILog log = LogManager.GetLogger(typeof(MSBuildBuildTool));
 
         public virtual string BuildFile { get; private set; }
@@ -105,8 +103,6 @@ namespace Horn.Core.BuildEngines
             SW.Close();
         }
 
-
-
         protected virtual void ProcessBuild(IPackageTree packageTree, IProcessFactory processFactory, string pathToBuildTool, string cmdLineArguments)
         {
             IProcess process = processFactory.GetProcess(pathToBuildTool, cmdLineArguments, packageTree.WorkingDirectory.FullName);
@@ -123,8 +119,6 @@ namespace Horn.Core.BuildEngines
 
             process.WaitForExit();
         }
-
-
 
         protected virtual void CopyArtifactsToBuildDirectory(IPackageTree packageTree)
         {
@@ -174,8 +168,6 @@ namespace Horn.Core.BuildEngines
             return Path.Combine(tree.WorkingDirectory.FullName, relativePath);
         }
 
-
-
         public BuildEngine(IBuildTool buildTool, string buildFile, FrameworkVersion version, IDependencyDispatcher dependencyDispatcher)
         {
             BuildTool = buildTool;
@@ -184,8 +176,5 @@ namespace Horn.Core.BuildEngines
             Dependencies = new List<Dependency>();
             this.dependencyDispatcher = dependencyDispatcher;
         }
-
-
-
     }
 }

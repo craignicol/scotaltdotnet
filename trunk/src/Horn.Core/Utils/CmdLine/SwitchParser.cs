@@ -8,32 +8,19 @@ namespace Horn.Core.Utils.CmdLine
 {
     public class SwitchParser
     {
-        #region console help text
-
-        public const string HelpText =
-@"HORN - SCOTALT.NET
-                                          
-http://code.google.com/p/scotaltdotnet/
-
-http://groups.google.com/group/scotaltnet
-
-Usage : horn -install:<component>
-Options :
-    -rebuildonly         Do not check for the latest source code.";
-
-        #endregion
 
         private readonly TextWriter Output;
         private readonly Parameter[] ParamTable;
-
         private readonly Dictionary<string, IList<string>> parsedArgs;
-
         private static readonly ILog log = LogManager.GetLogger(typeof(SwitchParser));
+
 
         public Dictionary<string, IList<string>> ParsedArgs
         {
             get { return parsedArgs; }
         }
+
+
 
         public virtual bool IsAValidRequest()
         {
@@ -102,6 +89,8 @@ Options :
             return false;
         }
 
+
+
         private Dictionary<string, IList<string>> Parse(string[] args)
         {
             const string ARGS_REGEX = @"-([a-zA-Z_][a-zA-Z_0-9]{0,}):?((?<=:).{0,})?";
@@ -152,6 +141,8 @@ Options :
             }
         }
 
+
+
         public SwitchParser(TextWriter output, string[] args)
         {
             Output = output;
@@ -166,5 +157,23 @@ Options :
 
             parsedArgs = Parse(args);
         }
+
+
+
+
+        #region console help text
+
+        public const string HelpText =
+@"HORN - SCOTALT.NET
+                                          
+http://code.google.com/p/scotaltdotnet/
+
+http://groups.google.com/group/scotaltnet
+
+Usage : horn -install:<component>
+Options :
+    -rebuildonly         Do not check for the latest source code.";
+
+        #endregion
     }
 }

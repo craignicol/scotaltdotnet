@@ -14,11 +14,11 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 {
     public class When_the_meta_data_has_an_export_list : GetSpecificationBase
     {
+
         private PackageBuilder packageBuilder;
-
         private MockRepository mockRepository;
-
         private readonly SourceControlDouble sourceControlDouble = new SourceControlDouble("url1");
+
 
         protected override void Before_each_spec()
         {
@@ -33,7 +33,6 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             packageBuilder = new PackageBuilder(get, new DiagnosticsProcessFactory());
         }
 
-
         protected override void Because()
         {
             var args = new Dictionary<string, IList<string>>
@@ -46,15 +45,17 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             packageBuilder.Execute(packageTree, args);
         }
 
+        protected override void After_each_spec()
+        {
+            sourceControlDouble.Dispose();
+        }
+
+
         [Fact]
         public void Then_the_export_list_is_retrieved()
         {
             Assert.True(sourceControlDouble.FileWasDownloaded);
         }
 
-        protected override void After_each_spec()
-        {
-            sourceControlDouble.Dispose();
-        }
     }
 }

@@ -7,11 +7,11 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
 {
     public abstract class MetaSynchroniserFixtureBase : Specification
     {
+
         protected IPackageTree packageTreeBase;
-
         protected IMetaDataSynchroniser metaDataSynchroniser;
-
         protected SourceControlDouble sourceControlDouble;
+
 
         protected override void Before_each_spec()
         {
@@ -21,5 +21,8 @@ namespace Horn.Core.Spec.MetaSynchroniserfixture
 
             packageTreeBase = new PackageTree(metaDataSynchroniser);
         }
+
+
+
     }
 }

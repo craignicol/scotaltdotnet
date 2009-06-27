@@ -5,6 +5,7 @@ namespace Horn.Core.extensions
 {
     public static class FileSystemInfoExtensions
     {
+
         public static void CopyToDirectory(this DirectoryInfo source, DirectoryInfo destination)
         {
             if (destination.Exists)
@@ -15,29 +16,6 @@ namespace Horn.Core.extensions
             CopyFiles(source, destination);
 
             CopyDirectories(source, destination);
-        }
-
-        private static void CopyDirectories(DirectoryInfo source, DirectoryInfo destination)
-        {
-            foreach (var dir in source.GetDirectories())
-            {
-                if (dir.FullName.Contains(".Svn"))
-                    continue;
-
-                var newDirectory = new DirectoryInfo(Path.Combine(destination.FullName, dir.Name));
-
-                dir.CopyToDirectory(newDirectory);
-            }
-        }
-
-        private static void CopyFiles(DirectoryInfo source, DirectoryInfo destination)
-        {
-            foreach (var file in source.GetFiles())
-            {
-                var destinationFile = Path.Combine(destination.FullName, Path.GetFileName(file.FullName));
-
-                file.CopyTo(destinationFile, true);
-            }
         }
 
         public static FileSystemInfo GetExportPath(string fullPath)
@@ -115,6 +93,31 @@ namespace Horn.Core.extensions
             return (!fullPath.PathIsDirectory());
         }
 
+
+
+        private static void CopyDirectories(DirectoryInfo source, DirectoryInfo destination)
+        {
+            foreach (var dir in source.GetDirectories())
+            {
+                if (dir.FullName.Contains(".Svn"))
+                    continue;
+
+                var newDirectory = new DirectoryInfo(Path.Combine(destination.FullName, dir.Name));
+
+                dir.CopyToDirectory(newDirectory);
+            }
+        }
+
+        private static void CopyFiles(DirectoryInfo source, DirectoryInfo destination)
+        {
+            foreach (var file in source.GetFiles())
+            {
+                var destinationFile = Path.Combine(destination.FullName, Path.GetFileName(file.FullName));
+
+                file.CopyTo(destinationFile, true);
+            }
+        }
+
         private static string[] AddFiles(string dir, string searchPattern, string[] filePaths, List<string> results)
         {
             // I do not like swallowing exceptions but there is a good reason
@@ -182,5 +185,8 @@ namespace Horn.Core.extensions
                 }
             }
         }
+
+
+
     }
 }

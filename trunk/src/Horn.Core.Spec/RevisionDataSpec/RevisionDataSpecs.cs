@@ -7,9 +7,10 @@ namespace Horn.Core.Spec.RevisionDataSpecs
 {   
     public class When_a_package_has_no_revision_data : Specification
     {
-        private IPackageTree package;
 
+        private IPackageTree package;
         private IRevisionData revisionData;
+
 
         protected override void Before_each_spec()
         {
@@ -21,18 +22,21 @@ namespace Horn.Core.Spec.RevisionDataSpecs
             revisionData = new RevisionData(package);
         }
 
+
         [Fact]
         public void Then_a_new_revision_data_is_created()
         {
             Assert.Equal("0", revisionData.Revision);
         }
+
     }
 
     public class When_the_revision_data_for_a_package_is_requested : Specification
     {
-        private IPackageTree package;
 
+        private IPackageTree package;
         private IRevisionData revisionData;
+
 
         protected override void Before_each_spec()
         {
@@ -44,20 +48,22 @@ namespace Horn.Core.Spec.RevisionDataSpecs
             revisionData = new RevisionData(package);
         }
 
+
         [Fact]
         public void Then_the_revision_data_is_parsed_from_the_file()
         {
             Assert.Equal("1", revisionData.Revision);
         }
+
     }
 
     public class When_comparing_a_scm_revison_against_a_package_with_no_revision_data : Specification
     {
+
         private IPackageTree package;
-
         private IRevisionData treeRevisionData;
-
         private IRevisionData scmRevisionData;
+
 
         protected override void Before_each_spec()
         {
@@ -69,12 +75,14 @@ namespace Horn.Core.Spec.RevisionDataSpecs
             treeRevisionData = new RevisionData(package);
 
             scmRevisionData = new RevisionData("1");
-        }        
+        }
 
-        [Fact]
+
+                [Fact]
         public void Then_the_revision_data_indicates_an_update_is_required()
         {
             Assert.True(treeRevisionData.ShouldUpdate(scmRevisionData));
         }
+
     }
 }

@@ -7,6 +7,13 @@ namespace Horn.Core.Dsl
 {
     public class NullBuildMetaData : IBuildMetaData
     {
+
+        public BuildEngine BuildEngine
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
         public string Description
         {
             get { throw new System.NotImplementedException(); }
@@ -19,31 +26,13 @@ namespace Horn.Core.Dsl
             set { throw new NotImplementedException(); }
         }
 
-        public List<IRepositoryElement> RepositoryElementList
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
         public string InstallName
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 
-        public Dictionary<string, object> ProjectInfo
-        {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
-        public BuildEngine BuildEngine
-        {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
-        public SourceControl SourceControl
+        public string OutputDirectory
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
@@ -54,10 +43,25 @@ namespace Horn.Core.Dsl
             get; set;
         }
 
-        public string OutputDirectory
+        public Dictionary<string, object> ProjectInfo
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
         }
+
+        public List<IRepositoryElement> RepositoryElementList
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public SourceControl SourceControl
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+
+
     }
 }

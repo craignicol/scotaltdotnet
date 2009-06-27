@@ -11,8 +11,10 @@ namespace Horn.Core.Spec.Dependencies
 {
     public class When_resolving_a_dependency_tree_with_a_circular_reference : DirectorySpecificationBase
     {
+
         protected IDependencyTree dependencyTree;
         protected PackageTreeStub packageTree;
+
 
         protected override void Before_each_spec()
         {
@@ -65,18 +67,17 @@ namespace Horn.Core.Spec.Dependencies
             packageTree.AddDependencyPackageTree("nhibernate", nhibernateTree);
         }
 
-
         protected override void Because()
         {
             dependencyTree = new DependencyTree(packageTree);
         }
+
 
         //[Fact]
         public void Then_there_are_no_duplicates()
         {
             Assert.Equal(5, dependencyTree.BuildList.Count);      
         }
-
         //[Fact]
         public void Then_the_build_list_is_ordered_by_least_dependencies()
         {
@@ -88,5 +89,6 @@ namespace Horn.Core.Spec.Dependencies
             Assert.Equal("castle", buildList[3].Name);
             Assert.Equal("nhibernate.memcached", buildList[4].Name);   
         }
+
     }
 }

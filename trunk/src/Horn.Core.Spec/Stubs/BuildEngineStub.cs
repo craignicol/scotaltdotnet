@@ -7,10 +7,13 @@ namespace Horn.Core.Spec.Doubles
 {
     public class BuildEngineStub : BuildEngines.BuildEngine
     {
+
         public override Horn.Core.BuildEngines.BuildEngine Build(IProcessFactory processFactory, Horn.Core.PackageStructure.IPackageTree packageTree)
         {
             return this;
         }
+
+
 
         public BuildEngineStub(IBuildTool buildTool, IDependencyDispatcher dependencyDispatcher, List<Dependency> dependencies)
             : base(buildTool, "somefile.build", FrameworkVersion.FrameworkVersion35, dependencyDispatcher)
@@ -22,5 +25,8 @@ namespace Horn.Core.Spec.Doubles
             : base(buildTool, buildFile, version, dependencyDispatcher)
         {
         }
+
+
+
     }
 }
