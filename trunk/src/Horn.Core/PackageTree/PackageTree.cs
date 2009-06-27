@@ -11,6 +11,7 @@ namespace Horn.Core.PackageStructure
     {
 
         private readonly IMetaDataSynchroniser metaDataSynchroniser;
+        private DirectoryInfo result;
         public const string RootPackageTreeName = ".horn";
         private readonly IList<IPackageTree> children;
         private DirectoryInfo workingDirectory;
@@ -71,12 +72,12 @@ namespace Horn.Core.PackageStructure
         {
             get
             {
-                var resultDirectory = new DirectoryInfo(Path.Combine(Root.CurrentDirectory.FullName, "Result"));
+                result = new DirectoryInfo(Path.Combine(Root.CurrentDirectory.FullName, "result"));
 
-                if(!resultDirectory.Exists)
-                    resultDirectory.Create();
+                if(!result.Exists)
+                    result.Create();
 
-                return resultDirectory;
+                return result;
             }
         }
 
@@ -267,9 +268,11 @@ namespace Horn.Core.PackageStructure
 
                 children.Add(CreateNewPackageTree(child));
             }
+
+            if (parent == null)
+            {
+                Result.Delete(true);
+            }
         }
-
-
-
     }
 }
