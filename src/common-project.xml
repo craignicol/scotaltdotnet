@@ -18,7 +18,7 @@
 
 
     <!-- Check if there is a framework specific config file and use that -->
-    <property name="app.config.src" value="${src.dir}/App-${framework::get-target-framework()}.config" />
+    <property name="app.config.src" value="${src.dir}/App.config" />
     <if test="${file::exists(app.config.src)}">
       <copy
 				file="${app.config.src}"
