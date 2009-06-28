@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -129,7 +130,15 @@ namespace Horn.Core.BuildEngines
                 var outputFile = Path.Combine(packageTree.Result.FullName, Path.GetFileName(file.FullName));
 
                 if(File.Exists(outputFile))
-                    File.Delete(outputFile);
+                {
+                    try
+                    {
+                        File.Delete(outputFile);
+                    }
+                    catch
+                    {                       
+                    }   
+                }
 
                 File.Copy(file.FullName, outputFile);
             }
