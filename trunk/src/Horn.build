@@ -161,8 +161,8 @@
         <include name="*.license.txt" />
         <include name="*.exe"/>
         <include name="*.config"/>
-        <include name="xunit.console.exe"/>
-        <include name="xunit.console.exe.config"/>
+        <include name="xunit.console.x86.exe"/>
+        <include name="xunit.console.x86.exe.config"/>
         <exclude name="*NGraphviz.*"/>
         <exclude name="QuickGraph.*.dll"/>
         <exclude name="TestDriven.Framework.dll"/>

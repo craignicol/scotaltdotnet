@@ -196,7 +196,7 @@
 
       <echo message="Running tests in '${project::get-name()}'" />
 
-      <property name="xunit-console" value="${root.dir}../../lib/xunit.console.exe" overwrite="true" />
+      <property name="xunit-console" value="${root.dir}../../lib/xunit.console.x86.exe" overwrite="true" />
 
       <exec
 				program="${xunit-console}"
