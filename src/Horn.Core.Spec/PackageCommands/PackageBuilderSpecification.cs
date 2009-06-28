@@ -93,7 +93,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
             return buildMetaData;
         }
 
-        [Fact]
+        //[Fact]
         public void Then_The_Builder_Coordinates_The_Build()
         {
             switches.Add("install", new List<string> { "horn" });
