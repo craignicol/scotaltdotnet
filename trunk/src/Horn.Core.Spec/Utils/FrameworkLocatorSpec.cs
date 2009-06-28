@@ -14,7 +14,7 @@ namespace Horn.Core.Spec.Integration.Utils
             msbuildPath = FrameworkLocator.Instance[FrameworkVersion.FrameworkVersion35].MSBuild.AssemblyPath;
         }
 
-        [Fact]
+        //[Fact]
         public void Then_Framework_35_Path_Is_Returned()
         {
             Console.WriteLine(msbuildPath);
