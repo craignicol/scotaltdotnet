@@ -1,7 +1,9 @@
+using log4net;
 using Rhino.Mocks;
 
 public abstract class Specification : TestBase
 {
+    protected static readonly ILog log = LogManager.GetLogger(typeof (Specification));
 
     protected static T CreateStub<T>() where T : class
     {
@@ -12,7 +14,4 @@ public abstract class Specification : TestBase
     {
         return MockRepository.GenerateStub<T>(param);
     }
-
-
-
 }
