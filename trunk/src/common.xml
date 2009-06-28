@@ -12,23 +12,14 @@
 	<property name="common.run-tests" value="true" readonly="false" overwrite="true"/>
 	<property name="common.testrunner.enabled" value="${common.run-tests}" overwrite="true" readonly="false" />
 	<property name="common.testrunner.failonerror" value="true" readonly="false" overwrite="true"/>
-	<!--  Whether to keep building when tests are failing -->
 
-	<!-- Check which nant version we're using - fail if it's not the minium  -->
-	<property name="current.nant-version" value="${assemblyname::get-version(assembly::get-name(nant::get-assembly()))}" />
-	<property name="required.nant-version" value="0.85.2478.0" />
-	<!-- Nant 0.85 release version -->
-
-	<!-- properties used to connect to database for testing -->
-	<property name="ar.dialect" value="NHibernate.Dialect.MsSql2000Dialect" />
-	<property name="ar.connection.driver_class" value="NHibernate.Driver.SqlClientDriver" />
-	<property name="ar.connection.connection_string.1" value="Server=10.0.2.10;Database=ncontinuity2;UID=ncontinuity2user;pwd=nc0nt1nu1ty_two_u53rrrr!!!!" />
-	<property name="ar.connection.connection_string.2" value="Server=server;Database=ncontinuity2;UID=ncontinuity2user;pwd=Passw0rd;" />
-	<property name="test.output.directory" value="c:\ci\build\ncontinuity2.web\"/>
-	<property name="live.output.directory" value="c:\www\demox\"/>
-	<property name="emailServer.1" value="base"/>
-	<property name="test.email.address" value="demo@continuity2com"/>
-
+  <!-- Check which nant version we're using - fail if it's not the minium  -->
+  <property name="nant-version.current" value="${assemblyname::get-version(assembly::get-name(nant::get-assembly()))}" />
+  <property name="nant-version.required" value="0.85.2478.0" />
+  <!-- Nant 0.85 release version -->
+  <property name="nant-version.beta1_086" value="0.86.2898.0" />
+  <!-- Nant 0.86 Beta 1 -->  
+  
 	<!-- 
 		Path to the folder that contain the external assemblies.  For net-2.0 the values will
 		be lib, lib/net, and lib/net/2.0 respectively.
@@ -37,14 +28,43 @@
 	<property name="lib.family.dir" value="${path::combine(lib.dir, framework::get-family(framework::get-target-framework()))}" dynamic="true" />
 	<property name="lib.framework.dir" value="${path::combine(lib.family.dir, version::to-string(framework::get-version(framework::get-target-framework())))}" dynamic="true" />
 
-	<!-- 
+  <!-- x64 support -->
+  <property name="lib.family-x64.dir" value="${path::combine(lib.family.dir, 'x64')}" dynamic="true" />
+  <property name="lib.framework-x64.dir" value="${path::combine(lib.framework.dir, 'x64')}" dynamic="true" />
+  <property name="lib.framework.clr-x64.dir" value="${path::combine(lib.framework.clr.dir, 'x64')}" dynamic="true" />
+
+  <if test="${not(framework::get-family(framework::get-runtime-framework()) == 'mono')}">
+    <property name="registry.dotnet.v3.0.Installed" value="0" overwrite="false"/>
+
+    <readregistry property="registry.dotnet.v3.0.Installed"
+			  key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.0\Install"
+			  hive="LocalMachine"
+			  failonerror="false" />
+
+    <readregistry property="registry.dotnet.v3.0.Installed"
+			  key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.0\Setup\InstallSuccess"
+			  hive="LocalMachine"
+			  unless="${property::exists('registry.dotnet.v3.0.Installed')}"
+			  failonerror="false" />
+
+    <property name="dotnet.v3.0.installed" value="${registry.dotnet.v3.0.Installed == '1'}" />
+
+    <if test="${dotnet.v3.0.installed}">
+      <readregistry property="dotnet.v3.0.ReferenceInstallPath"
+				  key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.0\Setup\Windows Communication Foundation\ReferenceInstallPath"
+				  hive="LocalMachine"
+				  if="${dotnet.v3.0.installed}" />
+    </if>
+  </if>
+
+  <!-- 
 		Versioning
 	-->
 	<property name="project.version" 	value="2.0.0.0" />
 	<property name="project.major" 		value="${version::get-major(version::parse(project.version))}" 		dynamic="true" />
 	<property name="project.minor" 		value="${version::get-minor(version::parse(project.version))}" 		dynamic="true" />
 	<property name="project.build"		value="${version::get-build(version::parse(project.version))}" 		dynamic="true" />
-	<property name="project.revision"	value="${svn.revision}" 											dynamic="true" />
+	<property name="project.revision"	value="${svn.revision}" dynamic="true" />
 
 	<property name="assembly.major" 	value="${version::get-major(version::parse(assembly.version))}"		dynamic="true" />
 	<property name="assembly.minor" 	value="${version::get-minor(version::parse(assembly.version))}" 	dynamic="true" />
@@ -56,7 +76,7 @@
 	<!-- 
 		These are used to set the correct attributes in AssemblyInfo.cs.  
 	-->
-	<property name="project.company" value="Continuity2" />
+	<property name="project.company" value="Horn" />
 
 	<!-- debug|release -->
 	<property name="build.defines" value="TRACE" />
@@ -96,28 +116,43 @@
 		<property name="package.dir" value="${src.dir}/Horn.Core/BuildConfigs" />
 	</target>
 
-	<target name="set-framework-configuration">
-		<if test="${not(target::exists('set-'+framework::get-target-framework()+'-framework-configuration'))}">
-			<fail message="The '${framework::get-target-framework()}' framework is not supported by this version of Cast;e." />
-		</if>
-		<property name="csc.keyfile" 	value="" />
-		<property name="csc.args" 		value="" />
-		<call target="set-${framework::get-target-framework()}-framework-configuration" />
+  <target name="set-framework-configuration">
+    <if test="${not(target::exists('set-'+framework::get-target-framework()+'-framework-configuration'))}">
+      <fail message="The '${framework::get-target-framework()}' framework is not supported by this version of Castle." />
+    </if>
+    <property name="clr-version" value="${framework::get-clr-version(framework::get-runtime-framework())}" />
 
-		<property name="build.msbuild" 	value="false" overwrite="true" readonly="false" />
+    <property name="csc.keyfile" 				value="" />
+    <property name="csc.args" 					value="" />
+    <property name="common.testrunner.args" 	value="" overwrite="false" />
+    <if test="${not(framework::get-family(framework::get-runtime-framework()) == 'mono')}">
+      <readregistry property="dotnet.SPlevel"
+						  key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v${framework::get-clr-version(framework::get-runtime-framework())}\SP"
+						  hive="LocalMachine"
+			 />
+    </if>
+    <property name="dotnet.SPlevel" value="0" if="${framework::get-family(framework::get-runtime-framework()) == 'mono'}" />
 
-		<!-- Where is MbUnit.Cons.exe ? -->
-		<property name="mbunit-console" value="MbUnit.Cons.exe" />
+    <script language="C#">
+      <code>
+        <![CDATA[
+					public static void ScriptMain(Project project)
+					{
+						// Detect Process Bitness - http://blogs.msdn.com/david.wang/archive/2006/03/26/HOWTO-Detect-Process-Bitness.aspx
+						if( System.Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE") == "x86" && string.IsNullOrEmpty(System.Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))) {
+							project.Properties["os.x64"] = false.ToString();
+						} else {
+							project.Properties["os.x64"] = true.ToString();
+						}
+					}
+				]]>
+      </code>
+    </script>
 
-		<!-- Where is nunit-console executable(win/mono) ? -->
-		<property name="nunit-console2" value="nunit-console2" />
-		<property name="nunit-console" value="nunit-console" />
+    <call target="set-${framework::get-target-framework()}-framework-configuration" />
 
-		<property name="testrunner" value="NUnit" overwrite="true" readonly="false" />
-
-		<!-- Where is WiX? -->
-		<property name="wix.dir" value="%ProgramFiles%\wix" />
-	</target>
+    <property name="build.msbuild" 	value="false" overwrite="false" />
+  </target>
 
 	<target name="set-net-2.0-framework-configuration">
 		<property name="nant.settings.currentframework" value="net-2.0" />
@@ -145,53 +180,25 @@
 		<property name="link.sdkdoc.version" value="SDK_v3_5" />
 		<property name="merge.targetplatform" value="v3" />
 		<property name="csc.keyfile" value="/keyfile:${key.file}" />
-		<!-- If DevEnvDir exists, we grab it, otherwise we try if the default location (if it exists) 
-		<if test="${environment::variable-exists('DevEnvDir')}">
-			<property name="dev.env.dir" value="${environment::get-variable('DevEnvDir')}" />
-		</if>
-		<if test="${not environment::variable-exists('DevEnvDir')}">
-			<property name="default.dev.env.dir" value="%ProgramFiles%\Microsoft Visual Studio 8\Common7\IDE" />
-			<if test="${directory::exists(default.dev.env.dir)}">
-				<property name="dev.env.dir" value="${default.dev.env.dir}" />
-			</if>
-		</if>
-		-->
 		<property name="build.msbuild"	value="false" overwrite="true" readonly="false" />
 		<property name="project.vsproj" value="${project::get-name()}.csproj" />
-	</target>	
-
-	<target name="set-mono-1.0-framework-configuration">
-		<property name="nant.settings.currentframework" value="mono-1.0" />
-		<property name="current.build.defines" value="${build.defines},MONO,MONO1" />
-		<property name="link.sdkdoc.version" value="MsdnOnline" />
-		<!-- mono puts gacutil on PATH -->
-		<property name="gacutil.file" value="gacutil" />
-		<property name="build.warnaserrors" value="false" />
 	</target>
 
-	<target name="set-mono-2.0-framework-configuration">
-		<property name="nant.settings.currentframework" value="mono-2.0" />
-		<property name="current.build.defines" value="${build.defines},MONO,MONO2,DOTNET2" />
-		<property name="link.sdkdoc.version" value="MsdnOnline" />
-		<!-- mono puts gacutil on PATH -->
-		<property name="gacutil.file" value="gacutil" />
-		<property name="build.warnaserrors" value="false" />
-	</target>
-
-	<target name="display-current-runtime">
-		<echo message="" />
-		<echo message="----------------------------------------------------------" />
-		<echo message=" ${framework::get-description(framework::get-target-framework())}" />
-		<echo message="----------------------------------------------------------" />
-		<echo message="" />
-		<echo message="framework : ${framework::get-target-framework()}" />
-		<echo message="description : ${framework::get-description(framework::get-target-framework())}" />
-		<echo message="sdk directory : ${framework::get-sdk-directory(framework::get-target-framework())}" />
-		<echo message="framework directory : ${framework::get-framework-directory(framework::get-target-framework())}" />
-		<echo message="assembly directory : ${framework::get-assembly-directory(framework::get-target-framework())}" />
-		<echo message="runtime engine : ${framework::get-runtime-engine(framework::get-target-framework())}" />
-		<echo message="" />
-	</target>
+  <target name="display-current-runtime">
+    <echo message="" />
+    <echo message="----------------------------------------------------------" />
+    <echo message=" ${framework::get-description(framework::get-target-framework())}" />
+    <echo message="----------------------------------------------------------" />
+    <echo message="" />
+    <echo message="framework : ${framework::get-target-framework()}" />
+    <echo message="description : ${framework::get-description(framework::get-target-framework())}" />
+    <echo message="sdk directory : ${framework::get-sdk-directory(framework::get-target-framework())}" />
+    <echo message="framework directory : ${framework::get-framework-directory(framework::get-target-framework())}" />
+    <echo message="assembly directory : ${framework::get-assembly-directory(framework::get-target-framework())}" />
+    <echo message="runtime engine : ${framework::get-runtime-engine(framework::get-target-framework())}" />
+    <echo message="extra : .Net 3.0 installed" if="${dotnet.v3.0.installed}" />
+    <echo message="" />
+  </target>
 
 	<target name="common.init"
 		depends="set-framework-configuration set-project-configuration common.check-nant-version"
@@ -203,60 +210,33 @@
 		<resourcefileset id="project.resources" />
 	</target>
 
-	<target name="common.find-svninfo">
-		<!-- For adding SVN revision to builds -->
-		<property name="svn.revision" value="0" />
-		<!-- try to update the revision -->
-		<exec
+  <target name="common.find-svninfo">
+    <!-- For adding SVN revision to builds -->
+    <property name="svn.revision" value="0" overwrite="false" />
+    <!-- try to update the revision -->
+    <exec
 			program="svn"
 			commandline='info "${project::get-base-directory()}" --xml'
 			output="_revision.xml"
 			failonerror="false"/>
-		<xmlpeek
+    <if test="${(framework::get-family(framework::get-runtime-framework()) == 'mono')}">
+      <!-- Should check unix not mono -->
+      <exec
+				program="svn"
+				commandline='info "${project::get-base-directory()}" --xml > _revision.xml'
+				failonerror="false"/>
+    </if>
+    <xmlpeek
 			file="_revision.xml"
-			xpath="/info/entry/commit/@revision"
+			xpath="/info/entry/@revision"
 			property="svn.revision"
 			failonerror="false"/>
-		<delete file="_revision.xml" failonerror="false" />
-		<echo message="INFO: Using Subversion revision number: ${svn.revision}"/>
-	</target>
+    <delete file="_revision.xml" failonerror="false" />
+    <echo message="INFO: Using Subversion revision number: ${svn.revision}"/>
+  </target>
 
-	<target name="common.find-nunit">
-		<echo message="nunit = ${build.dir}/nunit-console.exe"/>
-		<property name="nunit-console" value="${build.dir}/nunit-console.exe" overwrite="true" />
-		<if test="${not property::exists('nunit.found')}">
-			<!--<exec
-				program="${mbunit-console}"
-				resultproperty="mbunit.found"
-				failonerror="false" />
-
-			<property name="mbunit.found" value="${mbunit.found == '0' and string::to-lower(testrunner)=='mbunit'}" readonly="true" />-->
-			<property name="mbunit.found" value="false" />
-
-			<property name="nunit.found" value="-1" />
-			<!--<exec
-				unless="${mbunit.found}"
-				program="${nunit-console2}"
-				resultproperty="nunit.found"
-				failonerror="false" />-->
-
-			<property name="nunit-console" value="${nunit-console2}" if="${nunit.found == '0'}" />
-
-			<exec unless="${mbunit.found or nunit.found == '0'}"
-				program="${nunit-console}"
-				resultproperty="nunit.found"
-				failonerror="false" />
-
-			<property name="nunit.found" value="${nunit.found == '0'}" readonly="false" overwrite="true" />
-
-			<echo message="INFO: Using MBUnit for running unit tests" if="${mbunit.found}"/>
-			<echo message="INFO: Using NUnit for running unit tests" if="${nunit.found}"/>
-			<echo message="WARNING: MBUnit or NUnit not found, using less predictable NAnt &lt;nunit2&gt; task" unless="${nunit.found or mbunit.found}"/>
-		</if>
-	</target>
-
-	<target name="common.check-nant-version">
-		<fail if="${current.nant-version&lt;required.nant-version}" message="Not using minimum required Nant version: ${required.nant-version} (current version: ${current.nant-version}). Please upgrade your copy of nant." />
-	</target>
+  <target name="common.check-nant-version">
+    <fail if="${nant-version.current&lt;nant-version.required}" message="Not using minimum required Nant version: ${nant-version.required} (current version: ${nant-version.current}). Please upgrade your copy of nant." />
+  </target>
 
 </project>

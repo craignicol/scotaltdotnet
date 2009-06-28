@@ -113,6 +113,7 @@
 			optimize="${build.optimize}"
 			warnaserror="${build.warnaserrors}"
 			output="${build.dir}/${project::get-name()}.exe"
+      platform="x86"
 		>
       <nowarn>
         <warning number="1591" unless="${build.warnmissingdocs}" />

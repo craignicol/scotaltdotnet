@@ -17,7 +17,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisibleAttribute(false)]
 [assembly: AssemblyTitleAttribute("Horn.Core.Spec for Microsoft .NET Framework 3.5")]
 [assembly: AssemblyDescriptionAttribute("")]
-[assembly: AssemblyCompanyAttribute("Continuity2")]
+[assembly: AssemblyCompanyAttribute("Horn")]
 [assembly: AssemblyProductAttribute("Horn.Core.Spec")]
 [assembly: AssemblyCopyrightAttribute("ncontinuity2 Project, original author or authors")]
 [assembly: AssemblyVersionAttribute("2.0.0.0")]
