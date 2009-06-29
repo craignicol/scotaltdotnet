@@ -20,9 +20,9 @@ namespace Horn.Core.Spec.Integration.Utils
             log.Info(msbuildPath);
 
             if (Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE") == "x86")
-                Assert.Equal(@"C:\Windows\Microsoft.NET\Framework\v3.5\MSBuild.exe", msbuildPath);
+                Assert.Equal(@"C:\Windows\Microsoft.NET\Framework\v3.5\MSBuild.exe".ToLower(), msbuildPath.ToLower());
             else
-                Assert.Equal(@"C:\Windows\Microsoft.NET\Framework64\v3.5\MSBuild.exe", msbuildPath);
+                Assert.Equal(@"C:\Windows\Microsoft.NET\Framework64\v3.5\MSBuild.exe".ToLower(), msbuildPath.ToLower());
         }
     }
 }
