@@ -77,7 +77,7 @@ namespace Horn.Core.Spec.Doubles
 
         public DirectoryInfo Result
         {
-            get { throw new NotImplementedException(); }
+            get { return new DirectoryInfo(@"Z:\nowhere\"); }
         }
 
         public IPackageTree Root

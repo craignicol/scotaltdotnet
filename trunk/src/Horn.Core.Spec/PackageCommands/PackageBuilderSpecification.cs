@@ -80,7 +80,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             var buildTool = new BuildToolStub();
 
-            var buildEngine = new BuildEngine(buildTool, "Test", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
+            var buildEngine = new BuildEngineStub(buildTool, "Test", FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>());
 
             baseConfigReader.BuildMetaData.BuildEngine = buildEngine;
 
