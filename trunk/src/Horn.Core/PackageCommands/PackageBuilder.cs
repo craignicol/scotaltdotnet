@@ -42,10 +42,15 @@ namespace Horn.Core.PackageCommands
 
                 ExecutePrebuild(nextMetaData, nextTree);
 
-                log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine);
-
-                nextMetaData.BuildEngine.Build(processFactory, nextTree);
+                ExecuteBuild(nextTree, nextMetaData);
             }
+        }
+
+        protected virtual void ExecuteBuild(IPackageTree nextTree, IBuildMetaData nextMetaData)
+        {
+            log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine);
+
+            nextMetaData.BuildEngine.Build(processFactory, nextTree);
         }
 
         protected virtual void ExecutePrebuild(IBuildMetaData metaData, IPackageTree packageTree)

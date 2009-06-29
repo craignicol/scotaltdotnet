@@ -37,7 +37,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             get.Stub(x => x.ExportTo(packageTree)).Return(packageTree);
 
-            packageBuilder = new PackageBuilder(get, new DiagnosticsProcessFactory());
+            packageBuilder = new PackageBuilderStub(get, new DiagnosticsProcessFactory());
         }
 
         protected override void After_each_spec()
