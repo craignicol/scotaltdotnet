@@ -140,7 +140,7 @@ namespace Horn.Core.BuildEngines
                     }   
                 }
 
-                File.Copy(file.FullName, outputFile);
+                File.Copy(file.FullName, outputFile, true);
             }
         }
 
