@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Horn.Core.Spec.Integration.Utils
 {
-    public class When_Version_35_Is_Requested : Specification
+    public class When_Framework_Version_35_Is_Requested : Specification
     {
         private string msbuildPath;
 
@@ -17,9 +17,12 @@ namespace Horn.Core.Spec.Integration.Utils
         [Fact]
         public void Then_Framework_35_Path_Is_Returned()
         {
-            Console.WriteLine(msbuildPath);
+            log.Info(msbuildPath);
 
-            Assert.True(File.Exists(msbuildPath));
+            if (Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE") == "x86")
+                Assert.Equal(@"C:\Windows\Microsoft.NET\Framework\v3.5\MSBuild.exe", msbuildPath);
+            else
+                Assert.Equal(@"C:\Windows\Microsoft.NET\Framework64\v3.5\MSBuild.exe", msbuildPath);
         }
     }
 }
