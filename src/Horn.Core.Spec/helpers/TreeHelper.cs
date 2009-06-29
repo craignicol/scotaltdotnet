@@ -30,14 +30,14 @@ namespace Horn.Core.Spec.helpers
 
         public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies)
         {
-            var buildEngine = new BuildEngineStub(null, null, dependencies);
+            var buildEngine = new BuildEngineStub(new BuildToolStub(), null, dependencies);
             var sourceControl = new SourceControlDouble("http://someurl.com");
             return new BuildMetaDataStub(buildEngine, sourceControl);
         }
 
         public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<string> cmds )
         {
-            var buildEngine = new BuildEngineStub(null, null, dependencies);
+            var buildEngine = new BuildEngineStub(new BuildToolStub(), null, dependencies);
             var sourceControl = new SourceControlDouble("http://someurl.com");
             var buildMetaData = new BuildMetaDataStub(buildEngine, sourceControl);
 
@@ -48,7 +48,7 @@ namespace Horn.Core.Spec.helpers
 
         public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<SourceControl> exportList)
         {
-            var buildEngine = new BuildEngineStub(null, null, dependencies);
+            var buildEngine = new BuildEngineStub(new BuildToolStub(), null, dependencies);
             var buildMetaData = new BuildMetaDataStub(buildEngine, null);
 
             buildMetaData.ExportList.AddRange(exportList);
@@ -58,7 +58,7 @@ namespace Horn.Core.Spec.helpers
 
         public static IBuildMetaData GetPackageTreeParts(List<Dependency> dependencies, List<IRepositoryElement> repositoryElements)
         {
-            var buildEngine = new BuildEngineStub(null, null, dependencies);
+            var buildEngine = new BuildEngineStub(new BuildToolStub(), null, dependencies);
             var buildMetaData = new BuildMetaDataStub(buildEngine, null);
 
             buildMetaData.RepositoryElementList.AddRange(repositoryElements);

@@ -129,24 +129,21 @@ namespace Horn.Core.BuildEngines
             {
                 var outputFile = Path.Combine(packageTree.Result.FullName, Path.GetFileName(file.FullName));
 
-                if(File.Exists(outputFile))
-                {
-                    try
-                    {
-                        File.Delete(outputFile);
-                    }
-                    catch
-                    {                       
-                    }   
-                }
-
-                File.Copy(file.FullName, outputFile, true);
+                CopyFileFromWorkingToResult(file, outputFile);
             }
         }
 
         protected virtual void CopyDependenciesTo(IPackageTree packageTree)
         {
             dependencyDispatcher.Dispatch(packageTree, Dependencies, SharedLibrary);
+        }
+
+        protected virtual void CopyFileFromWorkingToResult(FileInfo file, string outputFile)
+        {
+            if (File.Exists(outputFile))
+                File.Delete(outputFile);
+
+            File.Copy(file.FullName, outputFile, true);
         }
 
         protected virtual DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
