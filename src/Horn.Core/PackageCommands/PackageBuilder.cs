@@ -3,6 +3,7 @@ using System.Linq;
 using Horn.Core.BuildEngines;
 using Horn.Core.Dependencies;
 using Horn.Core.Dsl;
+using Horn.Core.extensions;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageStructure;
 using log4net;
@@ -13,13 +14,13 @@ namespace Horn.Core.PackageCommands
     {
         private readonly IGet get;
         private readonly IProcessFactory processFactory;
-        private static readonly ILog log = LogManager.GetLogger(typeof (PackageBuilder));
+        private static readonly ILog log = LogManager.GetLogger(typeof(PackageBuilder));
 
         public void Execute(IPackageTree packageTree, IDictionary<string, IList<string>> switches)
         {
             string packageName = GetPackageName(switches);
 
-            if(!packageTree.BuildNodes().Select(x => x.Name).ToList().Contains(packageName))
+            if (!packageTree.BuildNodes().Select(x => x.Name).ToList().Contains(packageName))
                 throw new UnkownInstallPackageException(string.Format("No package definition exists for {0}.", packageName));
 
             IPackageTree componentTree = packageTree.RetrievePackage(packageName);
@@ -38,24 +39,24 @@ namespace Horn.Core.PackageCommands
                 IBuildMetaData nextMetaData = GetBuildMetaData(nextTree);
 
                 if (!switches.Keys.Contains("rebuildonly"))
-                    ExecuteSourceControlGet(nextMetaData, nextTree);
+                    RetrieveSourceCode(nextMetaData, nextTree);
 
-                ExecutePrebuild(nextMetaData, nextTree);
+                ExecutePrebuildCommands(nextMetaData, nextTree);
 
-                ExecuteBuild(nextTree, nextMetaData);
+                BuildSource(nextTree, nextMetaData);
             }
         }
 
-        protected virtual void ExecuteBuild(IPackageTree nextTree, IBuildMetaData nextMetaData)
+        protected virtual void BuildSource(IPackageTree nextTree, IBuildMetaData nextMetaData)
         {
             log.InfoFormat("\nHorn is building {0}.\n\n".ToUpper(), nextMetaData.BuildEngine);
 
             nextMetaData.BuildEngine.Build(processFactory, nextTree);
         }
 
-        protected virtual void ExecutePrebuild(IBuildMetaData metaData, IPackageTree packageTree)
+        protected virtual void ExecutePrebuildCommands(IBuildMetaData metaData, IPackageTree packageTree)
         {
-            if ((metaData.PrebuildCommandList == null) || (metaData.PrebuildCommandList.Count == 0))
+            if (!metaData.PrebuildCommandList.HasElements())
                 return;
 
             foreach (var command in metaData.PrebuildCommandList)
@@ -83,39 +84,48 @@ namespace Horn.Core.PackageCommands
             return new DependencyTree(componentTree);
         }
 
-        protected virtual void ExecuteSourceControlGet(IBuildMetaData buildMetaData, IPackageTree componentTree)
+        protected virtual void RetrieveSourceCode(IBuildMetaData buildMetaData, IPackageTree componentTree)
         {
-            if ((buildMetaData.RepositoryElementList != null) && (buildMetaData.RepositoryElementList.Count > 0))
-            {
-                componentTree.DeleteWorkingDirectory();
+            ExecuteRepositoryElementList(buildMetaData, componentTree);
 
-                foreach (var repositoryElement in buildMetaData.RepositoryElementList)
-                {
-                    repositoryElement.PrepareRepository(componentTree, get).Export();
-                }
+            ExecuteExportList(buildMetaData, componentTree);
 
+            if (buildMetaData.SourceControl == null)
                 return;
-            }
-            
-            if((buildMetaData.ExportList != null) && (buildMetaData.ExportList.Count > 0))
-            {
-                var initialise = true;
 
-                foreach (var sourceControl in buildMetaData.ExportList)
-                {
-                    log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), sourceControl.Url);
-
-                    get.From(sourceControl).ExportTo(componentTree, sourceControl.ExportPath, initialise);
-
-                    initialise = false;
-                }
-
-                return;
-            }
-            
             log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), buildMetaData.SourceControl.Url);
 
             get.From(buildMetaData.SourceControl).ExportTo(componentTree);
+        }
+
+        protected virtual void ExecuteExportList(IBuildMetaData buildMetaData, IPackageTree componentTree)
+        {
+            if (!buildMetaData.ExportList.HasElements())
+                return;
+
+            var initialise = true;
+
+            foreach (var sourceControl in buildMetaData.ExportList)
+            {
+                log.InfoFormat("\nHorn is fetching {0}.\n\n".ToUpper(), sourceControl.Url);
+
+                get.From(sourceControl).ExportTo(componentTree, sourceControl.ExportPath, initialise);
+
+                initialise = false;
+            }
+        }
+
+        protected virtual void ExecuteRepositoryElementList(IBuildMetaData buildMetaData, IPackageTree componentTree)
+        {
+            if (!buildMetaData.RepositoryElementList.HasElements())
+                return;
+
+            componentTree.DeleteWorkingDirectory();
+
+            foreach (var repositoryElement in buildMetaData.RepositoryElementList)
+            {
+                repositoryElement.PrepareRepository(componentTree, get).Export();
+            }
         }
 
         public PackageBuilder(IGet get, IProcessFactory processFactory)

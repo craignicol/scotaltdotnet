@@ -59,6 +59,5 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         {
             castleElementOne.AssertWasCalled(x => x.Export());
         }
-
     }
 }

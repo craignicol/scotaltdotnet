@@ -12,5 +12,10 @@ namespace Horn.Core.extensions
 
             return items;
         }
+
+        public static bool HasElements<T>(this ICollection<T> collection)
+        {
+            return collection != null && collection.Count != 0;
+        }
     }
 }

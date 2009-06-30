@@ -9,7 +9,7 @@ namespace Horn.Core.Spec.Doubles
 {
     public class PackageBuilderStub : PackageBuilder
     {
-        protected override void ExecuteBuild(IPackageTree nextTree, IBuildMetaData nextMetaData)
+        protected override void BuildSource(IPackageTree nextTree, IBuildMetaData nextMetaData)
         {
             Console.WriteLine(string.Format("Building {0}", nextMetaData.InstallName));
         }
