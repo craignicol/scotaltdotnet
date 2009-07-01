@@ -8,17 +8,9 @@ namespace core.tests.cfg
     public class When_nhibernate_is_configured_correctly
     {
         [Test]
-        public void The_we_can_open_an_session()
+        public void The_we_can_open_a_session()
         {
-            var cfg = new Configuration()
-                        .AddAssembly(typeof(Blank).Assembly);
 
-            var sessionFactory = cfg.BuildSessionFactory();
-
-            using(var session = sessionFactory.OpenSession())
-            {
-                Assert.IsTrue(session.Connection.State == ConnectionState.Open);
-            }
         }
     }
 }

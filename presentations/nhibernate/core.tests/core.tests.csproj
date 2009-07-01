@@ -66,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationSpecs.cs" />
-    <Compile Include="ConfigurationHelper.cs" />
     <Compile Include="ContextSpecification.cs" />
     <Compile Include="Mapping\UserSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
