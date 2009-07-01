@@ -1,7 +1,4 @@
-using System;
-using core.domain;
 using MbUnit.Framework;
-using NHibernate.Criterion;
 
 namespace core.tests.Mapping
 {
