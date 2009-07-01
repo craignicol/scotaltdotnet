@@ -17,19 +17,5 @@ namespace core.tests
 
             _sessionFactory = cfg.BuildSessionFactory();
         }
-
-        protected T GetEntityByDescription<T>(string propertyName, object value) where T : class
-        {
-            T ret = null;
-
-            using (var session = _sessionFactory.OpenSession())
-            {
-                ret = session.CreateCriteria(typeof(T))
-                    .Add(Restrictions.Eq(propertyName, value))
-                    .UniqueResult<T>();
-            }
-
-            return ret;
-        }
     }
 }
