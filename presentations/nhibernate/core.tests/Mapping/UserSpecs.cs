@@ -1,12 +1,20 @@
+using core.domain;
 using MbUnit.Framework;
 
 namespace core.tests.Mapping
 {
     public class When_we_need_to_store_user_details : NhibernateSpecBase
     {
+        private User _user;
+
         protected override void establish_context()
         {
-
+            _user = new User
+                        {
+                            FirstName = "Paul",
+                            Surname = "Cowan",
+                            Email = "dagda1@scotalt.net"
+                        };
         }
 
         protected override void because()
@@ -21,6 +29,8 @@ namespace core.tests.Mapping
 
     public class When_retrieving_a_users_details : NhibernateSpecBase
     {
+        private User _user;
+
         protected override void establish_context()
         {
         }
@@ -32,16 +42,20 @@ namespace core.tests.Mapping
         [Test]
         public void Then_you_can_use_the_criteria_syntax()
         {
+            Assert.AreEqual(_user.Email, "dagda1@scotalt.net");
         }
 
         [Test]
         public void Or_you_can_use_hql()
         {
+            Assert.AreEqual(_user.Email, "dagda1@scotalt.net");
         }
     }
 
     public class When_a_user_is_no_longer_in_ther_organisation : NhibernateSpecBase
     {
+        private User _user;
+
         protected override void establish_context()
         {
         }
@@ -58,8 +72,11 @@ namespace core.tests.Mapping
 
     public class When_we_need_different_user_roles : NhibernateSpecBase
     {
+        private Role _role;
+
         protected override void establish_context()
         {
+            _role = new Role {Name = "System Admin"};
         }
 
         protected override void because()
@@ -67,15 +84,19 @@ namespace core.tests.Mapping
         }
 
         [Test]
-        public void Then_roles_should_be_maintained()
+        public void Then_a_role_should_be_maintained()
         {
+            Assert.Greater(_role.Id, 0);
         }
     }
 
-    public class When_we_need_different_user_permission : NhibernateSpecBase
+    public class When_we_need_different_user_permissions : NhibernateSpecBase
     {
+        private Permission _permission;
+
         protected override void establish_context()
         {
+            _permission = new Permission {Name = "Customers"};
         }
 
         protected override void because()
@@ -83,8 +104,9 @@ namespace core.tests.Mapping
         }
 
         [Test]
-        public void Then_permission_should_be_maintained()
+        public void Then_a_permission_should_be_maintained()
         {
+            Assert.Greater(_permission.Id, 0);
         }
     }
 }
