@@ -7,7 +7,7 @@ install nhcontrib:
 		parameters "with.examples=false"
 		
 	shared_library "Lib"
-	output "build"		
+	build_root_dir "build"		
 	
 dependencies:  
 	depend @nhibernate  >>  "Nhibernate"
