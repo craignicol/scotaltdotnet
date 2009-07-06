@@ -3,7 +3,7 @@
 	get_from svn("http://scotaltdotnet.googlecode.com/svn/trunk/")
 	build_with msbuild, buildfile("src/horn.sln"), FrameworkVersion35	
 	
-	output "."
+	build_root_dir "."
 	shared_library "lib"	
 
 dependencies:
