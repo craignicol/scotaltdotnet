@@ -91,9 +91,17 @@ namespace Horn.Core.Spec.Doubles
             set { throw new NotImplementedException(); }
         }
 
+        private DirectoryInfo result;
         public DirectoryInfo Result
         {
-            get { return new DirectoryInfo(@"Z:\nowhere\"); }
+            get
+            {
+                if (result == null)
+                    return new DirectoryInfo(@"Z:\nowhere\");
+
+                return result;
+            }
+            set { result = value; }
         }
 
         public IPackageTree Root
