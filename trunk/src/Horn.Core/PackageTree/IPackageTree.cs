@@ -16,6 +16,8 @@ namespace Horn.Core.PackageStructure
 
         string FullName { get; }
 
+        bool IsAversionRequest { get; }
+
         bool IsBuildNode { get; }
 
         bool IsRoot { get; }

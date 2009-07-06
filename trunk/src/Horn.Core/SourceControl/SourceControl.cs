@@ -49,14 +49,16 @@ namespace Horn.Core.SCM
             if (downloadedPackages.ContainsKey(packageTree.Name))
                 return;
 
-            if (!packageTree.GetRevisionData().ShouldUpdate(new RevisionData(Revision)))
+            if(!packageTree.IsAversionRequest)
             {
-                downloadedPackages.Add(packageTree.Name, packageTree.Name);
+                if ((!packageTree.GetRevisionData().ShouldUpdate(new RevisionData(Revision))))
+                {
+                    downloadedPackages.Add(packageTree.Name, packageTree.Name);
 
-                return;
+                    return;
+                }                
             }
                 
-
             Initialise(packageTree);
 
             SetMonitor(packageTree.WorkingDirectory.FullName);

@@ -50,6 +50,11 @@ namespace Horn.Core.PackageStructure
             }
         }
 
+        public bool IsAversionRequest
+        {
+            get { return string.IsNullOrEmpty(Version) == false; }
+        }
+
         public bool IsBuildNode { get; private set; }
 
         public bool IsRoot

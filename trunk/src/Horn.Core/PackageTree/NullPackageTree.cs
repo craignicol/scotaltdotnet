@@ -53,6 +53,11 @@ namespace Horn.Core.PackageStructure
             get { throw new NullTreeException(); }
         }
 
+        public bool IsAversionRequest
+        {
+            get { throw new NullTreeException(); }
+        }
+
         public bool IsBuildNode
         {
             get { throw new NullTreeException(); }

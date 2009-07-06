@@ -39,7 +39,7 @@ namespace Horn.Core.Dependencies
 
         private FileInfo[] GetDependencyFiles(Dependency dependency, IPackageTree packageForCurrentDependency)
         {
-            DirectoryInfo dependencyDirectory = packageForCurrentDependency.OutputDirectory;
+            DirectoryInfo dependencyDirectory = packageForCurrentDependency.Result;
 
             var files =  dependencyDirectory.GetFiles(string.Format("{0}.*", dependency.Library));
 

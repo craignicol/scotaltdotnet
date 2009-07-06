@@ -54,6 +54,11 @@ namespace Horn.Core.Spec.Doubles
             }
         }
 
+        public bool IsAversionRequest
+        {
+            get { return string.IsNullOrEmpty(Version) == false; }
+        }
+
         public bool IsBuildNode
         {
             get { throw new NotImplementedException(); }
