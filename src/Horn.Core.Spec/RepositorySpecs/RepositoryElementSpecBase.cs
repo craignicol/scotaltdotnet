@@ -26,7 +26,7 @@ namespace Horn.Core.Spec.RepositorySpecs
 
             dependencyResolver = CreateStub<IDependencyResolver>();
 
-            dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>("boo")).Return(new BooBuildConfigReader());
+            dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>()).Return(new BooBuildConfigReader());
 
             var svn = new SVNSourceControl("http://svnserver/trunk");
 

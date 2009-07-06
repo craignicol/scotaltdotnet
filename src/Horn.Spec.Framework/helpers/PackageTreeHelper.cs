@@ -49,6 +49,9 @@ namespace Horn.Framework.helpers
             CreateDirectory(working, "Tools");
 
             var castleBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"BuildConfigs\Horn\castle.boo");
+            var castleVersionBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"BuildConfigs\Horn\castle-2.1.0.boo");
+
+            File.Copy(castleVersionBuildFile, Path.Combine(castle, "castle-2.1.0.boo"));
 
             CreateBuildFiles(castleBuildFile, castle, true);
 

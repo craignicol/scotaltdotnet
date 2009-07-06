@@ -113,6 +113,7 @@
     <Compile Include="BuildEngine\BuildEngineStub.cs" />
     <Compile Include="BuildEngine\BuildWithNantSpecification.cs" />
     <Compile Include="BuildEngine\OutputDirectorySpecs.cs" />
+    <Compile Include="CmdLine\VersionCmdLineSpecs.cs" />
     <Compile Include="Stubs\StubProcess.cs" />
     <Compile Include="Stubs\StubProcessFactory.cs" />
     <Compile Include="CmdLine\CommandArgsSpec.cs" />
@@ -167,8 +168,10 @@
     <Compile Include="PackageCommands\PackageBuilderSpecification.cs" />
     <Compile Include="SourceControl\PackageTree\PackageTreeSpecification.cs" />
     <Compile Include="Utils\FrameworkLocatorSpec.cs" />
+    <Compile Include="VersionSpecs\VersionSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BuildConfigs\Horn\castle-2.1.0.boo" />
     <Content Include="BuildConfigs\Horn\castle.boo" />
     <Content Include="BuildConfigs\Horn\hornmultiget.boo" />
     <Content Include="BuildConfigs\Horn\horn.boo">

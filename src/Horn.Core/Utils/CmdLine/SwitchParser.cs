@@ -20,7 +20,8 @@ http://groups.google.com/group/scotaltnet
 
 Usage : horn -install:<component>
 Options :
-    -rebuildonly         Do not check for the latest source code.";
+    -rebuildonly                Do not check for the latest source code.
+    -version:<version_number>   The specific version of a package.";
 
         #endregion        
 
@@ -166,7 +167,8 @@ Options :
             var parameters = new List<Parameter>
                                  {
                                      new Parameter("install", true, true, false),
-                                     new Parameter("rebuildonly", false, false, false)
+                                     new Parameter("rebuildonly", false, false, false),
+                                     new Parameter("version", false, true, false)
                                  };
 
             paramTable = parameters.ToArray();

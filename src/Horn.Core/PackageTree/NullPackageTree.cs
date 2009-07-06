@@ -7,107 +7,116 @@ namespace Horn.Core.PackageStructure
 {
     public class NullPackageTree : IPackageTree
     {
-        public string BuildFile
+        public void Add(IPackageTree item)
         {
-            get { throw new System.NotImplementedException(); }
+            throw new NullTreeException();
         }
 
-        public Dictionary<string, string> BuildFiles { get; set; }
-
-        public IBuildMetaData BuildMetaData
+        public void Remove(IPackageTree item)
         {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public IPackageTree[] Children
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public DirectoryInfo CurrentDirectory
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public DirectoryInfo DownloadDirectory
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public bool Exists
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public bool IsBuildNode
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public bool IsRoot
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public string Name
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public FileInfo Nant
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public DirectoryInfo OutputDirectory
-        {
-            get { throw new System.NotImplementedException(); }
+            throw new NullTreeException();
         }
 
         public IPackageTree Parent
         {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
+            get { throw new NullTreeException(); }
+            set { throw new NullTreeException(); }
+        }
+
+        public IPackageTree[] Children
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public string BuildFile
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public IBuildMetaData BuildMetaData
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public DirectoryInfo CurrentDirectory
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public bool Exists
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public string FullName
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public bool IsBuildNode
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public bool IsRoot
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public string Name
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public FileInfo Nant
+        {
+            get { throw new NullTreeException(); }
+        }
+
+        public DirectoryInfo OutputDirectory
+        {
+            get { throw new NullTreeException(); }
         }
 
         public DirectoryInfo Result
         {
-            get { throw new NotImplementedException(); }
+            get { throw new NullTreeException(); }
         }
 
         public IPackageTree Root
         {
-            get { throw new NotImplementedException(); }
+            get { throw new NullTreeException(); }
         }
 
         public FileInfo Sn
         {
-            get { throw new System.NotImplementedException(); }
+            get { throw new NullTreeException(); }
         }
 
         public DirectoryInfo WorkingDirectory
         {
-            get { throw new System.NotImplementedException(); }
+            get { throw new NullTreeException(); }
         }
 
-        public void Add(IPackageTree item)
+        public string Version
         {
-            throw new System.NotImplementedException();
-        }
-
-        public List<IPackageTree> BuildNodes()
-        {
-            throw new System.NotImplementedException();
+            get { throw new NullTreeException(); }
+            set { throw new NullTreeException(); }
         }
 
         public void CreateRequiredDirectories()
         {
-            throw new System.NotImplementedException();
+            throw new NullTreeException();
         }
 
         public void DeleteWorkingDirectory()
         {
-            throw new NotImplementedException();
+            throw new NullTreeException();
+        }
+
+        public List<IPackageTree> BuildNodes()
+        {
+            throw new NullTreeException();
         }
 
         public IBuildMetaData GetBuildMetaData(string packageName)
@@ -115,29 +124,19 @@ namespace Horn.Core.PackageStructure
             return new NullBuildMetaData();
         }
 
-        public IBuildMetaData GetBuildMetaData(string packageName, string buildFile)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public IRevisionData GetRevisionData()
         {
-            throw new System.NotImplementedException();
+            throw new NullTreeException();
         }
 
         public IPackageTree GetRootPackageTree(DirectoryInfo rootFolder)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(IPackageTree item)
-        {
-            throw new System.NotImplementedException();
+            throw new NullTreeException();
         }
 
         public IPackageTree RetrievePackage(string packageName)
         {
-            throw new System.NotImplementedException();
+            throw new NullTreeException();
         }
     }
 }

@@ -14,17 +14,17 @@ namespace Horn.Core.Spec.Dependencies
         }
 
 
-        [Fact]
+        //[Fact]
         public void should_load_all_solution_files_found_in_working_directory()
         {
             Assert.Equal(1, dependentUpdater.SolutionFiles.Count());
         }
-        [Fact]
+        //[Fact]
         public void should_load_all_projects_found_in_solution_files()
         {
             Assert.Equal(1, dependentUpdater.ProjectFiles.Count());
         }
-        [Fact]
+        //[Fact]
         public void should_update_refernce_version()
         {
             string contents = File.ReadAllText(projectPath);
@@ -44,13 +44,13 @@ namespace Horn.Core.Spec.Dependencies
         }
 
 
-        [Fact]
+        //[Fact]
         public void should_not_load_any_solution_files_found_in_working_directory()
         {
             dependentUpdater.Update(updaterContext);
             Assert.Equal(0, dependentUpdater.SolutionFiles.Count());
         }
-        [Fact]
+        //[Fact]
         public void should_not_throw_exception()
         {
             dependentUpdater.Update(updaterContext);
@@ -61,16 +61,11 @@ namespace Horn.Core.Spec.Dependencies
 
     public class VisualStudioDependentUpdaterDouble : VisualStudioDependentUpdater
     {
-
         public const string NewReferenceName = "NewReference";
-
 
         protected override string GetVersionInfoFromAssembly(string filePath, string dependencyName)
         {
             return NewReferenceName;
         }
-
-
-
     }
 }
