@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using Horn.Core.extensions;
 using log4net;
 
 namespace Horn.Core.Utils.CmdLine
@@ -21,12 +22,20 @@ Usage : horn -install:<component>
 Options :
     -rebuildonly         Do not check for the latest source code.";
 
-        #endregion
+        #endregion        
 
-        private readonly TextWriter Output;
-        private readonly Parameter[] ParamTable;
+        private readonly TextWriter output;
+        private readonly Parameter[] paramTable;
         private readonly Dictionary<string, IList<string>> parsedArgs;
         private static readonly ILog log = LogManager.GetLogger(typeof(SwitchParser));
+
+        public ICommandArgs CommandArguments
+        {
+            get
+            {
+                return new CommandArgs(parsedArgs);
+            }
+        }
 
         public Dictionary<string, IList<string>> ParsedArgs
         {
@@ -50,7 +59,7 @@ Options :
         {
             var ret = true;
 
-            foreach (var paramRow in ParamTable)
+            foreach (var paramRow in paramTable)
             {
                 var arg = ParsedArgs.ContainsKey(paramRow.Key) ? ParsedArgs[paramRow.Key] : null;
 
@@ -71,7 +80,7 @@ Options :
 
             foreach (var keyValuePair in ParsedArgs)
             {
-                var paramRow = Array.Find(ParamTable, match => match.Key == keyValuePair.Key);
+                var paramRow = Array.Find(paramTable, match => match.Key == keyValuePair.Key);
 
                 if (paramRow == null)
                     ret= OutputValidationMessage(string.Format("Argument key unknown: {0}.", keyValuePair.Key));
@@ -82,33 +91,33 @@ Options :
 
         public virtual void OutputHelpText()
         {
-            Output.WriteLine(HelpText);
+            output.WriteLine(HelpText);
         }
 
         public virtual bool OutputValidationMessage(string message)
         {
-            Output.WriteLine(message);
+            output.WriteLine(message);
 
             string usage = "USAGE:" + Environment.NewLine;
 
-            foreach (var paramRow in ParamTable)
+            foreach (var paramRow in paramTable)
                 usage += string.Format("{0}-{1}:{{{2}}}{3}{4}" + Environment.NewLine, paramRow.Required ? string.Empty : "[", paramRow.Key, "", paramRow.Reoccurs ? "*" : "", paramRow.Required ? "" : "]");
 
-            Output.WriteLine();
-            Output.WriteLine(usage);
+            output.WriteLine();
+            output.WriteLine(usage);
 
             return false;
         }
 
         private Dictionary<string, IList<string>> Parse(string[] args)
         {
-            const string ARGS_REGEX = @"-([a-zA-Z_][a-zA-Z_0-9]{0,}):?((?<=:).{0,})?";
+            const string argsRegex = @"-([a-zA-Z_][a-zA-Z_0-9]{0,}):?((?<=:).{0,})?";
             string name;
             Match match;
 
             var parsedArgs = new Dictionary<string, IList<string>>();
 
-            if ((args == null) || (args.Length == 0) || ((args[0].ToLower().Equals("-help"))))
+            if ((!args.HasElements()) || (args[0].ToLower().Equals("-help")))
             {
                 OutputHelpText();
 
@@ -117,7 +126,7 @@ Options :
 
             foreach (string arg in args)
             {
-                match = Regex.Match(arg, ARGS_REGEX, RegexOptions.IgnorePatternWhitespace);
+                match = Regex.Match(arg, argsRegex, RegexOptions.IgnorePatternWhitespace);
 
                 if ((match == null) || (!match.Success) || (match.Groups.Count != 3))
                     continue;
@@ -152,17 +161,17 @@ Options :
 
         public SwitchParser(TextWriter output, string[] args)
         {
-            Output = output;
+            this.output = output;
 
-            var parameters = new List<Parameter>();
+            var parameters = new List<Parameter>
+                                 {
+                                     new Parameter("install", true, true, false),
+                                     new Parameter("rebuildonly", false, false, false)
+                                 };
 
-            parameters.Add(new Parameter("install", true, true, false));
-
-            parameters.Add(new Parameter("rebuildonly", false, false, false));
-
-            ParamTable = parameters.ToArray();
+            paramTable = parameters.ToArray();
 
             parsedArgs = Parse(args);
-        }        
+        }
     }
 }

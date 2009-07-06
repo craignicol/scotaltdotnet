@@ -8,6 +8,8 @@ using Horn.Core.SCM;
 using Horn.Core.Spec.Doubles;
 using Horn.Core.Spec.helpers;
 using Horn.Core.Spec.Unit.GetSpecs;
+using Horn.Core.Utils.CmdLine;
+using Horn.Spec.Framework.doubles;
 using Rhino.Mocks;
 using Xunit;
 
@@ -37,7 +39,7 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             get.Stub(x => x.ExportTo(packageTree)).Return(packageTree);
 
-            packageBuilder = new PackageBuilderStub(get, new DiagnosticsProcessFactory());
+            packageBuilder = new PackageBuilderStub(get, new DiagnosticsProcessFactory(), new CommandArgsDouble("log4net", true));
         }
 
         protected override void After_each_spec()
@@ -47,15 +49,9 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
         protected override void Because()
         {
-            var args = new Dictionary<string, IList<string>>
-                           {
-                               {"install", new List<string> {"log4net"}},
-                               {"rebuildonly", new List<string> {""}}
-                           };
-
             mockRepository.Playback();
 
-            packageBuilder.Execute(packageTree, args);
+            packageBuilder.Execute(packageTree);
         }
 
         private void DeleteTestFile()

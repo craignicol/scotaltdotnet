@@ -4,6 +4,7 @@ using Horn.Core.Dsl;
 using Horn.Core.GetOperations;
 using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
+using Horn.Core.Utils.CmdLine;
 
 namespace Horn.Core.Spec.Doubles
 {
@@ -14,7 +15,8 @@ namespace Horn.Core.Spec.Doubles
             Console.WriteLine(string.Format("Building {0}", nextMetaData.InstallName));
         }
 
-        public PackageBuilderStub(IGet get, IProcessFactory processFactory) : base(get, processFactory)
+        public PackageBuilderStub(IGet get, IProcessFactory processFactory, ICommandArgs commandArgs)
+            : base(get, processFactory, commandArgs)
         {
         }
     }

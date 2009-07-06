@@ -9,6 +9,8 @@ using Horn.Core.SCM;
 using Horn.Core.Tree.MetaDataSynchroniser;
 using System.Reflection;
 using Horn.Core.Dependencies;
+using Horn.Core.Utils.CmdLine;
+using Parameter=Castle.MicroKernel.Registration.Parameter;
 
 namespace Horn.Core.Utils.IoC
 {
@@ -30,9 +32,12 @@ namespace Horn.Core.Utils.IoC
 
 
 
-        public WindsorDependencyResolver()
+        public WindsorDependencyResolver(ICommandArgs commandArgs)
         {
             innerContainer = new WindsorContainer();
+
+            innerContainer.Kernel.AddComponentInstance<ICommandArgs>(typeof(ICommandArgs), commandArgs);
+
             innerContainer.Kernel.Resolver.AddSubResolver(new EnumerableResolver(innerContainer.Kernel));
 
             innerContainer.Register(

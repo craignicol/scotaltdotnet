@@ -1,5 +1,6 @@
 using Horn.Core.BuildEngines;
 using Horn.Core.Dsl;
+using Horn.Core.Integration.IoC;
 using Horn.Core.PackageCommands;
 using Horn.Core.PackageStructure;
 using Horn.Core.SCM;
