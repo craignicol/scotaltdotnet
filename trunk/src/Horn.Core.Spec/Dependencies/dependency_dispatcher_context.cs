@@ -31,6 +31,7 @@ namespace Horn.Core.Spec.Dependencies
             dependencies = new[] { new Dependency("Test", "Test.Dependency"), };
 
             outputPath = packageTree.OutputDirectory.FullName;
+            ((PackageTreeStub)packageTree).Result = new DirectoryInfo(outputPath);
             workingPath = packageTree.WorkingDirectory.FullName;
             dependencyPath = Path.Combine(workingPath, "dependencies");
 
