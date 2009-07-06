@@ -43,6 +43,17 @@ namespace Horn.Core.Spec.Doubles
             get { throw new NotImplementedException(); }
         }
 
+        public string FullName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Version))
+                    return Name;
+
+                return string.Format("{0}-{1}", Name, Version);
+            }
+        }
+
         public bool IsBuildNode
         {
             get { throw new NotImplementedException(); }
@@ -94,6 +105,8 @@ namespace Horn.Core.Spec.Doubles
         {
             get { return new DirectoryInfo(Path.Combine(BaseDirectory, "working")).Parent; }
         }
+
+        public string Version { get; set; }
 
         public void Add(IPackageTree item)
         {

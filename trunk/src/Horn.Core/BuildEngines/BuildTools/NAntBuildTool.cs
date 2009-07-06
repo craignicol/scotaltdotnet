@@ -24,7 +24,7 @@ namespace Horn.Core
                     return "3.5";
             }
 
-            throw new InvalidEnumArgumentException("Invalid Framework version paased to NAntBuildTool.GetFrameworkVersion", (int)version, typeof(FrameworkVersion));
+            throw new InvalidEnumArgumentException("Invalid Framework Version paased to NAntBuildTool.GetFrameworkVersion", (int)version, typeof(FrameworkVersion));
         }
 
         public string PathToBuildTool(IPackageTree packageTree, FrameworkVersion version)

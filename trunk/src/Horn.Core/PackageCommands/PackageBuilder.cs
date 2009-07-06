@@ -20,18 +20,22 @@ namespace Horn.Core.PackageCommands
 
         public void Execute(IPackageTree packageTree)
         {
-            string packageName = GetPackageName();
+            LogPackageDetails();
 
-            if (!packageTree.BuildNodes().Select(x => x.Name).ToList().Contains(packageName))
-                throw new UnkownInstallPackageException(string.Format("No package definition exists for {0}.", packageName));
+            if (!packageTree.BuildNodes().Select(x => x.Name).ToList().Contains(commandArgs.PackageName))
+                throw new UnkownInstallPackageException(string.Format("No package definition exists for {0}.", commandArgs.PackageName));
+            
+            IPackageTree componentTree = packageTree.RetrievePackage(commandArgs.PackageName);
 
-            IPackageTree componentTree = packageTree.RetrievePackage(packageName);
+            //HACK: Need a better way of initialising the package tree with the version information
+            if (!string.IsNullOrEmpty(commandArgs.Version))
+                componentTree.Version = commandArgs.Version;
 
             IDependencyTree dependencyTree = GetDependencyTree(componentTree);
 
             BuildDependencyTree(packageTree, dependencyTree);
 
-            log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), packageName);
+            log.InfoFormat("\nHorn has finished installing {0}.\n\n".ToUpper(), commandArgs.PackageName);
         }
 
         protected virtual void BuildDependencyTree(IPackageTree packageTree, IDependencyTree dependencyTree)
@@ -72,13 +76,14 @@ namespace Horn.Core.PackageCommands
             return nextTree.GetBuildMetaData(nextTree.BuildFile);
         }
 
-        protected virtual string GetPackageName()
+        protected void LogPackageDetails()
         {
-            string packageName = commandArgs.InstallName;
+            var message = string.Format("installing {0} ", commandArgs.PackageName);
 
-            log.InfoFormat("installing {0}.\n", packageName);
+            if (!string.IsNullOrEmpty(commandArgs.Version))
+                message += string.Format(" Version {0}.", commandArgs.Version);
 
-            return packageName;
+            log.Info(message);
         }
 
         protected virtual IDependencyTree GetDependencyTree(IPackageTree componentTree)

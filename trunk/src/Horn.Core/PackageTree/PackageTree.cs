@@ -39,6 +39,17 @@ namespace Horn.Core.PackageStructure
             }
         }
 
+        public string FullName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Version))
+                    return Name;
+
+                return string.Format("{0}-{1}", Name, Version);
+            }
+        }
+
         public bool IsBuildNode { get; private set; }
 
         public bool IsRoot
@@ -116,6 +127,7 @@ namespace Horn.Core.PackageStructure
             private set { workingDirectory = value; }
         }
 
+        public string Version { get; set; }
 
 
         public void Add(IPackageTree item)
@@ -207,9 +219,9 @@ namespace Horn.Core.PackageStructure
             if (BuildMetaData != null)
                 return BuildMetaData;
 
-            var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageTree.Name);
+            var buildFileResolver = new BuildFileResolver().Resolve(packageTree.CurrentDirectory, packageTree.FullName);
 
-            var reader = IoC.Resolve<IBuildConfigReader>(buildFileResolver.Extension);
+            var reader = IoC.Resolve<IBuildConfigReader>();
 
             BuildMetaData = reader.SetDslFactory(packageTree).GetBuildMetaData(packageTree, Path.GetFileNameWithoutExtension(buildFileResolver.BuildFile));
 

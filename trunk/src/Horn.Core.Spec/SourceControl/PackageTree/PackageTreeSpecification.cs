@@ -76,7 +76,7 @@ namespace Horn.Core.Spec.Unit.HornTree
 
             dependencyResolver = CreateStub<IDependencyResolver>();
 
-            dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>("boo")).Return(buildConfigReader);
+            dependencyResolver.Stub(x => x.Resolve<IBuildConfigReader>()).Return(buildConfigReader);
 
             var svn = new SVNSourceControl("http://svnserver/trunk");
 
@@ -140,6 +140,7 @@ namespace Horn.Core.Spec.Unit.HornTree
         {
             Assert.IsType<NullPackageTree>(hornTree.RetrievePackage("unkownpackage"));
         }
+
         [Fact]
         public void Then_A_Null_Build_Meta_Data_Object_Is_Returned()
         {

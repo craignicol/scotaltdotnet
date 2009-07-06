@@ -128,14 +128,10 @@ namespace Horn.Core.BuildEngines
             return ret;
         }
 
-
-
         public virtual DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
         {
             return sourceDirectory.GetDirectoryFromParts(parts);
         }
-
-
 
         protected virtual void ProcessBuild(IPackageTree packageTree, IProcessFactory processFactory, string pathToBuildTool, string cmdLineArguments)
         {
@@ -186,8 +182,6 @@ namespace Horn.Core.BuildEngines
 
             return Path.Combine(tree.WorkingDirectory.FullName, relativePath);
         }
-
-
 
         public BuildEngine(IBuildTool buildTool, string buildFile, FrameworkVersion version, IDependencyDispatcher dependencyDispatcher)
         {

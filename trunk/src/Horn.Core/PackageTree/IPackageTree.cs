@@ -14,6 +14,8 @@ namespace Horn.Core.PackageStructure
 
         bool Exists { get; }
 
+        string FullName { get; }
+
         bool IsBuildNode { get; }
 
         bool IsRoot { get; }
@@ -31,6 +33,8 @@ namespace Horn.Core.PackageStructure
         FileInfo Sn { get; }
 
         DirectoryInfo WorkingDirectory { get; }
+
+        string Version { get; set; }
 
         void CreateRequiredDirectories();
 

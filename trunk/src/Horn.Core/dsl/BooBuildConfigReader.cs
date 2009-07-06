@@ -11,10 +11,7 @@ namespace Horn.Core.Dsl
         private BooConfigReader configReader;
         protected DslFactory factory;
 
-
         public IPackageTree PackageTree { get; private set; }
-
-
 
         public IBuildMetaData GetBuildMetaData(string packageName)
         {
@@ -29,7 +26,7 @@ namespace Horn.Core.Dsl
             if (factory == null)
                 throw new ArgumentNullException("You have not called SetDslFactory on class BooBuildConfigReader");
 
-            return CreateBuildMetaData(packageTree.CurrentDirectory, buildFile);
+            return CreateBuildMetaData(packageTree.CurrentDirectory, packageTree.FullName);
         }
 
         public virtual IBuildConfigReader SetDslFactory(IPackageTree packageTree)

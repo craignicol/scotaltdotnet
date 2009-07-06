@@ -16,7 +16,7 @@ namespace Horn.Core.Spec.Dependencies
         protected string projectPath;
         public DependentUpdaterContext updaterContext;
         protected string solutionContents = @"Project(""{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"") = ""Fake.Project"", ""Fake.Project\Fake.Project.csproj"", ""{093CFA20-D720-4C58-9B8F-754F03A40D16}""";
-        protected string projectContents = @"<?xml version=""1.0"" encoding=""utf-8""?>
+        protected string projectContents = @"<?xml Version=""1.0"" encoding=""utf-8""?>
 <Project ToolsVersion=""3.5"" DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"">
   <PropertyGroup>
     <Configuration Condition="" '$(Configuration)' == '' "">Debug</Configuration>

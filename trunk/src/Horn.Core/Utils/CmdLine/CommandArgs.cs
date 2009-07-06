@@ -5,15 +5,31 @@ namespace Horn.Core.Utils.CmdLine
 {
     public class CommandArgs : ICommandArgs
     {
-        public bool RebuildOnly { get; private set; }
+        public virtual string FullName 
+        { 
+            get
+            {
+                if (string.IsNullOrEmpty(Version))
+                    return PackageName;
 
-        public string InstallName { get; private set; }
+                return string.Format("{0}-{1}", PackageName, Version);
+            }
+        }
+
+        public virtual string PackageName { get; private set; }
+
+        public virtual bool RebuildOnly { get; private set; }
+
+        public virtual string Version{ get; private set; }
 
         public CommandArgs(IDictionary<string, IList<string>> switches)
         {
-            InstallName = switches["install"][0];
+            PackageName = switches["install"][0];
 
             RebuildOnly = switches.Keys.Contains("rebuildonly");
+
+            if (switches.Keys.Contains("version"))
+                Version = switches["version"][0];
         }
     }
 }
