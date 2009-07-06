@@ -7,7 +7,7 @@
 	with:
 		tasks clean, compile, dist
 		
-	output "build/debug"
+	build_root_dir "build"
 	
 package.homepage = "http://code.google.com/p/linfu/"
 package.forum    = "http://groups.google.com/group/linfuframework"

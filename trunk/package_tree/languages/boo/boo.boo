@@ -10,7 +10,7 @@
 	switches:
 		parameters "nosign=false"		
 		
-	output "build"
+	build_root_dir "build"
 	
 package.homepage = "http://boo.codehaus.org/"
 package.forum    = "http://groups.google.com/group/boolang"

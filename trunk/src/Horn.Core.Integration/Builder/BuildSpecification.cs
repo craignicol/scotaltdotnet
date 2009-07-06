@@ -22,7 +22,7 @@ namespace Horn.Core.Integration.Builder
 
             var solutionPath = Path.Combine(Path.Combine(rootPath, "Horn.Core"), "Horn.Core.csproj");
 
-            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>()){OutputDirectory = "."};
+            buildEngine = new BuildEngine(new MSBuildBuildTool(), solutionPath, FrameworkVersion.FrameworkVersion35, CreateStub<IDependencyDispatcher>()){BuildRootDirectory = "."};
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace Horn.Core.Integration.Builder
 
             dependentFilename = "dependency.dll";
 
-            buildEngine.OutputDirectory = ".";
+            buildEngine.BuildRootDirectory = ".";
 
             buildEngine.Dependencies.Add(new Dependency("dependency", "dependency"));
 

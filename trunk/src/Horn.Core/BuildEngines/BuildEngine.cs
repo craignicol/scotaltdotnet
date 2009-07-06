@@ -18,13 +18,13 @@ namespace Horn.Core.BuildEngines
 
         public virtual string BuildFile { get; private set; }
 
+        public virtual string BuildRootDirectory { get; set; }
+
         public virtual IBuildTool BuildTool { get; private set; }
 
         public virtual List<Dependency> Dependencies { get; protected set; }
 
         public virtual bool GenerateStrongKey { get; set; }
-
-        public virtual string OutputDirectory { get; set; }
 
         public virtual Dictionary<string, string> Parameters { get; private set; }
 
@@ -72,7 +72,7 @@ namespace Horn.Core.BuildEngines
 
             ProcessBuild(packageTree, processFactory, pathToBuildTool, cmdLineArguments);
 
-            if (OutputDirectory == ".")
+            if (BuildRootDirectory == ".")
                 return this;
 
             CopyArtifactsToBuildDirectory(packageTree);
@@ -104,6 +104,39 @@ namespace Horn.Core.BuildEngines
             SW.Close();
         }
 
+        public virtual DirectoryInfo GetBuildDirectory(DirectoryInfo root)
+        {
+            if(!root.Exists)
+                throw new DirectoryNotFoundException(string.Format("The build directory root {0} does not exist.", root.FullName));
+
+            if ((root.GetFiles("*.dll").Length > 0) || (root.GetFiles("*.exe").Length > 0))
+                return root;
+
+            DirectoryInfo ret = null;
+
+            foreach (var child in root.GetDirectories())
+            {
+                ret = GetBuildDirectory(child);
+
+                if(ret != null)
+                    break;
+            }
+
+            if(ret == null)
+                throw new DirectoryNotFoundException(string.Format("no build files found at {0}.", root.FullName));
+
+            return ret;
+        }
+
+
+
+        public virtual DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
+        {
+            return sourceDirectory.GetDirectoryFromParts(parts);
+        }
+
+
+
         protected virtual void ProcessBuild(IPackageTree packageTree, IProcessFactory processFactory, string pathToBuildTool, string cmdLineArguments)
         {
             IProcess process = processFactory.GetProcess(pathToBuildTool, cmdLineArguments, packageTree.WorkingDirectory.FullName);
@@ -123,7 +156,8 @@ namespace Horn.Core.BuildEngines
 
         protected virtual void CopyArtifactsToBuildDirectory(IPackageTree packageTree)
         {
-            DirectoryInfo buildDir = GetDirectoryFromParts(packageTree.WorkingDirectory, OutputDirectory);
+
+            DirectoryInfo buildDir = GetBuildDirectory(GetDirectoryFromParts(packageTree.WorkingDirectory, BuildRootDirectory));
 
             foreach (var file in buildDir.GetFiles())
             {
@@ -146,17 +180,14 @@ namespace Horn.Core.BuildEngines
             File.Copy(file.FullName, outputFile, true);
         }
 
-        protected virtual DirectoryInfo GetDirectoryFromParts(DirectoryInfo sourceDirectory, string parts)
-        {
-            return sourceDirectory.GetDirectoryFromParts(parts);
-        }
-
         protected virtual string GetBuildFilePath(IPackageTree tree)
         {
             var relativePath = BuildFile.Replace('/', '\\');
 
             return Path.Combine(tree.WorkingDirectory.FullName, relativePath);
         }
+
+
 
         public BuildEngine(IBuildTool buildTool, string buildFile, FrameworkVersion version, IDependencyDispatcher dependencyDispatcher)
         {

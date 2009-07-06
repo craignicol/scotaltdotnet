@@ -14,6 +14,11 @@ namespace Horn.Core.Spec.Doubles
         //    return this;
         //}
 
+        protected override void CopyArtifactsToBuildDirectory(Horn.Core.PackageStructure.IPackageTree packageTree)
+        {
+            Console.WriteLine("Copying");
+        }
+
         protected override void CopyDependenciesTo(Horn.Core.PackageStructure.IPackageTree packageTree)
         {
             Console.WriteLine(packageTree.Name);
@@ -24,6 +29,11 @@ namespace Horn.Core.Spec.Doubles
             Console.WriteLine(string.Format("source = {0}", file.FullName));
 
             Console.WriteLine(string.Format("destination = {0}", outputFile));
+        }
+
+        protected override void ProcessBuild(Horn.Core.PackageStructure.IPackageTree packageTree, IProcessFactory processFactory, string pathToBuildTool, string cmdLineArguments)
+        {
+            Console.WriteLine("Processing Build");
         }
 
         public BuildEngineStub(IBuildTool buildTool, IDependencyDispatcher dependencyDispatcher, List<Dependency> dependencies)

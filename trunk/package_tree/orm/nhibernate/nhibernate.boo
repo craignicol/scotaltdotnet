@@ -7,7 +7,7 @@ install nhibernate:
 		parameters "with.examples=false"
 		
 	shared_library "lib/net/3.5"
-	output "build/NHibernate-3.0.0.Alpha1-debug/bin/net-3.5"		
+	build_root_dir "build"		
 	
 dependencies:
 	depend "castle.tools" >> "Castle.Core"

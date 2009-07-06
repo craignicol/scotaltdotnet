@@ -7,7 +7,7 @@
 	with:
 		tasks full			
 		
-	output "build"
+	build_root_dir "build"
 	shared_library "lib"
 	
 package.homepage = "http://www.codeplex.com/AutoMapper/"

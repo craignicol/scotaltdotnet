@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Horn.Core.BuildEngines;
 using Horn.Core.Dependencies;
@@ -17,11 +18,13 @@ namespace Horn.Core.Spec.Dependencies
         protected string dependencyPath;
         protected Dependency[] dependencies;
         protected IDependentUpdaterExecutor dependentUpdater;
+        protected List<string> directoriesToDelete = new List<string>();
 
 
         protected override void Before_each_spec()
         { 
             targetDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Guid.NewGuid().ToString());
+
             packageTree = CreateStub<PackageTreeStub>(new[] { targetDirectory });
             dependentUpdater = CreateStub<IDependentUpdaterExecutor>();
 
@@ -39,8 +42,14 @@ namespace Horn.Core.Spec.Dependencies
 
         protected override void After_each_spec()
         {
-            //if (Directory.Exists(targetDirectory))
-            //    Directory.Delete(targetDirectory, true);
+            try
+            {
+                if (Directory.Exists(targetDirectory))
+                    Directory.Delete(targetDirectory, true);
+            }
+            catch
+            {                
+            }
         }
 
         private void CreateFiles()

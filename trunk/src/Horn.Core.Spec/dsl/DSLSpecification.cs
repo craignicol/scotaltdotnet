@@ -57,7 +57,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(".", reader.BuildMetaData.BuildEngine.SharedLibrary);
 
-            Assert.Equal("Output", reader.BuildMetaData.BuildEngine.OutputDirectory);
+            Assert.Equal("Output", reader.BuildMetaData.BuildEngine.BuildRootDirectory);
 
             Assert.Equal(5, reader.BuildMetaData.BuildEngine.Dependencies.Count);
 

@@ -61,9 +61,11 @@ namespace Horn.Core.Spec.Unit.dsl
 
     public class When_The_Build_File_Does_Not_Exist : BaseDSLSpecification
     {
+        private string directoryWithNoBooFile;
+
         protected override void Because()
         {
-            var directoryWithNoBooFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "nonexistent");
+            directoryWithNoBooFile = Path.Combine(DirectoryHelper.GetBaseDirectory(), "nonexistent");
 
             if (!Directory.Exists(directoryWithNoBooFile))
                 Directory.CreateDirectory(directoryWithNoBooFile);
@@ -80,5 +82,18 @@ namespace Horn.Core.Spec.Unit.dsl
         {
             Assert.Throws<MissingBuildFileException>(() => reader.SetDslFactory(packageTree).GetBuildMetaData("horn"));
         }
+
+        protected override void After_each_spec()
+        {
+            try
+            {
+                if(Directory.Exists(directoryWithNoBooFile))
+                    Directory.Delete(directoryWithNoBooFile, true);
+            }
+            catch
+            {               
+            }
+        }
+        
     }
 }

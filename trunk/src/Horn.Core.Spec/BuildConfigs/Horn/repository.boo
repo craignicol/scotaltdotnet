@@ -10,7 +10,7 @@
 		cmd "@echo \"hello\""
 	
 	build_with msbuild, buildfile("src/horn.sln"), FrameworkVersion35
-	output "Output"
+	build_root_dir "Output"
 	shared_library "."
 	
                 
