@@ -11,7 +11,7 @@ install castle:
 		parameters "sign=true","build.warnaserrors=false"
 		
 	shared_library "SharedLibs/net/2.0"
-	output "build/net-3.5/debug"		
+	output "build"		
 	
 dependencies:    
 	#depend @log4net >> "log4net"

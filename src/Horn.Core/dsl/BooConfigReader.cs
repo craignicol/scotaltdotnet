@@ -10,11 +10,11 @@ namespace Horn.Core.Dsl
 {
     public abstract class BooConfigReader
     {
-        private readonly IBuildMetaData _buildMetaData;
+        private readonly IBuildMetaData buildMetaData;
 
         public IBuildMetaData BuildMetaData
         {
-            get { return _buildMetaData; }        
+            get { return buildMetaData; }        
         }
 
         public virtual PackageMetaData PackageMetaData
@@ -207,7 +207,7 @@ namespace Horn.Core.Dsl
                                      {
                                          var dependency = Dependency.Parse(item);
 
-                                         _buildMetaData.BuildEngine.Dependencies.Add(dependency);
+                                         buildMetaData.BuildEngine.Dependencies.Add(dependency);
                                      });
         }
 
@@ -223,38 +223,36 @@ namespace Horn.Core.Dsl
 
         public void description(string text)
         {
-            _buildMetaData.Description = text;
+            buildMetaData.Description = text;
         }
 
         public void GetInstallerMeta(string installName, Action installDelegate)
         {
-            _buildMetaData.InstallName = installName;
+            buildMetaData.InstallName = installName;
 
             installDelegate();
         }
 
-        public void output(string path)
+        public void build_root_dir(string path)
         {
-            _buildMetaData.BuildEngine.OutputDirectory = path;   
+            buildMetaData.BuildEngine.BuildRootDirectory = path;   
         }
 
         public void ParseCommands(string[] cmdList)
         {
-            _buildMetaData.PrebuildCommandList.AddRange(cmdList);
+            buildMetaData.PrebuildCommandList.AddRange(cmdList);
         }
 
         public void ParseExportList(ExportData[] exports)
         {
             foreach (var exportData in exports)
-                _buildMetaData.ExportList.Add(exportData.SourceControl);                
+                buildMetaData.ExportList.Add(exportData.SourceControl);                
         }
 
         public virtual void ParseIncludes(RepositoryElement[] elements)
         {
-            _buildMetaData.RepositoryElementList.AddRange(elements);
+            buildMetaData.RepositoryElementList.AddRange(elements);
         }
-
-
 
         protected void msbuild(string buildFile, string frameWorkVersion)
         {
@@ -281,38 +279,38 @@ namespace Horn.Core.Dsl
 
         protected void SetBuildTargets(string[] taskActions)
         {
-            _buildMetaData.BuildEngine.AssignTasks(taskActions);
+            buildMetaData.BuildEngine.AssignTasks(taskActions);
         }
 
         protected void SetParameters(string[] parameters)
         {
-            _buildMetaData.BuildEngine.AssignParameters(parameters);
+            buildMetaData.BuildEngine.AssignParameters(parameters);
         }
 
         protected void svn(string url)
         {
-            _buildMetaData.SourceControl = SourceControl.Create<SVNSourceControl>(url);
+            buildMetaData.SourceControl = SourceControl.Create<SVNSourceControl>(url);
         }
 
         protected BooConfigReader()
         {
-            _buildMetaData = new BuildMetaData();
+            buildMetaData = new BuildMetaData();
 
             Global.package.PackageInfo.Clear();
         }
 
         private void SetBuildEngine(IBuildTool tool, string buildFile, FrameworkVersion version)
         {
-            _buildMetaData.BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
+            buildMetaData.BuildEngine = new BuildEngine(tool, buildFile, version, IoC.Resolve<IDependencyDispatcher>());
         }
 
         public virtual void generate_strong_key()
         {
-            _buildMetaData.BuildEngine.GenerateStrongKey = true;
+            buildMetaData.BuildEngine.GenerateStrongKey = true;
         }
         public void shared_library(string sharedLib)
         {
-            _buildMetaData.BuildEngine.SharedLibrary = sharedLib;
+            buildMetaData.BuildEngine.SharedLibrary = sharedLib;
         }
     }
 }

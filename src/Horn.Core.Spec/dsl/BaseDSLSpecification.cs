@@ -36,7 +36,7 @@ namespace Horn.Core.Spec.Unit.dsl
                 ret.BuildMetaData.ProjectInfo.Add(item.Key, item.Value);
 
             ret.BuildMetaData.BuildEngine.AssignTasks(Tasks.ToArray());
-            ret.BuildMetaData.BuildEngine.OutputDirectory = OutputDirectory;
+            ret.BuildMetaData.BuildEngine.BuildRootDirectory = OutputDirectory;
             ret.BuildMetaData.BuildEngine.SharedLibrary = ".";
             ret.BuildMetaData.BuildEngine.GenerateStrongKey = true;
 
@@ -57,7 +57,7 @@ namespace Horn.Core.Spec.Unit.dsl
 
             Assert.Equal(BuildFile, metaData.BuildEngine.BuildFile);
 
-            Assert.Equal(OutputDirectory, metaData.BuildEngine.OutputDirectory);
+            Assert.Equal(OutputDirectory, metaData.BuildEngine.BuildRootDirectory);
 
             Assert.Equal(".", metaData.BuildEngine.SharedLibrary);
         }

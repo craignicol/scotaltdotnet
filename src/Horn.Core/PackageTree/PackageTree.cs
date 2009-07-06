@@ -14,7 +14,7 @@ namespace Horn.Core.PackageStructure
         public const string RootPackageTreeName = ".horn";
         private readonly IList<IPackageTree> children;
         private DirectoryInfo workingDirectory;
-        private readonly static string[] reservedDirectoryNames = new[]{"working", "output"};
+        private readonly static string[] reservedDirectoryNames = new[]{"working", "build_root_dir"};
         private static readonly string[] libraryNodes = new[] {"lib", "debug", "buildengines"};
 
         public string BuildFile{ get; set; }

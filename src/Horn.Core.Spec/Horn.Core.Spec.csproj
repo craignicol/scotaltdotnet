@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="BuildEngine\BuildEngineStub.cs" />
     <Compile Include="BuildEngine\BuildWithNantSpecification.cs" />
+    <Compile Include="BuildEngine\OutputDirectorySpecs.cs" />
     <Compile Include="Stubs\StubProcess.cs" />
     <Compile Include="Stubs\StubProcessFactory.cs" />
     <Compile Include="CmdLine\CommandArgsSpec.cs" />

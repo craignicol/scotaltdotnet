@@ -45,6 +45,7 @@ namespace Horn.Framework.helpers
             string ioc = CreateDirectory(rootDirectory, "ioc");
             string castle = CreateDirectory(ioc, "castle");
             string working = CreateDirectory(castle, "working");
+            CreateTempBuildStructure(working);
             CreateDirectory(working, "Tools");
 
             var castleBuildFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"BuildConfigs\Horn\castle.boo");
@@ -92,6 +93,17 @@ namespace Horn.Framework.helpers
 
 
 
+        private static void CreateTempBuildStructure(string working)
+        {
+            string build = CreateDirectory(working, "build");
+            string net = CreateDirectory(build, "net-3.5");
+            string debug = CreateDirectory(net, "debug");
+
+            string dllPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Horn.Core.dll");
+
+            File.Copy(dllPath, Path.Combine(debug, "Horn.Core.dll"), true);
+        }
+
         private static void CreateBuildEnginesStructure(string root)
         {
             var path = Path.Combine(root, "buildengines");
@@ -116,6 +128,6 @@ namespace Horn.Framework.helpers
         }
 
 
-        
+
     }
 }

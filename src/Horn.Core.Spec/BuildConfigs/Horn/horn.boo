@@ -2,7 +2,7 @@
 	description "A .NET build and dependency manager"
 	get_from svn("http://scotaltdotnet.googlecode.com/svn/trunk/")
 	build_with msbuild, buildfile("src/horn.sln"), FrameworkVersion35
-	output "Output"
+	build_root_dir "Output"
 	shared_library "."
 	
                 

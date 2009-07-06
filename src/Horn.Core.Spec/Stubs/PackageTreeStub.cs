@@ -65,7 +65,7 @@ namespace Horn.Core.Spec.Doubles
 
         public DirectoryInfo OutputDirectory
         {
-            get { return new DirectoryInfo(Path.Combine(BaseDirectory, "output")); }
+            get { return new DirectoryInfo(Path.Combine(BaseDirectory, "build_root_dir")); }
             set { throw new NotImplementedException(); }
         }
 
