@@ -73,6 +73,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="doubles\CommandArgsDouble.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="helpers\DirectoryHelper.cs" />
     <Compile Include="helpers\FileHelper.cs" />
@@ -84,6 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Horn.Spec.Framework.build" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Horn.Core\Horn.Core.csproj">
+      <Project>{093CFA20-D720-4C58-9B8F-754F03A40D16}</Project>
+      <Name>Horn.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

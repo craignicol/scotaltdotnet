@@ -1,5 +1,7 @@
+using System;
 using core.domain;
 using MbUnit.Framework;
+using NHibernate.Criterion;
 
 namespace core.tests.Mapping
 {
@@ -19,11 +21,20 @@ namespace core.tests.Mapping
 
         protected override void because()
         {
+            using (var session = _sessionFactory.OpenSession())
+            using (var tx = session.BeginTransaction())
+            {
+                session.SaveOrUpdate(_user);
+
+                tx.Commit();
+            }
+
         }
 
         [Test]
         public void Then_the_details_should_be_maintained_in_the_database()
         {
+            Assert.AreNotEqual(_user.Uid, Guid.Empty);
         }
     }
 
@@ -42,12 +53,32 @@ namespace core.tests.Mapping
         [Test]
         public void Then_you_can_use_the_criteria_syntax()
         {
+            using (var session = _sessionFactory.OpenSession())
+            {
+                _user = session.CreateCriteria(typeof (User))
+                    .Add(Restrictions.Eq("Email", "dagda1@scotalt.net"))
+                    .UniqueResult<User>();
+            }
+
+
             Assert.AreEqual(_user.Email, "dagda1@scotalt.net");
         }
 
         [Test]
         public void Or_you_can_use_hql()
         {
+            var hql = "from User u where u.Email = :email";
+
+            using (var session = _sessionFactory.OpenSession())
+            {
+                var query = session.CreateQuery(hql);
+
+                query.SetString("email", "dagda1@scotalt.net");
+
+                _user = query.UniqueResult<User>();
+            }
+
+
             Assert.AreEqual(_user.Email, "dagda1@scotalt.net");
         }
     }
@@ -69,6 +100,7 @@ namespace core.tests.Mapping
         {
         }
     }
+
 
     public class When_we_need_different_user_roles : NhibernateSpecBase
     {

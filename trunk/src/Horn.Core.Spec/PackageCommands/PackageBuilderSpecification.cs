@@ -12,8 +12,10 @@ using Horn.Core.Spec.Doubles;
 using Horn.Core.Spec.helpers;
 using Horn.Core.Spec.Unit.GetSpecs;
 using Horn.Core.Utils;
+using Horn.Core.Utils.CmdLine;
 using Horn.Core.Utils.Framework;
 using Horn.Framework.helpers;
+using Horn.Spec.Framework.doubles;
 using Rhino.Mocks;
 using Xunit;
 
@@ -21,7 +23,6 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 {
     public class When_The_Builder_Receives_An_Install_Switch : Specification
     {
-        protected IDictionary<string, IList<string>> switches = new Dictionary<string, IList<string>>();
         protected IGet get;
         protected IBuildConfigReader buildConfigReader;
         protected IPackageTree wholeTree;
@@ -96,32 +97,27 @@ namespace Horn.Core.Spec.Unit.PackageCommands
         [Fact]
         public void Then_The_Builder_Coordinates_The_Build()
         {
-            switches.Add("install", new List<string> { "horn" });
+            IPackageCommand command = new PackageBuilder(get, new StubProcessFactory(), new CommandArgsDouble("horn"));
 
-            IPackageCommand command = new PackageBuilder(get, new StubProcessFactory());
-
-            command.Execute(wholeTree, switches);
+            command.Execute(wholeTree);
         }
     }
 
     public class When_the_package_builder_receives_an_install_command_for_an_unknown_package : GetSpecificationBase
     {
         private PackageBuilder packageBuilder;
-        private Dictionary<string, IList<string>> args = new Dictionary<string, IList<string>>();
 
         protected override void Because()
         {
-            packageBuilder = new PackageBuilder(get, MockRepository.GenerateStub<IProcessFactory>());
+            packageBuilder = new PackageBuilder(get, MockRepository.GenerateStub<IProcessFactory>(), new CommandArgsDouble("unknownpackage"));
 
             packageTree = TreeHelper.GetTempPackageTree();
-
-            args.Add("install", new List<string> { "unknownpackage" });
         }
 
         [Fact]
         public void Then_an_unknown_package_exception_is_thrown()
         {
-            Assert.Throws<UnkownInstallPackageException>(() => packageBuilder.Execute(packageTree, args));
+            Assert.Throws<UnkownInstallPackageException>(() => packageBuilder.Execute(packageTree));
         }
     }
 
@@ -142,19 +138,15 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             get.Stub(x => x.ExportTo(packageTree)).Return(packageTree);
 
-            packageBuilder = new PackageBuilder(get, MockRepository.GenerateStub<IProcessFactory>());
+            packageBuilder = new PackageBuilder(get, MockRepository.GenerateStub<IProcessFactory>(), new CommandArgsDouble("log4net", true));
         }
 
         protected override void Because()
         {
-            var args = new Dictionary<string, IList<string>>();
-
-            args.Add("install", new List<string>{"log4net"});
-            args.Add("rebuildonly", new List<string>{""});
 
             mockRepository.Playback();
             
-            packageBuilder.Execute(packageTree, args);
+            packageBuilder.Execute(packageTree);
         }
 
         [Fact]

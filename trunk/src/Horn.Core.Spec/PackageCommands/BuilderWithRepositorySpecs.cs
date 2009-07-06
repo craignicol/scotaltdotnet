@@ -8,6 +8,8 @@ using Horn.Core.Spec.Doubles;
 using Horn.Core.Spec.helpers;
 using Horn.Core.Spec.Unit.GetSpecs;
 using Horn.Core.Utils;
+using Horn.Core.Utils.CmdLine;
+using Horn.Spec.Framework.doubles;
 using Rhino.Mocks;
 using Xunit;
 
@@ -34,19 +36,14 @@ namespace Horn.Core.Spec.Unit.PackageCommands
 
             get = new Get(MockRepository.GenerateStub<IFileSystemProvider>());
 
-            packageBuilder = new PackageBuilder(get, new StubProcessFactory());
+            packageBuilder = new PackageBuilder(get, new StubProcessFactory(), new CommandArgsDouble("castle"));
         }
 
         protected override void Because()
         {
-            var args = new Dictionary<string, IList<string>>
-                           {
-                               {"install",  new List<string>{"castle"}}
-                           };
-
             mockRepository.Playback();
 
-            packageBuilder.Execute(packageTree, args);
+            packageBuilder.Execute(packageTree);
         }
 
         protected override void After_each_spec()

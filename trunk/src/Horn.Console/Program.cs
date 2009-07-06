@@ -31,13 +31,13 @@ namespace Horn.Console
                 return;
             }
 
-            InitialiseIoC();
+            InitialiseIoC(parser.CommandArguments);
 
             var packageTree = IoC.Resolve<IPackageTree>().GetRootPackageTree(GetRootFolderPath());
 
             try
             {
-                IoC.Resolve<IPackageCommand>(parser.ParsedArgs.First().Key).Execute(packageTree, parser.ParsedArgs);
+                IoC.Resolve<IPackageCommand>(parser.ParsedArgs.First().Key).Execute(packageTree);
             }
             catch (UnkownInstallPackageException unpe)
             {
@@ -45,9 +45,9 @@ namespace Horn.Console
             }            
         }
 
-        private static void InitialiseIoC()
+        private static void InitialiseIoC(ICommandArgs commandArgs)
         {
-            var resolver = new WindsorDependencyResolver();
+            var resolver = new WindsorDependencyResolver(commandArgs);
 
             IoC.InitializeWith(resolver);
 

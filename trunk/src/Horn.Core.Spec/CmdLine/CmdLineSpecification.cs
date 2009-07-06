@@ -24,7 +24,7 @@ namespace Horn.Core.Spec.Unit.CmdLine
         [Fact]
         public void Then_Parsed_Arguments_Contain_The_Install_Name()
         {
-            Assert.Equal(installName, parser.ParsedArgs["install"][0]);
+            Assert.Equal(installName, parser.CommandArguments.InstallName);
         }
 
     }
@@ -134,16 +134,9 @@ namespace Horn.Core.Spec.Unit.CmdLine
 
     public class When_horn_receives_a_rebuild_only_switch : CmdLineErrorSpecificationBase
     {
-        protected override void Because()
-        {
-            parser = new SwitchParser(Output, Args);
-
-            IsValid = parser.IsValid();
-        }
-
         protected override string[] Args
         {
-            get { return new[]{"-install:horn -rebuildonly"}; }
+            get { return new[] { "-install:castle.windsor", "-rebuildonly" }; }
         }
 
         protected override string ExpectErrorMessage
@@ -151,11 +144,29 @@ namespace Horn.Core.Spec.Unit.CmdLine
             get { return ""; }
         }
 
+        protected override void Because()
+        {
+            parser = new SwitchParser(Output, Args);
+
+            IsValid = parser.IsAValidRequest();
+        }
+
         [Fact]
-        public void Then_Parsed_Arguments_Are_Valid()
+        public void Then_the_parsed_arguments_Are_Valid()
         {
             Assert.True(IsValid);
         }
 
+        [Fact]
+        public void Then_the_install_name_should_be_castle_windsor()
+        {
+            Assert.Equal("castle.windsor", parser.CommandArguments.InstallName);
+        }
+
+        [Fact]
+        public void Then_the_command_args_specifies_rebuild_only()
+        {
+            Assert.True(parser.CommandArguments.RebuildOnly);
+        }
     }
 }
