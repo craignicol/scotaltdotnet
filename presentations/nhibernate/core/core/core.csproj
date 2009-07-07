@@ -141,12 +141,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="blank.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="domain\Model.cd" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="domain\Role.hbm.xml" />
     <EmbeddedResource Include="domain\User.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="domain\Permission.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
