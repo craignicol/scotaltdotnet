@@ -71,9 +71,13 @@
   <ItemGroup>
     <Compile Include="base\contextspecification.cs" />
     <Compile Include="base\dslspecbase.cs" />
+    <Compile Include="clientsspec.cs" />
+    <Compile Include="frequencyspecs.cs" />
+    <Compile Include="parametersspec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="queryandsubjectspec.cs" />
-    <Compile Include="taskheaderfixture.cs" />
+    <Compile Include="taskheaderspec.cs" />
+    <Compile Include="wholespec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\boo.scheduler.core\boo.scheduler.core.csproj">
@@ -82,6 +86,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="schedules\clientsblock.boo" />
+    <Content Include="schedules\frequency.boo" />
+    <Content Include="schedules\parametersblock.boo" />
     <Content Include="schedules\selectblock.boo" />
     <Content Include="schedules\taskheader.boo" />
     <Content Include="schedules\whole.boo" />

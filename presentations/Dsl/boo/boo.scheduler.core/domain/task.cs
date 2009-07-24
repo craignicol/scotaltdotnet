@@ -91,6 +91,8 @@ namespace boo.scheduler.core.domain
             EmailTemplate = string.Format("{0}.txt", name.Replace(" ", ""));
 
             Frequency = frequency;
+
+            Parameters = new List<Parameter>();
         }
     }
 }
