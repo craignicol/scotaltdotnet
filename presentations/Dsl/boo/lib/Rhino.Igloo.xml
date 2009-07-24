@@ -1,0 +1,1661 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rhino.Igloo</name>
+    </assembly>
+    <members>
+        <member name="T:Rhino.Igloo.Tests.FakeContext">
+            <summary>
+            Fake context, useful for testing
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.IContext">
+            <summary>
+            Abstract the HttpContext into an interface that can be mocked.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.Redirect(System.String)">
+            <summary>
+            Redirects the specified destination.
+            </summary>
+            <param myName="destination">The destination.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.Redirect(System.String,System.Boolean)">
+            <summary>
+            Redirects the specified destination.
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="endResponse">if set to <c>true</c> [end response].</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.GetInputVariable(System.String)">
+            <summary>
+            Gets the variable from the user input
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.GetMultiplyInputVariables(System.String)">
+            <summary>
+            Gets the input variables (multiplies of them).
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.GetFromSession(System.String)">
+            <summary>
+            Gets the variable from the session.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.SetAtSession(System.String,System.Object)">
+            <summary>
+            Sets the variable at the session level.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.AuthenticateAndRedirect(System.String,System.String)">
+            <summary>
+            Authenticates the user and redirect to the destination
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.AuthenticateAndRedirect(System.String,System.String,System.Boolean)">
+            <summary>
+            Authenticates the user and redirect to the destination
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+            <param name="endResponse">if set to <c>true</c> [end response].</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.Authenticate(System.String)">
+            <summary>
+            Authenticates as the user name
+            </summary>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.SignOut">
+            <summary>
+            Signs the user out of the system
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.GetFullPath(System.String)">
+            <summary>
+            Gets the full path from a relative or ~/ one
+            </summary>
+            <param name="directory">The directory.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.GetHostName">
+            <summary>
+            Gets the host name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.EnsureDirectoryExists(System.String)">
+            <summary>
+            Ensures that the directory exists.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.AddRefreshHeaderAfter(System.TimeSpan)">
+            <summary>
+            Adds the refresh header to refresh the page after the waitTime is over.
+            </summary>
+            <param name="waitTime">The wait time.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.AddRefreshHeaderAfter(System.String,System.TimeSpan)">
+            <summary>
+            Adds the refresh header to refresh the page after the waitTime is over.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="waitTime">The wait time.</param>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.MapPath(System.String)">
+            <summary>
+            Maps the path (translate ~/ to the correct virtual path)
+            </summary>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.HtmlDecode(System.String)">
+            <summary>
+            Html decode the string
+            </summary>
+            <param name="htmlEncodedString">The HTML encoded string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.HtmlEncode(System.String)">
+            <summary>
+            Html decode the string
+            </summary>
+            <param name="htmlString">The HTML string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.EndResponse">
+            <summary>
+            Ends the current request
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.Url">
+            <summary>
+            Return the Url of the request
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.UrlEncode(System.String)">
+            <summary>
+            Url encode the string
+            </summary>
+            <param name="s">The unencoded url</param>
+            <returns>The encoded url</returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.UrlDecode(System.String)">
+            <summary>
+            Url decode the string
+            </summary>
+            <param name="s">The encoded url</param>
+            <returns>The unencoded url</returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.BrowserIsIE7">
+            <summary>
+            Determines whether the browser is IE 7
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.ResolveUrl(System.String)">
+            <summary>
+            Resolves the URL.
+            </summary>
+            <param name="url">The URL.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.ClearSession">
+            <summary>
+            Clears the session.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.ClientIpIsIn(System.Collections.ICollection)">
+            <summary>
+            Check that the client ip address is in the given list.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.GetLogonUser">
+            <summary>
+            Gets the logon user server variable
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.IContext.SetContextVaraible(System.String,System.Object)">
+            <summary>
+            Sets the context varaible with the specified value
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.IContext.CurrentUser">
+            <summary>
+            Gets the principal of the current user
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Rhino.Igloo.IContext.UploadedFiles">
+            <summary>
+            Gets the uploaded files.
+            </summary>
+            <value>The uploaded files.</value>
+        </member>
+        <member name="P:Rhino.Igloo.IContext.RawUrl">
+            <summary>
+            The raw url that the user has sent
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.SetPrincipal(System.Security.Principal.IPrincipal)">
+            <summary>
+            Sets the principle
+            </summary>
+            <param name="value">the <see cref="T:System.Security.Principal.IPrincipal"/> to use instead of <see cref="T:System.Security.Principal.GenericPrincipal"/>.</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.SetIsIE7(System.Boolean)">
+            <summary>
+            Sets the is IE 7 flag
+            </summary>
+            <param name="value">if set to <c>true</c> [value].</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.Redirect(System.String)">
+            <summary>
+            Redirects the specified destination.
+            </summary>
+            <param name="destination"></param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.Redirect(System.String,System.Boolean)">
+            <summary>
+            Redirects the specified destination.
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="endResponse">if set to <c>true</c> [end response].</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.GetInputVariable(System.String)">
+            <summary>
+            Gets the variable from the user input
+            </summary>
+            <param name="key">The key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.GetMultiplyInputVariables(System.String)">
+            <summary>
+            Gets the input variables (multiplies of them).
+            </summary>
+            <param name="key">The key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.GetFromSession(System.String)">
+            <summary>
+            Gets the variable from the session.
+            </summary>
+            <param name="key">The key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.SetAtSession(System.String,System.Object)">
+            <summary>
+            Sets the variable at the session level.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.AuthenticateAndRedirect(System.String,System.String)">
+            <summary>
+            Authenticates the user and redirect to the destination
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.AuthenticateAndRedirect(System.String)">
+            <summary>
+            Authenticates as the user name
+            </summary>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.AuthenticateAndRedirect(System.String,System.String,System.Boolean)">
+            <summary>
+            Authenticates the user and redirect to the destination
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+            <param name="endResponse">if set to <c>true</c> [end response].</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.Authenticate(System.String)">
+            <summary>
+            Authenticates as the user name
+            </summary>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.SignOut">
+            <summary>
+            Signs the user out of the system
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.GetFullPath(System.String)">
+            <summary>
+            Gets the full path from a relative or ~/ one
+            </summary>
+            <param name="directory">The directory.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.GetHostName">
+            <summary>
+            Gets the host name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.EnsureDirectoryExists(System.String)">
+            <summary>
+            Ensures that the directory exists.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.AddRefreshHeaderAfter(System.TimeSpan)">
+            <summary>
+            Adds the refresh header to refresh the page after the waitTime is over.
+            </summary>
+            <param name="waitTime">The wait time.</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.AddRefreshHeaderAfter(System.String,System.TimeSpan)">
+            <summary>
+            Adds the refresh header to refresh the page after the waitTime is over.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="waitTime">The wait time.</param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.MapPath(System.String)">
+            <summary>
+            Maps the path (translate ~/ to the correct virtual path)
+            </summary>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.HtmlDecode(System.String)">
+            <summary>
+            Html decode the string
+            </summary>
+            <param name="htmlEncodedString">The HTML encoded string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.HtmlEncode(System.String)">
+            <summary>
+            Html decode the string
+            </summary>
+            <param name="htmlString">The HTML string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.EndResponse">
+            <summary>
+            Ends the current request
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.Url">
+            <summary>
+            Return the Url of the request
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.UrlEncode(System.String)">
+            <summary>
+            Url encode the string
+            </summary>
+            <param name="s">The unencoded url</param>
+            <returns>The encoded url</returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.UrlDecode(System.String)">
+            <summary>
+            Url decode the string
+            </summary>
+            <param name="s">The encoded url</param>
+            <returns>The unencoded url</returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.BrowserIsIE7">
+            <summary>
+            Determines whether the browser is IE 7
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.ResolveUrl(System.String)">
+            <summary>
+            Resolves the URL.
+            </summary>
+            <param name="url">The URL.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.SetContextVaraible(System.String,System.Object)">
+            <summary>
+            Sets the context varaible with the specified value
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.GetLogonUser">
+            <summary>
+            Gets the logon user server variable
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.ClientIpIsIn(System.Collections.ICollection)">
+            <summary>
+            Check that the client ip address is in the given list.
+            </summary>
+            <param name="listOfIps"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContext.ClearSession">
+            <summary>
+            Clears the session.
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.Inputs">
+            <summary>
+            Gets the inputs.
+            </summary>
+            <value>The inputs.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.SignOutCalled">
+            <summary>
+            Gets or sets a value indicating whether [sign out called].
+            </summary>
+            <value><c>true</c> if [sign out called]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.LastUser">
+            <summary>
+            Gets or sets the last user.
+            </summary>
+            <value>The last user.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.LastRedirectedUrl">
+            <summary>
+            Gets or sets the last redirected URL.
+            </summary>
+            <value>The last redirected URL.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.Session">
+            <summary>
+            Gets or sets the session.
+            </summary>
+            <value>The session.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.CurrentUser">
+            <summary>
+            Gets the principal of the current user
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.UploadedFiles">
+            <summary>
+            Gets the uploaded files.
+            </summary>
+            <value>The uploaded files.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.RawUrl">
+            <summary>
+            The raw url that the user has sent
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.RefreshUrl">
+            <summary>
+            Gets or sets the refresh URL.
+            </summary>
+            <value>The refresh URL.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.RefreshWaitTime">
+            <summary>
+            Gets or sets the refresh wait time.
+            </summary>
+            <value>The refresh wait time.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContext.HasEnded">
+            <summary>
+            Gets or sets a value indicating whether this instance has ended.
+            </summary>
+            <value><c>true</c> if this instance has ended; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:Rhino.Igloo.Tests.FakeContextProvider">
+            <summary>
+            Fake contenxt provider, always return the same context.
+            Useful for testing.
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.IContextProvider">
+            <summary>
+            Provide access to the current context
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.IContextProvider.Current">
+            <summary>
+            Get the current context
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.Tests.FakeContextProvider.SetTheCurrentContext(Rhino.Igloo.IContext)">
+            <summary>
+            Sets the current context.
+            </summary>
+            <param name="theCurrentContext">The current context.</param>
+        </member>
+        <member name="P:Rhino.Igloo.Tests.FakeContextProvider.Current">
+            <summary>
+            Get the current context
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:Rhino.Igloo.CachingInterceptor">
+            <summary>
+            Add query caching capabilities
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.CachingInterceptor.Intercept(Castle.Core.Interceptor.IInvocation)">
+            <summary>
+            Intercepts the specified invocation and adds query caching capabilities
+            </summary>
+            <param name="invocation">The invocation.</param>
+        </member>
+        <member name="M:Rhino.Igloo.CachingInterceptor.SetInterceptedComponentModel(Castle.Core.ComponentModel)">
+            <summary>
+            Sets the intercepted component model.
+            </summary>
+            <param name="target">The target.</param>
+        </member>
+        <member name="T:Rhino.Igloo.CachingInterceptorContributer">
+            <summary>
+            Inspect the model and add a caching interceptor if appropriate 
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.CachingInterceptorContributer.ProcessModel(Castle.MicroKernel.IKernel,Castle.Core.ComponentModel)">
+            <summary>
+            Inspect the model and add a caching interceptor if appropriate 
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.ContextResolver">
+            <summary>
+            Resolver to find the current IContext for components.
+            Works by finding the context provider and delegating to it.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ContextResolver.Resolve(Castle.MicroKernel.CreationContext,Castle.MicroKernel.ISubDependencyResolver,Castle.Core.ComponentModel,Castle.Core.DependencyModel)">
+            <summary>
+            Get the current context for the application
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ContextResolver.CanResolve(Castle.MicroKernel.CreationContext,Castle.MicroKernel.ISubDependencyResolver,Castle.Core.ComponentModel,Castle.Core.DependencyModel)">
+            <summary>
+            Returns true if the dependency is IContext
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.InjectionInspector">
+            <summary>
+            Retrieves injected/outjected properties
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.InjectionInspector.InMembers">
+            <summary>
+            In members token
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.InjectionInspector.InEntityMembers">
+            <summary>
+            In entity members token
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.InjectionInspector.BINDING_FLAGS_SET">
+            <summary>
+            Binding token
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.InjectionInspector.ProcessModel(Castle.MicroKernel.IKernel,Castle.Core.ComponentModel)">
+            <summary>
+            Usually the implementation will look in the configuration property
+            of the model or the service interface, or the implementation looking for
+            something.
+            </summary>
+            <param name="kernel">The kernel instance</param>
+            <param name="model">The component model</param>
+        </member>
+        <member name="T:Rhino.Igloo.LoggingResolver">
+            <summary>
+            Resolve a logger to the current class
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.LoggingResolver.Resolve(Castle.MicroKernel.CreationContext,Castle.MicroKernel.ISubDependencyResolver,Castle.Core.ComponentModel,Castle.Core.DependencyModel)">
+            <summary>
+            Resolve to a logger for the class that we are currently building.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.LoggingResolver.CanResolve(Castle.MicroKernel.CreationContext,Castle.MicroKernel.ISubDependencyResolver,Castle.Core.ComponentModel,Castle.Core.DependencyModel)">
+            <summary>
+            Returns true if the dependency is of type ILog
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.RhinoIglooFacility">
+            <summary>
+            Setup the container so we can get Bijection support for controllers and views
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.RhinoIglooFacility.#ctor(System.Reflection.Assembly[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.RhinoIglooFacility"/> class.
+            </summary>
+            <param myName="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Rhino.Igloo.RhinoIglooFacility.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.RhinoIglooFacility"/> class.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.RhinoIglooFacility.Init">
+            <summary>
+            The custom initialization for the Facility.
+            </summary>
+            <remarks>It must be overriden.</remarks>
+        </member>
+        <member name="M:Rhino.Igloo.RhinoIglooFacility.RegisterViewComponent">
+            <summary>
+            Registers the view component.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.RhinoIglooFacility.InjectMembers(System.Object,System.Collections.Generic.IDictionary{Rhino.Igloo.InjectAttribute,System.Reflection.PropertyInfo})">
+            <summary>
+            Injects the members.
+            </summary>
+            <param name="instance">The instance.</param>
+            <param name="membersToInject">The members to inject.</param>
+        </member>
+        <member name="T:Rhino.Igloo.AttributeUtil">
+            <summary>
+             Utility methods that simplifies access to attribute.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.AttributeUtil.GetInjectAttribute(System.Reflection.MemberInfo)">
+            <summary>
+            Gets the <see cref="T:Rhino.Igloo.InjectAttribute"/> on properties.
+            </summary>
+            <param myName="memberInfo">The <see cref="T:System.Reflection.MemberInfo"/>.</param>
+            <returns>The attribute</returns>
+        </member>
+        <member name="M:Rhino.Igloo.AttributeUtil.IsView(System.Type)">
+            <summary>
+            Determines whether the specified type is a view.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>
+            	<c>true</c> if the specified type is view; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Rhino.Igloo.AttributeUtil.GetInjectEntityAttribute(System.Reflection.MemberInfo)">
+            <summary>
+            Gets the inject entity attribute.
+            </summary>
+            <param name="memberInfo">The member info.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.AttributeUtil.ShouldSkipAutomaticRegistration(System.Type)">
+            <summary>
+            Shoulds we the skip automatic registration.
+            </summary>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rhino.Igloo.BaseControl">
+            <summary>
+            Base class for user controls in the application
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BaseControl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.BaseControl"/> class.
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.BaseController">
+            <summary>
+            Base class for all the controllers
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.#ctor(Rhino.Igloo.IContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.BaseController"/> class.
+            </summary>
+            <param myName="context">The context.</param>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.EmptyList``1">
+            <summary>
+            Return an an empty list of <typeparamref name="T"/>.
+            Used to clarify the intent of the action only
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryParseBoolFromInput(System.String)">
+            <summary>
+            Tries to parse the inputName as boolean from the user input
+            </summary>
+            <param name="inputName">The inputName.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.ParseCheckBox(System.String)">
+            <summary>
+            Tries to parse the inputName as a checkbox.
+            </summary>
+            <param name="inputName">The inputName.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryParseInt32FromInput(System.String)">
+            <summary>
+            Tries to parse the inputName as int from user input
+            </summary>
+            <param name="inputName">The inputName.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryParseInt32(System.String)">
+            <summary>
+            Tries the parse userInput as integer.
+            </summary>
+            <param name="userInput">The user input.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryParseDateFromInput(System.String)">
+            <summary>
+            Tries to parse the date using dd/MM/yyyy format
+            </summary>
+            <param name="inputName">Name of the input.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryParseDateAndTimeFromInput(System.String)">
+            <summary>
+            Tries the parse date and time from input.
+            </summary>
+            <param name="inputName">Name of the input.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryParseEnumFromInput``1(System.String)">
+            <summary>
+            Tries the parse enum from input.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="inputName">Name of the input.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryParseDateFromInput(System.String,System.String[])">
+            <summary>
+            Tries to parse the inputName as date.
+            </summary>
+            <param name="inputName">The inputName.</param>
+            <param name="formats">The formats.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryParseDate(System.String,System.String[])">
+            <summary>
+            Tries the parse date.
+            </summary>
+            <param name="userInput">The user input.</param>
+            <param name="formats">The formats.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryGetFromInput``1(System.String)">
+            <summary>
+            Tries to get the value for the input key.
+            </summary>
+            <param name="inputKey">The input key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryGetFromInputString``1(System.String)">
+            <summary>
+            Tries to get the value for the input key.
+            </summary>
+            <param name="inputKey">The input key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryGetFromInputChar``1(System.String)">
+            <summary>
+            Tries to get the value for the input key.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="inputKey">The input key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryGetById``1(System.String)">
+            <summary>
+            Tries the get by id.
+            </summary>
+            <param name="maybeId">The maybe id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryGetByIdString``1(System.String)">
+            <summary>
+            Tries the get by id.
+            </summary>
+            <param name="maybeId">The maybe id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.TryGetByIdChar``1(System.String)">
+            <summary>
+            Tries the get by id.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="maybeId">The maybe id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.BaseController.Initialize">
+            <summary>
+            Allow a derive class to initialize itself before handing the instance
+            to the view
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.BaseController.Log">
+            <summary>
+            Gets or sets the log for this controller.
+            </summary>
+            <value>The log.</value>
+        </member>
+        <member name="P:Rhino.Igloo.BaseController.Context">
+            <summary>
+            Gets the context we are currently in.
+            </summary>
+            <value>The context.</value>
+        </member>
+        <member name="P:Rhino.Igloo.BaseController.ValidatorRunner">
+            <summary>
+            Gets the validator runner.
+            </summary>
+            <value>The validator runner.</value>
+        </member>
+        <member name="T:Rhino.Igloo.BaseHttpHandler">
+            <summary>
+            Base class for HttpHandlers
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BaseHttpHandler.DoProcessRequest(System.Web.HttpContext)">
+            <summary>
+            Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler"></see> interface.
+            </summary>
+            <param name="context">An <see cref="T:System.Web.HttpContext"></see> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
+        </member>
+        <member name="M:Rhino.Igloo.BaseHttpHandler.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler"></see> interface.
+            </summary>
+            
+            <param name="context">An <see cref="T:System.Web.HttpContext"></see> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests. </param>
+        </member>
+        <member name="P:Rhino.Igloo.BaseHttpHandler.IsReusable">
+            <summary>
+            Gets a value indicating whether another request can use the <see cref="T:System.Web.IHttpHandler"></see> instance.
+            </summary>
+            <value></value>
+            <returns>true if the <see cref="T:System.Web.IHttpHandler"></see> instance is reusable; otherwise, false.</returns>
+        </member>
+        <member name="T:Rhino.Igloo.BaseMaster">
+            <summary>
+            Base class for the master page.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BaseMaster.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.BaseMaster"/> class.
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.BaseMaster.ScriptManager">
+            <summary>
+            Gets the script manager.
+            </summary>
+            <value>The script manager.</value>
+        </member>
+        <member name="T:Rhino.Igloo.BasePage">
+            <summary>
+            Base class for pages
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BasePage.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.BasePage"/> class.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BasePage.AddServiceReference(System.String)">
+            <summary>
+            Adds the service reference.
+            </summary>
+            <param myName="path">The path.</param>
+        </member>
+        <member name="M:Rhino.Igloo.BasePage.EnableCompression">
+            <summary>
+            Use gzip / default compression is the client allows this.
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.BaseScriptService">
+            <summary>
+            Base class for web services that are exposed for Ajax consumption
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BaseScriptService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.BaseScriptService"/> class.
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.BaseWebService">
+            <summary>
+            Base class for ASMX web services
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.BaseWebService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.BaseWebService"/> class.
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.CommonWebUI">
+            <summary>
+            Helper class that injects dependencies into the sender.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.CommonWebUI.WebUI_InjectComponent(System.Object,System.EventArgs)">
+            <summary>
+            Does injection on the WebUI control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="T:Rhino.Igloo.ComponentRepository">
+            <summary>
+            Holds all the ComponentCache for the UI components in the application.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ComponentRepository.AddComponent(System.Type)">
+            <summary>
+            Adds the ComponentCache.
+            </summary>
+            <param myName="ComponentCache">The ComponentCache.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ComponentRepository.RetrieveInjectedProperties(System.Type)">
+            <summary>
+            Find properties that require injection of BaseController components on a view component
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ComponentRepository.InjectControllers(System.Object)">
+            <summary>
+             Inject controllers to the view instance
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.InjectAttribute">
+            <summary>
+            Specifies that a value should be injected to
+            the annotated field or setter properties from the user's input
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.InjectAttribute.Name">
+            <summary>
+            The scope variable myName. Defaults to the name of
+            the annotated field or getter method.
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.InjectAttribute.Scope">
+            <summary>
+            Gets or sets the scope.
+            </summary>
+            <value>The scope.</value>
+        </member>
+        <member name="T:Rhino.Igloo.InjectEntityAttribute">
+            <summary>
+            Specifies that an entity should be injected to
+            the annotated field or setter properties from the user's input
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.InjectEntityAttribute.IdType">
+            <summary>
+            Gets or sets the type of the id.
+            </summary>
+            <value>The type of the id.</value>
+        </member>
+        <member name="P:Rhino.Igloo.InjectEntityAttribute.Name">
+            <summary>
+            The scope variable name. Defaults to the name of
+            the annotated field or getter method.
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.InjectEntityAttribute.EagerLoad">
+            <summary>
+            Gets the eager load.
+            </summary>
+            <value>The eager load.</value>
+        </member>
+        <member name="T:Rhino.Igloo.InjectionException">
+            <summary>
+            Thrown when there is a problem during injection 
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.InjectionException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.InjectionException"/> class.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.InjectionException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.InjectionException"/> class.
+            </summary>
+            <param myName="message">The message.</param>
+        </member>
+        <member name="M:Rhino.Igloo.InjectionException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.InjectionException"/> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="inner">The inner.</param>
+        </member>
+        <member name="M:Rhino.Igloo.InjectionException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.InjectionException"/> class.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"></see> that holds the serialized object data about the exception being thrown.</param>
+            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"></see> that contains contextual information about the source or destination.</param>
+            <exception cref="T:System.Runtime.Serialization.SerializationException">The class name is null or <see cref="P:System.Exception.HResult"></see> is zero (0). </exception>
+            <exception cref="T:System.ArgumentNullException">The info parameter is null. </exception>
+        </member>
+        <member name="T:Rhino.Igloo.NoAutomaticRegistrationInContainer">
+            <summary>
+            Signify that the controller should not be automatically registered in the view.
+            Usually because it needs additional configuration
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.ScopeType">
+            <summary>
+            Tye type of scope to use
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.ScopeType.Input">
+            <summary>
+            The current input scope
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.ScopeType.Inputs">
+            <summary>
+            The current input scope for an array
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.ScopeType.Session">
+            <summary>
+            The session scope
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.ScopeType.Flash">
+            <summary>
+            The flash scope
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.ViewAttribute">
+            <summary>
+            Marks the type as a view
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.ActiveRecordCachingPreprocessor">
+            <summary>
+            Add caching support to all entities and collections
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ActiveRecordCachingPreprocessor.ModelsCreated(Castle.ActiveRecord.Framework.Internal.ActiveRecordModelCollection,Castle.ActiveRecord.Framework.IConfigurationSource)">
+            <summary>
+            Handles the models creation event and pre-process the models
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.CacheableAttribute">
+            <summary>
+            Indicate that this is a cachable entity
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.Constants">
+            <summary>
+            Useful constants
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.Constants.Redirect">
+            <summary>
+            Redirect
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.Constants.ErrorMessage">
+            <summary>
+            ErrorMessage
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.Constants.SuccessMessage">
+            <summary>
+            SuccessMessage
+            </summary>
+        </member>
+        <member name="F:Rhino.Igloo.Constants.ErrorSummary">
+            <summary>
+            ErrorSummary summary
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.ConversionUtil">
+            <summary>
+            Apply heuristics when converting types.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ConversionUtil.ConvertTo(System.Type,System.String[])">
+            <summary>
+            Converts array of one type to another, applying heuristics as neccecary
+            </summary>
+            <param name="type">The type.</param>
+            <param name="inject">The inject.</param>
+            <exception cref="T:System.InvalidOperationException">thrown if Type.HasElementType is false (is not an array)</exception>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ConversionUtil.ConvertTo(System.Type,System.String)">
+            <summary>
+            Converts one type to another, applying heuristics as neccecary
+            </summary>
+            <param name="type">The type.</param>
+            <param name="inject">The inject.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rhino.Igloo.HttpContextAdapter">
+            <summary>
+            Adapter from HttpContext to IContext.
+            Used because we don't want to get a dependency on the real HttpAdapter, since
+            that would prevent successful testsing.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.#ctor(System.Web.HttpContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.HttpContextAdapter"/> class.
+            </summary>
+            <param myName="context">The context.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.Redirect(System.String)">
+            <summary>
+            Redirects to the specified destination.
+            </summary>
+            <param name="destination">The destination.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.Redirect(System.String,System.Boolean)">
+            <summary>
+            Redirects to the specified destination.
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="endResponse">if set to <c>true</c> [end response].</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.GetInputVariable(System.String)">
+            <summary>
+            Gets the input variable.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.GetMultiplyInputVariables(System.String)">
+            <summary>
+            Gets the input variables (multiplies of them).
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.GetFromSession(System.String)">
+            <summary>
+            Gets from the session.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.SetAtSession(System.String,System.Object)">
+            <summary>
+            Sets the value at the session level.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.AuthenticateAndRedirect(System.String,System.String)">
+            <summary>
+            Authenticates the user and redirect to the desination.
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.AuthenticateAndRedirect(System.String,System.String,System.Boolean)">
+            <summary>
+            Authenticates the user and redirect to the desination.
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+            <param name="endResponse">if set to <c>true</c> [end response].</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.Authenticate(System.String)">
+            <summary>
+            Authenticates the specified user.
+            </summary>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.SignOut">
+            <summary>
+            Signs the user out of the system
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.GetFullPath(System.String)">
+            <summary>
+            Gets the full path from a relative or ~/ one
+            </summary>
+            <param name="directory">The directory.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.GetHostName">
+            <summary>
+            Gets the host name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.EnsureDirectoryExists(System.String)">
+            <summary>
+            Ensures that the directory exists.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.AddRefreshHeaderAfter(System.TimeSpan)">
+            <summary>
+            Adds the refresh header to refresh the page after the waitTime is over.
+            </summary>
+            <param name="waitTime">The wait time.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.AddRefreshHeaderAfter(System.String,System.TimeSpan)">
+            <summary>
+            Adds the refresh header to refresh the page after the waitTime is over.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="waitTime">The wait time.</param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.MapPath(System.String)">
+            <summary>
+            Maps the path (translate ~/ to the correct virtual path)
+            </summary>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.HtmlDecode(System.String)">
+            <summary>
+            Html decode the string
+            </summary>
+            <param name="htmlEncodedString">The HTML encoded string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.HtmlEncode(System.String)">
+            <summary>
+            Html decode the string
+            </summary>
+            <param name="htmlString">The HTML string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.EndResponse">
+            <summary>
+            Ends the current request
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.Url">
+            <summary>
+            Return the Url of the request.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.UrlEncode(System.String)">
+            <summary>
+            Url encode the string
+            </summary>
+            <param name="s">The unencoded url</param>
+            <returns>The encoded url</returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.UrlDecode(System.String)">
+            <summary>
+            Url decode the string
+            </summary>
+            <param name="s">The encoded url</param>
+            <returns>The unencoded url</returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.BrowserIsIE7">
+            <summary>
+            Determines whether the browser is IE 7
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.ResolveUrl(System.String)">
+            <summary>
+            Resolves the URL.
+            </summary>
+            <param name="url">The URL.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.ClientIpIsIn(System.Collections.ICollection)">
+            <summary>
+            Check that the client ip address is in the given list.
+            </summary>
+            <param name="listOfIps"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.GetLogonUser">
+            <summary>
+            Gets the logon user server variable
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.SetContextVaraible(System.String,System.Object)">
+            <summary>
+            Sets the context varaible with the specified value
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Rhino.Igloo.HttpContextAdapter.ClearSession">
+            <summary>
+            Clears the session.
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.HttpContextAdapter.CurrentUser">
+            <summary>
+            Gets the principal of the current user.
+            </summary>
+            <value>The principal.</value>
+        </member>
+        <member name="P:Rhino.Igloo.HttpContextAdapter.UploadedFiles">
+            <summary>
+            Gets the uploaded files.
+            </summary>
+            <value>The uploaded files.</value>
+        </member>
+        <member name="P:Rhino.Igloo.HttpContextAdapter.RawUrl">
+            <summary>
+            Gets the raw URL.
+            </summary>
+            <value>The raw URL.</value>
+        </member>
+        <member name="T:Rhino.Igloo.HttpContextProvider">
+            <summary>
+            Exposes the current operation context
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.HttpContextProvider.Current">
+            <summary>
+            The current HTTP Context
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.Scope">
+            <summary>
+            We use Scope to pass objects betweens layers without breaking encapsulation and 
+            Seperation of concerns. This allows us to pass data without strong coupling 
+            between the objects passing the data. 
+            This also allows to fake the data source for testing purposes.
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.Scope.Input">
+            <summary>
+            Contact inputted values, be sure to validate the input before using.
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.Scope.Inputs">
+            <summary>
+            Contact inputted values (mutliplies), be sure to validate the input before using.
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.Scope.Flash">
+            <summary>
+            Storage for the current request only
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.Scope.Session">
+            <summary>
+            Storage for the current session
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.Scope.ErrorSummary">
+            <summary>
+            Gets or sets the error summary, if exists
+            </summary>
+            <value>The error summary.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Scope.HasErrorSummary">
+            <summary>
+            Gets a value indicating whether there is an error summary in the scope
+            </summary>
+            <value>
+            	<c>true</c> if the scope has error summary; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Rhino.Igloo.Scope.ErrorMessage">
+            <summary>
+            Gets or sets the single error message, if exist
+            </summary>
+            <value>The error.</value>
+        </member>
+        <member name="P:Rhino.Igloo.Scope.SuccessMessage">
+            <summary>
+            SuccessMessage.
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.ScopeItem`1">
+            <summary>
+            Utility to for managing items in Scope
+            </summary>
+            <typeparam name="StronglyTypedValue">type of value in Scope</typeparam>
+        </member>
+        <member name="M:Rhino.Igloo.ScopeItem`1.Create(System.String)">
+            <summary>
+            Create new ScopeItems here
+            </summary>
+            <param name="key">name of the key for scope</param>
+            <returns>new instance of ScopeItem</returns>
+        </member>
+        <member name="M:Rhino.Igloo.ScopeItem`1.op_Implicit(Rhino.Igloo.ScopeItem{`0})~System.String">
+            <summary>
+            Convert the item to a string
+            </summary>
+            <param name="item">ScopeItem to convert</param>
+            <returns>value of key</returns>
+        </member>
+        <member name="P:Rhino.Igloo.ScopeItem`1.ValueFromInput">
+            <summary>
+            Get value from Input
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.ScopeItem`1.ValueFromFlash">
+            <summary>
+            Get or Set value from Flash
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.ScopeItem`1.ValueFromSession">
+            <summary>
+            Get or set value from Session
+            </summary>
+        </member>
+        <member name="P:Rhino.Igloo.ScopeItem`1.ValueFromScope">
+            <summary>
+            Get value from anywhere in Scope. Progession: Input &gt; Flash &gt; Session
+            </summary>
+        </member>
+        <member name="T:Rhino.Igloo.ThrowingContextAdapter">
+            <summary>
+            A context adapter that always throws.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.Redirect(System.String)">
+            <summary>
+            Redirects the specified destination.
+            </summary>
+            <param myName="destination">The destination.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.Redirect(System.String,System.Boolean)">
+            <summary>
+            Redirects the specified destination.
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="endResponse">if set to <c>true</c> [end response].</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.GetInputVariable(System.String)">
+            <summary>
+            Gets the variable from the user input
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.GetMultiplyInputVariables(System.String)">
+            <summary>
+            Gets the input variables (multiplies of them).
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.GetFromSession(System.String)">
+            <summary>
+            Gets the variable from the session.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.SetAtSession(System.String,System.Object)">
+            <summary>
+            Sets the variable at the session level.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.AuthenticateAndRedirect(System.String,System.String)">
+            <summary>
+            Authenticates the user and redirect to the destination
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.AuthenticateAndRedirect(System.String,System.String,System.Boolean)">
+            <summary>
+            Authenticates the user and redirect to the destination
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+            <param name="endResponse">if set to <c>true</c> [end response].</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.Authenticate(System.String)">
+            <summary>
+            Authenticates as the user name
+            </summary>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.Authenticate(System.String,System.String)">
+            <summary>
+            Authenticates the specified destination.
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="user">The user.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.SignOut">
+            <summary>
+            Signs the user out of the system
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.GetFullPath(System.String)">
+            <summary>
+            Gets the full path from a relative or ~/ one
+            </summary>
+            <param name="directory">The directory.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.GetHostName">
+            <summary>
+            Gets the host name
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.EnsureDirectoryExists(System.String)">
+            <summary>
+            Ensures that the directory exists.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.AddRefreshHeaderAfter(System.TimeSpan)">
+            <summary>
+            Adds the refresh header to refresh the page after the waitTime is over.
+            </summary>
+            <param name="waitTime">The wait time.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.AddRefreshHeaderAfter(System.String,System.TimeSpan)">
+            <summary>
+            Adds the refresh header to refresh the page after the waitTime is over.
+            </summary>
+            <param name="url">The URL.</param>
+            <param name="waitTime">The wait time.</param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.MapPath(System.String)">
+            <summary>
+            Maps the path (translate ~/ to the correct virtual path)
+            </summary>
+            <param name="path">The path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.HtmlDecode(System.String)">
+            <summary>
+            Html decode the string
+            </summary>
+            <param name="htmlEncodedString">The HTML encoded string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.HtmlEncode(System.String)">
+            <summary>
+            Html decode the string
+            </summary>
+            <param name="htmlString">The HTML string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.EndResponse">
+            <summary>
+            Ends the current request
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.Url">
+            <summary>
+            Return the Url of the request
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.UrlEncode(System.String)">
+            <summary>
+            Url encode the string
+            </summary>
+            <param name="s">The unencoded url</param>
+            <returns>The encoded url</returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.UrlDecode(System.String)">
+            <summary>
+            Url decode the string
+            </summary>
+            <param name="s">The encoded url</param>
+            <returns>The unencoded url</returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.ResolveUrl(System.String)">
+            <summary>
+            Resolves the URL.
+            </summary>
+            <param name="url">The URL.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.SetContextVaraible(System.String,System.Object)">
+            <summary>
+            Sets the context varaible with the specified value
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.GetLogonUser">
+            <summary>
+            Gets the logon user server variable
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.ClientIpIsIn(System.Collections.ICollection)">
+            <summary>
+            Check that the client ip address is in the given list.
+            </summary>
+            <param name="listOfIps"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.ClearSession">
+            <summary>
+            Clears the session.
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.ThrowingContextAdapter.BrowserIsIE7">
+            <summary>
+            Determines whether the browser is IE 7
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Rhino.Igloo.ThrowingContextAdapter.CurrentUser">
+            <summary>
+            Gets the principal of the current user
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Rhino.Igloo.ThrowingContextAdapter.UploadedFiles">
+            <summary>
+            Gets the uploaded files.
+            </summary>
+            <value>The uploaded files.</value>
+        </member>
+        <member name="P:Rhino.Igloo.ThrowingContextAdapter.RawUrl">
+            <summary>
+            Gets the raw URL.
+            </summary>
+            <value>The raw URL.</value>
+        </member>
+        <member name="T:Rhino.Igloo.UploadedFile">
+            <summary>
+            Represent a single file uploaded by the user
+            </summary>
+        </member>
+        <member name="M:Rhino.Igloo.UploadedFile.#ctor(System.String,System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Rhino.Igloo.UploadedFile"/> class.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="stream">The stream.</param>
+        </member>
+        <member name="M:Rhino.Igloo.UploadedFile.SaveAs(System.String)">
+            <summary>
+            Saves the stream to the given path
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="P:Rhino.Igloo.UploadedFile.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Rhino.Igloo.UploadedFile.Stream">
+            <summary>
+            Gets or sets the stream.
+            </summary>
+            <value>The stream.</value>
+        </member>
+    </members>
+</doc>

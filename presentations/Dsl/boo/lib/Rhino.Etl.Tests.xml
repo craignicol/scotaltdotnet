@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rhino.Etl.Tests</name>
+    </assembly>
+    <members>
+        <member name="M:Rhino.Etl.Tests.Aggregation.CostPerProductAggregation.Accumulate(Rhino.Etl.Core.Row,Rhino.Etl.Core.Row)">
+            <summary>
+            Accumulate the current row to the current aggregation
+            </summary>
+            <param name="row">The row.</param>
+            <param name="aggregate">The aggregate.</param>
+        </member>
+        <member name="M:Rhino.Etl.Tests.Aggregation.RowCount.Accumulate(Rhino.Etl.Core.Row,Rhino.Etl.Core.Row)">
+            <summary>
+            Accumulate the current row to the current aggregation
+            </summary>
+            <param name="row">The row.</param>
+            <param name="aggregate">The aggregate.</param>
+        </member>
+        <member name="M:Rhino.Etl.Tests.Dsl.ResultsToList.Execute(System.Collections.Generic.IEnumerable{Rhino.Etl.Core.Row})">
+            <summary>
+            Executes this operation
+            </summary>
+            <param name="rows">The rows.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Etl.Tests.Fibonacci.Batch.BatchFibonacci.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.Fibonacci.Batch.BatchFibonacciToDatabase.PrepareCommand(Rhino.Etl.Core.Row,System.Data.SqlClient.SqlCommand)">
+            <summary>
+            Prepares the command from the given row
+            </summary>
+            <param name="row">The row.</param>
+            <param name="command">The command.</param>
+        </member>
+        <member name="M:Rhino.Etl.Tests.Fibonacci.Bulk.BulkInsertFibonacciToDatabase.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.Fibonacci.Bulk.FibonacciBulkInsert.PrepareSchema">
+            <summary>
+            Prepares the schema of the target table
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.Fibonacci.Output.OutputFibonacciToDatabase.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.Fibonacci.InMemoryFibonacci.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.LoadTest.BatchUpdateUserNames.PrepareCommand(Rhino.Etl.Core.Row,System.Data.SqlClient.SqlCommand)">
+            <summary>
+            Prepares the command from the given row
+            </summary>
+            <param name="row">The row.</param>
+            <param name="command">The command.</param>
+        </member>
+        <member name="M:Rhino.Etl.Tests.LoadTest.BulkInsertUsers.PrepareSchema">
+            <summary>
+            Prepares the schema of the target table
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.LoadTest.GenerateUsers.Execute(System.Collections.Generic.IEnumerable{Rhino.Etl.Core.Row})">
+            <summary>
+            Executes this operation
+            </summary>
+            <param name="rows">The rows.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Rhino.Etl.Tests.LoadTest.LoadTestFixture">
+            <summary>
+            This fixture is here to verify that we can handle large amount of data
+            without consuming too much memory or crashing
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.LoadTest.PushDataToDatabase.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.LoadTest.UpperCaseColumn.Execute(System.Collections.Generic.IEnumerable{Rhino.Etl.Core.Row})">
+            <summary>
+            Executes this operation
+            </summary>
+            <param name="rows">The rows.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Rhino.Etl.Tests.LoadTest.UpperCaseUserNames.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.UsingDAL.ExportUsersToFile.Initialize">
+            <summary>
+            Initializes this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Etl.Tests.UsingDAL.WriteUsersToFile.Execute(System.Collections.Generic.IEnumerable{Rhino.Etl.Core.Row})">
+            <summary>
+            Executes this operation
+            </summary>
+            <param name="rows">The rows.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

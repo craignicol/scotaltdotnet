@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rhino.Mocks.Tests</name>
+    </assembly>
+    <members>
+        <member name="M:Rhino.Mocks.Tests.Constraints.AllPropertiesMatchConstraintTest.DataRowTest">
+            <summary>
+            The mother of all tests, a DataRow object is mega complex with recusive properties
+            and properties that give exceptions when the Get is invoked.
+            </summary>
+            <remarks>
+            It's better to check DataRow's with a seperate specialized constraint but we want to
+            be sure our constraint won't break if someone used it with a DataRow.
+            </remarks>
+        </member>
+        <member name="T:Rhino.Mocks.Tests.FieldsProblem.ClassThatImplementsGetHashCodeAndEquals">
+            <summary>
+            Summary description for Bug_45.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.FieldsProblem.ClassThatImplementsGetHashCodeAndEquals.EmployeeInfo.ToString">
+            <summary>
+            Returns a string representation of this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.FieldsProblem.ClassThatImplementsGetHashCodeAndEquals.EmployeeInfo.GetHashCode">
+            <summary>
+            Gets the hash code for this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.FieldsProblem.ClassThatImplementsGetHashCodeAndEquals.EmployeeInfo.Equals(System.Object)">
+            <summary>
+            Determines whether the specified instance is equal to this instance.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.FieldsProblem.PropertyWithTypeParameterTest.DoubleGeneric">
+            <summary>
+            If this fails with Execution Engine Exception, you need to install the hotfix 
+            for KB 957542.
+            There is a bug in .Net 3.5 SP1 that this test exposes.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.FieldsProblem.FieldProblem_SpookyET.UsingReturnAndThenIgnoreArgs">
+            <summary>
+            Notice the ordering: First we've a Return and then IgnoreArguments, that
+            broke because I didn't copy the returnValueSet in the expectation swapping.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.MethodRecorders.MethodRecorderBaseTests.TestMethodRecorder.UnexpectedMethodCall(Castle.Core.Interceptor.IInvocation,System.Object,System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            Get the expectation for this method on this object with this arguments 
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Tests.Remoting.ContextSwitchTests">
+            <summary>
+            Test scenarios where mock objects are called from different
+            application domain.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.ArgConstraintTests.MockStringDelegateWithParams">
+            <summary>
+            Adapted from MockingDelegatesTests.MockStringDelegateWithParams
+            </summary>
+        </member>
+        <member name="T:Rhino.Mocks.Tests.Coverage">
+            <summary>
+            Tests needed to get full coverage
+            They won't test meaningful stuff neccesarily
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.VerifyExpectationAndCallOriginalRecordState.DoReplay">
+            <summary>
+            AssertWasCalled that we can move to replay state and move 
+            to the reply state.
+            </summary>
+        </member>
+        <member name="M:Rhino.Mocks.Tests.OrderedTests.AssertOrderValidity(Rhino.Mocks.Tests.OrderedTests.ConfigureMockDelegate,System.Boolean,System.String)">
+            <summary>
+            Sets up a mock, and runs through methods as specified by characters in <paramref name="methodOrder"/>.
+            </summary>
+            <param name="mockConfigurer">A delegate to use to configure the mock.</param>
+            <param name="isValid">Whether the order should be valid or not.</param>
+            <param name="methodOrder">The method order (e.g. "ABC", "ABBC").</param>
+        </member>
+    </members>
+</doc>

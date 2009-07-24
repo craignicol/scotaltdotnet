@@ -39,6 +39,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Commons, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Rhino.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Commons.Binsor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Rhino.Commons.Binsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Commons.Clr, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Rhino.Commons.Clr.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.DSL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Rhino.DSL.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -54,8 +70,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="base\contextspecification.cs" />
+    <Compile Include="base\dslspecbase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="queryandsubjectspec.cs" />
     <Compile Include="taskheaderfixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\boo.scheduler.core\boo.scheduler.core.csproj">
+      <Project>{A65B07B2-B74D-472A-913A-370A201F93EC}</Project>
+      <Name>boo.scheduler.core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="schedules\selectblock.boo" />
+    <Content Include="schedules\taskheader.boo" />
+    <Content Include="schedules\whole.boo" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -65,4 +94,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)schedules\*.boo" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
