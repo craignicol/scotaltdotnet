@@ -5,7 +5,7 @@ namespace boo.scheduler.test
 {
     public class When_we_have_a_complete_task_definition : DslSpecBase
     {
-        protected override string BooFileUndertest
+        protected override string BooFileUnderTest
         {
             get { return "whole.boo"; }
         }

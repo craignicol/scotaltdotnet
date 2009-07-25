@@ -1,17 +1,16 @@
-using System;
 using NUnit.Framework;
 
 namespace boo.scheduler.test
 {
-    public class When_the_email_task_requires_parameters : DslSpecBase
+    public class When_the_email_template_has_custom_parameters : DslSpecBase
     {
-        protected override string BooFileUndertest
+        protected override string BooFileUnderTest
         {
             get { return "parametersblock.boo"; }
         }
 
         [Test]
-        public void Then_the_task_will_know_the_parameters_to_replace()
+        public void Then_we_can_specify_the_parameters_in_the_dsl()
         {
             Assert.That(_task.Parameters.Count, Is.EqualTo(2));
 

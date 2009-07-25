@@ -75,7 +75,7 @@
     <Compile Include="frequencyspecs.cs" />
     <Compile Include="parametersspec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="queryandsubjectspec.cs" />
+    <Compile Include="queryandsubjectspecs.cs" />
     <Compile Include="taskheaderspec.cs" />
     <Compile Include="wholespec.cs" />
   </ItemGroup>

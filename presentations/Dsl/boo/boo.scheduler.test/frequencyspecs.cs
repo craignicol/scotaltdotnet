@@ -4,7 +4,7 @@ namespace boo.scheduler.test
 {
     public class When_we_want_to_record_the_task_frequency : DslSpecBase
     {
-        protected override string BooFileUndertest
+        protected override string BooFileUnderTest
         {
             get { return "frequency.boo"; }
         }

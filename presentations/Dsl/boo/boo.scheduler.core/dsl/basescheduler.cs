@@ -123,7 +123,7 @@ namespace boo.scheduler.core.dsl
             Task.Parameters.AddRange(parameters);
         }
 
-        public virtual void select(string query)
+        public virtual void query(string query)
         {
             Task.Query = query;
         }

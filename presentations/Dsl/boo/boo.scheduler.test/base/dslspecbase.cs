@@ -12,7 +12,7 @@ namespace boo.scheduler.test
         protected Task _task;
         protected BaseScheduler _baseScheduler;
 
-        protected abstract string BooFileUndertest { get; }
+        protected abstract string BooFileUnderTest { get; }
 
         protected override void establish_context()
         {
@@ -26,7 +26,7 @@ namespace boo.scheduler.test
 
         protected override void because()
         {
-            _baseScheduler = _factory.Create<BaseScheduler>(BooFileUndertest);
+            _baseScheduler = _factory.Create<BaseScheduler>(BooFileUnderTest);
 
             _baseScheduler.Prepare();
 
