@@ -11,9 +11,9 @@ namespace boo.scheduler.core.domain
         private string _emailTemplate;
         private DateTime _nextPollTime;
         private static readonly ILog _log = LogManager.GetLogger(typeof(Task));
-        protected List<string> _clients = new List<string>();
+        protected List<Client> _clients = new List<Client>();
 
-        public List<string> Clients
+        public List<Client> Clients
         {
             get
             {

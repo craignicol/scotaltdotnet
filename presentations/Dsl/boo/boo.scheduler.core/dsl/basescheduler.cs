@@ -45,8 +45,11 @@ namespace boo.scheduler.core.dsl
 
             var clientList = new ArrayLiteralExpression();
 
-            foreach (Expression client in expression.Arguments)
+            foreach (Expression argument in expression.Arguments)
             {
+                var client = new MethodInvocationExpression(new ReferenceExpression("Client"),
+                                                                                       argument);
+
                 clientList.Items.Add(client);
             }
 
@@ -113,7 +116,7 @@ namespace boo.scheduler.core.dsl
             Task.Frequency = timeSpan;
         }
 
-        public virtual void ParseClients(string[] clients)
+        public virtual void ParseClients(Client[] clients)
         {
             Task.Clients.AddRange(clients);
         }

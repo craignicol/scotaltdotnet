@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="domain\Client.cs" />
     <Compile Include="domain\parameter.cs" />
     <Compile Include="domain\task.cs" />
     <Compile Include="dsl\basescheduler.cs" />

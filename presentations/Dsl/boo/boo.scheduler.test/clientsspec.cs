@@ -14,7 +14,7 @@ namespace boo.scheduler.test
         {
             Assert.That(_task.Clients.Count, Is.EqualTo(1));
 
-            Assert.That(_task.Clients[0], Is.EqualTo("fakeclient"));
+            Assert.That(_task.Clients[0].Name, Is.EqualTo("fakeclient"));
         }
     }
 }
